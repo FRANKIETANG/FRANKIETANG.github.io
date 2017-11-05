@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Black History,React," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摸到 React 的门把手React 入门实例教程 - 阮一峰 阮一峰真的很适合当老师，这里我们就慢慢的跟上阮一峰老师步伐，摸上 React 的门把手。 起步12npm initnpm install --save react react-dom 而阮一峰的 demo 包自带了 React ，那我们就直接用吧。 1$ git clone git@github.com:ruanyf/react-de">
+<meta name="keywords" content="Black History,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 React 的门把手">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 React 的门把手/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 React 的门把手React 入门实例教程 - 阮一峰 阮一峰真的很适合当老师，这里我们就慢慢的跟上阮一峰老师步伐，摸上 React 的门把手。 起步12npm initnpm install --save react react-dom 而阮一峰的 demo 包自带了 React ，那我们就直接用吧。 1$ git clone git@github.com:ruanyf/react-de">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-a577caebac60a9c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-888bf6bd6f540557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-bc51896f11363644.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.828Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 React 的门把手">
+<meta name="twitter:description" content="摸到 React 的门把手React 入门实例教程 - 阮一峰 阮一峰真的很适合当老师，这里我们就慢慢的跟上阮一峰老师步伐，摸上 React 的门把手。 起步12npm initnpm install --save react react-dom 而阮一峰的 demo 包自带了 React ，那我们就直接用吧。 1$ git clone git@github.com:ruanyf/react-de">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3191557-a577caebac60a9c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/14/摸到 React 的门把手/"/>
+
+
+
+
+
+  <title>摸到 React 的门把手 | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/14/摸到 React 的门把手/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">摸到 React 的门把手</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-14T00:06:56+08:00">
+                2017-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="摸到-React-的门把手"><a href="#摸到-React-的门把手" class="headerlink" title="摸到 React 的门把手"></a>摸到 React 的门把手</h1><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="external">React 入门实例教程 - 阮一峰</a></p>
+<p>阮一峰真的很适合当老师，这里我们就慢慢的跟上阮一峰老师步伐，摸上 React 的门把手。</p>
+<h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">npm</span> init</div><div class="line"><span class="built_in">npm</span> install --save react react-dom</div></pre></td></tr></table></figure>
+<p>而阮一峰的 demo 包自带了 React ，那我们就直接用吧。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git <span class="keyword">clone</span> <span class="title">git</span>@github.com:ruanyf/react-demos.git</div></pre></td></tr></table></figure>
+<h2 id="第一个-demo"><a href="#第一个-demo" class="headerlink" title="第一个 demo"></a>第一个 demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="javascript">        &lt;h1&gt;Hello, world!<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>,</span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li><p>并非一定要引用 browser.js ，引入它的作用是使浏览器支持<code>babel</code>，你可以使用<code>ES2015</code>（具体可以看<a href="http://es6.ruanyifeng.com/" target="_blank" rel="external">阮一峰的ECMAScript 6 入门</a>）进行编码。如果你用ES5，可以不引入。而在这里的作用是将 JSX 语法转为 JavaScript 语法。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// The ES5 way</span></div><div class="line"><span class="keyword">var</span> Photo = React.createClass(&#123;</div><div class="line">  handleDoubleTap: <span class="function"><span class="keyword">function</span><span class="params">(e)</span> </span>&#123; … &#125;,</div><div class="line">  render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123; … &#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// The ES6+ way</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Photo</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  handleDoubleTap(e) &#123; … &#125;</div><div class="line">  render() &#123; … &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>注意 React 是用了 JSX 的语法，跟 JavaScript 不兼容。使用了 JSX 的地方都要加上 <code>type=&#39;text/babel&#39;</code></p>
+</li>
+<li><code>ReactDOM.render</code> 是一个 API ，将模板转成 HTML 语言，并插入制定的 DOM 节点。</li>
+</ol>
+<h2 id="第二个-demo"><a href="#第二个-demo" class="headerlink" title="第二个 demo"></a>第二个 demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> names = [<span class="string">'Alice'</span>, <span class="string">'Emily'</span>, <span class="string">'Kate'</span>];</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="undefined">        &#123;</span></div><div class="line"><span class="actionscript">          names.map(<span class="function"><span class="keyword">function</span> <span class="params">(name, index)</span> </span>&#123;</span></div><div class="line"><span class="javascript">            <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span>&gt;</span>Hello, &#123;name&#125;!<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="undefined">          &#125;)</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span>,</span></span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li>在这个例子中我觉得 JSX 语法原来可以这样用，其实就是等于 HTML 和 JavaScript 的混写。</li>
+<li>遇到 HTML 标签（以 <code>&lt;</code> 开头），就用 HTML 规则解析；遇到代码块（以 <code>{</code> 开头），就用 JavaScript 规则解析。</li>
+</ol>
+<h2 id="第三个demo"><a href="#第三个demo" class="headerlink" title="第三个demo"></a>第三个demo</h2><figure class="highlight dust"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="meta">&lt;!DOCTYPE html&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></div><div class="line"><span class="xml">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></div><div class="line"><span class="xml">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line"><span class="xml">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span></div><div class="line"><span class="xml">      var arr = [</span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">key</span>=<span class="string">"1"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span>,</span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">h2</span> <span class="attr">key</span>=<span class="string">"2"</span>&gt;</span>React is awesome<span class="tag">&lt;/<span class="name">h2</span>&gt;</span>,</span></div><div class="line"><span class="xml">      ];</span></div><div class="line"><span class="xml">      ReactDOM.render(</span></div><div class="line"><span class="xml">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><span class="template-variable">&#123;arr&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span>,</span></div><div class="line"><span class="xml">        document.getElementById('example')</span></div><div class="line"><span class="xml">      );</span></div><div class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div><div class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<ol>
+<li>这里有一个亮点，就是用了这行代码 <code>&lt;div&gt;{arr}&lt;/div&gt;</code> 把数组成员全部展现到模板上，如果让我想我只会想到用 for 循环再一个一个加到 HTML 那里。。。</li>
+</ol>
+<h2 id="第四个demo"><a href="#第四个demo" class="headerlink" title="第四个demo"></a>第四个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> HelloMessage = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="javascript">          <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello &#123;this.props.name&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">HelloMessage</span> <span class="attr">name</span>=<span class="string">"John"</span> /&gt;</span>,</span></span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li><p>也就是说，用 <code>React.createClass</code> 可以把一个段代码封装成组件，然后像普通的 HTML 标签一样在网页插入这个组件。</p>
+</li>
+<li><p>要保证自己的组件拥有 <code>ReactDOM.render</code> 这个 API 来输出组件。</p>
+</li>
+<li><p>组件类的第一个字母必须大写，否则会报错。如 <code>HelloMessage</code> 不能写成 <code>helloMessage</code>。</p>
+</li>
+<li><p>还有组件类只能包含一个顶层标签，否则会出错 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> HelloMessage = React.createClass(&#123;</div><div class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span></span></div><div class="line"><span class="xml">      Hello &#123;this.props.name&#125;</span></div><div class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span></span></div><div class="line"><span class="xml">      some text</span></div><div class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>组件的用法和 HTML 的用法是一样的，可以加入任何的属性，比如 <code>&lt;HelloMessage name=&quot;John&quot;&gt;</code> 就是 <code>HelloMessage</code> 中加入一个 <code>name</code> 属性。组件的属性可以在组件类的 <code>this.props</code> 对象上获取，比如 <code>name</code> 属性就可以通过 <code>this.props.name</code> 读取。</p>
+</li>
+<li><p>添加组件属性，有一个地方需要注意，就是 <code>class</code> 属性需要写成 <code>className</code> ，<code>for</code> 属性需要写成 <code>htmlFor</code> ，这是因为 <code>class</code> 和 <code>for</code> 是 JavaScript 的保留字。</p>
+</li>
+</ol>
+<h2 id="第五个demo"><a href="#第五个demo" class="headerlink" title="第五个demo"></a>第五个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> NotesList = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;<span class="name">ol</span>&gt;</span></span></span></div><div class="line"><span class="undefined">              &#123;</span></div><div class="line"><span class="actionscript">                React.Children.map(<span class="keyword">this</span>.props.children, <span class="function"><span class="keyword">function</span> <span class="params">(child)</span> </span>&#123;</span></div><div class="line"><span class="javascript">                  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;child&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</span></div><div class="line"><span class="undefined">                &#125;)</span></div><div class="line"><span class="undefined">              &#125;</span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span></span></div><div class="line"><span class="undefined">          );</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">NotesList</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">          <span class="tag">&lt;<span class="name">span</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">          <span class="tag">&lt;<span class="name">span</span>&gt;</span>world<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;/<span class="name">NotesList</span>&gt;</span>,</span></span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li>这一个例子主要是讲解了 <code>this.props.children</code> 属性。它表示组件的所有子节点。</li>
+<li><code>this.props.children</code> 的值有三种可能：如果当前组件没有子节点，它就是 <code>undefined</code> ;如果有一个子节点，数据类型是 <code>object</code> ；如果有多个子节点，数据类型就是 <code>array</code> 。所以，处理 <code>this.props.children</code> 的时候要小心。</li>
+<li>React 提供一个工具方法 <a href="https://facebook.github.io/react/docs/top-level-api.html#react.children" target="_blank" rel="external"><code>React.Children</code></a> 来处理 <code>this.props.children</code> 。我们可以用 <code>React.Children.map</code> 来遍历子节点，而不用担心 <code>this.props.children</code> 的数据类型是 <code>undefined</code> 还是 <code>object</code>。</li>
+</ol>
+<h2 id="第六的demo"><a href="#第六的demo" class="headerlink" title="第六的demo"></a>第六的demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> data = <span class="number">123</span>;</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> MyTitle = React.createClass(&#123;</span></div><div class="line"><span class="undefined">        propTypes: &#123;</span></div><div class="line"><span class="undefined">          title: React.PropTypes.string.isRequired,</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="javascript">          <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">MyTitle</span> <span class="attr">title</span>=<span class="string">&#123;data&#125;</span> /&gt;</span>,</span></span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li><p><code>PropTypes</code>属性，就是用来验证组件实例的属性是否符合要求。</p>
+</li>
+<li><p><code>Mytitle</code>组件有一个<code>title</code>属性。<code>PropTypes</code> 告诉 React，这个 <code>title</code> 属性是必须的，而且它的值必须是字符串。<code>title</code> 没有通过验证。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-a577caebac60a9c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>另外，阮一峰老师还介绍了<code>getDefaultProps</code> 方法可以用来设置组件属性的默认值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> MyTitle = React.createClass(&#123;</div><div class="line">  getDefaultProps : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      title : <span class="string">'Hello World'</span></div><div class="line">    &#125;;</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">     <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span> &#123;this.props.title&#125; <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>;</div><div class="line">   &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">ReactDOM.render(</div><div class="line">  &lt;MyTitle /&gt;,</div><div class="line">  <span class="built_in">document</span>.body</div><div class="line">);</div><div class="line"><span class="comment">//上面代码会输出"Hello World"。</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="第七个demo"><a href="#第七个demo" class="headerlink" title="第七个demo"></a>第七个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> MyComponent = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">        handleClick: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">this</span>.refs.myTextInput.focus();</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="actionscript">        render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">              <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">ref</span>=<span class="string">"myTextInput"</span> /&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">              <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"Focus the text input"</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span> /&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="undefined">          );</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">MyComponent</span> /&gt;</span>,</span></span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div><div class="line">//这样就能通过点击 button 来获取 input 的 focus</div></pre></td></tr></table></figure>
+<ol>
+<li><p>组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 <a href="http://calendar.perfplanet.com/2013/diff/" target="_blank" rel="external">DOM diff</a> ，它可以极大提高网页的性能表现。</p>
+<p>但是，有时需要从组件获取真实 DOM 的节点，这时就要用到 <code>ref</code> 属性。</p>
+</li>
+<li><p>上面代码中，组件 <code>MyComponent</code> 的子节点有一个文本输入框，用于获取用户的输入。这时就必须获取真实的 DOM 节点，虚拟 DOM 是拿不到用户输入的。为了做到这一点，文本输入框必须有一个 <code>ref</code> 属性，然后 <code>this.refs.[refName]</code> 就会返回这个真实的 DOM 节点。</p>
+</li>
+<li><p>需要注意的是，由于 <code>this.refs.[refName]</code> 属性获取的是真实 DOM ，所以必须等到虚拟 DOM 插入文档以后，才能使用这个属性，否则会报错。上面代码中，通过为组件指定 <code>Click</code> 事件的回调函数，确保了只有等到真实 DOM 发生 <code>Click</code> 事件之后，才会读取 <code>this.refs.[refName]</code> 属性。</p>
+</li>
+<li><p>除了 <code>Click</code> 事件以外，还有 <code>KeyDown</code> 、<code>Copy</code>、<code>Scroll</code> 等</p>
+</li>
+</ol>
+<h2 id="第八个demo"><a href="#第八个demo" class="headerlink" title="第八个demo"></a>第八个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript"><span class="keyword">var</span> LikeButton = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">  getInitialState: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">return</span> &#123;liked: <span class="literal">false</span>&#125;;</span></div><div class="line"><span class="undefined">  &#125;,</span></div><div class="line"><span class="actionscript">  handleClick: <span class="function"><span class="keyword">function</span><span class="params">(event)</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">this</span>.setState(&#123;liked: !<span class="keyword">this</span>.state.liked&#125;);</span></div><div class="line"><span class="undefined">  &#125;,</span></div><div class="line"><span class="actionscript">  render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">var</span> text = <span class="keyword">this</span>.state.liked ? <span class="string">'like'</span> : <span class="string">'haven\'t liked'</span>;</span></div><div class="line"><span class="actionscript">    <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">      <span class="tag">&lt;<span class="name">p</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick&#125;</span>&gt;</span></span></span></div><div class="line"><span class="actionscript">        You &#123;text&#125; <span class="keyword">this</span>. Click to toggle.</span></div><div class="line"><span class="handlebars"><span class="xml">      <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span></div><div class="line"><span class="undefined">    );</span></div><div class="line"><span class="undefined">  &#125;</span></div><div class="line"><span class="undefined">&#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">  <span class="tag">&lt;<span class="name">LikeButton</span> /&gt;</span>,</span></span></div><div class="line"><span class="javascript">  <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">);</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li>组件的状态，用来和用户互动，组件一开始有一个状态，然后用户操作导致状态改变，从而改变状态，根据状态重新渲染页面。</li>
+<li><code>return {liked: false}</code> 初始化组件的状态</li>
+<li><code>this.setState({liked: !this.state.liked})</code> 将组件状态设置为当前状态相反状态</li>
+</ol>
+<h2 id="第九个demo"><a href="#第九个demo" class="headerlink" title="第九个demo"></a>第九个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> Input = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">        getInitialState: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">return</span> &#123;value: <span class="string">'Hello!'</span>&#125;;</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="actionscript">        handleChange: <span class="function"><span class="keyword">function</span><span class="params">(event)</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">this</span>.setState(&#123;value: event.target.value&#125;);</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="actionscript">        render: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">var</span> value = <span class="keyword">this</span>.state.value;</span></div><div class="line"><span class="actionscript">          <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">              <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">value</span>=<span class="string">&#123;value&#125;</span> <span class="attr">onChange</span>=<span class="string">&#123;this.handleChange&#125;</span> /&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">              <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;value&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="undefined">          );</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="javascript">      ReactDOM.render(<span class="xml"><span class="tag">&lt;<span class="name">Input</span>/&gt;</span></span>, <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>));</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li>第一次看这个，呦吼？这难道是传说中的双向绑定？<a href="http://www.cnblogs.com/kuailingmin/p/4609721.html" target="_blank" rel="external">React的双向绑定</a></li>
+<li>上面代码中，文本输入框的值，不能用 <code>this.props.value</code> 读取，而要定义一个 <code>onChange</code> 事件的回调函数，通过 <code>event.target.value</code> 读取用户输入的值。</li>
+</ol>
+<h2 id="第十个demo"><a href="#第十个demo" class="headerlink" title="第十个demo"></a>第十个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> Hello = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">        getInitialState: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">return</span> &#123;</span></div><div class="line"><span class="undefined">            opacity: 1.0</span></div><div class="line"><span class="undefined">          &#125;;</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">        componentDidMount: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">this</span>.timer = setInterval(<span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">            <span class="keyword">var</span> opacity = <span class="keyword">this</span>.state.opacity;</span></div><div class="line"><span class="undefined">            opacity -= .05;</span></div><div class="line"><span class="actionscript">            <span class="keyword">if</span> (opacity &lt; <span class="number">0.1</span>) &#123;</span></div><div class="line"><span class="undefined">              opacity = 1.0;</span></div><div class="line"><span class="undefined">            &#125;</span></div><div class="line"><span class="actionscript">            <span class="keyword">this</span>.setState(&#123;</span></div><div class="line"><span class="undefined">              opacity: opacity</span></div><div class="line"><span class="undefined">            &#125;);</span></div><div class="line"><span class="actionscript">          &#125;.bind(<span class="keyword">this</span>), <span class="number">100</span>);</span></div><div class="line"><span class="undefined">        &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">        render: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">          <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=</span></span><span class="template-variable">&#123;&#123;opacity: this.state.opacity&#125;&#125;</span><span class="xml"><span class="tag">&gt;</span></span></span></div><div class="line"><span class="actionscript">              Hello &#123;<span class="keyword">this</span>.props.name&#125;</span></div><div class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="undefined">          );</span></div><div class="line"><span class="undefined">        &#125;</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">      ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">Hello</span> <span class="attr">name</span>=<span class="string">"world"</span>/&gt;</span>,</span></span></div><div class="line"><span class="javascript">        <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li><p>这里主要是介绍了关于组件的生命周期</p>
+</li>
+<li><p>React 为每个状态都提供了两种处理函数，<code>will</code> 是我要插入了！<code>did</code> 是我插进去之后，要不要搞点东西？</p>
+</li>
+<li><p>阮一峰老师的这个 demo 是在<code>hello</code>组件加载以后，通过 <code>componentDidMount</code> 方法设置一个定时器，每隔100毫秒，就重新设置组件的透明度，从而引发重新渲染。</p>
+</li>
+<li><p>注意组件 <code>style</code> 属性的设置方式</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//这样是错的</div><div class="line">style=<span class="string">"opacity:&#123;this.state.opacity&#125;;"</span></div><div class="line">//而要写成</div><div class="line">style=&#123;&#123;opacity: this.<span class="keyword">state</span>.opacity&#125;&#125;</div></pre></td></tr></table></figure>
+<p>这是因为 React 组件样式是一个对象，所以第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象。</p>
+</li>
+</ol>
+<h2 id="第十一个demo"><a href="#第十一个demo" class="headerlink" title="第十一个demo"></a>第十一个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript"><span class="keyword">var</span> UserGist = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">  getInitialState: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">return</span> &#123;</span></div><div class="line"><span class="actionscript">      username: <span class="string">''</span>,</span></div><div class="line"><span class="actionscript">      lastGistUrl: <span class="string">''</span></span></div><div class="line"><span class="undefined">    &#125;;</span></div><div class="line"><span class="undefined">  &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">  componentDidMount: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="javascript">    $.get(<span class="keyword">this</span>.props.source, <span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> lastGist = result[<span class="number">0</span>];</span></div><div class="line"><span class="actionscript">      <span class="keyword">if</span> (<span class="keyword">this</span>.isMounted()) &#123;</span></div><div class="line"><span class="actionscript">        <span class="keyword">this</span>.setState(&#123;</span></div><div class="line"><span class="undefined">          username: lastGist.owner.login,</span></div><div class="line"><span class="undefined">          lastGistUrl: lastGist.html_url</span></div><div class="line"><span class="undefined">        &#125;);</span></div><div class="line"><span class="undefined">      &#125;</span></div><div class="line"><span class="actionscript">    &#125;.bind(<span class="keyword">this</span>));</span></div><div class="line"><span class="undefined">  &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">  render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">        &#123;this.state.username&#125;'s last gist is <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&#123;this.state.lastGistUrl&#125;</span>&gt;</span>here<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span></span></div><div class="line"><span class="handlebars"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span></div><div class="line"><span class="undefined">    );</span></div><div class="line"><span class="undefined">  &#125;</span></div><div class="line"><span class="undefined">&#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">  <span class="tag">&lt;<span class="name">UserGist</span> <span class="attr">source</span>=<span class="string">"https://api.github.com/users/octocat/gists"</span> /&gt;</span>,</span></span></div><div class="line"><span class="javascript">  <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">);</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li>把数据通过 AJAX 请求的方法从服务器获取，阮一峰老师这里是用了 <code>componentDidMount</code> 方法设置 AJAX 请求，再用 <code>this.setState</code> 方法重新渲染 UI，<code>InitialState</code> 初始数据为空</li>
+</ol>
+<h2 id="第十二个demo"><a href="#第十二个demo" class="headerlink" title="第十二个demo"></a>第十二个demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/react-dom.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/browser.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../build/jquery.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="actionscript"><span class="keyword">var</span> RepoList = React.createClass(&#123;</span></div><div class="line"><span class="actionscript">  getInitialState: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">return</span> &#123;</span></div><div class="line"><span class="actionscript">      loading: <span class="literal">true</span>,</span></div><div class="line"><span class="actionscript">      error: <span class="literal">null</span>,</span></div><div class="line"><span class="actionscript">      data: <span class="literal">null</span></span></div><div class="line"><span class="undefined">    &#125;;</span></div><div class="line"><span class="undefined">  &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">  componentDidMount() &#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">this</span>.props.promise.then(</span></div><div class="line"><span class="actionscript">      value =&gt; <span class="keyword">this</span>.setState(&#123;loading: <span class="literal">false</span>, data: value&#125;),</span></div><div class="line"><span class="actionscript">      error =&gt; <span class="keyword">this</span>.setState(&#123;loading: <span class="literal">false</span>, error: error&#125;));</span></div><div class="line"><span class="undefined">  &#125;,</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="actionscript">  render: <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span></div><div class="line"><span class="actionscript">    <span class="keyword">if</span> (<span class="keyword">this</span>.state.loading) &#123;</span></div><div class="line"><span class="javascript">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>;</span></div><div class="line"><span class="undefined">    &#125;</span></div><div class="line"><span class="actionscript">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.state.error !== <span class="literal">null</span>) &#123;</span></div><div class="line"><span class="javascript">      <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span>Error: &#123;this.state.error.message&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span>;</span></div><div class="line"><span class="undefined">    &#125;</span></div><div class="line"><span class="actionscript">    <span class="keyword">else</span> &#123;</span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> repos = <span class="keyword">this</span>.state.data.items;</span></div><div class="line"><span class="actionscript">      <span class="keyword">var</span> repoList = repos.map(<span class="function"><span class="keyword">function</span> <span class="params">(repo, index)</span> </span>&#123;</span></div><div class="line"><span class="actionscript">        <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">          <span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&#123;repo.html_url&#125;</span>&gt;</span>&#123;repo.name&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span> (&#123;repo.stargazers_count&#125; stars) <span class="tag">&lt;<span class="name">br</span>/&gt;</span> &#123;repo.description&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span></div><div class="line"><span class="undefined">        );</span></div><div class="line"><span class="undefined">      &#125;);</span></div><div class="line"><span class="actionscript">      <span class="keyword">return</span> (</span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;<span class="name">main</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">          <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Most Popular JavaScript Projects in Github<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">          <span class="tag">&lt;<span class="name">ol</span>&gt;</span>&#123;repoList&#125;<span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span></span></div><div class="line"><span class="handlebars"><span class="xml">        <span class="tag">&lt;/<span class="name">main</span>&gt;</span></span></span></div><div class="line"><span class="undefined">      );</span></div><div class="line"><span class="undefined">    &#125;</span></div><div class="line"><span class="undefined">  &#125;</span></div><div class="line"><span class="undefined">&#125;);</span></div><div class="line"><span class="undefined"></span></div><div class="line"><span class="undefined">ReactDOM.render(</span></div><div class="line"><span class="handlebars"><span class="xml">  <span class="tag">&lt;<span class="name">RepoList</span> <span class="attr">promise</span>=<span class="string">&#123;$.getJSON(</span>'<span class="attr">https:</span>//<span class="attr">api.github.com</span>/<span class="attr">search</span>/<span class="attr">repositories</span>?<span class="attr">q</span>=<span class="string">javascript&amp;sort</span>=<span class="string">stars</span>')&#125; /&gt;</span>,</span></span></div><div class="line"><span class="javascript">  <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></div><div class="line"><span class="undefined">);</span></div><div class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<ol>
+<li><p>数据传来后赋值</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">componentDidMount() &#123;</div><div class="line">  <span class="keyword">this</span>.props.promise.then(</div><div class="line">    value =&gt; <span class="keyword">this</span>.setState(&#123;<span class="string">loading:</span> <span class="literal">false</span>, <span class="string">data:</span> value&#125;),</div><div class="line">    error =&gt; <span class="keyword">this</span>.setState(&#123;<span class="string">loading:</span> <span class="literal">false</span>, <span class="string">error:</span> error&#125;));</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>如果Promise对象报错（rejected状态），组件显示报错信息；如果Promise对象抓取数据成功（fulfilled状态），组件显示获取的数据。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="attr">getInitialState:</span> <span class="string">function()</span> <span class="string">&#123;</span></div><div class="line">  <span class="string">return</span> <span class="string">&#123;</span></div><div class="line"><span class="attr">    loading:</span> <span class="literal">true</span><span class="string">,</span></div><div class="line"><span class="attr">    error:</span> <span class="literal">null</span><span class="string">,</span></div><div class="line"><span class="attr">    data:</span> <span class="literal">null</span></div><div class="line">  <span class="string">&#125;;</span></div><div class="line"><span class="string">&#125;,</span></div></pre></td></tr></table></figure>
+<p>Promise对象正在抓取数据（pending状态），组件显示”正在加载”</p>
+</li>
+</ol>
+<h2 id="第十三个demo"><a href="#第十三个demo" class="headerlink" title="第十三个demo"></a>第十三个demo</h2><ul>
+<li><p>这里不贴代码</p>
+</li>
+<li><p>这是一个 React 的服务器渲染</p>
+</li>
+<li><p>根据 readme.md 的提示，我们搞好依赖，<code>node server.js</code> 来监听 <a href="http://localhost:3000" target="_blank" rel="external">http://localhost:3000</a> <img src="http://upload-images.jianshu.io/upload_images/3191557-888bf6bd6f540557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>这看着是非常像手写服务器的方法，如果有 JavaScript权威指南 这本书，我建议你看看 P302 如何手写服务器。<img src="http://upload-images.jianshu.io/upload_images/3191557-bc51896f11363644.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>这里推荐一篇文章 <a href="http://www.alloyteam.com/2017/01/react-from-scratch-server-render/" target="_blank" rel="external">从零开始 React 服务器渲染</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Black-History/" rel="tag"># Black History</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/14/摸到 TypeScript 的门把手/" rel="next" title="摸到 TypeScript 的门把手">
+                <i class="fa fa-chevron-left"></i> 摸到 TypeScript 的门把手
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (2)/" rel="prev" title="摸到 React 的门把手 (2)">
+                摸到 React 的门把手 (2) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸到-React-的门把手"><span class="nav-number">1.</span> <span class="nav-text">摸到 React 的门把手</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#起步"><span class="nav-number">1.1.</span> <span class="nav-text">起步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个-demo"><span class="nav-number">1.2.</span> <span class="nav-text">第一个 demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二个-demo"><span class="nav-number">1.3.</span> <span class="nav-text">第二个 demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三个demo"><span class="nav-number">1.4.</span> <span class="nav-text">第三个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四个demo"><span class="nav-number">1.5.</span> <span class="nav-text">第四个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五个demo"><span class="nav-number">1.6.</span> <span class="nav-text">第五个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六的demo"><span class="nav-number">1.7.</span> <span class="nav-text">第六的demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第七个demo"><span class="nav-number">1.8.</span> <span class="nav-text">第七个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第八个demo"><span class="nav-number">1.9.</span> <span class="nav-text">第八个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第九个demo"><span class="nav-number">1.10.</span> <span class="nav-text">第九个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十个demo"><span class="nav-number">1.11.</span> <span class="nav-text">第十个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十一个demo"><span class="nav-number">1.12.</span> <span class="nav-text">第十一个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十二个demo"><span class="nav-number">1.13.</span> <span class="nav-text">第十二个demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第十三个demo"><span class="nav-number">1.14.</span> <span class="nav-text">第十三个demo</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

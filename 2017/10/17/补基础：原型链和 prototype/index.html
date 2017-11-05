@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="补基础：原型链和 prototype先搞清楚两个东西  __proto__ prototype   实例化对象的原型(__proto__)指向了构造函数的prototype属性  例如 1234let arr = [1,2]let arr2 = new Array(3,4)arr.__proto__ === Array.prototype 再举个例子 1234567891011121314// A">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="补基础：原型链和 prototype">
+<meta property="og:url" content="http://yoursite.com/2017/10/17/补基础：原型链和 prototype/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="补基础：原型链和 prototype先搞清楚两个东西  __proto__ prototype   实例化对象的原型(__proto__)指向了构造函数的prototype属性  例如 1234let arr = [1,2]let arr2 = new Array(3,4)arr.__proto__ === Array.prototype 再举个例子 1234567891011121314// A">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="补基础：原型链和 prototype">
+<meta name="twitter:description" content="补基础：原型链和 prototype先搞清楚两个东西  __proto__ prototype   实例化对象的原型(__proto__)指向了构造函数的prototype属性  例如 1234let arr = [1,2]let arr2 = new Array(3,4)arr.__proto__ === Array.prototype 再举个例子 1234567891011121314// A">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/17/补基础：原型链和 prototype/"/>
+
+
+
+
+
+  <title>补基础：原型链和 prototype | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/17/补基础：原型链和 prototype/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">补基础：原型链和 prototype</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-17T01:58:32+08:00">
+                2017-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="补基础：原型链和-prototype"><a href="#补基础：原型链和-prototype" class="headerlink" title="补基础：原型链和 prototype"></a>补基础：原型链和 prototype</h1><p>先搞清楚两个东西</p>
+<ul>
+<li><code>__proto__</code></li>
+<li><code>prototype</code></li>
+</ul>
+<blockquote>
+<p>实例化对象的原型(<code>__proto__</code>)指向了构造函数的prototype属性</p>
+</blockquote>
+<p>例如</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line"><span class="keyword">let</span> arr2 = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">3</span>,<span class="number">4</span>)</div><div class="line"></div><div class="line">arr.__proto__ === <span class="built_in">Array</span>.prototype</div></pre></td></tr></table></figure>
+<p>再举个例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Array 实际是一个构造函数</span></div><div class="line"><span class="built_in">Array</span>.__proto__ === <span class="built_in">Function</span>.prototype</div><div class="line"></div><div class="line"><span class="comment">// 我们经常用到的 Array.forEach Array.push 实际上是 Function 的方法</span></div><div class="line"><span class="built_in">Array</span>.prototype.forEach</div><div class="line"><span class="built_in">Array</span>.prototype.push</div><div class="line"></div><div class="line"><span class="comment">// 举个例子</span></div><div class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line">arr.push(<span class="number">3</span>)</div><div class="line"><span class="built_in">console</span>.log(arr) <span class="comment">// [1,2,3]</span></div><div class="line"><span class="comment">// 利用 hasOwnProperty 的方法看看</span></div><div class="line"><span class="built_in">console</span>.log(arr.hasOwnProperty(<span class="string">'push'</span>)) <span class="comment">// false</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Array</span>.prototype.hasOwnProperty(<span class="string">'push'</span>))</div></pre></td></tr></table></figure>
+<p>所以说，本身 <code>arr</code> 是没有 <code>push</code> 这个方法的 ，于是就会从他的原型上找。先会找它的原型 (<code>arr.__proto__</code> 等价与在 <code>Array.prototype</code> 里面找) 。</p>
+<p> 那 <code>arr.hasOwnProperty</code> 又是怎么来的呢？</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">console.log(Object<span class="selector-class">.prototype</span><span class="selector-class">.hasOwnProperty</span><span class="selector-class">.call</span>(arr, <span class="string">'hasOwnProperty'</span>)) <span class="comment">//false</span></div><div class="line">console.log(Object<span class="selector-class">.prototype</span><span class="selector-class">.hasOwnProperty</span><span class="selector-class">.call</span>(arr.__proto__, <span class="string">'hasOwnProperty'</span>)) <span class="comment">//false</span></div><div class="line">console.log(Object<span class="selector-class">.prototype</span><span class="selector-class">.hasOwnProperty</span><span class="selector-class">.call</span>(Array<span class="selector-class">.prototype</span>, <span class="string">'hasOwnProperty'</span>)) <span class="comment">//false</span></div><div class="line"><span class="comment">// 既然找不到，那我们可以往上一级找</span></div><div class="line"><span class="comment">// arr.__proto__.__proto___ === Array.prototype.__proto__ === Object.prototype</span></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">为什么 Array 是一个对象呢？</span></div><div class="line"><span class="comment">因为是对象格式</span></div><div class="line"><span class="comment">Array.prototype = &#123;</span></div><div class="line"><span class="comment">  push: function() &#123;</span></div><div class="line"><span class="comment">    </span></div><div class="line"><span class="comment">  &#125;</span></div><div class="line"><span class="comment">&#125;</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line">console.log(Object<span class="selector-class">.prototype</span><span class="selector-class">.hasOwnProperty</span><span class="selector-class">.call</span>(Object<span class="selector-class">.prototype</span>, <span class="string">'hasOwnProperty'</span>)) <span class="comment">// true</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">实际上是有尽头的</span></div><div class="line"><span class="comment">一直往原型上找的话</span></div><div class="line"><span class="comment">最后是一个 null</span></div><div class="line"><span class="comment">*/</span></div></pre></td></tr></table></figure>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line"><span class="built_in">console</span>.log(mike.hasOwnProperty(<span class="string">'sayHi'</span>)) <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">    &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line"><span class="built_in">console</span>.log(mike.hasOwnProperty(<span class="string">'sayHi'</span>)) <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>所以说，<code>prototype</code> 会给每个实例对象赋予一个新的 <code>sayHi()</code> </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">true<span class="keyword">this</span>.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    	<span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">true&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line"><span class="keyword">let</span> mike2 = <span class="keyword">new</span> Person(<span class="string">'mike2'</span>);</div><div class="line">mike.sayHi();</div><div class="line">mike2.sayHi();</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(mike.sayHi === mike2.sayHi) <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line"><span class="keyword">let</span> mike2 = <span class="keyword">new</span> Person(<span class="string">'mike2'</span>);</div><div class="line">mike.sayHi();</div><div class="line">mike2.sayHi();</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(mike.sayHi === mike2.sayHi) <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line"><span class="keyword">let</span> mike2 = <span class="keyword">new</span> Person(<span class="string">'mike2'</span>);</div><div class="line">mike.sayHi();</div><div class="line">mike2.sayHi();</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hi I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">mike.sayHi();</div><div class="line">mike2.sayHi();</div><div class="line"></div><div class="line"><span class="comment">// hello I'm mike</span></div><div class="line"><span class="comment">// hello I'm mike2</span></div><div class="line"><span class="comment">// hi I'm mike</span></div><div class="line"><span class="comment">// hi I'm mike2</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line"><span class="keyword">let</span> mike2 = <span class="keyword">new</span> Person(<span class="string">'mike2'</span>);</div><div class="line">mike.sayHi();</div><div class="line">mike2.sayHi();</div><div class="line"></div><div class="line">mike.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hi I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">mike.sayHi();</div><div class="line">mike2.sayHi();</div><div class="line"></div><div class="line"><span class="comment">// hello I'm mike</span></div><div class="line"><span class="comment">// hello I'm mike2</span></div><div class="line"><span class="comment">// hi I'm mike</span></div><div class="line"><span class="comment">// hello I'm mike2</span></div></pre></td></tr></table></figure>
+<p>所以，如果要找 a 里面有没有 b 这个玩意，就一直 <code>a.__proto__.__proto__</code> … 这个子子孙孙无穷尽也 </p>
+<h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><blockquote>
+<p>判断自定义对象的类型</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line"><span class="built_in">console</span>.log(arr <span class="keyword">instanceof</span> <span class="built_in">Array</span>)</div><div class="line"><span class="comment">// 实际上就是 arr.__proto__ === Array.prototype</span></div></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">let arr = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line"></div><div class="line">// 实现一个 instanceof, <span class="keyword">in</span> 是实例 fn 是构造函数</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">io</span><span class="params">(ins, fn)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span>(ins.__proto__)&#123;</div><div class="line">        <span class="keyword">if</span>(ins.__proto__ === fn.prototype)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> <span class="built_in">io</span>(ins.__proto__, fn);</div><div class="line">        &#125;</div><div class="line">    &#125;<span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">io</span><span class="params">(ins, fn)</span></span> &#123;</div><div class="line">true<span class="keyword">while</span>(ins.__proto__ !== null)&#123;</div><div class="line">      <span class="keyword">if</span>(ins.__proto__ === fn.prototype)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">      &#125;</div><div class="line">      ins = ins.__proto__</div><div class="line">true&#125;</div><div class="line">true<span class="keyword">return</span> <span class="literal">false</span></div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line">/*</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">io</span><span class="params">(ins, fn)</span></span> &#123;</div><div class="line">true<span class="keyword">if</span>(ins.__proto__ === fn.prototype) <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">true<span class="keyword">else</span> <span class="keyword">if</span>(ins.__proto__ === null)&#123;</div><div class="line">      	<span class="keyword">return</span> <span class="literal">false</span></div><div class="line">true&#125;</div><div class="line">true<span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">io</span>(ins.__proto__, fn)</div><div class="line">&#125;</div><div class="line">*/</div><div class="line"></div><div class="line">console.<span class="built_in">log</span>(<span class="built_in">io</span>(arr, Array)); //<span class="literal">true</span></div><div class="line">console.<span class="built_in">log</span>(<span class="built_in">io</span>(arr, Object)); //<span class="literal">true</span></div><div class="line">console.<span class="built_in">log</span>(<span class="built_in">io</span>(arr, Number)); //<span class="literal">false</span></div></pre></td></tr></table></figure>
+<h2 id="new"><a href="#new" class="headerlink" title="new"></a>new</h2><blockquote>
+<p>创建一个实例化对象，继承构造函数的一些实例和方法</p>
+<ul>
+<li>新生成一个对象</li>
+<li>将构造函数的 this 指向这个新生成的对象</li>
+<li>设置新生成对象的原型</li>
+<li>执行构造函数</li>
+<li>返回这个对象</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">true<span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="string">'mike'</span>);</div><div class="line">mike.sayHi()</div><div class="line"></div><div class="line"><span class="comment">// 实现一个 new 方法</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">myNewObject</span>(<span class="params">f, ...arg</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> obj, ret, proto;</div><div class="line">    proto = f.prototype;</div><div class="line">    obj = <span class="built_in">Object</span>.create(proto);</div><div class="line">    ret = f.apply(obj, arg);</div><div class="line">    <span class="keyword">return</span> obj;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// function myNewObject(fn, ...arg) &#123;</span></div><div class="line"><span class="comment">// 	let obj = &#123;&#125;</span></div><div class="line"><span class="comment">// 	obj.__proto__ = fn.prototype</span></div><div class="line"><span class="comment">// 	fn.call(obj,arg)</span></div><div class="line"><span class="comment">// 	return obj</span></div><div class="line"><span class="comment">// &#125;</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> mike2 = myNewObject(Person, <span class="string">'mike2'</span>, <span class="number">12</span>);</div><div class="line"><span class="built_in">console</span>.log(mike2.name) <span class="comment">// mike2</span></div><div class="line">mike2.sayHi(); <span class="comment">// hello I'm mike2</span></div><div class="line"><span class="built_in">console</span>.log(mike2 <span class="keyword">instanceof</span> Person); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">true<span class="comment">// 看这里，因为 this 不是那个实例化对象了</span></div><div class="line">true<span class="keyword">if</span>(!(<span class="keyword">this</span> <span class="keyword">instanceof</span> Person)) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Person(name);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike3 = Person(<span class="string">'mike3'</span>);</div><div class="line"><span class="built_in">console</span>.log(mike3) <span class="comment">//undefined</span></div><div class="line"></div><div class="line"><span class="comment">// 怎么让 mike3 也成为一个正常的实例化对象呢？</span></div><div class="line"><span class="comment">// 看上面</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(mike3.name); <span class="comment">//mike3</span></div><div class="line">mike3.sayHi(); <span class="comment">//hello I'm mike3</span></div><div class="line"><span class="built_in">console</span>.log(mike3 <span class="keyword">instanceof</span> Person); <span class="comment">//true</span></div></pre></td></tr></table></figure>
+<h2 id="inheritance"><a href="#inheritance" class="headerlink" title="inheritance"></a>inheritance</h2><p>继承方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.sayHi = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`hello I'm <span class="subst">$&#123;<span class="keyword">this</span>.name&#125;</span>`</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name, grade</span>) </span>&#123;</div><div class="line">true<span class="comment">// to-do</span></div><div class="line">truePerson.call(<span class="keyword">this</span>,name);</div><div class="line">    <span class="keyword">this</span>.grade = grade;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Student.prototype = <span class="built_in">Object</span>.create(Person.prototype); <span class="comment">//to-do</span></div><div class="line"><span class="comment">// Student.prototype.__proto__ = Person.prototype</span></div><div class="line"><span class="comment">// Student.prototype.constructor = Student;</span></div><div class="line"></div><div class="line"><span class="comment">// 注意如果用以下这种方法</span></div><div class="line"><span class="comment">// Student.prototype = new Person()</span></div><div class="line"><span class="comment">// xiaohong.__proto__ === Student.prototype</span></div><div class="line"><span class="comment">// xiaohong.__proto__.name === undefined // 多余的东西 </span></div><div class="line"><span class="comment">// 需要的条件是</span></div><div class="line"><span class="comment">// xiaohong.__proto__ // Student.prototype</span></div><div class="line"><span class="comment">// xiaohong.__proto__.__proto__ // Person.protoype</span></div><div class="line"></div><div class="line">Student.prototype.study = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"I'm studying"</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> xiaohong = <span class="keyword">new</span> Student(<span class="string">'xiaohong'</span>, <span class="number">6</span>);</div><div class="line">xiaohong.sayHi(); <span class="comment">//hello I'm xiaohong</span></div><div class="line">xiaohong.study(); <span class="comment">//I'm studying</span></div><div class="line"><span class="built_in">console</span>.log(xiaohong.grade); <span class="comment">//6</span></div><div class="line"><span class="built_in">console</span>.log(xiaohong.name); <span class="comment">//xiaohong</span></div><div class="line"><span class="built_in">console</span>.log(xiaohong <span class="keyword">instanceof</span> Person); <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(xiaohong <span class="keyword">instanceof</span> Student); <span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(xiaohong.constructor === Person); <span class="comment">//true</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 彩蛋 做一个 Object.create()</span></div><div class="line"><span class="keyword">if</span>(<span class="keyword">typeof</span> <span class="built_in">Object</span>.create !== <span class="string">'function'</span>)&#123;</div><div class="line">  	<span class="built_in">Object</span>.create = <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>)</span>&#123;</div><div class="line">      <span class="function"><span class="keyword">function</span> <span class="title">F</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">      F.prototype = obj</div><div class="line">      <span class="keyword">return</span> <span class="keyword">new</span> F()</div><div class="line">  	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意 <code>__proto__</code> 不是规范里面的，是浏览器的规范 <code>Object.getPrototype(Array) === Array.__proto__</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/15/做一个音乐 Webapp/" rel="next" title="做一个音乐 Webapp 的流程">
+                <i class="fa fa-chevron-left"></i> 做一个音乐 Webapp 的流程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/19/补基础：this/" rel="prev" title="补基础：this">
+                补基础：this <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#补基础：原型链和-prototype"><span class="nav-number">1.</span> <span class="nav-text">补基础：原型链和 prototype</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">1.1.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instanceof"><span class="nav-number">1.2.</span> <span class="nav-text">instanceof</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new"><span class="nav-number">1.3.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inheritance"><span class="nav-number">1.4.</span> <span class="nav-text">inheritance</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

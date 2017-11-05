@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="补基础：对象与数组的遍历方式  Object.getOwnPropertyNames   Object.defineProperty   Object.getOwnPropertyDescriptor   getOwnPropertyDescriptors   数组的遍历1234567891011121314let arr = [1, 2, 3]for(let i = 0, len = arr.l">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="补基础：对象与数组的遍历方式">
+<meta property="og:url" content="http://yoursite.com/2017/10/22/补基础：对象与数组的遍历方式/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="补基础：对象与数组的遍历方式  Object.getOwnPropertyNames   Object.defineProperty   Object.getOwnPropertyDescriptor   getOwnPropertyDescriptors   数组的遍历1234567891011121314let arr = [1, 2, 3]for(let i = 0, len = arr.l">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="补基础：对象与数组的遍历方式">
+<meta name="twitter:description" content="补基础：对象与数组的遍历方式  Object.getOwnPropertyNames   Object.defineProperty   Object.getOwnPropertyDescriptor   getOwnPropertyDescriptors   数组的遍历1234567891011121314let arr = [1, 2, 3]for(let i = 0, len = arr.l">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/22/补基础：对象与数组的遍历方式/"/>
+
+
+
+
+
+  <title>补基础：对象与数组的遍历方式 | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/22/补基础：对象与数组的遍历方式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">补基础：对象与数组的遍历方式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T21:40:50+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="补基础：对象与数组的遍历方式"><a href="#补基础：对象与数组的遍历方式" class="headerlink" title="补基础：对象与数组的遍历方式"></a>补基础：对象与数组的遍历方式</h1><blockquote>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames" target="_blank" rel="external">Object.getOwnPropertyNames</a></li>
+</ul>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">Object.defineProperty</a></li>
+</ul>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor" target="_blank" rel="external">Object.getOwnPropertyDescriptor</a></li>
+</ul>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors" target="_blank" rel="external">getOwnPropertyDescriptors</a></li>
+</ul>
+</blockquote>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>, len = arr.length; i &lt; len; i++)&#123;</div><div class="line">  	<span class="built_in">console</span>.log(arr[i])</div><div class="line">&#125;</div><div class="line"></div><div class="line">arr.forEach(<span class="function">(<span class="params">it, index, self</span>) =&gt;</span> &#123;</div><div class="line">  	<span class="built_in">console</span>.log(it, index, self)</div><div class="line">&#125;)</div><div class="line"><span class="comment">// 1 0 [1,2,3]</span></div><div class="line"><span class="comment">// 2 1 [1,2,3]</span></div><div class="line"><span class="comment">// 3 2 [1,2,3]</span></div><div class="line"><span class="comment">// 等于</span></div><div class="line">arr.forEach(<span class="built_in">console</span>.log)</div></pre></td></tr></table></figure>
+<h2 id="对象的遍历"><a href="#对象的遍历" class="headerlink" title="对象的遍历"></a>对象的遍历</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">// 打印出</span></div><div class="line"><span class="comment">// key a -&gt; b</span></div><div class="line"><span class="comment">// key c -&gt; d</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</div><div class="line">  	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 要注意的是，for in 会遍历原型链上的属性</span></div><div class="line"><span class="comment">// 但是并没有打印到 console.log(obj.toString) 这个值</span></div><div class="line"><span class="comment">// 没有打印 key toString -&gt; [Function: toString]</span></div><div class="line"></div><div class="line"><span class="built_in">Object</span>.prototype.test = <span class="string">'mytest'</span></div><div class="line"></div><div class="line"><span class="comment">// key a -&gt; b</span></div><div class="line"><span class="comment">// key c -&gt; d</span></div><div class="line"><span class="comment">// key test -&gt; mytest</span></div><div class="line"><span class="comment">// 说明确实会遍历找到原型链上的属性</span></div><div class="line"><span class="comment">// 那为什么 toString 没有打印出来？</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(<span class="built_in">Object</span>.prototype, <span class="string">'toString'</span>))</div><div class="line"><span class="comment">// &#123;writable: true, enumerable: false, configurable: true, value: ƒ&#125;</span></div><div class="line"><span class="comment">// 通过 getOwnPropertyDescriptor 看到 enumerable 的确是 false ，说明了不可枚举。 </span></div><div class="line"><span class="comment">// 所以说 Object.prototype 里面内置的方法大多数都是不可枚举的</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 那怎么可以只 for in 自身属性呢而不会遍历其他赋予到原型链上的属性呢？ （有的第三方库会在原型链上赋值）</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.prototype.test = <span class="string">'mytest'</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</div><div class="line">true<span class="comment">// 只遍历自身属性 可以加一层判断</span></div><div class="line">true<span class="keyword">if</span>(obj.hasOwnProperty(key)) &#123;</div><div class="line">      	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</div><div class="line">true&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 看一个使用场景</span></div><div class="line"><span class="selector-tag">function</span> <span class="selector-tag">validUser</span>(obj) &#123;</div><div class="line">    <span class="comment">// 同时具有name, age属性的为合法用户</span></div><div class="line">true<span class="selector-tag">return</span> <span class="selector-tag">obj</span><span class="selector-class">.hasOwnProperty</span>(<span class="string">'name'</span>) <span class="selector-tag">&amp;</span><span class="selector-tag">&amp;</span> <span class="selector-tag">obj</span><span class="selector-class">.hasOwnProperty</span>(<span class="string">'age'</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="selector-tag">console</span><span class="selector-class">.log</span>(validUser(&#123;<span class="attribute">name</span>: <span class="string">'mike'</span>&#125;)); <span class="comment">// false;</span></div><div class="line"><span class="selector-tag">console</span><span class="selector-class">.log</span>(validUser(&#123;<span class="attribute">age</span>: <span class="number">15</span>&#125;)); <span class="comment">// false</span></div><div class="line"><span class="selector-tag">console</span><span class="selector-class">.log</span>(validUser(&#123;<span class="attribute">name</span>: <span class="string">'xiaohong'</span>, <span class="attribute">age</span>: <span class="number">18</span>&#125;)); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<p>要注意不能用 <code>(!!obj.name &amp;&amp; !!obj.age)</code> 这种方法，要考虑到 <code>{age: 0}</code> 的可能性或者其他 如：<code>!!0 -&gt; false</code> <code>!!{} -&gt; true</code> <code>!![] -&gt; true</code> <code>!!&#39;&#39; -&gt; false</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 多个属性</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">validUser</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">    <span class="comment">// 同时具有 name, age, sex 属性的为合法用户</span></div><div class="line">    <span class="comment">// 若是上面那种做法，会导致多属性很麻烦</span></div><div class="line">true<span class="comment">// return obj.hasOwnProperty('name') &amp;&amp; </span></div><div class="line">true<span class="comment">//	      obj.hasOwnProperty('age') &amp;&amp;</span></div><div class="line">true<span class="comment">//	      obj.hasOwnProperty('sex')</span></div><div class="line">true<span class="comment">// 以下为解决方法</span></div><div class="line">true<span class="keyword">return</span> requiredFields.every(<span class="function">(<span class="params">it</span>) =&gt;</span> &#123;</div><div class="line">      	<span class="keyword">return</span> obj.hasOwnProperty(it)</div><div class="line">true&#125;)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 可以先配置成一个数组, 改变量就好</span></div><div class="line"><span class="keyword">let</span> requiredFields = [<span class="string">'name'</span>, <span class="string">'age'</span>, <span class="string">'sex'</span>]</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">name</span>: <span class="string">'mike'</span>&#125;)); <span class="comment">// false;</span></div><div class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">age</span>: <span class="number">15</span>&#125;)); <span class="comment">// false</span></div><div class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">name</span>: <span class="string">'xiaohong'</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;)); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">name</span>: <span class="string">'xiaohong'</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">sex</span>: <span class="string">'ddd'</span>&#125;)); <span class="comment">// true</span></div></pre></td></tr></table></figure>
+<h2 id="Object-keys-obj"><a href="#Object-keys-obj" class="headerlink" title="Object.keys(obj)"></a>Object.keys(obj)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 另外一种遍历方法 Object.keys(obj)</span></div><div class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.prototype.test = <span class="string">'myTest'</span></div><div class="line"></div><div class="line"><span class="built_in">Object</span>.keys(obj).forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</div><div class="line">  	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// 这个方法只能遍历到自身可枚举属性，那有没有办法可以遍历到不可枚举属性呢？</span></div><div class="line"></div><div class="line"><span class="comment">// 打印所有自身属性，包含不可枚举</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(obj)) <span class="comment">// ["a", "c", "nonEnumerable"]</span></div><div class="line"></div><div class="line"><span class="built_in">Object</span>.getOwnPropertyNames(obj).forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</div><div class="line">  	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// key a -&gt; b</span></div><div class="line"><span class="comment">// key c -&gt; d</span></div><div class="line"><span class="comment">// key nonEnumerable -&gt; static</span></div><div class="line"></div><div class="line"><span class="comment">// 设置不可枚举的方法</span></div><div class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'nonEnumerable'</span>, &#123;</div><div class="line">    enumerable: <span class="literal">false</span>,</div><div class="line">    configurable: <span class="literal">false</span>,</div><div class="line">    writable: <span class="literal">false</span>,</div><div class="line">    value: <span class="string">'static'</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(obj.nonEnumerable) <span class="comment">// 'static'</span></div><div class="line"><span class="built_in">console</span>.log(obj.hasOwnProperty(<span class="string">'nonEnumerable'</span>)) <span class="comment">// ture</span></div><div class="line"><span class="comment">// 说明 obj 自身有 nonEnumerable ，设置为 static</span></div></pre></td></tr></table></figure>
+<h2 id="get-set"><a href="#get-set" class="headerlink" title="get - set"></a>get - set</h2><p>数据双向绑定</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> obj = &#123;a: <span class="string">'b'</span>&#125;</div><div class="line"></div><div class="line"><span class="comment">// 可以这样</span></div><div class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'c'</span>, &#123;</div><div class="line">    <span class="keyword">get</span>() &#123;</div><div class="line">    	<span class="comment">// business logic 业务逻辑</span></div><div class="line">    	<span class="comment">// if(...) &#123;</span></div><div class="line">        <span class="comment">//  	throw Error()</span></div><div class="line">    	<span class="comment">// &#125; </span></div><div class="line">    	<span class="comment">// return 3 </span></div><div class="line">      	<span class="keyword">return</span> <span class="number">2</span></div><div class="line">    &#125;,</div><div class="line">    <span class="keyword">set</span>() &#123;</div><div class="line">   		<span class="comment">// 绑定逻辑 vue 的原理</span></div><div class="line">      	<span class="built_in">console</span>.log(<span class="string">'setting value'</span>)</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(obj.c) <span class="comment">// 在什么情况下会打印出 2 ？</span></div><div class="line">obj.c = <span class="number">10</span>         <span class="comment">// 相当于运行了 set() 这个函数 打印出 setting value</span></div><div class="line"><span class="built_in">console</span>.log(obj.c) <span class="comment">// 仍然是 2</span></div><div class="line"></div><div class="line"><span class="comment">// 也就是说可以变成一个私有变量</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 如果要设置深层次的赋值</span></div><div class="line">obj = &#123;</div><div class="line">    a: &#123;</div><div class="line">        b: &#123;</div><div class="line">            c: &#123;</div><div class="line">                d: <span class="number">3</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(obj.a.b.c.d); <span class="comment">// 3</span></div><div class="line"></div><div class="line"><span class="comment">// 用 defineProperty</span></div><div class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'_deep'</span>, &#123;</div><div class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">return</span> obj.a.b.c.d;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(obj._deep); <span class="comment">//3</span></div></pre></td></tr></table></figure>
+<h2 id="怎么大小通吃"><a href="#怎么大小通吃" class="headerlink" title="怎么大小通吃"></a>怎么大小通吃</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 对象和数组一起遍历</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_each</span>(<span class="params">objOrArray, callback</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object array]'</span>)&#123;</div><div class="line">        objOrArray.forEach(callback); </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object object]'</span>)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> objOrArray)&#123;</div><div class="line">            <span class="keyword">if</span>(objOrArray.hasOwnProperty(key))&#123;</div><div class="line">                callback(key,objOrArray[key]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;  	</div><div class="line">&#125;</div><div class="line"></div><div class="line">_each([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], <span class="function"><span class="keyword">function</span>(<span class="params">it, index</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(it + index);  </div><div class="line">&#125;); </div><div class="line"><span class="comment">// 1</span></div><div class="line"><span class="comment">// 3</span></div><div class="line"><span class="comment">// 5</span></div><div class="line"></div><div class="line">_each(&#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(key + value);</div><div class="line">&#125;);</div><div class="line"><span class="comment">// ab</span></div><div class="line"><span class="comment">// cd</span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 设置一个上下文</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">_each</span>(<span class="params">objOrArray, callback, ctx</span>)</span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object array]'</span>)&#123;</div><div class="line">        objOrArray.forEach(callback, ctx || <span class="keyword">this</span>); </div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object object]'</span>)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> objOrArray)&#123;</div><div class="line">            <span class="keyword">if</span>(objOrArray.hasOwnProperty(key))&#123;</div><div class="line">                callback.call(ctx || <span class="keyword">this</span>, key,objOrArray[key]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">_each([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], <span class="function"><span class="keyword">function</span>(<span class="params">it, index</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(it + index + <span class="keyword">this</span>.a);  </div><div class="line">&#125;, &#123;<span class="attr">a</span>: <span class="number">3</span>&#125;); </div><div class="line"><span class="comment">// 4</span></div><div class="line"><span class="comment">// 6</span></div><div class="line"><span class="comment">// 8</span></div><div class="line"></div><div class="line">_each(&#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(key + value + <span class="keyword">this</span>.a);</div><div class="line">&#125;, &#123;<span class="attr">a</span>: <span class="string">'e'</span>&#125;);</div><div class="line"><span class="comment">// abe</span></div><div class="line"><span class="comment">// cde</span></div></pre></td></tr></table></figure>
+<p>三板斧 <code>typeof</code> <code>Array.isArray([1,2])</code> <code>(Object.prototype.toString.call([1,2])</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/19/补基础：this/" rel="next" title="补基础：this">
+                <i class="fa fa-chevron-left"></i> 补基础：this
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/24/补基础：函数/" rel="prev" title="补基础：函数">
+                补基础：函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#补基础：对象与数组的遍历方式"><span class="nav-number">1.</span> <span class="nav-text">补基础：对象与数组的遍历方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的遍历"><span class="nav-number">1.1.</span> <span class="nav-text">数组的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的遍历"><span class="nav-number">1.2.</span> <span class="nav-text">对象的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-keys-obj"><span class="nav-number">1.3.</span> <span class="nav-text">Object.keys(obj)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get-set"><span class="nav-number">1.4.</span> <span class="nav-text">get - set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么大小通吃"><span class="nav-number">1.5.</span> <span class="nav-text">怎么大小通吃</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

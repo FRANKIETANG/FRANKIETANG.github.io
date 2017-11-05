@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Black History,React," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摸到 React 的门把手 (6)慢慢的撸出一个应用，就像看着自己的孩子长大一样。 继续撸代码增加邮箱注册并找回密码的方法。  请求 LeanCloud 的 API  返回登录框  分成一个一个小模块就是把每个功能分成一个一个的小模块，但是在这一步要注意，会有大量的props和state。只要不弄混，你就能体会到模块化的好处。 React Developer Tools  我们用 props 在组">
+<meta name="keywords" content="Black History,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 React 的门把手 (6)">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 React 的门把手 (6)/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 React 的门把手 (6)慢慢的撸出一个应用，就像看着自己的孩子长大一样。 继续撸代码增加邮箱注册并找回密码的方法。  请求 LeanCloud 的 API  返回登录框  分成一个一个小模块就是把每个功能分成一个一个的小模块，但是在这一步要注意，会有大量的props和state。只要不弄混，你就能体会到模块化的好处。 React Developer Tools  我们用 props 在组">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-adc098e0863d2a19.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-d526e3072a087e32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-cb586c8af567044d.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-85d314006e43f8d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-087167c7a4e954a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-4c6b054d27c27e04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-1cb2b198f0b21514.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-213d7d92c6c93bf2.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.364Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 React 的门把手 (6)">
+<meta name="twitter:description" content="摸到 React 的门把手 (6)慢慢的撸出一个应用，就像看着自己的孩子长大一样。 继续撸代码增加邮箱注册并找回密码的方法。  请求 LeanCloud 的 API  返回登录框  分成一个一个小模块就是把每个功能分成一个一个的小模块，但是在这一步要注意，会有大量的props和state。只要不弄混，你就能体会到模块化的好处。 React Developer Tools  我们用 props 在组">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3191557-adc098e0863d2a19.gif?imageMogr2/auto-orient/strip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (6)/"/>
+
+
+
+
+
+  <title>摸到 React 的门把手 (6) | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (6)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">摸到 React 的门把手 (6)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-14T00:10:29+08:00">
+                2017-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="摸到-React-的门把手-6"><a href="#摸到-React-的门把手-6" class="headerlink" title="摸到 React 的门把手 (6)"></a>摸到 React 的门把手 (6)</h1><p>慢慢的撸出一个应用，就像看着自己的孩子长大一样。</p>
+<h2 id="继续撸代码"><a href="#继续撸代码" class="headerlink" title="继续撸代码"></a>继续撸代码</h2><p>增加邮箱注册并找回密码的方法。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-adc098e0863d2a19.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>请求 LeanCloud 的 API</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-d526e3072a087e32.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>返回登录框</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-cb586c8af567044d.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<h2 id="分成一个一个小模块"><a href="#分成一个一个小模块" class="headerlink" title="分成一个一个小模块"></a>分成一个一个小模块</h2><p>就是把每个功能分成一个一个的小模块，但是在这一步要注意，会有大量的<code>props</code>和<code>state</code>。只要不弄混，你就能体会到模块化的好处。</p>
+<p><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank" rel="external">React Developer Tools</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-85d314006e43f8d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我们用 props 在组件直接传递数据（从父组件到子组件），用 state 保存组件自身的数据，这就是 props 和 state 的区别。</p>
+<p>注意每个模块的<code>state</code> </p>
+<p>App 的 <code>state</code></p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">this.<span class="keyword">state</span> = &#123;</div><div class="line">  <span class="keyword">user</span>: getCurrentUser() || &#123;&#125;,</div><div class="line">  newTodo: '',</div><div class="line">  todoList: []</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UserDialog 的 <code>state</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.state = &#123;</div><div class="line">  selectedTeb: <span class="string">'signInOrSignUp'</span>, <span class="comment">//forgotPassword</span></div><div class="line">  formData: &#123;</div><div class="line">    email: <span class="string">''</span>,</div><div class="line">    username: <span class="string">''</span>,</div><div class="line">    password: <span class="string">''</span>,</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>SignInOrSignUp 的 <code>state</code></p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">this.<span class="keyword">state</span> = &#123;</div><div class="line">  selected: 'signUp'</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以说<code>state</code>的分布策略是每个组件只保存与自己有关系的数据到state里。而<code>props</code>的用法就是，负责传递数据或函数到子组件中。</p>
+<p>如果一个组件没有<code>state</code>只有<code>props</code>，说明这个组件没有特殊逻辑，是一个纯（pure）的组件，而且还有一个特点是不能对（props）做任何修改。</p>
+<p><a href="https://facebook.github.io/react/docs/components-and-props.html#props-are-read-only" target="_blank" rel="external">Props are Read-Only</a></p>
+<p>我们可以把组件只有 <code>props</code> 没有 <code>state</code> 写成一个函数。</p>
+<p>在封装的时候要注意<code>this</code>，因为之前还是一个组件，所以是可以利用<code>this</code>来接住父组件的数据的，而变成了一个函数之后，<code>this</code>传入就是这个函数的东西了。所以 <code>{this.props.xxx}</code>就变成了<code>{props.props.xxx}</code>。</p>
+<p>另外如果组件只有一个方法，也可以改写一个函数</p>
+<p>注意</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params">props</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> &lt;input <span class="keyword">type</span>=<span class="string">"text"</span> value=&#123;props.content&#125; </div><div class="line">    className=<span class="string">"TodoInput"</span> </div><div class="line">    onKeyPress=&#123;submit.bind(<span class="literal">null</span>,props)&#125; </div><div class="line">    onChange=&#123;changeTitle.bind(<span class="literal">null</span>,props)&#125;/&gt;</div><div class="line">&#125;</div><div class="line"><span class="comment">//相当于</span></div><div class="line"><span class="keyword">let</span> temp = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    changeTitle.call(<span class="literal">null</span>, props, e)</div><div class="line">&#125;</div><div class="line">onChange=&#123;temp&#125;</div></pre></td></tr></table></figure>
+<p>可以说这几行代码是很看基础的。</p>
+<p>为什么在那几个函数明明没有用到 React ，但是要用 import React 。这是因为这个函数里面有 JSX ，而引用了这句话后<code>import React from &#39;react</code>浏览器就能读懂。<a href="http://web.jobbole.com/91637/" target="_blank" rel="external">我想这将是最有价值的 react 入门与进阶教程</a></p>
+<p>重构到此为止</p>
+<h2 id="把-TodoItem-的数据上传到云端"><a href="#把-TodoItem-的数据上传到云端" class="headerlink" title="把 TodoItem 的数据上传到云端"></a>把 TodoItem 的数据上传到云端</h2><p>我们再回过去看看 LeanCloud 的文档</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-087167c7a4e954a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>把这段代码复制来用一下，却得到了这样的反馈。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-4c6b054d27c27e04.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>控制中心也收到数据了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-1cb2b198f0b21514.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>所以我们就思考一下 TodoItem 的流程</p>
+<ul>
+<li>创建一个 Todo，就在中心留下一条记录</li>
+<li>用户修改一个 Todo，就发请求修改对应的 Todo</li>
+<li>用户删除 Todo，我们就删除一个</li>
+</ul>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-213d7d92c6c93bf2.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>这里要用到文档里的代码 <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#批量操作" target="_blank" rel="external">批量操作</a> <a href="https://leancloud.cn/docs/acl-guide.html#单用户权限设置" target="_blank" rel="external">单用户权限设置</a> <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#删除对象" target="_blank" rel="external">删除对象</a> <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#更新对象" target="_blank" rel="external">更新对象</a></p>
+<p>注意在更新对象的函数</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">update</span>(&#123;<span class="keyword">id</span>,title,<span class="keyword">status</span>,deleted&#125;,successFn,errorFn)&#123;</div><div class="line">    let todo = AV.Object.createWithoutData(<span class="string">'Todo'</span>,<span class="keyword">id</span>)</div><div class="line">    title !== undefined &amp;&amp; todo.set(<span class="string">'title'</span>,title)</div><div class="line">    <span class="keyword">status</span> !== undefined &amp;&amp; todo.set(<span class="string">'status'</span>,<span class="keyword">status</span>)</div><div class="line">    deleted !== undefined &amp;&amp; todo.set(<span class="string">'deleted'</span>,deleted)</div><div class="line">//这里为什么要那么麻烦？</div><div class="line">//为什么我要像上面那样写代码？</div><div class="line">//考虑如下场景</div><div class="line">//<span class="keyword">update</span>(&#123;<span class="keyword">id</span>:<span class="number">1</span>, title:<span class="string">'hi'</span>&#125;)</div><div class="line">//调用 <span class="keyword">update</span> 时，很有可能没有传 <span class="keyword">status</span> 和 deleted</div><div class="line">//也就是说，用户只想「局部更新」</div><div class="line">//所以我们只 <span class="keyword">set</span> 该 <span class="keyword">set</span> 的</div><div class="line">//那么为什么不写成 title &amp;&amp; todo.set(<span class="string">'title'</span>, title) 呢，为什么要多此一举跟 undefined 做对比呢？</div><div class="line">//考虑如下场景</div><div class="line">//<span class="keyword">update</span>(&#123;<span class="keyword">id</span>:<span class="number">1</span>, title: <span class="string">''</span>, <span class="keyword">status</span>: <span class="literal">null</span>&#125;&#125;</div><div class="line">//用户想将 title 和 <span class="keyword">status</span> 置空，我们要满足</div><div class="line">    todo.save().then((response) =&gt; &#123;</div><div class="line">      successFn &amp;&amp; successFn.call(<span class="literal">null</span>)</div><div class="line">    &#125;,(<span class="keyword">error</span>) =&gt; &#123;</div><div class="line">      errorFn &amp;&amp; errorFn.call(<span class="literal">null</span>,<span class="keyword">error</span>)</div><div class="line">    &#125;)</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>啊真的累，React 真的难啊，几个小模块就那么多接口…</p>
+<p><a href="https://github.com/FRANKIETANG/banana-todolist/commits/master" target="_blank" rel="external">所有代码</a></p>
+<p><a href="https://frankietang.github.io/banana-todolist/build/index.html" target="_blank" rel="external">预览</a></p>
+<p>我会另开几篇文章来详解这里免得知识点的，因为涉及的知识点有点多。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Black-History/" rel="tag"># Black History</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (5)/" rel="next" title="摸到 React 的门把手 (5)">
+                <i class="fa fa-chevron-left"></i> 摸到 React 的门把手 (5)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (完)/" rel="prev" title="摸到 React 的门把手 (完)">
+                摸到 React 的门把手 (完) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸到-React-的门把手-6"><span class="nav-number">1.</span> <span class="nav-text">摸到 React 的门把手 (6)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#继续撸代码"><span class="nav-number">1.1.</span> <span class="nav-text">继续撸代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分成一个一个小模块"><span class="nav-number">1.2.</span> <span class="nav-text">分成一个一个小模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把-TodoItem-的数据上传到云端"><span class="nav-number">1.3.</span> <span class="nav-text">把 TodoItem 的数据上传到云端</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

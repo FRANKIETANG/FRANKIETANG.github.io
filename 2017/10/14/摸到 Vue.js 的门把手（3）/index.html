@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Black History,Vue," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摸到 Vue.js 的门把手（3）回炉重造 重看 vue init webpack 的选项12345678910111213? Generate project in current directory? Yes? Project name vue-resume? Project description A Vue.js project? Author FRANKIETANG &amp;lt;350558">
+<meta name="keywords" content="Black History,Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 Vue.js 的门把手（3）">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 Vue.js 的门把手（3）回炉重造 重看 vue init webpack 的选项12345678910111213? Generate project in current directory? Yes? Project name vue-resume? Project description A Vue.js project? Author FRANKIETANG &amp;lt;350558">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 Vue.js 的门把手（3）">
+<meta name="twitter:description" content="摸到 Vue.js 的门把手（3）回炉重造 重看 vue init webpack 的选项12345678910111213? Generate project in current directory? Yes? Project name vue-resume? Project description A Vue.js project? Author FRANKIETANG &amp;lt;350558">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/"/>
+
+
+
+
+
+  <title>摸到 Vue.js 的门把手（3） | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">摸到 Vue.js 的门把手（3）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-14T00:13:11+08:00">
+                2017-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="摸到-Vue-js-的门把手（3）"><a href="#摸到-Vue-js-的门把手（3）" class="headerlink" title="摸到 Vue.js 的门把手（3）"></a>摸到 Vue.js 的门把手（3）</h1><p>回炉重造</p>
+<h2 id="重看-vue-init-webpack-的选项"><a href="#重看-vue-init-webpack-的选项" class="headerlink" title="重看 vue init webpack 的选项"></a>重看 <code>vue init webpack</code> 的选项</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">? <span class="keyword">Generate</span> project <span class="keyword">in</span> current directory? Yes</div><div class="line">? Project name vue-resume</div><div class="line">? Project description A Vue.js project</div><div class="line">? Author FRANKIETANG &lt;350558468@qq.com&gt;</div><div class="line">? Vue build standalone</div><div class="line"><span class="comment">//可以以后再装</span></div><div class="line">? Install vue-router? <span class="keyword">No</span></div><div class="line"><span class="comment">//这东西很烦，不要</span></div><div class="line">? <span class="keyword">Use</span> ESLint to lint your code? <span class="keyword">No</span></div><div class="line"><span class="comment">//不需要单元测试</span></div><div class="line">? Setup unit tests with Karma + Mocha? <span class="keyword">No</span></div><div class="line"><span class="comment">//不用管</span></div><div class="line">? Setup e2e tests with Nightwatch? <span class="keyword">No</span></div></pre></td></tr></table></figure>
+<h2 id="升级了-NPM-之后居然装不了-SCSS-？"><a href="#升级了-NPM-之后居然装不了-SCSS-？" class="headerlink" title="升级了 NPM 之后居然装不了 SCSS ？"></a>升级了 NPM 之后居然装不了 SCSS ？</h2><p>会有一个奇怪的 <code>user &quot;root&quot; does not have permission to access the dev dir &quot;/home/tangkalun/Desktop/vue-resume/node_modules/node-sass/.node-gyp/6.3.1&quot;</code></p>
+<p>那就用 <code>sudo SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install --save --unsafe-perm</code></p>
+<p>不行就用 <code>export SASS_BINARY_SITE=&quot;https://npm.taobao.org/mirrors/node-sass&quot;</code></p>
+<p><code>npm install --save  sass-loader node-sass</code></p>
+<p>又不行？</p>
+<p><code>sudo npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<p><code>sudo cnpm install --save  sass-loader node-sass --unsafe-perm</code></p>
+<p>不要加 <code>--unsafe-perm</code></p>
+<p>在 linux 下有可能循环安装…</p>
+<p>用这句 <code>rm -rf node_modules/ &amp;&amp; npm install &amp;&amp; npm rebuild</code></p>
+<p>不用想那么多。人生苦短，能用就行。</p>
+<h2 id="程序构想"><a href="#程序构想" class="headerlink" title="程序构想"></a>程序构想</h2><p>和之前一样分为导航栏，侧栏编写区，预览区</p>
+<h2 id="iconfont-的善用"><a href="#iconfont-的善用" class="headerlink" title="iconfont 的善用"></a>iconfont 的善用</h2><p>生成 <code>&lt;script&gt;</code> 标签直接用…不用像之前写个脚本来搞一大堆</p>
+<h2 id="element-ui"><a href="#element-ui" class="headerlink" title="element-ui"></a>element-ui</h2><p><code>npm i element-ui -S</code></p>
+<p><a href="http://element.eleme.io/#/zh-CN/component/installation" target="_blank" rel="external">文档</a></p>
+<h2 id="数据绑定语法为-value-sync"><a href="#数据绑定语法为-value-sync" class="headerlink" title="数据绑定语法为:value.sync"></a>数据绑定语法为<code>:value.sync</code></h2><p><a href="https://vuxjs.gitbooks.io/vux/content/form/x-input.html" target="_blank" rel="external">点击这里</a></p>
+<h2 id="slot-分發內容"><a href="#slot-分發內容" class="headerlink" title="slot 分發內容"></a>slot 分發內容</h2><p><a href="http://jsnwork.kiiuo.com/archives/2645/vue-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E3%80%8C%E4%BD%BF%E7%94%A8-slot-%E5%88%86%E7%99%BC%E5%85%A7%E5%AE%B9%E3%80%8D" target="_blank" rel="external">Vue – 如何理解「使用 slot 分發內容」</a></p>
+<h2 id="完。"><a href="#完。" class="headerlink" title="完。"></a>完。</h2><p><a href="https://frankietang.github.io/vue-resume/dist/index.html" target="_blank" rel="external">预览</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Black-History/" rel="tag"># Black History</a>
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/14/摸到 Vue.js 的门把手（2）/" rel="next" title="摸到 Vue.js 的门把手（2）">
+                <i class="fa fa-chevron-left"></i> 摸到 Vue.js 的门把手（2）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/15/做一个音乐 Webapp/" rel="prev" title="做一个音乐 Webapp 的流程">
+                做一个音乐 Webapp 的流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸到-Vue-js-的门把手（3）"><span class="nav-number">1.</span> <span class="nav-text">摸到 Vue.js 的门把手（3）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重看-vue-init-webpack-的选项"><span class="nav-number">1.1.</span> <span class="nav-text">重看 vue init webpack 的选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#升级了-NPM-之后居然装不了-SCSS-？"><span class="nav-number">1.2.</span> <span class="nav-text">升级了 NPM 之后居然装不了 SCSS ？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序构想"><span class="nav-number">1.3.</span> <span class="nav-text">程序构想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iconfont-的善用"><span class="nav-number">1.4.</span> <span class="nav-text">iconfont 的善用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#element-ui"><span class="nav-number">1.5.</span> <span class="nav-text">element-ui</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据绑定语法为-value-sync"><span class="nav-number">1.6.</span> <span class="nav-text">数据绑定语法为:value.sync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slot-分發內容"><span class="nav-number">1.7.</span> <span class="nav-text">slot 分發內容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完。"><span class="nav-number">1.8.</span> <span class="nav-text">完。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

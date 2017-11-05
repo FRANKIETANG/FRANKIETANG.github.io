@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Black History,React," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摸到 React 的门把手 (4)经过一段时间的踩坑 摸到 React 的门把手 摸到 React 的门把手 (2) 摸到 React 的门把手 (3) ，是不是可以做一个项目了？ Todo List不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。  有什么功能 输入框输入要做的事 按回车添加要做">
+<meta name="keywords" content="Black History,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 React 的门把手 (4)">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 React 的门把手 (4)/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 React 的门把手 (4)经过一段时间的踩坑 摸到 React 的门把手 摸到 React 的门把手 (2) 摸到 React 的门把手 (3) ，是不是可以做一个项目了？ Todo List不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。  有什么功能 输入框输入要做的事 按回车添加要做">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-46b343dbe1c59d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-2fe83ce52dc119fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-0a3d90f9199c3e88.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-383c1bddda0d2c8c.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-1b876867916258d3.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-2fc657e33903e0cb.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-44d0d5f42f5c0a9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-5d8f997dcfc09154.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-a6bbcdeda9ada74d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-3279099d4a906453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-76ff1267a6ea4bd5.gif?imageMogr2/auto-orient/strip">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.272Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 React 的门把手 (4)">
+<meta name="twitter:description" content="摸到 React 的门把手 (4)经过一段时间的踩坑 摸到 React 的门把手 摸到 React 的门把手 (2) 摸到 React 的门把手 (3) ，是不是可以做一个项目了？ Todo List不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。  有什么功能 输入框输入要做的事 按回车添加要做">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3191557-46b343dbe1c59d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (4)/"/>
+
+
+
+
+
+  <title>摸到 React 的门把手 (4) | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (4)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">摸到 React 的门把手 (4)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-14T00:09:14+08:00">
+                2017-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="摸到-React-的门把手-4"><a href="#摸到-React-的门把手-4" class="headerlink" title="摸到 React 的门把手 (4)"></a>摸到 React 的门把手 (4)</h1><p>经过一段时间的踩坑 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="external">摸到 React 的门把手 (2)</a> <a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="external">摸到 React 的门把手 (3)</a> ，是不是可以做一个项目了？</p>
+<h2 id="Todo-List"><a href="#Todo-List" class="headerlink" title="Todo List"></a>Todo List</h2><p>不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-46b343dbe1c59d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="有什么功能"><a href="#有什么功能" class="headerlink" title="有什么功能"></a>有什么功能</h2><ul>
+<li>输入框输入要做的事</li>
+<li>按回车添加要做的事</li>
+<li>添加要做的事后输入框清空</li>
+<li>每一个要做的事可以标记成已完成</li>
+<li>要做的事能删除</li>
+</ul>
+<h2 id="Todo-List长什么样"><a href="#Todo-List长什么样" class="headerlink" title="Todo List长什么样"></a>Todo List长什么样</h2><ul>
+<li><p>有一个大盒子</p>
+</li>
+<li><p>里面有一个标题</p>
+</li>
+<li><p>有一个类似 <code>&lt;input&gt;</code> 的玩意</p>
+</li>
+<li><p>一个列表，重点</p>
+<ul>
+<li>todoList<ul>
+<li>一个数组 id 用来区分要做的事</li>
+<li>title 是这个要做的事是什么</li>
+<li>status 要有一个 completed 值表示完成，空表示未完成</li>
+<li>deleted 是一个 boolean ，表示是否要删除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>newTodo 用来容纳用户在 input 输入的值，为什么不用 input 的 value 属性？因为 value= 后面加引号会错。在 React 中是无法直接更改 from 表单元素的值的，必须通过 setState() 去响应用户的输入。</li>
+</ul>
+<h2 id="开始写代码"><a href="#开始写代码" class="headerlink" title="开始写代码"></a>开始写代码</h2><p>注意 JavaScript 会自动给行末添加分号。如果 return 后面换行不加括号就会变成 <code>return;</code>，所以为了提高可读性还是加括号会比较好。</p>
+<p>添加 CSS <code>npm i -S normalize.css</code></p>
+<p>然后在 <code>import</code> 加上 CSS 和 JS ，另外一定要注意顺序。normalize.css 要放在最前面。</p>
+<h2 id="怎么交互"><a href="#怎么交互" class="headerlink" title="怎么交互"></a>怎么交互</h2><p>试了一下 newTodo 的值改成 <code>&#39;&#39;</code> ，在 input 里什么都输入不了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-2fe83ce52dc119fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>浏览器告诉了我们两种方法</p>
+<ul>
+<li>If the field should be mutable use <code>defaultValue</code>.</li>
+<li>set either <code>onChange</code> or <code>readOnly</code>.</li>
+</ul>
+<p>那我们用一下 <code>defaultValue</code> ，ok 了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-0a3d90f9199c3e88.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>监听用户的回车事件 我们可以用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onkeypress" target="_blank" rel="external">GlobalEventHandlers.onkeypress</a> 这个属性</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-383c1bddda0d2c8c.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>我们用 props 的话我们要注意绑定按回车那个 this ，就是我系列文章上一篇的 bind(this) </p>
+<p>这样，我们就能够往里面加东西了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-1b876867916258d3.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>但是我们又发现了一个问题，input 的 value 没有重置。那是因为 defaultValue，只会影响 input 的第一次值，后面的 newTodo 怎么变，都不会影响 input</p>
+<p>那我们试试 onChange 这种方法，成了</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-2fc657e33903e0cb.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>紧接着是标记为已完成的事件和未完成的事件</p>
+<p>我们让 checked 的值先等于 null，点击后就变成了 completed</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-44d0d5f42f5c0a9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><img src="http://upload-images.jianshu.io/upload_images/3191557-5d8f997dcfc09154.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>点击 checkbox 后增加了 <code>status: &#39;completed&#39;</code></p>
+<p>接下来新增一个删除 todo</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-a6bbcdeda9ada74d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><img src="http://upload-images.jianshu.io/upload_images/3191557-3279099d4a906453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>我们还要让 deleted 变成真 deleted</p>
+<p>那我们就用 <code>filter</code> 这个 API ，<code>.filter((item)=&gt; !item.deleted)</code></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-76ff1267a6ea4bd5.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<p>基本功能已经做出来了</p>
+<p>##代码</p>
+<ul>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/2431a2a81415c3fd674f14a894a2bd3f7777f805" target="_blank" rel="external">基本骨架完成</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/37a39392ac65e03d4a4551ca6f2aa33400fcd5ec" target="_blank" rel="external">将输入框变成 TodoInput 组件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/db78ca8d08545394b5ecd93e344fc955508ce393" target="_blank" rel="external">将每个待办封装成 TodoItem 组件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/ad05ce18fe7083a2e76573c3032b28cc6c715103" target="_blank" rel="external">添加 normalize.css</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9b62a921aa2adbfec99c17c04cc4438e7ae17b69" target="_blank" rel="external">添加 reset.css</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/556f760571f1b60c7b7c25f46e6698bacb168d67" target="_blank" rel="external">fix value</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/5eeef99c4ae2678e60c28a691b0b5d935c1b2591" target="_blank" rel="external">监听回车事件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/c8727d8482b81f84e1441166f3be016b8affea9a" target="_blank" rel="external">App 传一个函数给 TodoInput</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b9de4886314df06317d176b00b769196fcbd642d" target="_blank" rel="external">bind(this)</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b765bebe0097d7283d34209f84404e9433e667c4" target="_blank" rel="external">可以添加 todo 了</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/20701a8e764cfe158b3b387c6686fada36f54c52" target="_blank" rel="external">fix value again</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/730db326d22892d3ef4e32e6e705c061d24a1142" target="_blank" rel="external">fix value again and again</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/a78fea70fd172c1aa35b77d85e1f9720f738ea1c" target="_blank" rel="external">标记为已完成或者未完成</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9bc07f8a2c564c95bacc7e8ba1728e4b69b20784" target="_blank" rel="external">删除 todo</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/f0ea5a391f90588fd093eb859c273bbd96a05930" target="_blank" rel="external">真正删除 todo</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/85b7255e4daa64699badfa2b35f8eab4268516f5" target="_blank" rel="external">TodoItem 样式</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/d1df4c1ecadaf9aa5af0a55e30d295e2b8b943c5" target="_blank" rel="external">TodoInput 样式</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Black-History/" rel="tag"># Black History</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (3)/" rel="next" title="摸到 React 的门把手 (3)">
+                <i class="fa fa-chevron-left"></i> 摸到 React 的门把手 (3)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (5)/" rel="prev" title="摸到 React 的门把手 (5)">
+                摸到 React 的门把手 (5) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸到-React-的门把手-4"><span class="nav-number">1.</span> <span class="nav-text">摸到 React 的门把手 (4)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Todo-List"><span class="nav-number">1.1.</span> <span class="nav-text">Todo List</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有什么功能"><span class="nav-number">1.2.</span> <span class="nav-text">有什么功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Todo-List长什么样"><span class="nav-number">1.3.</span> <span class="nav-text">Todo List长什么样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始写代码"><span class="nav-number">1.4.</span> <span class="nav-text">开始写代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么交互"><span class="nav-number">1.5.</span> <span class="nav-text">怎么交互</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

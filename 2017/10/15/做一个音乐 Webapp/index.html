@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="做一个音乐 Webapp超低仿 Vanilla JS 写的 QQ 音乐 预览 | 源码 那么乱的笔记估计就只有我才能看懂  按需求制定一下接口 功能拆分成一个一个模块（首页 + 推荐 / 排行榜 / 搜索 / 播放器界面） 技术选型（CSS 预处理器 / JS 库）  怎么在网页抄数据 伪造请求 1curl &apos;https://c.y.qq.com/musichall/fcgi-bin/fcg_yq">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="做一个音乐 Webapp 的流程">
+<meta property="og:url" content="http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="做一个音乐 Webapp超低仿 Vanilla JS 写的 QQ 音乐 预览 | 源码 那么乱的笔记估计就只有我才能看懂  按需求制定一下接口 功能拆分成一个一个模块（首页 + 推荐 / 排行榜 / 搜索 / 播放器界面） 技术选型（CSS 预处理器 / JS 库）  怎么在网页抄数据 伪造请求 1curl &apos;https://c.y.qq.com/musichall/fcgi-bin/fcg_yq">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2017/09/22/59c4990ac3f33.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/23/59c5f31f6601d.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/23/59c60819cabdf.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/23/59c60b0dcf706.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/23/59c6163e42f5b.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/23/59c618bbb79d2.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/23/59c6200b767cb.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/25/59c8db302e050.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/25/59c8dbc2a1f79.png">
+<meta property="og:image" content="https://i.loli.net/2017/09/25/59c8dc2dd23db.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/09/28/59ccf1d9533c4.png">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="做一个音乐 Webapp 的流程">
+<meta name="twitter:description" content="做一个音乐 Webapp超低仿 Vanilla JS 写的 QQ 音乐 预览 | 源码 那么乱的笔记估计就只有我才能看懂  按需求制定一下接口 功能拆分成一个一个模块（首页 + 推荐 / 排行榜 / 搜索 / 播放器界面） 技术选型（CSS 预处理器 / JS 库）  怎么在网页抄数据 伪造请求 1curl &apos;https://c.y.qq.com/musichall/fcgi-bin/fcg_yq">
+<meta name="twitter:image" content="https://i.loli.net/2017/09/22/59c4990ac3f33.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/15/做一个音乐 Webapp/"/>
+
+
+
+
+
+  <title>做一个音乐 Webapp 的流程 | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/15/做一个音乐 Webapp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">做一个音乐 Webapp 的流程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T12:41:39+08:00">
+                2017-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="做一个音乐-Webapp"><a href="#做一个音乐-Webapp" class="headerlink" title="做一个音乐 Webapp"></a>做一个音乐 Webapp</h1><p>超低仿 Vanilla JS 写的 QQ 音乐</p>
+<p><a href="https://frankietang.github.io/qq-music/index.html" target="_blank" rel="external">预览</a> | <a href="https://github.com/FRANKIETANG/qq-music" target="_blank" rel="external">源码</a></p>
+<p>那么乱的笔记估计就只有我才能看懂</p>
+<ul>
+<li>按需求制定一下接口</li>
+<li>功能拆分成一个一个模块（首页 + 推荐 / 排行榜 / 搜索 / 播放器界面）</li>
+<li>技术选型（CSS 预处理器 / JS 库）</li>
+</ul>
+<h2 id="怎么在网页抄数据"><a href="#怎么在网页抄数据" class="headerlink" title="怎么在网页抄数据"></a>怎么在网页抄数据</h2><p><img src="https://i.loli.net/2017/09/22/59c4990ac3f33.png" alt=""></p>
+<h2 id="伪造请求"><a href="#伪造请求" class="headerlink" title="伪造请求"></a>伪造请求</h2><p><img src="https://i.loli.net/2017/09/23/59c5f31f6601d.png" alt=""></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=<span class="number">5381</span>&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;_=<span class="number">150756419910</span>9' -H 'pragma: no-cache' -H 'origin: https://m.y.qq.com' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: zh-CN,zh;q=0.8' -H 'user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1' -H 'accept: application/json' -H 'cache-control: no-cache' -H 'authority: c.y.qq.com' -H 'cookie: pgv_pvi=<span class="number">1576136704</span>; pgv_si=s<span class="number">2924205056</span>; RK=QfWPx2jbHN; tvfe_boss_uuid=bdd869ba21d<span class="number">1959</span>5; o_cookie=<span class="number">35055846</span>8; ts_refer=ADTAGmyqq; ptui_loginuin=<span class="number">35055846</span>8; ptisp=ctc; ptcz=bde020f<span class="number">982847</span>5fc3e22f0fc78ba<span class="number">0024</span>b7a615fad803b<span class="number">9169</span>4a069a02cefdb0b; pt2gguin=o<span class="number">0350558468</span>; LW_sid=11S540S7L3v4m1k4L632K6r1m3; LW_uid=g1l<span class="number">5302</span>7M384N1y4K6Z2v6d1L4; eas_sid=H1Y5t0B7H3o461B4f692f682Y2; ts_uid=<span class="number">2559117424</span>; qqmusic_fromtag=10; checkmask=3; yqq_stat=0; ts_refer=www.google.ca/; ts_uid=<span class="number">2559117424</span>; pgv_info=ssid=s<span class="number">8871552255</span>; pgv_pvid=<span class="number">2779555285</span>' -H 'referer: https://m.y.qq.com/' --compressed</div></pre></td></tr></table></figure>
+<p><code>npm install express --save</code> </p>
+<p><code>npm install request --save</code> <code>npm install request-promise --save</code>（发请求的库）</p>
+<p><a href="https://github.com/request/request-promise" target="_blank" rel="external">request-promise</a></p>
+<p><img src="https://i.loli.net/2017/09/23/59c60819cabdf.png" alt=""></p>
+<p><code>npm install -g nodemon</code></p>
+<p><a href="https://nodemon.io/" target="_blank" rel="external">nodemon</a></p>
+<p>我去…用 nodemon 不能用 <code>import XXX from &#39;XXX&#39;</code> 要用 <code>var XXX = require(&#39;XXX&#39;)</code></p>
+<p><img src="https://i.loli.net/2017/09/23/59c60b0dcf706.png" alt=""></p>
+<p>我去…原来还有 n 模块这玩意…</p>
+<p><a href="https://www.npmjs.com/package/n" target="_blank" rel="external">n</a> 接受了这个设定还是挺不错的…</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//qq-server 代码</span></div><div class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</div><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request-promise'</span>)</div><div class="line"></div><div class="line"><span class="keyword">const</span> app = express()</div><div class="line"></div><div class="line">app.get(<span class="string">'/'</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</div><div class="line">    <span class="keyword">const</span> url = <span class="string">`https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;_=<span class="subst">$&#123;+ <span class="keyword">new</span> <span class="built_in">Date</span>()&#125;</span>`</span></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        res.json(</div><div class="line">            <span class="keyword">await</span> request(&#123;</div><div class="line">                uri: url,</div><div class="line">                json: <span class="literal">true</span>,</div><div class="line">                headers: &#123;</div><div class="line">                    <span class="string">'accept'</span>: <span class="string">'application/json'</span>,</div><div class="line">                    <span class="string">'authority'</span>: <span class="string">'c.y.qq.com'</span>,</div><div class="line">                    <span class="string">'origin'</span>: <span class="string">'https://m.y.qq.com'</span>,</div><div class="line">                    <span class="string">'referer'</span>: <span class="string">'https://m.y.qq.com/'</span>,</div><div class="line">                    <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'</span></div><div class="line">                &#125;</div><div class="line">            &#125;)</div><div class="line">        )</div><div class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">        res.json(&#123; <span class="attr">error</span>: e.message &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">app.listen(<span class="number">4000</span>)</div></pre></td></tr></table></figure>
+<p>运行 <code>nodemon qq-server.js</code> 打开 localhost:4000</p>
+<p><img src="https://i.loli.net/2017/09/23/59c6163e42f5b.png" alt=""></p>
+<p>开心 终于不用跨域请求了 也不用自己去抄数据了hhhh 新技能 get</p>
+<p>再分析一个 API 接口</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://<span class="keyword">c</span>.y.qq.com/soso/fcgi-bin/search_for_qq_cp?g_tk=<span class="number">5381</span>&amp;uin=<span class="number">0</span>&amp;format=json&amp;inCharset=utf<span class="number">-8</span>&amp;outCharset=utf<span class="number">-8</span>&amp;notice=<span class="number">0</span>&amp;platform=h<span class="number">5</span>&amp;needNewCode=<span class="number">1</span>&amp;w=<span class="symbol">%E6</span><span class="symbol">%9</span>D<span class="symbol">%8</span>E<span class="symbol">%E8</span><span class="symbol">%8</span>D<span class="symbol">%A3</span><span class="symbol">%E6</span><span class="symbol">%B5</span><span class="symbol">%A9</span>&amp;zhidaqu=<span class="number">1</span>&amp;catZhida=<span class="number">1</span>&amp;t=<span class="number">0</span>&amp;flag=<span class="number">1</span>&amp;ie=utf<span class="number">-8</span>&amp;sem=<span class="number">1</span>&amp;aggr=<span class="number">0</span>&amp;perpage=<span class="number">20</span>&amp;n=<span class="number">20</span>&amp;p=<span class="number">1</span>&amp;remoteplace=txt.mqq.all&amp;_=<span class="number">1506154238572</span></div></pre></td></tr></table></figure>
+<p><code>w=%E6%9D%8E%E8%8D%A3%E6%B5%A9</code> 这个是李荣浩</p>
+<p><img src="https://i.loli.net/2017/09/23/59c618bbb79d2.png" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//search部分的核心代码</span></div><div class="line">app.get(<span class="string">'/search'</span>, <span class="keyword">async</span>(req,res)=&gt;&#123;</div><div class="line">    <span class="keyword">const</span> &#123; keyword, page = <span class="number">1</span> &#125; = req.query</div><div class="line">    <span class="keyword">const</span> url=<span class="string">`https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;w=<span class="subst">$&#123;<span class="built_in">encodeURIComponent</span>(keyword)&#125;</span>&amp;zhidaqu=1&amp;catZhida=1&amp;t=0&amp;flag=1&amp;ie=utf-8&amp;sem=1&amp;aggr=0&amp;perpage=20&amp;n=20&amp;p=<span class="subst">$&#123;page&#125;</span>&amp;remoteplace=txt.mqq.all&amp;_=<span class="subst">$&#123;+ <span class="keyword">new</span> <span class="built_in">Date</span>()&#125;</span>`</span></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        res.json(</div><div class="line">            <span class="keyword">await</span> request(&#123;</div><div class="line">                uri: url,</div><div class="line">                json: <span class="literal">true</span>,</div><div class="line">                headers: HEADERS</div><div class="line">            &#125;)</div><div class="line">        )</div><div class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">        res.json(&#123; <span class="attr">error</span>: e.message &#125;)</div><div class="line">    &#125;    </div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><img src="https://i.loli.net/2017/09/23/59c6200b767cb.png" alt=""></p>
+<p>所有参数都放在 ? 后面 用 &amp; 链接</p>
+<p>你看真的成了</p>
+<p>那就是说…我自己做了一个 API …</p>
+<p>让这个 API 跨域 <code>npm install cors --save</code></p>
+<p><a href="https://zeit.co/now" target="_blank" rel="external">https://zeit.co/now</a> 把做出来的 server.js 上传就可以用了</p>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>import export</p>
+<h2 id="音乐歌词-API"><a href="#音乐歌词-API" class="headerlink" title="音乐歌词 API"></a>音乐歌词 API</h2><p><img src="https://i.loli.net/2017/09/25/59c8db302e050.png" alt=""></p>
+<p>点击 network 看 JS</p>
+<p>把这个地址复制，在 console 用 <code>fetch()</code> 跑一遍</p>
+<p><img src="https://i.loli.net/2017/09/25/59c8dbc2a1f79.png" alt=""></p>
+<p>再回到 network 看 XHR</p>
+<p><img src="https://i.loli.net/2017/09/25/59c8dc2dd23db.png" alt=""></p>
+<p>写一个正则，把 callback 去掉，括号去掉。</p>
+<p><code>MusicJsonCallback({...}).replace(/MusicJsonCallback\((.*)\)/, &#39;$1&#39;)</code></p>
+<p><code>let json = {...}</code></p>
+<p><code>JSON.parse(json)</code></p>
+<p><code>json.lyric</code></p>
+<p><code>let div = document.createElement(&#39;div&#39;)</code></p>
+<p><code>div.innerHTML = json.lyric</code></p>
+<p><code>div.firstChild.nodeValue</code></p>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><p>单页面保存数据的方式</p>
+<p>就是当你打开这个页面就可以直接转跳到那首歌的入口</p>
+<p><code>href=&quot;#player?artist=${artist}&amp;songid=${song.songid}&amp;songname=${song.songname}&amp;albummid=${song.albummid}&amp;duration=${song.interval}&quot;</code></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p>fetch / await async</p>
+<p><code>[].slice.call()</code></p>
+<p>IntersectionObserver</p>
+<p><code>map</code> 和 <code>forEach</code> 的区别</p>
+<p>懒加载 / 曝光加载</p>
+<p>正则</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">'<span class="keyword">View</span> frankietang <span class="keyword">on</span> GitHub'.<span class="built_in">match</span>(/<span class="keyword">View</span> (\w+) <span class="keyword">on</span> GitHub/)[1]</div><div class="line">'frankietang'</div></pre></td></tr></table></figure>
+<p>css 里面的 <code>filter:blur(15px)</code> 毛玻璃效果</p>
+<p>进度条可以先移到最边边，然后慢慢的往右移。</p>
+<p><code>max-height: calc(100% - 205px);</code></p>
+<p><code>location.hash</code> 点击时 url 的变化</p>
+<p><img src="https://ooo.0o0.ooo/2017/09/28/59ccf1d9533c4.png" alt=""></p>
+<p>MVC – Model View Controller</p>
+<p>autoprefixer-cli</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/NonDocumentTypeChildNode/previousElementSibling" target="_blank" rel="external">NonDocumentTypeChildNode.previousElementSibling</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/14/摸到 Vue.js 的门把手（3）/" rel="next" title="摸到 Vue.js 的门把手（3）">
+                <i class="fa fa-chevron-left"></i> 摸到 Vue.js 的门把手（3）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/17/补基础：原型链和 prototype/" rel="prev" title="补基础：原型链和 prototype">
+                补基础：原型链和 prototype <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#做一个音乐-Webapp"><span class="nav-number">1.</span> <span class="nav-text">做一个音乐 Webapp</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么在网页抄数据"><span class="nav-number">1.1.</span> <span class="nav-text">怎么在网页抄数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#伪造请求"><span class="nav-number">1.2.</span> <span class="nav-text">伪造请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化"><span class="nav-number">1.3.</span> <span class="nav-text">模块化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#音乐歌词-API"><span class="nav-number">1.4.</span> <span class="nav-text">音乐歌词 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash"><span class="nav-number">1.5.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知识点"><span class="nav-number">1.6.</span> <span class="nav-text">知识点</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="Black History,React," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摸到 React 的门把手 (3)经过了上几篇文章 摸到 React 的门把手 摸到 React 的门把手 (2)/) 的踩坑，我们估计很快就可以摸到门把手了。 关于 JSX实际上 JSX 并不是 JavaScript 和 HTML 的结合，而是和 XML 的结合，就像这样。https://babeljs.io/repl/  Introducing - JSX 关于 React 的虚拟 DOM 你">
+<meta name="keywords" content="Black History,React">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 React 的门把手 (3)">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 React 的门把手 (3)/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 React 的门把手 (3)经过了上几篇文章 摸到 React 的门把手 摸到 React 的门把手 (2)/) 的踩坑，我们估计很快就可以摸到门把手了。 关于 JSX实际上 JSX 并不是 JavaScript 和 HTML 的结合，而是和 XML 的结合，就像这样。https://babeljs.io/repl/  Introducing - JSX 关于 React 的虚拟 DOM 你">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-264608323011334e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-04a725ede551ad1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-c31f16851c918ba5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-6dc701032129deb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-ace3aae6e3f84a99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.568Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 React 的门把手 (3)">
+<meta name="twitter:description" content="摸到 React 的门把手 (3)经过了上几篇文章 摸到 React 的门把手 摸到 React 的门把手 (2)/) 的踩坑，我们估计很快就可以摸到门把手了。 关于 JSX实际上 JSX 并不是 JavaScript 和 HTML 的结合，而是和 XML 的结合，就像这样。https://babeljs.io/repl/  Introducing - JSX 关于 React 的虚拟 DOM 你">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3191557-264608323011334e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (3)/"/>
+
+
+
+
+
+  <title>摸到 React 的门把手 (3) | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (3)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">摸到 React 的门把手 (3)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-14T00:08:13+08:00">
+                2017-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="摸到-React-的门把手-3"><a href="#摸到-React-的门把手-3" class="headerlink" title="摸到 React 的门把手 (3)"></a>摸到 React 的门把手 (3)</h1><p>经过了上几篇文章 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(2" target="_blank" rel="external">摸到 React 的门把手 (2)</a>/) 的踩坑，我们估计很快就可以摸到门把手了。</p>
+<h2 id="关于-JSX"><a href="#关于-JSX" class="headerlink" title="关于 JSX"></a>关于 JSX</h2><p>实际上 JSX 并不是 JavaScript 和 HTML 的结合，而是和 XML 的结合，就像这样。<a href="https://babeljs.io/repl/" target="_blank" rel="external">https://babeljs.io/repl/</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-264608323011334e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="external">Introducing - JSX</a></p>
+<h2 id="关于-React-的虚拟-DOM"><a href="#关于-React-的虚拟-DOM" class="headerlink" title="关于 React 的虚拟 DOM"></a>关于 React 的虚拟 DOM</h2><blockquote>
+<p>你用这些 XML 写出来的标签，都不会出现在页面里，只会出现在内存里。React 会使用虚拟 DOM 计算出真正的页面结构，然后再更新到页面中（真正的 DOM 操作）。</p>
+<p>让 JS 操作内存肯定比操作 DOM 要快很多。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-04a725ede551ad1e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="."></p>
+<p>看看这一段代码：</p>
+<ul>
+<li>用 XML 语法声明一个 h1</li>
+<li>babel 将 h1 转为 React Element（虚拟元素）</li>
+<li>React 将虚拟元素转化为真正的 DOM，插入到 #root 里。</li>
+</ul>
+<h2 id="按需更新"><a href="#按需更新" class="headerlink" title="按需更新"></a>按需更新</h2><blockquote>
+<p>With our knowledge so far, the only way to update the UI is to create a new element, and pass it to <code>ReactDOM.render()</code>.</p>
+</blockquote>
+<p>所以说更新一个元素的唯一方法就是新的元素</p>
+<p>我们改一下 index.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">tick</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> element = (</div><div class="line">    &lt;div&gt;</div><div class="line">      &lt;h1&gt;Hello, world!<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></div><div class="line">      &lt;h2&gt;It is &#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString()&#125;.&lt;<span class="regexp">/h2&gt;</span></div><div class="line"><span class="regexp">    &lt;/</span>div&gt;</div><div class="line">  );</div><div class="line">  ReactDOM.render(</div><div class="line">    element,</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">  );</div><div class="line">&#125;</div><div class="line"></div><div class="line">setInterval(tick, <span class="number">1000</span>);</div></pre></td></tr></table></figure>
+<p>这个示例通过 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval" target="_blank" rel="external"><code>setInterval()</code></a> 方法，每秒钟调用一次 <code>ReactDOM.render()</code>.</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> &lt;h1&gt;<span class="type">Component</span>&lt;/h1&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">ReactDOM</span>.render(</div><div class="line">    &lt;<span class="type">Welcome</span>/&gt;,</div><div class="line">    document.getElementById(<span class="symbol">'roo</span>t')</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>这样我们就造了一个 <code>&lt;Welcome/&gt;</code> 的组件</p>
+<p><code>extends React.Component</code> 不能删掉。</p>
+<h2 id="组件成为一个单独代码"><a href="#组件成为一个单独代码" class="headerlink" title="组件成为一个单独代码"></a>组件成为一个单独代码</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//src/Welcome.js</span></div><div class="line"><span class="keyword">import</span> <span class="type">React</span> from <span class="symbol">'reac</span>t'</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> &lt;h1&gt;<span class="type">Component</span>&lt;/h1&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export <span class="keyword">default</span> <span class="type">Welcome</span></div></pre></td></tr></table></figure>
+<p><code>import React from &#39;react&#39;</code> 这个是引用 React ，不写这一句就在这个组件代码里就用不了 <code>React.Component</code></p>
+<p><code>export</code> 和 <code>export default</code> 作用是导出常量/函数/文件/模块 这些</p>
+<p><code>export</code> 和 <code>import</code> 可以有多个，<code>export default</code> 只能有一个</p>
+<p><code>export</code> 导出导入的时候要加 {}，<code>export default</code> 则不需要</p>
+<p><a href="http://www.jianshu.com/p/edaf43e9384f" target="_blank" rel="external">ES6：export default 和 export 区别</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//src/index.js</span></div><div class="line"><span class="keyword">import</span> Welcome <span class="keyword">from</span> <span class="string">'./Welcome'</span></div><div class="line"></div><div class="line">ReactDOM.render(</div><div class="line">  &lt;Welcome/&gt;,</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//src/Welcome.js</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> &lt;h1&gt;<span class="type">I</span> am &#123;<span class="keyword">this</span>.props.name&#125;&lt;/h1&gt;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//其中 class Welcome 变成 funciton Welcome</span></div></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ReactDOM.render(</div><div class="line">    &lt;Welcome name=<span class="string">"tangkalun"</span>/&gt;,</div><div class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</div><div class="line">)</div></pre></td></tr></table></figure>
+<h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><blockquote>
+<p>组件不能改变得到的 props，那么组件中可以变的东西放在哪呢？答案是 state（函数形式的组件不支持 state）。</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//src/Welcome.js</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">    constructor(props)&#123;</div><div class="line">        <span class="keyword">super</span>(props)</div><div class="line">        <span class="keyword">this</span>.state = &#123;</div><div class="line">            date: <span class="keyword">new</span> <span class="type">Date</span>()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    render() &#123;</div><div class="line">        <span class="keyword">return</span> (</div><div class="line">            &lt;div&gt;</div><div class="line">                &lt;h1&gt;<span class="type">I</span> am &#123;<span class="keyword">this</span>.props.name&#125;&lt;/h1&gt;</div><div class="line">                &lt;h2&gt;&#123;<span class="keyword">this</span>.state.date.toString()&#125;.&lt;/h2&gt;                </div><div class="line">            &lt;/div&gt;</div><div class="line">        )</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="改变-state"><a href="#改变-state" class="headerlink" title="改变 state"></a>改变 state</h2><p>这里我们可以用 <code>setState()</code> 来改变 state。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//在 constructor 里加</span></div><div class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.state = &#123;</div><div class="line">    date: <span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这上面的代码是有问题的，实际上还要 <code>.bind(this)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.setState(&#123;</div><div class="line">    date: <span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">  &#125;)</div><div class="line">&#125;.bind(<span class="keyword">this</span>))</div></pre></td></tr></table></figure>
+<blockquote>
+<p>The callback is made in a different context. You need to <code>bind</code> to <code>this</code> in order to have access inside the callback</p>
+</blockquote>
+<p><a href="https://stackoverflow.com/questions/31045716/react-this-setstate-is-not-a-function" target="_blank" rel="external">React this.setState is not a function</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25954470" target="_blank" rel="external">setState：这个API设计到底怎么样</a></p>
+<p>我讨厌 setState 这个 API</p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><a href="https://facebook.github.io/react/docs/react-component.html#the-component-lifecycle" target="_blank" rel="external">The Component Lifecycle</a></p>
+<p>React 的生命周期包括三个阶段：mount（挂载）、update（更新）和 unmount（移除）</p>
+<h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><blockquote>
+<p>mount 就是第一次让组件出现在页面中的过程。这个过程的关键就是 render 方法。React 会将 render 的返回值（一般是虚拟 DOM，也可以是 DOM 或者 null）插入到页面中。</p>
+<p>这个过程会暴露几个钩子（hook）方便你往里面加代码：</p>
+<ul>
+<li><code>constructor()</code> 初始化 props 和 state</li>
+<li><code>componentWillMount()</code> 我要插入了</li>
+<li><code>render()</code> 将 render 里的 return 的内容插入到页面中</li>
+<li><code>componentDidMount()</code> 插进去后该做点什么吗？</li>
+</ul>
+</blockquote>
+<p>commit: <a href="https://github.com/FRANKIETANG/react-demo/commit/cad040489620cf5b4f7e02a571cb2e3c06803932" target="_blank" rel="external">钩子</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-c31f16851c918ba5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><blockquote>
+<p>mount 之后，如果数据有任何变动，就会来到 update 过程，这个过程有 5 个钩子：</p>
+<ul>
+<li><code>componentWillReceiveProps(nextProps)</code> - 我要读取 props 啦！</li>
+<li><code>shouldComponentUpdate(nextProps, nextState)</code> - 请问要不要更新组件？true / false</li>
+<li><code>componentWillUpdate()</code> - 我要更新组件啦！</li>
+<li><code>render()</code> - 更新！</li>
+<li><code>componentDidUpdate()</code> - 更新完毕啦！</li>
+</ul>
+</blockquote>
+<h3 id="unmount"><a href="#unmount" class="headerlink" title="unmount"></a>unmount</h3><blockquote>
+<p>当一个组件将要从页面中移除时，会进入 unmount 过程，这个过程就一个钩子：</p>
+<ul>
+<li>componentWillUnmount() - 我要死啦！</li>
+</ul>
+</blockquote>
+<h2 id="setState-应该放在哪？"><a href="#setState-应该放在哪？" class="headerlink" title="setState 应该放在哪？"></a>setState 应该放在哪？</h2><p>commit: <a href="https://github.com/FRANKIETANG/react-demo/commit/3b2061343d754f2975356ef4502d445e943eef5a" target="_blank" rel="external">哪些钩子里面可以加 setState</a></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-6dc701032129deb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这里面有三个错误</p>
+<p>第一个错误说明不能在 constructor 里面 setState</p>
+<p>第二个错误说明不能在 render 里面 setState</p>
+<p>第三个错误说明 Welcome.shouldComponentUpdate 必须返回 boolean value，那我们改改</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-ace3aae6e3f84a99.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>好吧错误都是 render 的，那就都删掉吧。</p>
+<p>还是会有 bug 原因是在 componentWillUpdate 和 componentDidUpdate 里 setState 了，因为每次 setState 都会触发这两个钩子，而这两个钩子却又触发了 setState。</p>
+<p>所以只能在这几个钩子里 setState：</p>
+<ul>
+<li><code>componentWillMount</code></li>
+<li><code>componentDidMount</code></li>
+<li><code>componentWillReceiveProps</code></li>
+<li><code>componentDidUpdate</code></li>
+</ul>
+<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a><a href="https://github.com/FRANKIETANG/react-demo" target="_blank" rel="external">看看成果</a></h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Black-History/" rel="tag"># Black History</a>
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (2)/" rel="next" title="摸到 React 的门把手 (2)">
+                <i class="fa fa-chevron-left"></i> 摸到 React 的门把手 (2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/14/摸到 React 的门把手 (4)/" rel="prev" title="摸到 React 的门把手 (4)">
+                摸到 React 的门把手 (4) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摸到-React-的门把手-3"><span class="nav-number">1.</span> <span class="nav-text">摸到 React 的门把手 (3)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-JSX"><span class="nav-number">1.1.</span> <span class="nav-text">关于 JSX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-React-的虚拟-DOM"><span class="nav-number">1.2.</span> <span class="nav-text">关于 React 的虚拟 DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#按需更新"><span class="nav-number">1.3.</span> <span class="nav-text">按需更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件"><span class="nav-number">1.4.</span> <span class="nav-text">组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件成为一个单独代码"><span class="nav-number">1.5.</span> <span class="nav-text">组件成为一个单独代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#props"><span class="nav-number">1.6.</span> <span class="nav-text">props</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#state"><span class="nav-number">1.7.</span> <span class="nav-text">state</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变-state"><span class="nav-number">1.8.</span> <span class="nav-text">改变 state</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-number">1.9.</span> <span class="nav-text">生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mount"><span class="nav-number">1.9.1.</span> <span class="nav-text">mount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#update"><span class="nav-number">1.9.2.</span> <span class="nav-text">update</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unmount"><span class="nav-number">1.9.3.</span> <span class="nav-text">unmount</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setState-应该放在哪？"><span class="nav-number">1.10.</span> <span class="nav-text">setState 应该放在哪？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#看看成果"><span class="nav-number">1.11.</span> <span class="nav-text">看看成果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="JavaScript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="补基础：函数  函数 实参 length call apply bind Generator Function Generator 迭代器协议 for of   什么是函数1234567891011121314function fn() &amp;#123;  	console.log(1)&amp;#125;fn() // 1// 传东西function fn(num, fn) &amp;#123;  	console">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="补基础：函数">
+<meta property="og:url" content="http://yoursite.com/2017/10/24/补基础：函数/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="补基础：函数  函数 实参 length call apply bind Generator Function Generator 迭代器协议 for of   什么是函数1234567891011121314function fn() &amp;#123;  	console.log(1)&amp;#125;fn() // 1// 传东西function fn(num, fn) &amp;#123;  	console">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.468Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="补基础：函数">
+<meta name="twitter:description" content="补基础：函数  函数 实参 length call apply bind Generator Function Generator 迭代器协议 for of   什么是函数1234567891011121314function fn() &amp;#123;  	console.log(1)&amp;#125;fn() // 1// 传东西function fn(num, fn) &amp;#123;  	console">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/24/补基础：函数/"/>
+
+
+
+
+
+  <title>补基础：函数 | 付林恒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">付林恒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">要做最咸的鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/24/补基础：函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frankie Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="付林恒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">补基础：函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-24T01:19:56+08:00">
+                2017-10-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="补基础：函数"><a href="#补基础：函数" class="headerlink" title="补基础：函数"></a>补基础：函数</h1><blockquote>
+<ul>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" rel="external">函数</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/arguments" target="_blank" rel="external">实参</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/length" target="_blank" rel="external">length</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="external">call</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="external">apply</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="external">bind</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*" target="_blank" rel="external">Generator Function</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator" target="_blank" rel="external">Generator</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="external">迭代器协议</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="external">for of</a></li>
+</ul>
+</blockquote>
+<h2 id="什么是函数"><a href="#什么是函数" class="headerlink" title="什么是函数"></a>什么是函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function fn() &#123;</div><div class="line">  	console.log(1)</div><div class="line">&#125;</div><div class="line"></div><div class="line">fn() // 1</div><div class="line"></div><div class="line">// 传东西</div><div class="line">function fn(num, fn) &#123;</div><div class="line">  	console.log(fn(num))</div><div class="line">&#125;</div><div class="line"></div><div class="line">fn(1, function(a)&#123;</div><div class="line">  	return a + 1</div><div class="line">&#125;) // 2</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// whether fn is function</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> fn === <span class="string">'function'</span>)</div><div class="line"><span class="built_in">console</span>.log(fn <span class="keyword">instanceof</span> <span class="built_in">Function</span>)</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(fn) === <span class="string">'[object Function]'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 函数调用和没调用的区别</span></div><div class="line">function fn2() &#123;</div><div class="line">  	<span class="keyword">return</span> <span class="number">2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">fn2()</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">  	<span class="function"><span class="keyword">fn</span>: fn2</span></div><div class="line"><span class="function">&#125;</span></div><div class="line"><span class="function"></span></div><div class="line"><span class="function">console.<span class="built_in">log</span><span class="params">(obj.<span class="keyword">fn</span>)</span>     <span class="comment">// 返回是一个函数</span></span></div><div class="line"><span class="function">console.<span class="built_in">log</span><span class="params">(obj.<span class="keyword">fn</span>()</span>)   <span class="comment">// 返回函数的结果</span></span></div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 函数的借用</span></div><div class="line"><span class="keyword">let</span> user = &#123;</div><div class="line">  	name: <span class="string">'xiaohong'</span>,</div><div class="line">  	sayHi: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      	<span class="built_in">console</span>.log(<span class="string">'hello my name is '</span> + <span class="keyword">this</span>.name)</div><div class="line">  	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">uesr.sayHi()  <span class="comment">// hello my name is xiaohong</span></div><div class="line"></div><div class="line"><span class="comment">// 怎么借用方法</span></div><div class="line"><span class="keyword">let</span> user2 = &#123;<span class="attr">name</span>: <span class="string">'xiaohei'</span>&#125;</div><div class="line"><span class="comment">// to-do</span></div><div class="line">user.sayHi.call(user2)</div><div class="line"><span class="comment">// hello my name is xiaohong</span></div><div class="line"></div><div class="line"></div><div class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  	<span class="built_in">console</span>.log(<span class="string">'hello'</span>)</div><div class="line">&#125;, <span class="number">1000</span>)</div><div class="line"></div><div class="line"><span class="comment">// 怎么写成一行呢？</span></div><div class="line">setTimeout(<span class="built_in">console</span>.log.bind(<span class="literal">null</span>, <span class="string">'hello'</span>), <span class="number">1000</span>)</div><div class="line"></div><div class="line"><span class="comment">// 举个实用场景</span></div><div class="line"><span class="comment">// var collection = document.getElementsByClassName('a')</span></div><div class="line"><span class="comment">// 但是 collection 没有 forEach 方法</span></div><div class="line"><span class="comment">// Array.prototype.forEach.call(collection)</span></div></pre></td></tr></table></figure>
+<h2 id="形参-parameters-vs-实参-arguments"><a href="#形参-parameters-vs-实参-arguments" class="headerlink" title="形参(parameters) vs 实参(arguments)"></a>形参(parameters) vs 实参(arguments)</h2><p>实参是实际传进来的参数</p>
+<p>形参是定义时候的参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">// arguments</div><div class="line">function fn(a, b) &#123;</div><div class="line">trueconsole.log(a, b)</div><div class="line">  	console.log(arguments)</div><div class="line">  	console.log(arguments.length)</div><div class="line">&#125;</div><div class="line"></div><div class="line">function fn(a, b, ...args) &#123;</div><div class="line">trueconsole.log(a, b)</div><div class="line">  	console.log(args)   // [3,4]</div><div class="line">  	let args1 = Array.prototype.slice.call(arguments, 2)</div><div class="line">  	console.log(args1)  // [3,4]</div><div class="line">&#125;</div><div class="line"></div><div class="line">fn(1,2,3,4)</div><div class="line">// 1 2</div><div class="line">// &#123; &apos;0&apos;: 1, &apos;1&apos;: 2, &apos;2&apos;: 3, &apos;3&apos;: 4 &#125;</div><div class="line">// 4</div><div class="line"></div><div class="line">let arr = [1,2,3]</div><div class="line">arr.push(1,2,3,4,5)</div><div class="line">console.log(arr)</div><div class="line"></div><div class="line">Array.prototype.push = function() &#123;</div><div class="line">true// arguments</div><div class="line">  	let args = Array.prototype.slice.call(arguments)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// parameters</span></div><div class="line">function fn(<span class="selector-tag">a</span>, b) &#123;</div><div class="line">  	console.log(arguments.length)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">fn</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span></span></div><div class="line">console.log(fn.length) <span class="comment">// 2 形参个数 = 函数名.length</span></div><div class="line"></div><div class="line"><span class="comment">// 实现一个功能</span></div><div class="line">function sum(<span class="selector-tag">a</span>, <span class="selector-tag">b</span>, c) &#123;</div><div class="line">  	return <span class="selector-tag">a</span> + <span class="selector-tag">b</span> + c</div><div class="line">&#125;</div><div class="line"></div><div class="line">console.log(sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</div><div class="line"></div><div class="line"><span class="comment">// fn 是一个函数</span></div><div class="line">function curry(fn) &#123;</div><div class="line">true<span class="selector-tag">var</span> len = fn.length</div><div class="line">  	return function f1() &#123;</div><div class="line">      	let args = Array<span class="selector-class">.prototype</span><span class="selector-class">.slice</span><span class="selector-class">.call</span>(arguments)</div><div class="line">      	<span class="keyword">if</span>(args<span class="selector-class">.length</span> &lt; len) &#123;</div><div class="line">          	return function() &#123;</div><div class="line">              	let args2 = Array<span class="selector-class">.prototype</span><span class="selector-class">.slice</span><span class="selector-class">.call</span>(arguments)</div><div class="line">              	return f1.apply(this, args.concat(args2))</div><div class="line">          	&#125;</div><div class="line">      	&#125; <span class="keyword">else</span> &#123;</div><div class="line">          	return fn.apply(null,args)</div><div class="line">      	&#125;</div><div class="line">  	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">let sumWithCurry = curry(sum) </div><div class="line"><span class="function"><span class="title">sumWithCurry</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span></span>   <span class="comment">// 6 len = 3, args.length = 3 sum.apply(null,[1,2,3])</span></div><div class="line"><span class="function"><span class="title">sumWithCurry</span><span class="params">(<span class="number">1</span>)</span><span class="params">(<span class="number">2</span>,<span class="number">3</span>)</span></span>  <span class="comment">// 6</span></div><div class="line"></div><div class="line"><span class="comment">// 先运行 sumWithCurry(1) 然后吃掉后面的函数 利用 concat </span></div><div class="line"></div><div class="line"><span class="function"><span class="title">sumWithCurry</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span><span class="params">(<span class="number">3</span>)</span></span>  <span class="comment">// 6</span></div></pre></td></tr></table></figure>
+<p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="external">柯里化</a></p>
+<h2 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器(Generator)"></a>生成器(Generator)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 function 加一个 * 号就可以变成一个 Generator 函数</span></div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  	<span class="keyword">yield</span> <span class="number">3</span>;</div><div class="line">  	<span class="keyword">yield</span> <span class="number">4</span>;</div><div class="line">  	<span class="comment">// console.log('hello')</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> fn)     <span class="comment">// function</span></div><div class="line"><span class="built_in">console</span>.log(fn())          <span class="comment">// &#123;&#125;</span></div><div class="line"><span class="keyword">let</span> iterator = fn()</div><div class="line"><span class="built_in">console</span>.log(iterator.next())  <span class="comment">// &#123;value: 3, done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator.next())  <span class="comment">// &#123;value: 4, done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator.next())  <span class="comment">// &#123;value: undefined, done: true&#125;</span></div><div class="line"><span class="comment">// 3 -&gt; 4 -&gt; done</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> fn()) &#123;  <span class="comment">// for of 遍历方法，可以遍历数组</span></div><div class="line">  	<span class="built_in">console</span>.log(i)</div><div class="line">&#125;</div><div class="line"><span class="comment">// 3</span></div><div class="line"><span class="comment">// 4</span></div><div class="line"></div><div class="line"><span class="comment">// 看看是怎么做到的</span></div><div class="line"><span class="keyword">let</span> arr = [<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</div><div class="line"><span class="keyword">let</span> iterator = arr[<span class="built_in">Symbol</span>.iterator]()</div><div class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: 2, done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: 3, done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: 4, done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: undefined, done: true&#125;</span></div><div class="line"><span class="comment">// 只要符合迭代器 就可以用 for of 方法</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> j <span class="keyword">of</span> iterator) &#123;</div><div class="line">  	<span class="built_in">console</span>.log(j)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 也可以遍历对象</span></div><div class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>.prototype, <span class="built_in">Symbol</span>.iterator, &#123;</div><div class="line">  	enumerable: <span class="literal">false</span>,</div><div class="line">  	writable: <span class="literal">false</span>,</div><div class="line">  	configurable: <span class="literal">false</span>,</div><div class="line">  	value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">      	<span class="keyword">let</span> self = <span class="keyword">this</span>;</div><div class="line">      	<span class="keyword">let</span> keys = <span class="built_in">Object</span>.keys(self); <span class="comment">// ['a', 'd']</span></div><div class="line">      	<span class="keyword">let</span> index = <span class="number">0</span>;</div><div class="line">      	<span class="keyword">return</span> &#123;</div><div class="line">          	next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">              	<span class="keyword">return</span> &#123;</div><div class="line">                  	value: self[keys[index++]],  <span class="comment">// 加点注释啥的 + 'suffix'</span></div><div class="line">                  	done: index &gt; keys.length</div><div class="line">              	&#125;</div><div class="line">          	&#125;</div><div class="line">      	&#125;</div><div class="line">  	&#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> iterator2 = obj[<span class="built_in">Symbol</span>.iterator]()</div><div class="line"><span class="built_in">console</span>.log(iterator2.next()) <span class="comment">// &#123;value: 'b', done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator2.next()) <span class="comment">// &#123;value: 'd', done: false&#125;</span></div><div class="line"><span class="built_in">console</span>.log(iterator2.next()) <span class="comment">// &#123;value: undefined, done: true&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> val <span class="keyword">of</span> obj) &#123;</div><div class="line">  	<span class="built_in">console</span>.log(val)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj2 = &#123;<span class="attr">name</span>: <span class="string">'xiaohong'</span>, <span class="attr">age</span>: <span class="number">20</span>, <span class="attr">sex</span>: <span class="string">'male'</span>&#125;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">let</span> j <span class="keyword">of</span> obj2) &#123;  <span class="comment">// 只要支持迭代器协议就可以了</span></div><div class="line">  	<span class="built_in">console</span>.log(j)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 彩蛋 和 Promise 的比较</span></div><div class="line"></div><div class="line"><span class="comment">// Promise</span></div><div class="line"><span class="keyword">new</span> Promise()</div><div class="line">.<span class="keyword">then</span>()</div><div class="line">.<span class="keyword">then</span>()</div><div class="line">.<span class="keyword">then</span>()</div><div class="line"></div><div class="line"><span class="comment">// yield + generator</span></div><div class="line"><span class="keyword">let</span> a = <span class="keyword">yield</span> promise1</div><div class="line"><span class="keyword">let</span> b = <span class="keyword">yield</span> promise2</div><div class="line"><span class="keyword">let</span> c = <span class="keyword">yield</span> promise3</div><div class="line"><span class="comment">// 看起来像是同步，实际上是异步</span></div></pre></td></tr></table></figure>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 彩蛋<span class="number">2</span> 为什么不支持 <span class="keyword">for</span> <span class="keyword">of</span> 遍历对象</div><div class="line">// 原因有可能是这样的</div><div class="line">// 数组不关心索引，对象关心</div><div class="line"></div><div class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>] = &#123;</div><div class="line">  	<span class="string">'0'</span> : <span class="string">'a'</span>,</div><div class="line">  	<span class="string">'1'</span> : <span class="string">'b'</span>,</div><div class="line">  	<span class="string">'2'</span> : <span class="string">'c'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">  	<span class="string">'a'</span>: <span class="string">'b'</span>,</div><div class="line">  	<span class="string">'c'</span>: <span class="string">'d'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="external">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="external">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 彩蛋3 Symbol 是用来干嘛的？</span></div><div class="line"><span class="comment">// 避免相等的值重复</span></div><div class="line">let <span class="selector-tag">a</span> = <span class="string">'a'</span></div><div class="line">let <span class="selector-tag">b</span> = <span class="string">'a'</span></div><div class="line"></div><div class="line">let obj = &#123;&#125;</div><div class="line">obj[a]</div><div class="line">obj[b]</div></pre></td></tr></table></figure>
+<p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="external">深入浅出ES6（八）：Symbols</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/22/补基础：对象与数组的遍历方式/" rel="next" title="补基础：对象与数组的遍历方式">
+                <i class="fa fa-chevron-left"></i> 补基础：对象与数组的遍历方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/25/deepin shadowsocks-qt5 全局翻了个墙/" rel="prev" title="deepin shadowsocks-qt5 全局翻了个墙">
+                deepin shadowsocks-qt5 全局翻了个墙 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frankie Tang</p>
+              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#补基础：函数"><span class="nav-number">1.</span> <span class="nav-text">补基础：函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是函数"><span class="nav-number">1.1.</span> <span class="nav-text">什么是函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形参-parameters-vs-实参-arguments"><span class="nav-number">1.2.</span> <span class="nav-text">形参(parameters) vs 实参(arguments)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成器-Generator"><span class="nav-number">1.3.</span> <span class="nav-text">生成器(Generator)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数 <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量 <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
