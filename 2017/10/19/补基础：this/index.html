@@ -1,732 +1,238 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
-
-
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.jpg?v=5.1.3">
-
-
-
-
-
-
-  <meta name="keywords" content="JavaScript," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="补基础：this this 的值到底是什么？一次说清楚 你怎么还没搞懂 this？ this的值是在函数调用的时候决定，而不是定义的时候决定  this 的四种绑定规则123456789// 默认绑定window.a = 3;function f() &amp;#123;    let a = 4;    console.log(this.a);&amp;#125;f(); // 3// 通过上面的文章我们得出其">
-<meta name="keywords" content="JavaScript">
-<meta property="og:type" content="article">
-<meta property="og:title" content="补基础：this">
-<meta property="og:url" content="http://yoursite.com/2017/10/19/补基础：this/index.html">
-<meta property="og:site_name" content="付林恒的博客">
-<meta property="og:description" content="补基础：this this 的值到底是什么？一次说清楚 你怎么还没搞懂 this？ this的值是在函数调用的时候决定，而不是定义的时候决定  this 的四种绑定规则123456789// 默认绑定window.a = 3;function f() &amp;#123;    let a = 4;    console.log(this.a);&amp;#125;f(); // 3// 通过上面的文章我们得出其">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-05T14:42:01.432Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="补基础：this">
-<meta name="twitter:description" content="补基础：this this 的值到底是什么？一次说清楚 你怎么还没搞懂 this？ this的值是在函数调用的时候决定，而不是定义的时候决定  this 的四种绑定规则123456789// 默认绑定window.a = 3;function f() &amp;#123;    let a = 4;    console.log(this.a);&amp;#125;f(); // 3// 通过上面的文章我们得出其">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '5.1.3',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="http://yoursite.com/2017/10/19/补基础：this/"/>
-
-
-
-
-
-  <title>补基础：this | 付林恒的博客</title>
-  
-
-
-
-
-
-
-
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">付林恒的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle">要做最咸的鱼</p>
-      
-  </div>
-
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/19/补基础：this/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frankie Tang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="付林恒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">补基础：this</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-19T21:23:13+08:00">
-                2017-10-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv">本文总阅读量 <i class="fa fa-file-o"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
-            </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="补基础：this"><a href="#补基础：this" class="headerlink" title="补基础：this"></a>补基础：this</h1><blockquote>
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 补基础：this · 付林恒的博客</title><meta name="description" content="补基础：this - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">补基础：this</h1><div class="post-info">Oct 19, 2017</div><div class="post-content"><h1 id="补基础：this"><a href="#补基础：this" class="headerlink" title="补基础：this"></a>补基础：this</h1><blockquote>
 <p><a href="https://zhuanlan.zhihu.com/p/23804247?refer=study-fe" target="_blank" rel="external">this 的值到底是什么？一次说清楚</a></p>
 <p><a href="https://zhuanlan.zhihu.com/p/25991271" target="_blank" rel="external">你怎么还没搞懂 this？</a></p>
 <p>this的值是在函数调用的时候决定，而不是定义的时候决定</p>
 </blockquote>
-<h2 id="this-的四种绑定规则"><a href="#this-的四种绑定规则" class="headerlink" title="this 的四种绑定规则"></a>this 的四种绑定规则</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 默认绑定</span></div><div class="line"><span class="built_in">window</span>.a = <span class="number">3</span>;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">let</span> a = <span class="number">4</span>;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">&#125;</div><div class="line"></div><div class="line">f(); <span class="comment">// 3</span></div><div class="line"><span class="comment">// 通过上面的文章我们得出其实是 f().call(undefined) 默认为 global</span></div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 隐式绑定</span></div><div class="line"><span class="built_in">window</span>.a = <span class="number">3</span>;</div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">    a: <span class="number">4</span>,</div><div class="line">    f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">let</span> obj1 = &#123;</div><div class="line">    a: <span class="number">4</span>,</div><div class="line">    obj: &#123;</div><div class="line">        a: <span class="number">5</span>,</div><div class="line">        f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">obj.f() <span class="comment">// obj.f.call(obj) 所以是 4</span></div><div class="line">obj1.obj.f(); <span class="comment">// obj1.obj.f.call(obj1.obj) 是 5</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> f = obj1.obj.f;</div><div class="line">f(); <span class="comment">// f.call(undefined) 是 3</span></div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 显式绑定</span></div><div class="line"><span class="built_in">window</span>.a = <span class="number">3</span>;</div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">    a: <span class="number">4</span>,</div><div class="line">    f: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">obj.f.call(&#123;<span class="attr">a</span>: <span class="number">6</span>&#125;); <span class="comment">// 6</span></div><div class="line"><span class="keyword">let</span> f = obj.f;</div><div class="line">f.call(&#123;<span class="attr">a</span>: <span class="number">5</span>&#125;); <span class="comment">// 5</span></div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// new绑定</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = Person(<span class="number">12</span>); <span class="comment">// Person.call(12) 如果在全局作用域写一个 12 那就会有 12 ,但是 mike.age 还是 undefined</span></div><div class="line"><span class="built_in">console</span>.log(mike.age); <span class="comment">// undefined</span></div><div class="line"></div><div class="line"><span class="comment">// 所以应该这样写</span></div><div class="line"><span class="comment">// let mike = new Person(12)</span></div><div class="line"><span class="comment">// 关于 new 这个方法，我在原型链实现过，内部应该会有一个 call() 的用法来调用 this</span></div></pre></td></tr></table></figure>
-<h2 id="forEach-方法"><a href="#forEach-方法" class="headerlink" title="forEach 方法"></a>forEach 方法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Array</span>.prototype._forEach = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">true<span class="comment">// 实现一个 forEach 方法</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">let</span> it = <span class="keyword">this</span>[i];</div><div class="line">        fn(it, i, <span class="keyword">this</span>); <span class="comment">// 看这里，调用的时候是这样的 fn.call(it,i,this) fn 没有绑定任何的上下文，所以是全局变量</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">    [<span class="number">3</span>,<span class="number">5</span>,<span class="number">10</span>]._forEach(<span class="function"><span class="keyword">function</span>(<span class="params">it</span>)</span>&#123;</div><div class="line">    	<span class="comment">// console.log(this) 这里其实会打印出 global 属性, 原因看上面</span></div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;it&#125;</span> year later I'm <span class="subst">$&#123;<span class="keyword">this</span>.age + it&#125;</span> year old`</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="number">12</span>);</div><div class="line"><span class="comment">// 3 year later I'm 15 year old</span></div><div class="line"><span class="comment">// 5 year later I'm 17 year old</span></div><div class="line"><span class="comment">// 10 year later I'm 22 year old</span></div></pre></td></tr></table></figure>
-<p>所以真正实现方法是：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 实际上原生的 forEach 可以传两个参数，一个是 callback ，还有一个其实是 this，所以其实 forEach 他本来就考虑到这种情况，所以可以直接传一个 this 进去</span></div><div class="line"><span class="built_in">Array</span>.prototype._forEach = <span class="function"><span class="keyword">function</span>(<span class="params">fn, ctx</span>) </span>&#123;</div><div class="line">true<span class="comment">// 实现一个 forEach 方法</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">let</span> it = <span class="keyword">this</span>[i];</div><div class="line">        fn.call(ctx || <span class="keyword">this</span>, it, i, <span class="keyword">this</span>); <span class="comment">// 所以可以这样实现</span></div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">Array.prototype._forEach = function(fn) &#123;</span></div><div class="line"><span class="comment">    for(let i = 0; i &lt; this.length; i++) &#123;</span></div><div class="line"><span class="comment">        let it = this[i];</span></div><div class="line"><span class="comment">        fn(it, i, this);</span></div><div class="line"><span class="comment">    &#125;</span></div><div class="line"><span class="comment">&#125;;</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">    [<span class="number">3</span>,<span class="number">5</span>,<span class="number">10</span>]._forEach(<span class="function"><span class="keyword">function</span>(<span class="params">it</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;it&#125;</span> year later I'm <span class="subst">$&#123;<span class="keyword">this</span>.age + it&#125;</span> year old`</span>);</div><div class="line">    &#125;, <span class="keyword">this</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">function Person(age) &#123;</span></div><div class="line"><span class="comment">    this.age = age;</span></div><div class="line"><span class="comment">    [3,5,10]._forEach(function(it)&#123;</span></div><div class="line"><span class="comment">        console.log(`$&#123;it&#125; year later I'm $&#123;this.age + it&#125; year old`);</span></div><div class="line"><span class="comment">    &#125;.bind(this)); // bind(this) 会绑定成上下文的 this</span></div><div class="line"><span class="comment">&#125;</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">function Person(age) &#123;</span></div><div class="line"><span class="comment">    this.age = age;</span></div><div class="line"><span class="comment">    let that = this</span></div><div class="line"><span class="comment">    [3,5,10]._forEach(function(it)&#123;</span></div><div class="line"><span class="comment">        console.log(`$&#123;it&#125; year later I'm $&#123;that.age + it&#125; year old`);</span></div><div class="line"><span class="comment">    &#125;);  // 使 this 变成一个普通的变量，其实和 bind(this) 是一样的套路</span></div><div class="line"><span class="comment">&#125;</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">function Person(age) &#123;</span></div><div class="line"><span class="comment">    this.age = age;</span></div><div class="line"><span class="comment">    [3,5,10]._forEach((it) =&gt; &#123;</span></div><div class="line"><span class="comment">        console.log(`$&#123;it&#125; year later I'm $&#123;this.age + it&#125; year old`);</span></div><div class="line"><span class="comment">    &#125;); // </span></div><div class="line"><span class="comment">&#125;</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="number">12</span>);</div><div class="line"><span class="comment">// 3 year later I'm 15 year old</span></div><div class="line"><span class="comment">// 5 year later I'm 17 year old</span></div><div class="line"><span class="comment">// 10 year later I'm 22 year old</span></div></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 这里说一下箭头函数的 this</span></div><div class="line"><span class="built_in">Array</span>.prototype._forEach = <span class="function"><span class="keyword">function</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</div><div class="line">        <span class="keyword">let</span> it = <span class="keyword">this</span>[i];</div><div class="line">        fn(it, i, <span class="keyword">this</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">age</span>) </span>&#123;</div><div class="line">    [<span class="number">3</span>,<span class="number">5</span>,<span class="number">10</span>]._forEach(<span class="function">(<span class="params">it</span>) =&gt;</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>);</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.call(&#123;<span class="attr">a</span>: <span class="string">'a'</span>&#125;); <span class="comment">// 绑定了 call 值 输出 =&gt; &#123;a: 'a'&#125;</span></div><div class="line">Person(); <span class="comment">// Person 的 this 输出 =&gt; global</span></div><div class="line"><span class="keyword">let</span> obj = &#123;</div><div class="line">  b: <span class="number">1</span>,</div><div class="line">  f: Person</div><div class="line">&#125;</div><div class="line"></div><div class="line">obj.f(); <span class="comment">// 绑定了 obj 所以是 &#123; b: 1, [Function: Person] &#125;</span></div></pre></td></tr></table></figure>
-<p>这里说一个很可能会出现的 bug ，在 <code>this.age = age</code> 这里如果不加分号会出现 bug ，变成了 <code>this.age = age[3,4,5]._forEach()</code> <code>age[3,4,5]</code> 返回是一个 <code>undefined</code></p>
-<h2 id="bind-方法"><a href="#bind-方法" class="headerlink" title="bind 方法"></a>bind 方法</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 先看 _bind 的 this 值是什么</span></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">Function.prototype._bind = function(ctx) &#123;</span></div><div class="line"><span class="comment">	console.log(this)</span></div><div class="line"><span class="comment">&#125;;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">function Person(age) &#123;</span></div><div class="line"><span class="comment">    this.age = age;</span></div><div class="line"><span class="comment">	(function()&#123;&#125;)._bind(this)</span></div><div class="line"><span class="comment">	console.log(this)</span></div><div class="line"><span class="comment">&#125;</span></div><div class="line"><span class="comment"></span></div><div class="line"><span class="comment">let mike = new Person(12);</span></div><div class="line"><span class="comment">// Function 因为上下文的关系</span></div><div class="line"><span class="comment">// Person &#123; age: 12 &#125; </span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="built_in">Function</span>.prototype._bind = <span class="function"><span class="keyword">function</span>(<span class="params">ctx</span>) </span>&#123;</div><div class="line">true<span class="comment">// 实现一个 bind 方法</span></div><div class="line">true<span class="comment">// return fn</span></div><div class="line">true<span class="comment">// 注意不能用箭头函数，因为箭头函数没有 arguments</span></div><div class="line">true<span class="keyword">let</span> that = <span class="keyword">this</span></div><div class="line">true<span class="keyword">let</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>) <span class="comment">// [1,3]</span></div><div class="line">true<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">truetrue<span class="keyword">let</span> args2 = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>) <span class="comment">// [4,5]</span></div><div class="line">      	<span class="keyword">let</span> all = args.concat(args2); </div><div class="line">        <span class="keyword">return</span> that.apply(ctx, all);</div><div class="line">true&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"><span class="comment">Function.prototype._bind = function(ctx) &#123;</span></div><div class="line"><span class="comment">	// 如果要用箭头函数，用 ... 取剩余的值</span></div><div class="line"><span class="comment">	let args = Array.prototype.slice.call(arguments, 1)</span></div><div class="line"><span class="comment">	return (...args2) &#123;</span></div><div class="line"><span class="comment">		console.log(args2)</span></div><div class="line"><span class="comment">      	let all = args.concat(args2); </span></div><div class="line"><span class="comment">      	cosole.log(all)</span></div><div class="line"><span class="comment">        return that.apply(ctx, all);</span></div><div class="line"><span class="comment">	&#125;</span></div><div class="line"><span class="comment">&#125;;</span></div><div class="line"><span class="comment">*/</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">age</span>) </span>&#123;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">    [<span class="number">3</span>,<span class="number">5</span>,<span class="number">10</span>].forEach(<span class="function"><span class="keyword">function</span>(<span class="params">it</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;it&#125;</span> yeas later I'm <span class="subst">$&#123;<span class="keyword">this</span>.age + it&#125;</span> yeas old`</span>);</div><div class="line">    &#125;._bind(<span class="keyword">this</span>, <span class="number">1</span>, <span class="number">2</span>));</div><div class="line">    <span class="comment">// let fn = function(it) &#123;</span></div><div class="line">    <span class="comment">// &#125;._bind(this, 1, 3);</span></div><div class="line">    <span class="comment">// fn(4,5)</span></div><div class="line">    <span class="comment">// 所以用了 _bind() 方法后就是等于 fn(this, 1, 3, 4, 5)</span></div><div class="line">    <span class="comment">// let fn = function(it) &#123;</span></div><div class="line">    <span class="comment">// &#125;</span></div><div class="line">    <span class="comment">// let fn2 = fn._bind(this, 1, 2)</span></div><div class="line">    <span class="comment">// fn2(4, 5, 6, 7, 8)</span></div><div class="line">    <span class="comment">// 相当于 fn(1, 2, 4, 5, 6, 7, 8)</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> mike = <span class="keyword">new</span> Person(<span class="number">12</span>);</div></pre></td></tr></table></figure>
-<p>如何摊平数组?</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 正常来说 数组 push 一个数组那就是数组内嵌数组</span></div><div class="line">let arr = [<span class="number">1</span>,<span class="number">2</span>]</div><div class="line">arr.push([<span class="number">3</span>,<span class="number">4</span>])</div><div class="line">arr <span class="comment">// [1, 2, [3, 4]]</span></div><div class="line">arr.concat([<span class="number">3</span>, <span class="number">4</span>]) <span class="comment">// [1, 2, [3, 4], 3, 4]</span></div><div class="line">arr.push.apply(arr, [<span class="number">5</span>, <span class="number">6</span>]) <span class="comment">// [1, 2, [3, 4], 3, 4, 5, 6]</span></div></pre></td></tr></table></figure>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/10/17/补基础：原型链和 prototype/" rel="next" title="补基础：原型链和 prototype">
-                <i class="fa fa-chevron-left"></i> 补基础：原型链和 prototype
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/22/补基础：对象与数组的遍历方式/" rel="prev" title="补基础：对象与数组的遍历方式">
-                补基础：对象与数组的遍历方式 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">Frankie Tang</p>
-              <p class="site-description motion-element" itemprop="description">要做最咸的鱼</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">22</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          <div class="links-of-author motion-element">
-            
-              
-                <span class="links-of-author-item">
-                  <a href="https://github.com/frankietang" target="_blank" title="GitHub">
-                    
-                      <i class="fa fa-fw fa-github"></i>GitHub</a>
-                </span>
-              
-            
-          </div>
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#补基础：this"><span class="nav-number">1.</span> <span class="nav-text">补基础：this</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#this-的四种绑定规则"><span class="nav-number">1.1.</span> <span class="nav-text">this 的四种绑定规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#forEach-方法"><span class="nav-number">1.2.</span> <span class="nav-text">forEach 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind-方法"><span class="nav-number">1.3.</span> <span class="nav-text">bind 方法</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Frankie Tang</span>
-
-  
-</div>
-
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
-
-
-
-
-        
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv">
-      本站访客数 <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      人次
-    </span>
-  
-
-  
-    <span class="site-pv">
-      本站总访问量 <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      次
-    </span>
-  
-</div>
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
+<h2 id="this-的四种绑定规则"><a href="#this-的四种绑定规则" class="headerlink" title="this 的四种绑定规则"></a>this 的四种绑定规则</h2><pre><code>// 默认绑定
+window.a = 3;
+function f() {
+    let a = 4;
+    console.log(this.a);
+}
+
+f(); // 3
+// 通过上面的文章我们得出其实是 f().call(undefined) 默认为 global
+</code></pre><pre><code>// 隐式绑定
+window.a = 3;
+let obj = {
+    a: 4,
+    f: function() {
+        console.log(this.a);
+    }
+};
+
+let obj1 = {
+    a: 4,
+    obj: {
+        a: 5,
+        f: function() {
+            console.log(this.a);
+        }
+    }
+};
+
+obj.f() // obj.f.call(obj) 所以是 4
+obj1.obj.f(); // obj1.obj.f.call(obj1.obj) 是 5
+
+let f = obj1.obj.f;
+f(); // f.call(undefined) 是 3
+</code></pre><pre><code>// 显式绑定
+window.a = 3;
+let obj = {
+    a: 4,
+    f: function() {
+        console.log(this.a);
+    }
+};
+
+obj.f.call({a: 6}); // 6
+let f = obj.f;
+f.call({a: 5}); // 5
+</code></pre><pre><code>// new绑定
+function Person(age) {
+    this.age = age;
+}
+
+let mike = Person(12); // Person.call(12) 如果在全局作用域写一个 12 那就会有 12 ,但是 mike.age 还是 undefined
+console.log(mike.age); // undefined
+
+// 所以应该这样写
+// let mike = new Person(12)
+// 关于 new 这个方法，我在原型链实现过，内部应该会有一个 call() 的用法来调用 this
+</code></pre><h2 id="forEach-方法"><a href="#forEach-方法" class="headerlink" title="forEach 方法"></a>forEach 方法</h2><pre><code>Array.prototype._forEach = function(fn) {
+    // 实现一个 forEach 方法
+    for(let i = 0; i &lt; this.length; i++) {
+        let it = this[i];
+        fn(it, i, this); // 看这里，调用的时候是这样的 fn.call(it,i,this) fn 没有绑定任何的上下文，所以是全局变量
+    }
+};
+
+function Person(age) {
+    this.age = age;
+    [3,5,10]._forEach(function(it){
+        // console.log(this) 这里其实会打印出 global 属性, 原因看上面
+        console.log(`${it} year later I&#39;m ${this.age + it} year old`);
+    });
+}
+
+let mike = new Person(12);
+// 3 year later I&#39;m 15 year old
+// 5 year later I&#39;m 17 year old
+// 10 year later I&#39;m 22 year old
+</code></pre><p>所以真正实现方法是：</p>
+<pre><code>// 实际上原生的 forEach 可以传两个参数，一个是 callback ，还有一个其实是 this，所以其实 forEach 他本来就考虑到这种情况，所以可以直接传一个 this 进去
+Array.prototype._forEach = function(fn, ctx) {
+    // 实现一个 forEach 方法
+    for(let i = 0; i &lt; this.length; i++) {
+        let it = this[i];
+        fn.call(ctx || this, it, i, this); // 所以可以这样实现
+    }
+};
+
+/*
+Array.prototype._forEach = function(fn) {
+    for(let i = 0; i &lt; this.length; i++) {
+        let it = this[i];
+        fn(it, i, this);
+    }
+};
+*/
+
+function Person(age) {
+    this.age = age;
+    [3,5,10]._forEach(function(it){
+        console.log(`${it} year later I&#39;m ${this.age + it} year old`);
+    }, this);
+}
+
+/*
+function Person(age) {
+    this.age = age;
+    [3,5,10]._forEach(function(it){
+        console.log(`${it} year later I&#39;m ${this.age + it} year old`);
+    }.bind(this)); // bind(this) 会绑定成上下文的 this
+}
+*/
+
+/*
+function Person(age) {
+    this.age = age;
+    let that = this
+    [3,5,10]._forEach(function(it){
+        console.log(`${it} year later I&#39;m ${that.age + it} year old`);
+    });  // 使 this 变成一个普通的变量，其实和 bind(this) 是一样的套路
+}
+*/
+
+/*
+function Person(age) {
+    this.age = age;
+    [3,5,10]._forEach((it) =&gt; {
+        console.log(`${it} year later I&#39;m ${this.age + it} year old`);
+    }); // 
+}
+*/
+
+let mike = new Person(12);
+// 3 year later I&#39;m 15 year old
+// 5 year later I&#39;m 17 year old
+// 10 year later I&#39;m 22 year old
+</code></pre><pre><code>// 这里说一下箭头函数的 this
+Array.prototype._forEach = function(fn) {
+    for(let i = 0; i &lt; this.length; i++) {
+        let it = this[i];
+        fn(it, i, this);
+    }
+};
+
+function Person(age) {
+    [3,5,10]._forEach((it) =&gt; {
+        console.log(this);
+    });
+}
+
+Person.call({a: &#39;a&#39;}); // 绑定了 call 值 输出 =&gt; {a: &#39;a&#39;}
+Person(); // Person 的 this 输出 =&gt; global
+let obj = {
+  b: 1,
+  f: Person
+}
+
+obj.f(); // 绑定了 obj 所以是 { b: 1, [Function: Person] }
+</code></pre><p>这里说一个很可能会出现的 bug ，在 <code>this.age = age</code> 这里如果不加分号会出现 bug ，变成了 <code>this.age = age[3,4,5]._forEach()</code> <code>age[3,4,5]</code> 返回是一个 <code>undefined</code></p>
+<h2 id="bind-方法"><a href="#bind-方法" class="headerlink" title="bind 方法"></a>bind 方法</h2><pre><code>// 先看 _bind 的 this 值是什么
+/*
+Function.prototype._bind = function(ctx) {
+    console.log(this)
+};
+
+function Person(age) {
+    this.age = age;
+    (function(){})._bind(this)
+    console.log(this)
+}
+
+let mike = new Person(12);
+// Function 因为上下文的关系
+// Person { age: 12 } 
+*/
+
+Function.prototype._bind = function(ctx) {
+    // 实现一个 bind 方法
+    // return fn
+    // 注意不能用箭头函数，因为箭头函数没有 arguments
+    let that = this
+    let args = Array.prototype.slice.call(arguments, 1) // [1,3]
+    return function() {
+        let args2 = Array.prototype.slice.call(arguments) // [4,5]
+          let all = args.concat(args2); 
+        return that.apply(ctx, all);
+    }
+};
+
+/*
+Function.prototype._bind = function(ctx) {
+    // 如果要用箭头函数，用 ... 取剩余的值
+    let args = Array.prototype.slice.call(arguments, 1)
+    return (...args2) {
+        console.log(args2)
+          let all = args.concat(args2); 
+          cosole.log(all)
+        return that.apply(ctx, all);
+    }
+};
+*/
+
+function Person(age) {
+    this.age = age;
+    [3,5,10].forEach(function(it){
+        console.log(`${it} yeas later I&#39;m ${this.age + it} yeas old`);
+    }._bind(this, 1, 2));
+    // let fn = function(it) {
+    // }._bind(this, 1, 3);
+    // fn(4,5)
+    // 所以用了 _bind() 方法后就是等于 fn(this, 1, 3, 4, 5)
+    // let fn = function(it) {
+    // }
+    // let fn2 = fn._bind(this, 1, 2)
+    // fn2(4, 5, 6, 7, 8)
+    // 相当于 fn(1, 2, 4, 5, 6, 7, 8)
+}
+
+let mike = new Person(12);
+</code></pre><p>如何摊平数组?</p>
+<pre><code>// 正常来说 数组 push 一个数组那就是数组内嵌数组
+let arr = [1,2]
+arr.push([3,4])
+arr // [1, 2, [3, 4]]
+arr.concat([3, 4]) // [1, 2, [3, 4], 3, 4]
+arr.push.apply(arr, [5, 6]) // [1, 2, [3, 4], 3, 4, 5, 6]
+</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2017/10/22/补基础：对象与数组的遍历方式/" class="prev">PREV</a><a href="/2017/10/17/补基础：原型链和 prototype/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+var disqus_identifier = '2017/10/19/补基础：this/';
+var disqus_title = '补基础：this';
+var disqus_url = 'http://yoursite.com/2017/10/19/补基础：this/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 <a href="http://yoursite.com">Frankie Tang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
