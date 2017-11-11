@@ -44,7 +44,7 @@
     <link href="http://yoursite.com/2017/10/25/deepin%20shadowsocks-qt5%20%E5%85%A8%E5%B1%80%E7%BF%BB%E4%BA%86%E4%B8%AA%E5%A2%99/"/>
     <id>http://yoursite.com/2017/10/25/deepin shadowsocks-qt5 全局翻了个墙/</id>
     <published>2017-10-24T16:58:53.000Z</published>
-    <updated>2017-11-05T14:42:01.340Z</updated>
+    <updated>2017-11-11T14:11:32.770Z</updated>
     
     <content type="html"><![CDATA[<h1 id="deepin-shadowsocks-qt5-全局翻了个墙"><a href="#deepin-shadowsocks-qt5-全局翻了个墙" class="headerlink" title="deepin shadowsocks-qt5 全局翻了个墙"></a>deepin shadowsocks-qt5 全局翻了个墙</h1><p>最近真的是非常时期 <code>git push</code> <code>git pull</code> <code>git clone</code> 全部显示了</p><p>Connection closed by 192.30.255.113 port 22</p><p>以下是解决办法</p><pre><code>sudo apt-get install shadowsocks-qt5sudo apt-get install proxychains// 配置 /etc/proxychains.conf// 不要 socks4 127.0.0.1 9095 加上socks5 127.0.0.1 1080// 然后在每一条命令都加上proxychains</code></pre><p>关于怎么配 shadowsocks-qt5 网上一搜一大把，祝各位看到这篇文章能早日肉身翻墙吧。</p>]]></content>
     
