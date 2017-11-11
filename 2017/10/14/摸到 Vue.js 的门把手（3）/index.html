@@ -1,18 +1,32 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 Vue.js 的门把手（3） · 付林恒的博客</title><meta name="description" content="摸到 Vue.js 的门把手（3） - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 Vue.js 的门把手（3）</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-Vue-js-的门把手（3）"><a href="#摸到-Vue-js-的门把手（3）" class="headerlink" title="摸到 Vue.js 的门把手（3）"></a>摸到 Vue.js 的门把手（3）</h1><p>回炉重造</p>
-<h2 id="重看-vue-init-webpack-的选项"><a href="#重看-vue-init-webpack-的选项" class="headerlink" title="重看 vue init webpack 的选项"></a>重看 <code>vue init webpack</code> 的选项</h2><pre><code>? Generate project in current directory? Yes
-? Project name vue-resume
-? Project description A Vue.js project
-? Author FRANKIETANG &lt;350558468@qq.com&gt;
-? Vue build standalone
-//可以以后再装
-? Install vue-router? No
-//这东西很烦，不要
-? Use ESLint to lint your code? No
-//不需要单元测试
-? Setup unit tests with Karma + Mocha? No
-//不用管
-? Setup e2e tests with Nightwatch? No
-</code></pre><h2 id="升级了-NPM-之后居然装不了-SCSS-？"><a href="#升级了-NPM-之后居然装不了-SCSS-？" class="headerlink" title="升级了 NPM 之后居然装不了 SCSS ？"></a>升级了 NPM 之后居然装不了 SCSS ？</h2><p>会有一个奇怪的 <code>user &quot;root&quot; does not have permission to access the dev dir &quot;/home/tangkalun/Desktop/vue-resume/node_modules/node-sass/.node-gyp/6.3.1&quot;</code></p>
+<h2 id="重看-vue-init-webpack-的选项"><a href="#重看-vue-init-webpack-的选项" class="headerlink" title="重看 vue init webpack 的选项"></a>重看 <code>vue init webpack</code> 的选项</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line">? <span class="keyword">Generate</span> project <span class="keyword">in</span> current directory? Yes</span>
+<span class="line">? Project name vue-resume</span>
+<span class="line">? Project description A Vue.js project</span>
+<span class="line">? Author FRANKIETANG &lt;350558468@qq.com&gt;</span>
+<span class="line">? Vue build standalone</span>
+<span class="line"><span class="comment">//可以以后再装</span></span>
+<span class="line">? Install vue-router? <span class="keyword">No</span></span>
+<span class="line"><span class="comment">//这东西很烦，不要</span></span>
+<span class="line">? <span class="keyword">Use</span> ESLint to lint your code? <span class="keyword">No</span></span>
+<span class="line"><span class="comment">//不需要单元测试</span></span>
+<span class="line">? Setup unit tests with Karma + Mocha? <span class="keyword">No</span></span>
+<span class="line"><span class="comment">//不用管</span></span>
+<span class="line">? Setup e2e tests with Nightwatch? <span class="keyword">No</span></span>
+</pre></td></tr></table></figure>
+<h2 id="升级了-NPM-之后居然装不了-SCSS-？"><a href="#升级了-NPM-之后居然装不了-SCSS-？" class="headerlink" title="升级了 NPM 之后居然装不了 SCSS ？"></a>升级了 NPM 之后居然装不了 SCSS ？</h2><p>会有一个奇怪的 <code>user &quot;root&quot; does not have permission to access the dev dir &quot;/home/tangkalun/Desktop/vue-resume/node_modules/node-sass/.node-gyp/6.3.1&quot;</code></p>
 <p>那就用 <code>sudo SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install --save --unsafe-perm</code></p>
 <p>不行就用 <code>export SASS_BINARY_SITE=&quot;https://npm.taobao.org/mirrors/node-sass&quot;</code></p>
 <p><code>npm install --save  sass-loader node-sass</code></p>

@@ -1,141 +1,265 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 Vue.js 的门把手 · 付林恒的博客</title><meta name="description" content="摸到 Vue.js 的门把手 - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 Vue.js 的门把手</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-Vue-js-的门把手"><a href="#摸到-Vue-js-的门把手" class="headerlink" title="摸到 Vue.js 的门把手"></a>摸到 Vue.js 的门把手</h1><p>文档那么多中文多和谐啊是不是？<a href="https://cn.vuejs.org/" target="_blank" rel="external">Vue.js</a></p>
 <h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><p>先把 webpack 给配好。</p>
 <p>接下来我们输入 Vue.js 测试代码给我们的代码</p>
-<pre><code>//index.html
-      &lt;div id=&quot;app&quot;&gt;
-          {{ message }}
-      &lt;/div&gt; 
-//index.js
-import Vue from &#39;vue&#39;
-
-var app = new Vue({
-    el: &#39;#app&#39;,
-    data: {
-      message: &#39;Hello Vue!&#39;
-    }
-  })
-</code></pre><p>真的是非常的和谐，很像 React </p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//index.html</span></span>
+<span class="line">      &lt;div id=<span class="string">"app"</span>&gt;</span>
+<span class="line">          &#123;&#123; message &#125;&#125;</span>
+<span class="line">      &lt;/div&gt; </span>
+<span class="line"><span class="comment">//index.js</span></span>
+<span class="line"><span class="keyword">import</span> Vue from <span class="string">'vue'</span></span>
+<span class="line"></span>
+<span class="line"><span class="built_in">var</span> app = <span class="literal">new</span> Vue(&#123;</span>
+<span class="line">    el: <span class="string">'#app'</span>,</span>
+<span class="line">    <span class="built_in">data</span>: &#123;</span>
+<span class="line">      message: <span class="string">'Hello Vue!'</span></span>
+<span class="line">    &#125;</span>
+<span class="line">  &#125;)</span>
+</pre></td></tr></table></figure>
+<p>真的是非常的和谐，很像 React </p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-19472a5df4b492fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h2><pre><code>//index.html
-&lt;div class=&quot;newTask&quot;&gt;
-    &lt;input type=&quot;text&quot; v-model=&quot;newTodo&quot;&gt;
-&lt;/div&gt;
-//index.js
-var app = new Vue({
-    el: &#39;#app&#39;,
-    data: {
-        newTodo: &#39;&#39;,
-        todoList: []
-    },
-    created: function(){
-        let i = 0
-        setInterval(()=&gt;{
-            this.newTodo = i
-            i += 1
-        },1000)
-    }
-})
-</code></pre><p>只要 data.newTodo 被 JS 改了，input.value 就会变成一样的值。</p>
-<pre><code>//index.html
-&lt;div class=&quot;newTask&quot;&gt;
-    &lt;input type=&quot;text&quot; v-model=&quot;newTodo&quot;&gt;
-&lt;/div&gt;
-//index.js
-var app = new Vue({
-    el: &#39;#app&#39;,
-    data: {
-        newTodo: &#39;&#39;,
-        todoList: []
-    },
-    created: function(){
-        let i = 0
-        setInterval(()=&gt;{
-            console.log(this.newTodo)
-            i += 1
-        },1000)
-    }
-})
-</code></pre><p>只要 input.value 被用户改了，data.newTodo 就会变成一样的值；</p>
-<h2 id="绑定事件"><a href="#绑定事件" class="headerlink" title="绑定事件"></a>绑定事件</h2><pre><code>//index.html
-&lt;input type=&quot;text&quot; v-model=&quot;newTodo&quot; @keypress.enter=&quot;addTodo&quot;&gt;
-//index.js
-methods: {
-    addTodo: function(){
-        this.todoList.push({
-            title: this.newTodo,
-            createdAt: new Date()
-        })
-        console.log(this.todoList)
-    }
-}
-</code></pre><h2 id="输入东西在页面展示"><a href="#输入东西在页面展示" class="headerlink" title="输入东西在页面展示"></a>输入东西在页面展示</h2><pre><code>&lt;li v-for=&quot;todo in todoList&quot;&gt;
-  {{ todo.title }}
-&lt;/li&gt;
-</code></pre><h2 id="复选框"><a href="#复选框" class="headerlink" title="复选框"></a>复选框</h2><pre><code>//index.html
-&lt;input type=&quot;checkbox&quot; v-model=&quot;todo.done&quot;&gt;{{ todo.title }}
-&lt;span v-if=&quot;todo.done&quot;&gt;已完成&lt;/span&gt;
-&lt;span v-else&gt;未完成&lt;/span&gt;
-//index.js
-addTodo: function(){
-    this.todoList.push({
-        title: this.newTodo,
-        createdAt: new Date(),
-        done: false
-    })
-    this.newTodo = &quot;&quot; //input 框变成空的
-}
-</code></pre><h2 id="localStorage-保存数据"><a href="#localStorage-保存数据" class="headerlink" title="localStorage 保存数据"></a>localStorage 保存数据</h2><pre><code>created: function() {
-  window.onbeforeunload = () =&gt;{
-    let dataString = JSON.stringify(this.todoList)
-    window.localStorage.setItem(&#39;myTodos&#39;, dataString)
-  }
-  let oldDataString = window.localStorage.getItem(&#39;myTodos&#39;)
-  let oldData = JSON.parse(oldDataString)
-  this.todoList = oldData || []
-},
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload" target="_blank" rel="external">onbeforeunload - MDN</a> 当窗口即将被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onunload" target="_blank" rel="external"><code>卸载</code></a>时,会触发该事件.此时页面文档依然可见,且该事件的默认动作可以被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Event/preventDefault" target="_blank" rel="external"><code>取消</code></a>.</p>
+<h2 id="双向绑定"><a href="#双向绑定" class="headerlink" title="双向绑定"></a>双向绑定</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//index.html</span></span>
+<span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"newTask"</span>&gt;</span>
+<span class="line">	&lt;input type=<span class="string">"text"</span> v-model=<span class="string">"newTodo"</span>&gt;</span>
+<span class="line">&lt;<span class="regexp">/div&gt;</span></span>
+<span class="line"><span class="regexp">/</span><span class="regexp">/index.js</span></span>
+<span class="line"><span class="regexp">var app = new Vue(&#123;</span></span>
+<span class="line"><span class="regexp">    el: '#app',</span></span>
+<span class="line"><span class="regexp">    data: &#123;</span></span>
+<span class="line"><span class="regexp">        newTodo: '',</span></span>
+<span class="line"><span class="regexp">        todoList: []</span></span>
+<span class="line"><span class="regexp">    &#125;,</span></span>
+<span class="line"><span class="regexp">    created: function()&#123;</span></span>
+<span class="line"><span class="regexp">        let i = 0</span></span>
+<span class="line"><span class="regexp">        setInterval(()=&gt;&#123;</span></span>
+<span class="line"><span class="regexp">            this.newTodo = i</span></span>
+<span class="line"><span class="regexp">            i += 1</span></span>
+<span class="line"><span class="regexp">        &#125;,1000)</span></span>
+<span class="line"><span class="regexp">    &#125;</span></span>
+<span class="line"><span class="regexp">&#125;)</span></span>
+</pre></td></tr></table></figure>
+<p>只要 data.newTodo 被 JS 改了，input.value 就会变成一样的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//index.html</span></span>
+<span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"newTask"</span>&gt;</span>
+<span class="line">	&lt;input type=<span class="string">"text"</span> v-model=<span class="string">"newTodo"</span>&gt;</span>
+<span class="line">&lt;<span class="regexp">/div&gt;</span></span>
+<span class="line"><span class="regexp">/</span><span class="regexp">/index.js</span></span>
+<span class="line"><span class="regexp">var app = new Vue(&#123;</span></span>
+<span class="line"><span class="regexp">    el: '#app',</span></span>
+<span class="line"><span class="regexp">    data: &#123;</span></span>
+<span class="line"><span class="regexp">        newTodo: '',</span></span>
+<span class="line"><span class="regexp">        todoList: []</span></span>
+<span class="line"><span class="regexp">    &#125;,</span></span>
+<span class="line"><span class="regexp">    created: function()&#123;</span></span>
+<span class="line"><span class="regexp">        let i = 0</span></span>
+<span class="line"><span class="regexp">        setInterval(()=&gt;&#123;</span></span>
+<span class="line"><span class="regexp">            console.log(this.newTodo)</span></span>
+<span class="line"><span class="regexp">            i += 1</span></span>
+<span class="line"><span class="regexp">        &#125;,1000)</span></span>
+<span class="line"><span class="regexp">    &#125;</span></span>
+<span class="line"><span class="regexp">&#125;)</span></span>
+</pre></td></tr></table></figure>
+<p>只要 input.value 被用户改了，data.newTodo 就会变成一样的值；</p>
+<h2 id="绑定事件"><a href="#绑定事件" class="headerlink" title="绑定事件"></a>绑定事件</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//index.html</span></span>
+<span class="line">&lt;input <span class="keyword">type</span>=<span class="string">"text"</span> v-model=<span class="string">"newTodo"</span> <span class="meta">@keypress</span>.enter=<span class="string">"addTodo"</span>&gt;</span>
+<span class="line"><span class="comment">//index.js</span></span>
+<span class="line">methods: &#123;</span>
+<span class="line">    addTodo: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">        <span class="keyword">this</span>.todoList.push(&#123;</span>
+<span class="line">            title: <span class="keyword">this</span>.newTodo,</span>
+<span class="line">            createdAt: <span class="keyword">new</span> <span class="built_in">Date</span>()</span>
+<span class="line">        &#125;)</span>
+<span class="line">        <span class="built_in">console</span>.log(<span class="keyword">this</span>.todoList)</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="输入东西在页面展示"><a href="#输入东西在页面展示" class="headerlink" title="输入东西在页面展示"></a>输入东西在页面展示</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">li</span> v-<span class="keyword">for</span>=<span class="string">"todo in todoList"</span>&gt;</span>
+<span class="line">  &#123;&#123; todo<span class="selector-class">.title</span> &#125;&#125;</span>
+<span class="line">&lt;/li&gt;</span>
+</pre></td></tr></table></figure>
+<h2 id="复选框"><a href="#复选框" class="headerlink" title="复选框"></a>复选框</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//index.html</span></span>
+<span class="line">&lt;<span class="selector-tag">input</span> type=<span class="string">"checkbox"</span> v-model=<span class="string">"todo.done"</span>&gt;&#123;&#123; todo<span class="selector-class">.title</span> &#125;&#125;</span>
+<span class="line">&lt;<span class="selector-tag">span</span> v-<span class="keyword">if</span>=<span class="string">"todo.done"</span>&gt;已完成&lt;/span&gt;</span>
+<span class="line">&lt;<span class="selector-tag">span</span> v-<span class="keyword">else</span>&gt;未完成&lt;/span&gt;</span>
+<span class="line"><span class="comment">//index.js</span></span>
+<span class="line">addTodo: function()&#123;</span>
+<span class="line">    this<span class="selector-class">.todoList</span><span class="selector-class">.push</span>(&#123;</span>
+<span class="line">        title: this<span class="selector-class">.newTodo</span>,</span>
+<span class="line">        createdAt: new Date(),</span>
+<span class="line">        done: false</span>
+<span class="line">    &#125;)</span>
+<span class="line">    this<span class="selector-class">.newTodo</span> = <span class="string">""</span> <span class="comment">//input 框变成空的</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="localStorage-保存数据"><a href="#localStorage-保存数据" class="headerlink" title="localStorage 保存数据"></a>localStorage 保存数据</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">created: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">  <span class="built_in">window</span>.onbeforeunload = <span class="function"><span class="params">()</span> =&gt;</span>&#123;</span>
+<span class="line">    <span class="keyword">let</span> dataString = <span class="built_in">JSON</span>.stringify(<span class="keyword">this</span>.todoList)</span>
+<span class="line">    <span class="built_in">window</span>.localStorage.setItem(<span class="string">'myTodos'</span>, dataString)</span>
+<span class="line">  &#125;</span>
+<span class="line">  <span class="keyword">let</span> oldDataString = <span class="built_in">window</span>.localStorage.getItem(<span class="string">'myTodos'</span>)</span>
+<span class="line">  <span class="keyword">let</span> oldData = <span class="built_in">JSON</span>.parse(oldDataString)</span>
+<span class="line">  <span class="keyword">this</span>.todoList = oldData || []</span>
+<span class="line">&#125;,</span>
+</pre></td></tr></table></figure>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload" target="_blank" rel="external">onbeforeunload - MDN</a> 当窗口即将被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onunload" target="_blank" rel="external"><code>卸载</code></a>时,会触发该事件.此时页面文档依然可见,且该事件的默认动作可以被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Event/preventDefault" target="_blank" rel="external"><code>取消</code></a>.</p>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="external">JSON - MDN</a> 简单深拷贝</p>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="external">localStorage - MDN</a> <code>localStorage</code> 属性允许你访问一个 local <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Storage" target="_blank" rel="external"><code>Storage</code></a> 对象。存储在 localStorage 里面的数据没有过期时间（expiration time）。</p>
 <h2 id="数据存储选-leancloud"><a href="#数据存储选-leancloud" class="headerlink" title="数据存储选 leancloud"></a>数据存储选 leancloud</h2><p><a href="https://leancloud.cn/docs/start.html" target="_blank" rel="external">JavaScript SDK 安装指南</a></p>
 <p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html#数据存储开发指南___JavaScript" target="_blank" rel="external">数据存储开发指南 · JavaScript</a></p>
 <p>之前有一个没有注意到的东西，就是利用这一段代码的时候打印出来的东西</p>
-<pre><code>    signUp: function () {
-      let user = new AV.User();
-      user.setUsername(this.formData.username);
-      user.setPassword(this.formData.password);
-      user.signUp().then(function (loginedUser) {
-        console.log(loginedUser);
-      }, function (error) {
-      });
-    }
-</code></pre><blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">signUp: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">  <span class="keyword">let</span> user = <span class="keyword">new</span> AV.User();</span>
+<span class="line">  user.setUsername(<span class="keyword">this</span>.formData.username);</span>
+<span class="line">  user.setPassword(<span class="keyword">this</span>.formData.password);</span>
+<span class="line">  user.signUp().then(<span class="function"><span class="keyword">function</span> (<span class="params">loginedUser</span>) </span>&#123;</span>
+<span class="line">    <span class="built_in">console</span>.log(loginedUser);</span>
+<span class="line">  &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span>
+<span class="line">  &#125;);</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<blockquote>
 <p>注意打印出来的三个属性：attributes, createdAt, id。</p>
 <p>其中 attributes 就是我们传给数据库的 username（我们不是还传了一个 password 吗？服务器是不会把 password 传给前端的）</p>
 <p>createdAt 是这个数据创建的时间，id 是用户的 id，也是我们区别用户的唯一凭据。</p>
 </blockquote>
 <h2 id="Vue-的切换-Tab"><a href="#Vue-的切换-Tab" class="headerlink" title="Vue 的切换 Tab"></a>Vue 的切换 Tab</h2><p>在 React 中是这样切换的</p>
-<pre><code>{ this.state.selectedTab === &#39;signInOrSignUp&#39; ? &lt;SignIn /&gt;  : &lt;SignUp /&gt; }
-</code></pre><p>而 Vue 是这样</p>
-<pre><code>&lt;div class=&quot;signUp&quot; v-if=&quot;actionType === &#39;signUp&#39;&quot;&gt;
-&lt;div class=&quot;logIn&quot; v-if=&quot;actionType === &#39;logIn&#39;&quot;&gt;
-</code></pre><h2 id="可注册-可登入-可登出-功能"><a href="#可注册-可登入-可登出-功能" class="headerlink" title="可注册 / 可登入 / 可登出 功能"></a>可注册 / 可登入 / 可登出 功能</h2><p>这个和我之前 React 没什么区别了</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">&#123; this.<span class="keyword">state</span>.selectedTab === 'signInOrSignUp' ? <span class="variable">&lt;SignIn /&gt;</span>  : <span class="variable">&lt;SignUp /&gt;</span> &#125;</span>
+</pre></td></tr></table></figure>
+<p>而 Vue 是这样</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">class</span>=<span class="string">"signUp"</span> v-<span class="keyword">if</span>=<span class="string">"actionType === 'signUp'"</span>&gt;</span>
+<span class="line">&lt;<span class="keyword">div</span> <span class="built_in">class</span>=<span class="string">"logIn"</span> v-<span class="keyword">if</span>=<span class="string">"actionType === 'logIn'"</span>&gt;</span>
+</pre></td></tr></table></figure>
+<h2 id="可注册-可登入-可登出-功能"><a href="#可注册-可登入-可登出-功能" class="headerlink" title="可注册 / 可登入 / 可登出 功能"></a>可注册 / 可登入 / 可登出 功能</h2><p>这个和我之前 React 没什么区别了</p>
 <p>就是看 leancloud 的文档抄抄</p>
 <p>注意 <code>v-if</code> 的使用技巧</p>
 <h2 id="保存数据功能"><a href="#保存数据功能" class="headerlink" title="保存数据功能"></a>保存数据功能</h2><p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html#保存对象" target="_blank" rel="external">保存数据</a></p>
-<pre><code>  // 声明类型
-  var TodoFolder = AV.Object.extend(&#39;TodoFolder&#39;);
-  // 新建对象
-  var todoFolder = new TodoFolder();
-  // 设置名称
-  todoFolder.set(&#39;name&#39;,&#39;工作&#39;);
-  // 设置优先级
-  todoFolder.set(&#39;priority&#39;,1);
-  todoFolder.save().then(function (todo) {
-    console.log(&#39;objectId is &#39; + todo.id);
-  }, function (error) {
-    console.error(error);
-  });
-</code></pre><p>照着抄</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明类型</span></span>
+<span class="line"><span class="keyword">var</span> TodoFolder = AV.Object.extend(<span class="string">'TodoFolder'</span>);</span>
+<span class="line"><span class="comment">// 新建对象</span></span>
+<span class="line"><span class="keyword">var</span> todoFolder = <span class="keyword">new</span> TodoFolder();</span>
+<span class="line"><span class="comment">// 设置名称</span></span>
+<span class="line">todoFolder.set(<span class="string">'name'</span>,<span class="string">'工作'</span>);</span>
+<span class="line"><span class="comment">// 设置优先级</span></span>
+<span class="line">todoFolder.set(<span class="string">'priority'</span>,<span class="number">1</span>);</span>
+<span class="line">todoFolder.save().then(<span class="function"><span class="keyword">function</span> (<span class="params">todo</span>) </span>&#123;</span>
+<span class="line">  <span class="built_in">console</span>.log(<span class="string">'objectId is '</span> + todo.id);</span>
+<span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span>
+<span class="line">  <span class="built_in">console</span>.error(error);</span>
+<span class="line">&#125;);</span>
+</pre></td></tr></table></figure>
+<p>照着抄</p>
 <p>注意不可以把代码放在 <code>window.onbeforeunload</code> 里，请求发出页面就刷新了</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-509e312e01c9434c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <blockquote>
@@ -145,35 +269,62 @@ addTodo: function(){
 </blockquote>
 <p>这样就应该把上面那一段代码封装成一个函数调用。</p>
 <h2 id="角色权限管理"><a href="#角色权限管理" class="headerlink" title="角色权限管理"></a>角色权限管理</h2><p><a href="https://leancloud.cn/docs/acl-guide.html#角色的创建" target="_blank" rel="external">角色的创建</a></p>
-<pre><code>  // 创建一个针对 User 的查询
-  var query = new AV.Query(AV.User);
-  query.get(&#39;55f1572460b2ce30e8b7afde&#39;).then(function(otherUser) {
-    var post = new AV.Object(&#39;Post&#39;);
-    post.set(&#39;title&#39;, &#39;这是我的第二条发言，谢谢大家！&#39;);
-    post.set(&#39;content&#39;,&#39;我最近喜欢看足球和篮球了。&#39;);
-
-    // 新建一个 ACL 实例
-    var acl = new AV.ACL();
-    acl.setPublicReadAccess(true);
-    acl.setWriteAccess(AV.User.current(), true);
-    acl.setWriteAccess(otherUser, true);
-
-    // 将 ACL 实例赋予 Post 对象
-    post.setACL(acl);
-
-    // 保存到云端
-    return post.save();
-  }).then(function() {
-    // 保存成功
-  }).catch(function(error) {
-    // 错误信息
-    console.log(error);
-  });
-</code></pre><h2 id="居然有-React-一样的-BUG"><a href="#居然有-React-一样的-BUG" class="headerlink" title="居然有 React 一样的 BUG"></a>居然有 React 一样的 BUG</h2><p>就是 logout 之后 再 login 别的账号会没有数据</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个针对 User 的查询</span></span>
+<span class="line"><span class="keyword">var</span> query = <span class="keyword">new</span> <span class="type">AV</span>.Query(AV.User);</span>
+<span class="line">query.<span class="keyword">get</span>(<span class="string">'55f1572460b2ce30e8b7afde'</span>).then(<span class="function"><span class="keyword">function</span></span>(otherUser) &#123;</span>
+<span class="line">  <span class="keyword">var</span> post = <span class="keyword">new</span> <span class="type">AV</span>.Object(<span class="string">'Post'</span>);</span>
+<span class="line">  post.<span class="keyword">set</span>(<span class="string">'title'</span>, <span class="string">'这是我的第二条发言，谢谢大家！'</span>);</span>
+<span class="line">  post.<span class="keyword">set</span>(<span class="string">'content'</span>,<span class="string">'我最近喜欢看足球和篮球了。'</span>);</span>
+<span class="line"></span>
+<span class="line">  <span class="comment">// 新建一个 ACL 实例</span></span>
+<span class="line">  <span class="keyword">var</span> acl = <span class="keyword">new</span> <span class="type">AV</span>.ACL();</span>
+<span class="line">  acl.setPublicReadAccess(<span class="literal">true</span>);</span>
+<span class="line">  acl.setWriteAccess(AV.User.current(), <span class="literal">true</span>);</span>
+<span class="line">  acl.setWriteAccess(otherUser, <span class="literal">true</span>);</span>
+<span class="line"></span>
+<span class="line">  <span class="comment">// 将 ACL 实例赋予 Post 对象</span></span>
+<span class="line">  post.setACL(acl);</span>
+<span class="line"></span>
+<span class="line">  <span class="comment">// 保存到云端</span></span>
+<span class="line">  <span class="keyword">return</span> post.save();</span>
+<span class="line">&#125;).then(<span class="function"><span class="keyword">function</span></span>() &#123;</span>
+<span class="line">  <span class="comment">// 保存成功</span></span>
+<span class="line">&#125;).<span class="keyword">catch</span>(<span class="function"><span class="keyword">function</span></span>(error) &#123;</span>
+<span class="line">  <span class="comment">// 错误信息</span></span>
+<span class="line">  console.log(error);</span>
+<span class="line">&#125;);</span>
+</pre></td></tr></table></figure>
+<h2 id="居然有-React-一样的-BUG"><a href="#居然有-React-一样的-BUG" class="headerlink" title="居然有 React 一样的 BUG"></a>居然有 React 一样的 BUG</h2><p>就是 logout 之后 再 login 别的账号会没有数据</p>
 <p>和 React 的解决方法一样封装成一个函数放在 <code>methods</code> 里。</p>
-<h2 id="遇到奇怪的-BUG"><a href="#遇到奇怪的-BUG" class="headerlink" title="遇到奇怪的 BUG"></a>遇到奇怪的 BUG</h2><pre><code>rm -rf node_modules/
-npm install
-</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 Vue.js 的门把手（2）/" class="prev">PREV</a><a href="/2017/10/14/摸到 React 的门把手 (完)/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+<h2 id="遇到奇怪的-BUG"><a href="#遇到奇怪的-BUG" class="headerlink" title="遇到奇怪的 BUG"></a>遇到奇怪的 BUG</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line">rm -rf node_modules/</span>
+<span class="line">npm <span class="keyword">install</span></span>
+</pre></td></tr></table></figure></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 Vue.js 的门把手（2）/" class="prev">PREV</a><a href="/2017/10/14/摸到 React 的门把手 (完)/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/14/摸到 Vue.js 的门把手/';
 var disqus_title = '摸到 Vue.js 的门把手';
 var disqus_url = 'http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手/';

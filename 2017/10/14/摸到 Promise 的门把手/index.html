@@ -1,127 +1,247 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 Promise 的门把手 · 付林恒的博客</title><meta name="description" content="摸到 Promise 的门把手 - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 Promise 的门把手</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>这其实是异步的一种方法。</p>
-<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><pre><code>//假定有两个函数f1和f2，后者等待前者的执行结果。
-f1()
-f2()
-//如果f1是一个很耗时的任务，可以考虑改写f1，把f2写成f1的回调函数。
-function f1(callback){
-  setTimeout(function(){
-    //f1 的任务代码
-    callback()
-  },1000)
-}
-//是不是有点像 AJAX
-//执行代码就变成下面这样：
-f1(f2)
-//例子
-function f2(){
-  let b = 2
-  console.log(b)
-}
-
-function f1(callback){
-  setTimeout(function(){    
-    let a = 1
-    console.log(a)
-    callback()
-  },3000)
-}
-
-f1(f2)
-</code></pre><h3 id="Promises对象"><a href="#Promises对象" class="headerlink" title="Promises对象"></a>Promises对象</h3><blockquote>
+<h3 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//假定有两个函数f1和f2，后者等待前者的执行结果。</span></span>
+<span class="line">f1()</span>
+<span class="line">f2()</span>
+<span class="line"><span class="comment">//如果f1是一个很耗时的任务，可以考虑改写f1，把f2写成f1的回调函数。</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">callback</span>)</span>&#123;</span>
+<span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">    <span class="comment">//f1 的任务代码</span></span>
+<span class="line">    callback()</span>
+<span class="line">  &#125;,<span class="number">1000</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="comment">//是不是有点像 AJAX</span></span>
+<span class="line"><span class="comment">//执行代码就变成下面这样：</span></span>
+<span class="line">f1(f2)</span>
+<span class="line"><span class="comment">//例子</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f2</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">  <span class="keyword">let</span> b = <span class="number">2</span></span>
+<span class="line">  <span class="built_in">console</span>.log(b)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f1</span>(<span class="params">callback</span>)</span>&#123;</span>
+<span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;    </span>
+<span class="line">    <span class="keyword">let</span> a = <span class="number">1</span></span>
+<span class="line">    <span class="built_in">console</span>.log(a)</span>
+<span class="line">    callback()</span>
+<span class="line">  &#125;,<span class="number">3000</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">f1(f2)</span>
+</pre></td></tr></table></figure>
+<h3 id="Promises对象"><a href="#Promises对象" class="headerlink" title="Promises对象"></a>Promises对象</h3><blockquote>
 <p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">统一接口</a>。</p>
 <p>简单说，它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。</p>
 </blockquote>
 <p>注意这个 <code>then</code> </p>
-<pre><code>//f1 的回调函数 f2
-f1().then(f2)
-//看下面这个例子
-f1().then(f2).then(f3)
-//比如说
-//先执行 f1() 函数
-//执行完后获取一个对象，叫 promise 对象
-//这个 promise 对象呢，它上面有个方法叫做 then
-//所以就调用了 then(f2)
-//如果数据到来之后就会执行 then(f2)
-//这个数据的参数传给 f2
-//then(f2) 执行完后再执行 then(f3)
-f1().then(f2).fail(f3)
-//如果执行失败就执行 fail(f3)
-</code></pre><h3 id="为什么要用-Promise"><a href="#为什么要用-Promise" class="headerlink" title="为什么要用 Promise"></a>为什么要用 Promise</h3><pre><code>$.get(url, function(data){
-  console.log(data)
-  $.get(url2, function(data){
-    console.log(data)
-    $.get(url3, function(date){
-      ........
-    })
-  })
-})
-//Promise
-$.get(url)
- .then()
- .then()
- .then()
-</code></pre><h3 id="如何实现一个-Promise"><a href="#如何实现一个-Promise" class="headerlink" title="如何实现一个 Promise"></a>如何实现一个 Promise</h3><pre><code>class Promise{
-  constructor(){
-    this.callbacks = []    //这个数组存储的是对象
-  }
-
-  then(onsuccess,onfail){
-    this.callbacks.push({
-      resolve: onsuccess,
-      reject: onfail
-    })
-    return this
-  }
-
-  resolve(result){
-    this.complete(&#39;resolve&#39;,result)
-  }
-
-  reject(result){
-    this.complete(&#39;reject&#39;,result)
-  }
-
-  complete(type,result){
-    var callbackObj = this.callbacks.shift()
-    callbackObj[type](result)     //callbackObj[resolve] 等于 fn1 所以就是 fn1(result)
-  }
-
-}
-
-// function Promise(){
-
-// }
-
-// Promise.prototype.then = function(){
-
-// }
-
-var p = new Promise()
-
-function fn() {
-  console.log(&#39;fn1&#39;)
-  setTimeout(function(){
-    p.resolve(&#39;data1&#39;)
-  },1000)
-  return p
-}
-
-function fn1(result) {
-  console.log(&#39;fn1&#39;,result)
-  setTimeout(function(){
-    p.resolve(&#39;data2&#39;)
-//     p.reject()
-    fn2()
-  },2000)
-}
-
-function fn2(result) {
-  console.log(&#39;fn2&#39;,result)
-}
-
-fn().then(fn1).then(fn2)
-//[{resolve:fn1,reject:undefined},{resolve:fn2,reject:undefined}]
-</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 webpack 的门把手/" class="prev">PREV</a><a href="/2017/10/14/摸到 ES6 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//f1 的回调函数 f2</span></span>
+<span class="line"><span class="function"><span class="title">f1</span><span class="params">()</span></span>.then(f2)</span>
+<span class="line"><span class="comment">//看下面这个例子</span></span>
+<span class="line"><span class="function"><span class="title">f1</span><span class="params">()</span></span>.then(f2).then(f3)</span>
+<span class="line"><span class="comment">//比如说</span></span>
+<span class="line"><span class="comment">//先执行 f1() 函数</span></span>
+<span class="line"><span class="comment">//执行完后获取一个对象，叫 promise 对象</span></span>
+<span class="line"><span class="comment">//这个 promise 对象呢，它上面有个方法叫做 then</span></span>
+<span class="line"><span class="comment">//所以就调用了 then(f2)</span></span>
+<span class="line"><span class="comment">//如果数据到来之后就会执行 then(f2)</span></span>
+<span class="line"><span class="comment">//这个数据的参数传给 f2</span></span>
+<span class="line"><span class="comment">//then(f2) 执行完后再执行 then(f3)</span></span>
+<span class="line"><span class="function"><span class="title">f1</span><span class="params">()</span></span>.then(f2).fail(f3)</span>
+<span class="line"><span class="comment">//如果执行失败就执行 fail(f3)</span></span>
+</pre></td></tr></table></figure>
+<h3 id="为什么要用-Promise"><a href="#为什么要用-Promise" class="headerlink" title="为什么要用 Promise"></a>为什么要用 Promise</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">$.<span class="keyword">get</span>(url, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span>
+<span class="line">  <span class="built_in">console</span>.log(data)</span>
+<span class="line">  $.<span class="keyword">get</span>(url2, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span>
+<span class="line">    <span class="built_in">console</span>.log(data)</span>
+<span class="line">    $.<span class="keyword">get</span>(url3, <span class="function"><span class="keyword">function</span>(<span class="params">date</span>)</span>&#123;</span>
+<span class="line">      ........</span>
+<span class="line">    &#125;)</span>
+<span class="line">  &#125;)</span>
+<span class="line">&#125;)</span>
+<span class="line"><span class="comment">//Promise</span></span>
+<span class="line">$.<span class="keyword">get</span>(url)</span>
+<span class="line"> .then()</span>
+<span class="line"> .then()</span>
+<span class="line"> .then()</span>
+</pre></td></tr></table></figure>
+<h3 id="如何实现一个-Promise"><a href="#如何实现一个-Promise" class="headerlink" title="如何实现一个 Promise"></a>如何实现一个 Promise</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Promise</span></span>&#123;</span>
+<span class="line">  <span class="keyword">constructor</span>()&#123;</span>
+<span class="line">    <span class="keyword">this</span>.callbacks = []    <span class="comment">//这个数组存储的是对象</span></span>
+<span class="line">  &#125;</span>
+<span class="line">  </span>
+<span class="line">  then(onsuccess,onfail)&#123;</span>
+<span class="line">    <span class="keyword">this</span>.callbacks.push(&#123;</span>
+<span class="line">      resolve: onsuccess,</span>
+<span class="line">      reject: onfail</span>
+<span class="line">    &#125;)</span>
+<span class="line">    <span class="keyword">return</span> <span class="keyword">this</span></span>
+<span class="line">  &#125;</span>
+<span class="line">  </span>
+<span class="line">  resolve(result)&#123;</span>
+<span class="line">    <span class="keyword">this</span>.complete(<span class="string">'resolve'</span>,result)</span>
+<span class="line">  &#125;</span>
+<span class="line">  </span>
+<span class="line">  reject(result)&#123;</span>
+<span class="line">    <span class="keyword">this</span>.complete(<span class="string">'reject'</span>,result)</span>
+<span class="line">  &#125;</span>
+<span class="line">  </span>
+<span class="line">  complete(type,result)&#123;</span>
+<span class="line">    <span class="keyword">var</span> callbackObj = <span class="keyword">this</span>.callbacks.shift()</span>
+<span class="line">    callbackObj[type](result)     <span class="comment">//callbackObj[resolve] 等于 fn1 所以就是 fn1(result)</span></span>
+<span class="line">  &#125;</span>
+<span class="line">  </span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// function Promise()&#123;</span></span>
+<span class="line">  </span>
+<span class="line"><span class="comment">// &#125;</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Promise.prototype.then = function()&#123;</span></span>
+<span class="line">  </span>
+<span class="line"><span class="comment">// &#125;</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>()</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">  <span class="built_in">console</span>.log(<span class="string">'fn1'</span>)</span>
+<span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">    p.resolve(<span class="string">'data1'</span>)</span>
+<span class="line">  &#125;,<span class="number">1000</span>)</span>
+<span class="line">  <span class="keyword">return</span> p</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn1</span>(<span class="params">result</span>) </span>&#123;</span>
+<span class="line">  <span class="built_in">console</span>.log(<span class="string">'fn1'</span>,result)</span>
+<span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">    p.resolve(<span class="string">'data2'</span>)</span>
+<span class="line"><span class="comment">//     p.reject()</span></span>
+<span class="line">    fn2()</span>
+<span class="line">  &#125;,<span class="number">2000</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn2</span>(<span class="params">result</span>) </span>&#123;</span>
+<span class="line">  <span class="built_in">console</span>.log(<span class="string">'fn2'</span>,result)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">fn().then(fn1).then(fn2)</span>
+<span class="line"><span class="comment">//[&#123;resolve:fn1,reject:undefined&#125;,&#123;resolve:fn2,reject:undefined&#125;]</span></span>
+</pre></td></tr></table></figure></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 webpack 的门把手/" class="prev">PREV</a><a href="/2017/10/14/摸到 ES6 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/14/摸到 Promise 的门把手/';
 var disqus_title = '摸到 Promise 的门把手';
 var disqus_url = 'http://yoursite.com/2017/10/14/摸到 Promise 的门把手/';

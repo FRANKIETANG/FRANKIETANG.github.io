@@ -17,23 +17,40 @@
 <p><a href="http://www.ruanyifeng.com/blog/2012/08/how_to_read_diff.html" target="_blank" rel="external">读懂diff - 阮一峰</a></p>
 <h2 id="引用-jQuery"><a href="#引用-jQuery" class="headerlink" title="引用 jQuery"></a>引用 jQuery</h2><ul>
 <li><p><code>npm i -S jquery</code></p>
-<pre><code> import _ from &#39;lodash&#39;
-+import j from &#39;jquery&#39;
-
- function component () {
--  var element = document.createElement(&#39;div&#39;);
-+  var element = j(&#39;&lt;div&gt;&lt;/div&gt;&#39;);
-
-   /* lodash is required for the next line to work */
--  element.innerHTML = _.join([&#39;Hello&#39;,&#39;webpack&#39;], &#39; &#39;);
-+  element.html(_.join([&#39;Hello&#39;,&#39;webpack&#39;], &#39; &#39;))
-
--  return element;
-+  return element.get(0);
- }
-
- document.body.appendChild(component());
-</code></pre></li>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+</pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span></span>
+<span class="line">+<span class="keyword">import</span> j <span class="keyword">from</span> <span class="string">'jquery'</span></span>
+<span class="line"></span>
+<span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">component</span> (<span class="params"></span>) </span>&#123;</span>
+<span class="line">-  <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span>
+<span class="line">+  <span class="keyword">var</span> element = j(<span class="string">'&lt;div&gt;&lt;/div&gt;'</span>);</span>
+<span class="line"></span>
+<span class="line">   <span class="comment">/* lodash is required for the next line to work */</span></span>
+<span class="line">-  element.innerHTML = _.join([<span class="string">'Hello'</span>,<span class="string">'webpack'</span>], <span class="string">' '</span>);</span>
+<span class="line">+  element.html(_.join([<span class="string">'Hello'</span>,<span class="string">'webpack'</span>], <span class="string">' '</span>))</span>
+<span class="line"></span>
+<span class="line">-  <span class="keyword">return</span> element;</span>
+<span class="line">+  <span class="keyword">return</span> element.get(<span class="number">0</span>);</span>
+<span class="line"> &#125;</span>
+<span class="line"></span>
+<span class="line"> <span class="built_in">document</span>.body.appendChild(component());</span>
+</pre></td></tr></table></figure>
+</li>
 <li><p><code>./node_modules/.bin/webpack src/index.js dist/bundle.js</code> 跑这句话</p>
 </li>
 <li><p>点击 commits 看看有什么变化</p>
@@ -43,34 +60,54 @@
 </ul>
 <h2 id="做一点改良"><a href="#做一点改良" class="headerlink" title="做一点改良"></a>做一点改良</h2><ul>
 <li><p>我们可以在根目录搞一个 <code>webpack.config.js</code>，在里面写上一点代码。</p>
-<pre><code>var path = require(&#39;path&#39;)
-
-module.exports = {
-    entry: &#39;./src/index.js&#39;,
-    output: {
-        filename: &#39;bundle.js&#39;,
-        path: path.resolve(__dirname, &#39;dist&#39;)
-    }
-}
-</code></pre><p>重点是这三个玩意 src/index.js 、dist 和 bundle.js 在哪就行，方便我们后面改。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line">var <span class="built_in">path</span> = <span class="built_in">require</span>(<span class="string">'path'</span>)</span>
+<span class="line"></span>
+<span class="line">module.exports = &#123;</span>
+<span class="line">    entry: <span class="string">'./src/index.js'</span>,</span>
+<span class="line">    <span class="built_in">output</span>: &#123;</span>
+<span class="line">        filename: <span class="string">'bundle.js'</span>,</span>
+<span class="line">        <span class="built_in">path</span>: <span class="built_in">path</span>.resolve(__dirname, <span class="string">'dist'</span>)</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>重点是这三个玩意 src/index.js 、dist 和 bundle.js 在哪就行，方便我们后面改。</p>
 </li>
 <li><p>然后我们就可以用上这句 <code>./node_modules/.bin/webpack --config webpack.config.js</code></p>
 </li>
 <li><p>或者我们可以进行下面的改良</p>
-<pre><code>  &quot;scripts&quot;: {
-    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
-    &quot;webpack&quot;: &quot;webpack&quot;
-  },
-  &quot;keywords&quot;: [],
-</code></pre><p>然后运行 npm run webpack</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span>
+<span class="line">  <span class="string">"test"</span>: <span class="string">"echo \"</span><span class="keyword">Error</span>: <span class="keyword">no</span> <span class="keyword">test</span> specified\<span class="string">" &amp;&amp; exit 1"</span>,</span>
+<span class="line">  <span class="string">"webpack"</span>: <span class="string">"webpack"</span></span>
+<span class="line">&#125;,</span>
+<span class="line"><span class="string">"keywords"</span>: [],</span>
+</pre></td></tr></table></figure>
+<p>然后运行 npm run webpack</p>
 </li>
 </ul>
 <h2 id="尝试-import-一个自己的文件"><a href="#尝试-import-一个自己的文件" class="headerlink" title="尝试 import 一个自己的文件"></a>尝试 import 一个自己的文件</h2><ul>
 <li><p>创建一个 <code>foo.js</code></p>
-<pre><code>export default function(){
-    return &#39;tangkalun&#39;
-}
-</code></pre></li>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">    <span class="keyword">return</span> <span class="string">'tangkalun'</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+</li>
 <li><p>然后在 <code>index.js</code> 加上 <code>import foo from &#39;./foo&#39;</code>，顺便 <code>console.log</code> 一下</p>
 </li>
 <li><p><code>npm run webpack</code></p>
@@ -80,15 +117,24 @@ module.exports = {
 <li><p><a href="https://webpack.js.org/guides/production/" target="_blank" rel="external">webpack 自带的</a> 支持所有 <a href="https://github.com/mishoo/UglifyJS2#usage" target="_blank" rel="external">UglifyJS 选项</a></p>
 </li>
 <li><p>在 <code>webpack.config.js</code> 加上这样一句话，UglifyJS 的选项可以一个都不加</p>
-<pre><code>var webpack = require(&#39;webpack&#39;);
-
-module.exports = {
-  /*...*/
-  plugins:[
-    new webpack.optimize.UglifyJsPlugin()
-  ]
-};
-</code></pre></li>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">module</span>.exports = &#123;</span>
+<span class="line">  <span class="comment">/*...*/</span></span>
+<span class="line">  plugins:[</span>
+<span class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin()</span>
+<span class="line">  ]</span>
+<span class="line">&#125;;</span>
+</pre></td></tr></table></figure>
+</li>
 <li><p><code>npm run webpack</code></p>
 </li>
 <li><p>压完了</p>

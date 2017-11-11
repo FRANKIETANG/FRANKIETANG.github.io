@@ -18,100 +18,189 @@
 </blockquote>
 <p>所以说更新一个元素的唯一方法就是新的元素</p>
 <p>我们改一下 index.js</p>
-<pre><code>function tick() {
-  const element = (
-    &lt;div&gt;
-      &lt;h1&gt;Hello, world!&lt;/h1&gt;
-      &lt;h2&gt;It is {new Date().toLocaleTimeString()}.&lt;/h2&gt;
-    &lt;/div&gt;
-  );
-  ReactDOM.render(
-    element,
-    document.getElementById(&#39;root&#39;)
-  );
-}
-
-setInterval(tick, 1000);
-</code></pre><p>这个示例通过 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval" target="_blank" rel="external"><code>setInterval()</code></a> 方法，每秒钟调用一次 <code>ReactDOM.render()</code>.</p>
-<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><pre><code>class Welcome extends React.Component {
-    render() {
-        return &lt;h1&gt;Component&lt;/h1&gt;
-    }
-}
-
-ReactDOM.render(
-    &lt;Welcome/&gt;,
-    document.getElementById(&#39;root&#39;)
-)
-</code></pre><p>这样我们就造了一个 <code>&lt;Welcome/&gt;</code> 的组件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">tick</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">  <span class="keyword">const</span> element = (</span>
+<span class="line">    &lt;div&gt;</span>
+<span class="line">      &lt;h1&gt;Hello, world!<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span>
+<span class="line">      &lt;h2&gt;It is &#123;<span class="keyword">new</span> <span class="built_in">Date</span>().toLocaleTimeString()&#125;.&lt;<span class="regexp">/h2&gt;</span></span>
+<span class="line"><span class="regexp">    &lt;/</span>div&gt;</span>
+<span class="line">  );</span>
+<span class="line">  ReactDOM.render(</span>
+<span class="line">    element,</span>
+<span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span>
+<span class="line">  );</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">setInterval(tick, <span class="number">1000</span>);</span>
+</pre></td></tr></table></figure>
+<p>这个示例通过 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval" target="_blank" rel="external"><code>setInterval()</code></a> 方法，每秒钟调用一次 <code>ReactDOM.render()</code>.</p>
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span>
+<span class="line">    render() &#123;</span>
+<span class="line">        <span class="keyword">return</span> &lt;h1&gt;<span class="type">Component</span>&lt;/h1&gt;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="type">ReactDOM</span>.render(</span>
+<span class="line">    &lt;<span class="type">Welcome</span>/&gt;,</span>
+<span class="line">    document.getElementById(<span class="symbol">'roo</span>t')</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<p>这样我们就造了一个 <code>&lt;Welcome/&gt;</code> 的组件</p>
 <p><code>extends React.Component</code> 不能删掉。</p>
-<h2 id="组件成为一个单独代码"><a href="#组件成为一个单独代码" class="headerlink" title="组件成为一个单独代码"></a>组件成为一个单独代码</h2><pre><code>//src/Welcome.js
-import React from &#39;react&#39;
-
-class Welcome extends React.Component {
-    render() {
-        return &lt;h1&gt;Component&lt;/h1&gt;
-    }
-}
-
-export default Welcome
-</code></pre><p><code>import React from &#39;react&#39;</code> 这个是引用 React ，不写这一句就在这个组件代码里就用不了 <code>React.Component</code></p>
+<h2 id="组件成为一个单独代码"><a href="#组件成为一个单独代码" class="headerlink" title="组件成为一个单独代码"></a>组件成为一个单独代码</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//src/Welcome.js</span></span>
+<span class="line"><span class="keyword">import</span> <span class="type">React</span> from <span class="symbol">'reac</span>t'</span>
+<span class="line"></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span>
+<span class="line">    render() &#123;</span>
+<span class="line">        <span class="keyword">return</span> &lt;h1&gt;<span class="type">Component</span>&lt;/h1&gt;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">export <span class="keyword">default</span> <span class="type">Welcome</span></span>
+</pre></td></tr></table></figure>
+<p><code>import React from &#39;react&#39;</code> 这个是引用 React ，不写这一句就在这个组件代码里就用不了 <code>React.Component</code></p>
 <p><code>export</code> 和 <code>export default</code> 作用是导出常量/函数/文件/模块 这些</p>
 <p><code>export</code> 和 <code>import</code> 可以有多个，<code>export default</code> 只能有一个</p>
 <p><code>export</code> 导出导入的时候要加 {}，<code>export default</code> 则不需要</p>
 <p><a href="http://www.jianshu.com/p/edaf43e9384f" target="_blank" rel="external">ES6：export default 和 export 区别</a></p>
-<pre><code>//src/index.js
-import Welcome from &#39;./Welcome&#39;
-
-ReactDOM.render(
-  &lt;Welcome/&gt;,
-  document.getElementById(&#39;root&#39;)
-)
-</code></pre><h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><pre><code>//src/Welcome.js
-class Welcome extends React.Component {
-    render() {
-        return &lt;h1&gt;I am {this.props.name}&lt;/h1&gt;
-    }
-}
-//其中 class Welcome 变成 funciton Welcome
-</code></pre><pre><code>ReactDOM.render(
-    &lt;Welcome name=&quot;tangkalun&quot;/&gt;,
-    document.getElementById(&#39;root&#39;)
-)
-</code></pre><h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//src/index.js</span></span>
+<span class="line"><span class="keyword">import</span> Welcome <span class="keyword">from</span> <span class="string">'./Welcome'</span></span>
+<span class="line"></span>
+<span class="line">ReactDOM.render(</span>
+<span class="line">  &lt;Welcome/&gt;,</span>
+<span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//src/Welcome.js</span></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span>
+<span class="line">    render() &#123;</span>
+<span class="line">        <span class="keyword">return</span> &lt;h1&gt;<span class="type">I</span> am &#123;<span class="keyword">this</span>.props.name&#125;&lt;/h1&gt;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="comment">//其中 class Welcome 变成 funciton Welcome</span></span>
+</pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span>
+<span class="line">    &lt;Welcome name=<span class="string">"tangkalun"</span>/&gt;,</span>
+<span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<h2 id="state"><a href="#state" class="headerlink" title="state"></a>state</h2><blockquote>
 <p>组件不能改变得到的 props，那么组件中可以变的东西放在哪呢？答案是 state（函数形式的组件不支持 state）。</p>
 </blockquote>
-<pre><code>//src/Welcome.js
-class Welcome extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            date: new Date()
-        }
-    }
-    render() {
-        return (
-            &lt;div&gt;
-                &lt;h1&gt;I am {this.props.name}&lt;/h1&gt;
-                &lt;h2&gt;{this.state.date.toString()}.&lt;/h2&gt;                
-            &lt;/div&gt;
-        )
-    }
-}
-</code></pre><h2 id="改变-state"><a href="#改变-state" class="headerlink" title="改变 state"></a>改变 state</h2><p>这里我们可以用 <code>setState()</code> 来改变 state。</p>
-<pre><code>//在 constructor 里加
-setInterval(function(){
-  this.state = {
-    date: new Date()
-  }
-})
-</code></pre><p>这上面的代码是有问题的，实际上还要 <code>.bind(this)</code></p>
-<pre><code>setInterval(function(){
-  this.setState({
-    date: new Date()
-  })
-}.bind(this))
-</code></pre><blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//src/Welcome.js</span></span>
+<span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Welcome</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span>
+<span class="line">    constructor(props)&#123;</span>
+<span class="line">        <span class="keyword">super</span>(props)</span>
+<span class="line">        <span class="keyword">this</span>.state = &#123;</span>
+<span class="line">            date: <span class="keyword">new</span> <span class="type">Date</span>()</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">    render() &#123;</span>
+<span class="line">        <span class="keyword">return</span> (</span>
+<span class="line">            &lt;div&gt;</span>
+<span class="line">                &lt;h1&gt;<span class="type">I</span> am &#123;<span class="keyword">this</span>.props.name&#125;&lt;/h1&gt;</span>
+<span class="line">                &lt;h2&gt;&#123;<span class="keyword">this</span>.state.date.toString()&#125;.&lt;/h2&gt;                </span>
+<span class="line">            &lt;/div&gt;</span>
+<span class="line">        )</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="改变-state"><a href="#改变-state" class="headerlink" title="改变 state"></a>改变 state</h2><p>这里我们可以用 <code>setState()</code> 来改变 state。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//在 constructor 里加</span></span>
+<span class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">  <span class="keyword">this</span>.state = &#123;</span>
+<span class="line">    date: <span class="keyword">new</span> <span class="built_in">Date</span>()</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure>
+<p>这上面的代码是有问题的，实际上还要 <code>.bind(this)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+</pre></td><td class="code"><pre><span class="line">setInterval(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">  <span class="keyword">this</span>.setState(&#123;</span>
+<span class="line">    date: <span class="keyword">new</span> <span class="built_in">Date</span>()</span>
+<span class="line">  &#125;)</span>
+<span class="line">&#125;.bind(<span class="keyword">this</span>))</span>
+</pre></td></tr></table></figure>
+<blockquote>
 <p>The callback is made in a different context. You need to <code>bind</code> to <code>this</code> in order to have access inside the callback</p>
 </blockquote>
 <p><a href="https://stackoverflow.com/questions/31045716/react-this-setstate-is-not-a-function" target="_blank" rel="external">React this.setState is not a function</a></p>

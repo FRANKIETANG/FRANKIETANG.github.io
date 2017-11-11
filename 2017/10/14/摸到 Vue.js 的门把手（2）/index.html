@@ -1,26 +1,49 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 Vue.js 的门把手（2） · 付林恒的博客</title><meta name="description" content="摸到 Vue.js 的门把手（2） - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 Vue.js 的门把手（2）</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-Vue-js-的门把手（2）"><a href="#摸到-Vue-js-的门把手（2）" class="headerlink" title="摸到 Vue.js 的门把手（2）"></a>摸到 Vue.js 的门把手（2）</h1><p>用 vue-cli 快速搭建</p>
-<pre><code>npm init -y
-npm install -g vue-cli
-vue init webpack .
-//全部回车
-npm i
-npm run dev
-</code></pre><h2 id="项目分三组件"><a href="#项目分三组件" class="headerlink" title="项目分三组件"></a>项目分三组件</h2><p><code>&lt;Topbar/&gt;</code> / <code>&lt;ResumeEditor/&gt;</code> / <code>&lt;ResumePreview/&gt;</code></p>
-<h2 id="禁用-ESLint"><a href="#禁用-ESLint" class="headerlink" title="禁用 ESLint"></a>禁用 ESLint</h2><pre><code>//build/webpack.base.conf.js
-  module: {
-    rules: [
-      //{
-        //test: /\.(js|vue)$/,
-        //loader: &#39;eslint-loader&#39;,
-        //enforce: &quot;pre&quot;,
-        //include: [resolve(&#39;src&#39;), resolve(&#39;test&#39;)],
-        //options: {
-          //formatter: eslintFriendlyFormatter
-        //}
-      //},
-</code></pre><h2 id="GitHub-预览"><a href="#GitHub-预览" class="headerlink" title="GitHub 预览"></a>GitHub 预览</h2><pre><code>//config/index.js
-assetsPublicPath: &#39;/vue-resume/dist&#39;,
-</code></pre><p><code>npm run build</code></p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line">npm init -<span class="built_in">y</span></span>
+<span class="line">npm install -<span class="keyword">g</span> vue-<span class="keyword">cli</span></span>
+<span class="line">vue init webpack .</span>
+<span class="line"><span class="comment">//全部回车</span></span>
+<span class="line">npm <span class="built_in">i</span></span>
+<span class="line">npm <span class="keyword">run</span> dev</span>
+</pre></td></tr></table></figure>
+<h2 id="项目分三组件"><a href="#项目分三组件" class="headerlink" title="项目分三组件"></a>项目分三组件</h2><p><code>&lt;Topbar/&gt;</code> / <code>&lt;ResumeEditor/&gt;</code> / <code>&lt;ResumePreview/&gt;</code></p>
+<h2 id="禁用-ESLint"><a href="#禁用-ESLint" class="headerlink" title="禁用 ESLint"></a>禁用 ESLint</h2><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//build/webpack.base.conf.js</span></span>
+<span class="line"><span class="symbol">  module:</span> &#123;</span>
+<span class="line"><span class="symbol">    rules:</span> [</span>
+<span class="line">      <span class="comment">//&#123;</span></span>
+<span class="line">        <span class="comment">//test: /\.(js|vue)$/,</span></span>
+<span class="line">        <span class="comment">//loader: 'eslint-loader',</span></span>
+<span class="line">        <span class="comment">//enforce: "pre",</span></span>
+<span class="line">        <span class="comment">//include: [resolve('src'), resolve('test')],</span></span>
+<span class="line">        <span class="comment">//options: &#123;</span></span>
+<span class="line">          <span class="comment">//formatter: eslintFriendlyFormatter</span></span>
+<span class="line">        <span class="comment">//&#125;</span></span>
+<span class="line">      <span class="comment">//&#125;,</span></span>
+</pre></td></tr></table></figure>
+<h2 id="GitHub-预览"><a href="#GitHub-预览" class="headerlink" title="GitHub 预览"></a>GitHub 预览</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//config/index.js</span></span>
+<span class="line"><span class="string">assetsPublicPath:</span> <span class="string">'/vue-resume/dist'</span>,</span>
+</pre></td></tr></table></figure>
+<p><code>npm run build</code></p>
 <p><code>https://frankietang.github.io/vue-resume/dist/#/</code></p>
 <h2 id="使用-SCSS"><a href="#使用-SCSS" class="headerlink" title="使用 SCSS"></a>使用 SCSS</h2><p><code>npm install --save  sass-loader node-sass</code></p>
 <h2 id="SVG-合并和使用方法"><a href="#SVG-合并和使用方法" class="headerlink" title="SVG 合并和使用方法"></a>SVG 合并和使用方法</h2><ul>
@@ -28,84 +51,153 @@ assetsPublicPath: &#39;/vue-resume/dist&#39;,
 <li><a href="https://github.com/FRANKIETANG/vue-resume/commit/78556c0f7cb18d20e078f3abbbb85fd9b4c8ed43" target="_blank" rel="external">运行 node build/svg-symbol.js</a></li>
 <li><a href="https://github.com/FRANKIETANG/vue-resume/commit/476cec015bbea1e7fc55bbfb33ba627c68353084" target="_blank" rel="external">将 SVG 插入 body 中</a></li>
 </ul>
-<pre><code>//任意地方
-&lt;svg&gt;
-  &lt;use xlink:href=&quot;#icon-xxx&quot;&gt;&lt;/use&gt;
-&lt;/svg&gt;
-</code></pre><p><strong>值得注意的是，之前的 ResumeEditor 中的 data 是对象，对象是无序的，应该用数组让项目有一个完整的顺序</strong></p>
-<h2 id="填写区核心代码"><a href="#填写区核心代码" class="headerlink" title="填写区核心代码"></a>填写区核心代码</h2><pre><code>        &lt;ol class=&quot;panels&quot;&gt;
-            &lt;li v-for=&quot;item in resume.config&quot; 
-            v-show=&quot;item.field === selected&quot;&gt;
-                &lt;div v-if=&quot;resume[item.field] instanceof Array&quot;&gt;
-                    &lt;div class=&quot;subitem&quot; v-for=&quot;subitem in resume[item.field]&quot;&gt;
-                        &lt;div class=&quot;resumeField&quot; v-for=&quot;(value,key) in subitem&quot;&gt;
-                            &lt;label&gt;{{key}}&lt;/label&gt;
-                            &lt;input type=&quot;text&quot; :value=&quot;value&quot;&gt;                            
-                        &lt;/div&gt;
-                        &lt;hr&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-                &lt;div v-else class=&quot;resumeField&quot; 
-                v-for=&quot;(value,key) in resume[item.field]&quot;&gt;
-                    &lt;label&gt;{{key}}&lt;/label&gt;
-                    &lt;input type=&quot;text&quot; 
-                    v-model=&quot;resume[item.field][key]&quot;&gt;
-                &lt;/div&gt;
-            &lt;/li&gt;
-        &lt;/ol&gt;
-</code></pre><h2 id="如何把填进去的数据放到预览页面呢？"><a href="#如何把填进去的数据放到预览页面呢？" class="headerlink" title="如何把填进去的数据放到预览页面呢？"></a>如何把填进去的数据放到预览页面呢？</h2><p>可以做一个公共数据储存区域</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">//任意地方</span>
+<span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span></span>
+<span class="line">  <span class="tag">&lt;<span class="name">use</span> <span class="attr">xlink:href</span>=<span class="string">"#icon-xxx"</span>&gt;</span><span class="tag">&lt;/<span class="name">use</span>&gt;</span></span>
+<span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span>
+</pre></td></tr></table></figure>
+<p><strong>值得注意的是，之前的 ResumeEditor 中的 data 是对象，对象是无序的，应该用数组让项目有一个完整的顺序</strong></p>
+<h2 id="填写区核心代码"><a href="#填写区核心代码" class="headerlink" title="填写区核心代码"></a>填写区核心代码</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+</pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">ol</span> class=<span class="string">"panels"</span>&gt;</span>
+<span class="line">    &lt;<span class="selector-tag">li</span> v-<span class="keyword">for</span>=<span class="string">"item in resume.config"</span> </span>
+<span class="line">    v-show=<span class="string">"item.field === selected"</span>&gt;</span>
+<span class="line">        &lt;<span class="selector-tag">div</span> v-<span class="keyword">if</span>=<span class="string">"resume[item.field] instanceof Array"</span>&gt;</span>
+<span class="line">            &lt;<span class="selector-tag">div</span> class=<span class="string">"subitem"</span> v-<span class="keyword">for</span>=<span class="string">"subitem in resume[item.field]"</span>&gt;</span>
+<span class="line">                &lt;<span class="selector-tag">div</span> class=<span class="string">"resumeField"</span> v-<span class="keyword">for</span>=<span class="string">"(value,key) in subitem"</span>&gt;</span>
+<span class="line">                    &lt;label&gt;&#123;&#123;key&#125;&#125;&lt;/label&gt;</span>
+<span class="line">                    &lt;<span class="selector-tag">input</span> type=<span class="string">"text"</span> :value=<span class="string">"value"</span>&gt;                            </span>
+<span class="line">                &lt;/div&gt;</span>
+<span class="line">                &lt;hr&gt;</span>
+<span class="line">            &lt;/div&gt;</span>
+<span class="line">        &lt;/div&gt;</span>
+<span class="line">        &lt;<span class="selector-tag">div</span> v-<span class="keyword">else</span> class=<span class="string">"resumeField"</span> </span>
+<span class="line">        v-<span class="keyword">for</span>=<span class="string">"(value,key) in resume[item.field]"</span>&gt;</span>
+<span class="line">            &lt;label&gt;&#123;&#123;key&#125;&#125;&lt;/label&gt;</span>
+<span class="line">            &lt;<span class="selector-tag">input</span> type=<span class="string">"text"</span> </span>
+<span class="line">            v-model=<span class="string">"resume[item.field][key]"</span>&gt;</span>
+<span class="line">        &lt;/div&gt;</span>
+<span class="line">    &lt;/li&gt;</span>
+<span class="line">&lt;/ol&gt;</span>
+</pre></td></tr></table></figure>
+<h2 id="如何把填进去的数据放到预览页面呢？"><a href="#如何把填进去的数据放到预览页面呢？" class="headerlink" title="如何把填进去的数据放到预览页面呢？"></a>如何把填进去的数据放到预览页面呢？</h2><p>可以做一个公共数据储存区域</p>
 <p>填写区填进去的数据先放到公共数据再传到预览区</p>
 <h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p><a href="https://jsfiddle.net/n9jmu5v7/1269/" target="_blank" rel="external">最基本的 Vuex 记数应用</a></p>
-<h2 id="getter-与-setter"><a href="#getter-与-setter" class="headerlink" title="getter 与 setter"></a>getter 与 setter</h2><pre><code>computed: {
-  fullName: {
-    // getter
-    get: function () {
-      return this.firstName + &#39; &#39; + this.lastName
-    },
-    // setter
-    set: function (newValue) {
-      var names = newValue.split(&#39; &#39;)
-      this.firstName = names[0]
-      this.lastName = names[names.length - 1]
-    }
-  }
-}
-</code></pre><h2 id="提交载荷（Payload）"><a href="#提交载荷（Payload）" class="headerlink" title="提交载荷（Payload）"></a>提交载荷（Payload）</h2><p>你可以向 <code>store.commit</code> 传入额外的参数，即 mutation 的 <strong>载荷（payload）</strong>：</p>
-<pre><code>// ...
-mutations: {
-  increment (state, n) {
-    state.count += n
-  }
-}
-
-store.commit(&#39;increment&#39;, 10)
-</code></pre><p>在大多数情况下，载荷应该是一个对象，这样可以包含多个字段并且记录的 mutation 会更易读：</p>
-<pre><code>// ...
-mutations: {
-  increment (state, payload) {
-    state.count += payload.amount
-  }
-}
-
-store.commit(&#39;increment&#39;, {
-  amount: 10
-})
-</code></pre><h2 id="store"><a href="#store" class="headerlink" title="$store"></a>$store</h2><p>这个 <code>$</code> 在 Vue 里是代表全局的意思</p>
+<h2 id="getter-与-setter"><a href="#getter-与-setter" class="headerlink" title="getter 与 setter"></a>getter 与 setter</h2><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">computed: &#123;</span>
+<span class="line">  fullName: &#123;</span>
+<span class="line">    <span class="comment">// getter</span></span>
+<span class="line">    <span class="keyword">get</span>: <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span>
+<span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName</span>
+<span class="line">    &#125;,</span>
+<span class="line">    <span class="comment">// setter</span></span>
+<span class="line">    <span class="keyword">set</span>: <span class="function"><span class="keyword">function</span> <span class="params">(newValue)</span> </span>&#123;</span>
+<span class="line">      <span class="keyword">var</span> names = newValue.split(<span class="string">' '</span>)</span>
+<span class="line">      <span class="keyword">this</span>.firstName = names[<span class="number">0</span>]</span>
+<span class="line">      <span class="keyword">this</span>.lastName = names[names.length - <span class="number">1</span>]</span>
+<span class="line">    &#125;</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<h2 id="提交载荷（Payload）"><a href="#提交载荷（Payload）" class="headerlink" title="提交载荷（Payload）"></a>提交载荷（Payload）</h2><p>你可以向 <code>store.commit</code> 传入额外的参数，即 mutation 的 <strong>载荷（payload）</strong>：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line">// ...</span>
+<span class="line">mutations: &#123;</span>
+<span class="line">  increment (<span class="keyword">state</span>, n) &#123;</span>
+<span class="line">    <span class="keyword">state</span>.count += n</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">store.commit('increment', <span class="number">10</span>)</span>
+</pre></td></tr></table></figure>
+<p>在大多数情况下，载荷应该是一个对象，这样可以包含多个字段并且记录的 mutation 会更易读：</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line">// ...</span>
+<span class="line">mutations: &#123;</span>
+<span class="line">  increment (<span class="keyword">state</span>, payload) &#123;</span>
+<span class="line">    <span class="keyword">state</span>.count += payload.amount</span>
+<span class="line">  &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">store.commit('increment', &#123;</span>
+<span class="line">  amount: <span class="number">10</span></span>
+<span class="line">&#125;)</span>
+</pre></td></tr></table></figure>
+<h2 id="store"><a href="#store" class="headerlink" title="$store"></a>$store</h2><p>这个 <code>$</code> 在 Vue 里是代表全局的意思</p>
 <h2 id="多次-import-同一个文件"><a href="#多次-import-同一个文件" class="headerlink" title="多次 import 同一个文件"></a>多次 import 同一个文件</h2><p>Node对引入的模块都会进行缓存（缓存的是编译和执行后的对象），减少二次引入开销；<br>在Node的加载机制中，缓存的优先级是最高的；<br>这一点同时适用于不同的模块加载机制，无论ES2015的import还是CommonJS的require；</p>
 <h2 id="CSS-white-space-pre-line"><a href="#CSS-white-space-pre-line" class="headerlink" title="CSS white-space: pre-line"></a>CSS white-space: pre-line</h2><p>去除一行文本中的空格，但是保留一行的换行符，作用是防止用户在输入框输入空格而产生对用户不友好显示效果</p>
 <h2 id="Object-Path"><a href="#Object-Path" class="headerlink" title="Object-Path"></a>Object-Path</h2><p><a href="https://github.com/mariocasciaro/object-path" target="_blank" rel="external">object-path</a></p>
 <p><a href="https://satanwoo.github.io/2015/11/05/Object-Path-Source-Code/" target="_blank" rel="external">Object-Path 源码解读</a></p>
 <h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p><code>Object.assign()</code> 方法用于将所有可枚举的属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</p>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="external">Object.assign()</a></p>
-<h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><pre><code>//旧版本
-components: {
-  &#39;MyDialog&#39;: MyDialog
-}
-//ES6
-components: {
-  MyDialog
-}
-</code></pre></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 Vue.js 的门把手（3）/" class="prev">PREV</a><a href="/2017/10/14/摸到 Vue.js 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+<h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//旧版本</span></span>
+<span class="line"><span class="string">components:</span> &#123;</span>
+<span class="line">  <span class="string">'MyDialog'</span>: MyDialog</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="comment">//ES6</span></span>
+<span class="line"><span class="string">components:</span> &#123;</span>
+<span class="line">  MyDialog</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 Vue.js 的门把手（3）/" class="prev">PREV</a><a href="/2017/10/14/摸到 Vue.js 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/14/摸到 Vue.js 的门把手（2）/';
 var disqus_title = '摸到 Vue.js 的门把手（2）';
 var disqus_url = 'http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（2）/';

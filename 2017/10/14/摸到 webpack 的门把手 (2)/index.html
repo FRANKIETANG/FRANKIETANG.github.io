@@ -7,31 +7,50 @@
 <li>运行<a href="https://webpack.js.org/plugins/loader-options-plugin/#components/sidebar/sidebar.jsx" target="_blank" rel="external">LoaderOptionsPlugin</a></li>
 <li>设置Node环境变量</li>
 </ul>
-<pre><code>//运行 webpack -p 会通过如下方式调用 DefinePlugin
-var webpack=require(&#39;webpack&#39;);
-
-module.exports={
-  plugins:[
-    new webpack DefinePlugin({
-      &#39;process.env.NODE_ENV&#39;: JSON.stringify(&#39;production&#39;)
-    })
-  ]
-}
-</code></pre><p><code>DefinePlugin</code> 在原始的源码中执行查找和替换操作. 在导入的代码中,任何出现 <code>process.env.NODE_ENV</code>的地方都会被替换为<code>”production”</code>. 因此, 形如<code>if (process.env.NODE_ENV !== ‘production’) console.log(‘…’)</code> 的代码就会等价于 <code>if (false) console.log(‘…’)</code> 并且最终通过<code>UglifyJS</code>等价替换掉.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">//运行 webpack -p 会通过如下方式调用 DefinePlugin</span></span>
+<span class="line"><span class="keyword">var</span> webpack=<span class="built_in">require</span>(<span class="string">'webpack'</span>);</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">module</span>.exports=&#123;</span>
+<span class="line">  plugins:[</span>
+<span class="line">    <span class="keyword">new</span> webpack DefinePlugin(&#123;</span>
+<span class="line">      <span class="string">'process.env.NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</span>
+<span class="line">    &#125;)</span>
+<span class="line">  ]</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p><code>DefinePlugin</code> 在原始的源码中执行查找和替换操作. 在导入的代码中,任何出现 <code>process.env.NODE_ENV</code>的地方都会被替换为<code>”production”</code>. 因此, 形如<code>if (process.env.NODE_ENV !== ‘production’) console.log(‘…’)</code> 的代码就会等价于 <code>if (false) console.log(‘…’)</code> 并且最终通过<code>UglifyJS</code>等价替换掉.</p>
 <p><a href="https://webpack.js.org/guides/public-path/" target="_blank" rel="external">webpack - public-path</a></p>
 <h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>每次写完代码都要 npm run webpack ，很麻烦，那我们需要 <code>webpack --progress --watch</code> 监听文件变动，只要我们保存了文件就会自动编译代码。</p>
 <p>在 npm script 加一句 <code>&quot;watch&quot;: &quot;webpack --progress --watch&quot;</code>，然后 npm run watch 试试</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>不但能刷新代码，还能刷新浏览器</p>
 <p>看到 Using webpack-dev-server 那里，它叫我们在根目录跑这句话</p>
-<pre><code>npm install --save-dev webpack-dev-server
-</code></pre><p>在 webpack.config.js 加点东西</p>
-<pre><code>devServer: {
-    contentBase: &#39;./dist&#39;
-},
-</code></pre><p>在 package.json 的 npm script 加点东西</p>
-<pre><code>&quot;start&quot;: &quot;webpack-dev-server --open&quot;
-</code></pre><p>成了，看下图。<br><img src="http://upload-images.jianshu.io/upload_images/3191557-494866b6ba1c3ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">npm install --<span class="built_in">save</span>-<span class="built_in">dev</span> webpack-<span class="built_in">dev</span>-server</span>
+</pre></td></tr></table></figure>
+<p>在 webpack.config.js 加点东西</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line"><span class="selector-tag">devServer</span>: &#123;</span>
+<span class="line">    <span class="attribute">contentBase</span>: <span class="string">'./dist'</span></span>
+<span class="line">&#125;,</span>
+</pre></td></tr></table></figure>
+<p>在 package.json 的 npm script 加点东西</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">"<span class="keyword">start</span><span class="string">": "</span>webpack-dev-<span class="keyword">server</span> <span class="comment">--open"</span></span>
+</pre></td></tr></table></figure>
+<p>成了，看下图。<br><img src="http://upload-images.jianshu.io/upload_images/3191557-494866b6ba1c3ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>如果我们改一下 src/bundle.js 就会发现</p>
 <ul>
 <li>bundle.js 自动打包</li>

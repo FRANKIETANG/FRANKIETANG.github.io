@@ -1,14 +1,22 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> deepin shadowsocks-qt5 全局翻了个墙 · 付林恒的博客</title><meta name="description" content="deepin shadowsocks-qt5 全局翻了个墙 - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">deepin shadowsocks-qt5 全局翻了个墙</h1><div class="post-info">Oct 25, 2017</div><div class="post-content"><h1 id="deepin-shadowsocks-qt5-全局翻了个墙"><a href="#deepin-shadowsocks-qt5-全局翻了个墙" class="headerlink" title="deepin shadowsocks-qt5 全局翻了个墙"></a>deepin shadowsocks-qt5 全局翻了个墙</h1><p>最近真的是非常时期 <code>git push</code> <code>git pull</code> <code>git clone</code> 全部显示了</p>
 <p>Connection closed by 192.30.255.113 port 22</p>
 <p>以下是解决办法</p>
-<pre><code>sudo apt-get install shadowsocks-qt5
-sudo apt-get install proxychains
-// 配置 /etc/proxychains.conf
-// 不要 socks4 127.0.0.1 9095 加上
-socks5 127.0.0.1 1080
-// 然后在每一条命令都加上
-proxychains
-</code></pre><p>关于怎么配 shadowsocks-qt5 网上一搜一大把，祝各位看到这篇文章能早日肉身翻墙吧。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+</pre></td><td class="code"><pre><span class="line">sudo apt-get install shadowsocks-qt5</span>
+<span class="line">sudo apt-get install proxychains</span>
+<span class="line"><span class="comment">// 配置 /etc/proxychains.conf</span></span>
+<span class="line"><span class="comment">// 不要 socks4 127.0.0.1 9095 加上</span></span>
+<span class="line">socks5 <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="number">1080</span></span>
+<span class="line"><span class="comment">// 然后在每一条命令都加上</span></span>
+<span class="line">proxychains</span>
+</pre></td></tr></table></figure>
+<p>关于怎么配 shadowsocks-qt5 网上一搜一大把，祝各位看到这篇文章能早日肉身翻墙吧。</p>
 </div></article></div></main><footer><div class="paginator"><a href="/2017/11/05/补基础：React-Redux-ES6-webpack-babel/" class="prev">PREV</a><a href="/2017/10/24/补基础：函数/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/25/deepin shadowsocks-qt5 全局翻了个墙/';
 var disqus_title = 'deepin shadowsocks-qt5 全局翻了个墙';

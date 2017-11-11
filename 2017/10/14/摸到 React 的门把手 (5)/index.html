@@ -6,20 +6,34 @@
 <li>重新打开页面的时候，将 localStorage 里面的字符串变为对象赋值给 todoList</li>
 </ul>
 <p>封装 localStorage 封装成两个函数</p>
-<pre><code>export function save(key,value){
-    return window.localStorage.setItem(key,
-        JSON.stringify(value))
-}
-
-export function load(key){
-    return JSON.parse(window.localStorage.getItem(key))
-}
-</code></pre><p>load 和 save 的调用</p>
-<pre><code>// load
-localStore.load(&#39;todoList&#39;) || []
-// save
-localStore.save(&#39;todoList&#39;,this.state.todoList)
-</code></pre><p><img src="http://upload-images.jianshu.io/upload_images/3191557-7c1b95c23aa12525.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">save</span>(<span class="params">key,value</span>)</span>&#123;</span>
+<span class="line">    <span class="keyword">return</span> <span class="built_in">window</span>.localStorage.setItem(key,</span>
+<span class="line">        <span class="built_in">JSON</span>.stringify(value))</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">load</span>(<span class="params">key</span>)</span>&#123;</span>
+<span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">window</span>.localStorage.getItem(key))</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>load 和 save 的调用</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// load</span></span>
+<span class="line"><span class="selector-tag">localStore</span><span class="selector-class">.load</span>(<span class="string">'todoList'</span>) || <span class="selector-attr">[]</span></span>
+<span class="line"><span class="comment">// save</span></span>
+<span class="line"><span class="selector-tag">localStore</span><span class="selector-class">.save</span>(<span class="string">'todoList'</span>,this.state.todoList)</span>
+</pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3191557-7c1b95c23aa12525.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p><code>||</code> 居然还有这种操作？可以用来定义默认参数？</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-0dcd24f922e4a0aa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>不过 ES6 有了新的默认参数用法</p>
@@ -33,11 +47,15 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 <p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html" target="_blank" rel="external">看文档</a></p>
 <p><a href="https://leancloud.cn/docs/sdk_setup-js.html" target="_blank" rel="external">JavaScript SDK 安装指南</a></p>
 <p>安装</p>
-<pre><code>$ sudo npm install leancloud-storage --save
-</code></pre><p>复制这一段代码到我们的App.js</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">$ sudo npm <span class="keyword">install</span> leancloud-<span class="keyword">storage</span> <span class="comment">--save</span></span>
+</pre></td></tr></table></figure>
+<p>复制这一段代码到我们的App.js</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-49cd74d87191419f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<pre><code>ping api.leancloud.cn
-</code></pre><p>验证结果如下则正常</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line">ping api<span class="selector-class">.leancloud</span><span class="selector-class">.cn</span></span>
+</pre></td></tr></table></figure>
+<p>验证结果如下则正常</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-e10c06115a5054f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>然后我们测试下面这一段代码。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-d0ceaa7fa89d6cc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -50,11 +68,16 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 <p>还要让它变成一个选项卡来回切换</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-caefa908df34d17f.gif?imageMogr2/auto-orient/strip" alt=""></p>
 <p>把 form 表单的 input 和 formData 绑定用下面这种方法是不行的</p>
-<pre><code>    changeUsername(e){
-        this.state.formData.username = e.target.value
-        this.setState(this.state)
-    }
-</code></pre><p>其实是不行的，原因看 <a href="https://stackoverflow.com/questions/37755997/why-cant-i-directly-modify-a-components-state-really" target="_blank" rel="external">Why can’t I directly modify a component’s state, really?</a> 里面 <a href="https://stackoverflow.com/users/4945468/pranesh-ravi" target="_blank" rel="external">Pranesh Ravi</a> 的答案。</p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">changeUsername(e)&#123;</span>
+<span class="line">    this.<span class="keyword">state</span>.formData.username = e.target.value</span>
+<span class="line">    this.<span class="built_in">set</span>State(this.<span class="keyword">state</span>)</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>其实是不行的，原因看 <a href="https://stackoverflow.com/questions/37755997/why-cant-i-directly-modify-a-components-state-really" target="_blank" rel="external">Why can’t I directly modify a component’s state, really?</a> 里面 <a href="https://stackoverflow.com/users/4945468/pranesh-ravi" target="_blank" rel="external">Pranesh Ravi</a> 的答案。</p>
 <blockquote>
 <p>Just a reminder: most basic methods for cloning in JS (<code>slice</code>, ES6 destructuring, etc.) are shallow. If you have a nested array or nested objects you’ll need to look at other methods of deep copying, e.g. <code>JSON.parse(JSON.stringify(obj))</code> (though this particular method won’t work if your object has circular references). </p>
 </blockquote>

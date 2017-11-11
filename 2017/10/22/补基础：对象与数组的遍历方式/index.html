@@ -12,219 +12,439 @@
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors" target="_blank" rel="external">getOwnPropertyDescriptors</a></li>
 </ul>
 </blockquote>
-<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><pre><code>let arr = [1, 2, 3]
-
-for(let i = 0, len = arr.length; i &lt; len; i++){
-      console.log(arr[i])
-}
-
-arr.forEach((it, index, self) =&gt; {
-      console.log(it, index, self)
-})
-// 1 0 [1,2,3]
-// 2 1 [1,2,3]
-// 3 2 [1,2,3]
-// 等于
-arr.forEach(console.log)
-</code></pre><h2 id="对象的遍历"><a href="#对象的遍历" class="headerlink" title="对象的遍历"></a>对象的遍历</h2><pre><code>let obj = {a: &#39;b&#39;, c: &#39;d&#39;}
-
-// 打印出
-// key a -&gt; b
-// key c -&gt; d
-
-for(let key in obj) {
-      console.log(`key ${key} -&gt; ${obj[key]}`)
-}
-
-// 要注意的是，for in 会遍历原型链上的属性
-// 但是并没有打印到 console.log(obj.toString) 这个值
-// 没有打印 key toString -&gt; [Function: toString]
-
-Object.prototype.test = &#39;mytest&#39;
-
-// key a -&gt; b
-// key c -&gt; d
-// key test -&gt; mytest
-// 说明确实会遍历找到原型链上的属性
-// 那为什么 toString 没有打印出来？
-
-console.log(Object.getOwnPropertyDescriptor(Object.prototype, &#39;toString&#39;))
-// {writable: true, enumerable: false, configurable: true, value: ƒ}
-// 通过 getOwnPropertyDescriptor 看到 enumerable 的确是 false ，说明了不可枚举。 
-// 所以说 Object.prototype 里面内置的方法大多数都是不可枚举的
-</code></pre><pre><code>// 那怎么可以只 for in 自身属性呢而不会遍历其他赋予到原型链上的属性呢？ （有的第三方库会在原型链上赋值）
-
-let obj = {a: &#39;b&#39;, c: &#39;d&#39;}
-
-Object.prototype.test = &#39;mytest&#39;
-
-for(let key in obj) {
-    // 只遍历自身属性 可以加一层判断
-    if(obj.hasOwnProperty(key)) {
-          console.log(`key ${key} -&gt; ${obj[key]}`)
-    }
-}
-</code></pre><pre><code>// 看一个使用场景
-function validUser(obj) {
-    // 同时具有name, age属性的为合法用户
-    return obj.hasOwnProperty(&#39;name&#39;) &amp;&amp; obj.hasOwnProperty(&#39;age&#39;)
-}
-
-console.log(validUser({name: &#39;mike&#39;})); // false;
-console.log(validUser({age: 15})); // false
-console.log(validUser({name: &#39;xiaohong&#39;, age: 18})); // true
-</code></pre><p>要注意不能用 <code>(!!obj.name &amp;&amp; !!obj.age)</code> 这种方法，要考虑到 <code>{age: 0}</code> 的可能性或者其他 如：<code>!!0 -&gt; false</code> <code>!!{} -&gt; true</code> <code>!![] -&gt; true</code> <code>!!&#39;&#39; -&gt; false</code></p>
-<pre><code>// 多个属性
-function validUser(obj) {
-    // 同时具有 name, age, sex 属性的为合法用户
-    // 若是上面那种做法，会导致多属性很麻烦
-    // return obj.hasOwnProperty(&#39;name&#39;) &amp;&amp; 
-    //          obj.hasOwnProperty(&#39;age&#39;) &amp;&amp;
-    //          obj.hasOwnProperty(&#39;sex&#39;)
-    // 以下为解决方法
-    return requiredFields.every((it) =&gt; {
-          return obj.hasOwnProperty(it)
-    })
-}
-
-// 可以先配置成一个数组, 改变量就好
-let requiredFields = [&#39;name&#39;, &#39;age&#39;, &#39;sex&#39;]
-
-console.log(validUser({name: &#39;mike&#39;})); // false;
-console.log(validUser({age: 15})); // false
-console.log(validUser({name: &#39;xiaohong&#39;, age: 18})); // true
-console.log(validUser({name: &#39;xiaohong&#39;, age: 18, sex: &#39;ddd&#39;})); // true
-</code></pre><h2 id="Object-keys-obj"><a href="#Object-keys-obj" class="headerlink" title="Object.keys(obj)"></a>Object.keys(obj)</h2><pre><code>// 另外一种遍历方法 Object.keys(obj)
-let obj = {a: &#39;b&#39;, c: &#39;d&#39;}
-
-Object.prototype.test = &#39;myTest&#39;
-
-Object.keys(obj).forEach((key) =&gt; {
-      console.log(`key ${key} -&gt; ${obj[key]}`)
-})
-
-// 这个方法只能遍历到自身可枚举属性，那有没有办法可以遍历到不可枚举属性呢？
-
-// 打印所有自身属性，包含不可枚举
-
-console.log(Object.getOwnPropertyNames(obj)) // [&quot;a&quot;, &quot;c&quot;, &quot;nonEnumerable&quot;]
-
-Object.getOwnPropertyNames(obj).forEach((key) =&gt; {
-      console.log(`key ${key} -&gt; ${obj[key]}`)
-})
-
-// key a -&gt; b
-// key c -&gt; d
-// key nonEnumerable -&gt; static
-
-// 设置不可枚举的方法
-Object.defineProperty(obj, &#39;nonEnumerable&#39;, {
-    enumerable: false,
-    configurable: false,
-    writable: false,
-    value: &#39;static&#39;
-});
-
-console.log(obj.nonEnumerable) // &#39;static&#39;
-console.log(obj.hasOwnProperty(&#39;nonEnumerable&#39;)) // ture
-// 说明 obj 自身有 nonEnumerable ，设置为 static
-</code></pre><h2 id="get-set"><a href="#get-set" class="headerlink" title="get - set"></a>get - set</h2><p>数据双向绑定</p>
-<pre><code>let obj = {a: &#39;b&#39;}
-
-// 可以这样
-Object.defineProperty(obj, &#39;c&#39;, {
-    get() {
-        // business logic 业务逻辑
-        // if(...) {
-        //      throw Error()
-        // } 
-        // return 3 
-          return 2
-    },
-    set() {
-           // 绑定逻辑 vue 的原理
-          console.log(&#39;setting value&#39;)
-    }
-});
-
-console.log(obj.c) // 在什么情况下会打印出 2 ？
-obj.c = 10         // 相当于运行了 set() 这个函数 打印出 setting value
-console.log(obj.c) // 仍然是 2
-
-// 也就是说可以变成一个私有变量
-</code></pre><pre><code>// 如果要设置深层次的赋值
-obj = {
-    a: {
-        b: {
-            c: {
-                d: 3
-            }
-        }
-    }
-}
-console.log(obj.a.b.c.d); // 3
-
-// 用 defineProperty
-Object.defineProperty(obj, &#39;_deep&#39;, {
-    get: function(){
-        return obj.a.b.c.d;
-    }
-});
-
-console.log(obj._deep); //3
-</code></pre><h2 id="怎么大小通吃"><a href="#怎么大小通吃" class="headerlink" title="怎么大小通吃"></a>怎么大小通吃</h2><pre><code>// 对象和数组一起遍历
-function _each(objOrArray, callback) {
-    if (Object.prototype.toString.call(objOrArray).toLowerCase() === &#39;[object array]&#39;){
-        objOrArray.forEach(callback); 
-    }
-    else if (Object.prototype.toString.call(objOrArray).toLowerCase() === &#39;[object object]&#39;){
-        for(let key in objOrArray){
-            if(objOrArray.hasOwnProperty(key)){
-                callback(key,objOrArray[key]);
-            }
-        }
-    }      
-}
-
-_each([1,2,3], function(it, index) {
-    console.log(it + index);  
-}); 
-// 1
-// 3
-// 5
-
-_each({a: &#39;b&#39;, c: &#39;d&#39;}, function(key, value) {
-    console.log(key + value);
-});
-// ab
-// cd
-</code></pre><pre><code>// 设置一个上下文
-function _each(objOrArray, callback, ctx){
-    if (Object.prototype.toString.call(objOrArray).toLowerCase() === &#39;[object array]&#39;){
-        objOrArray.forEach(callback, ctx || this); 
-    }
-    else if (Object.prototype.toString.call(objOrArray).toLowerCase() === &#39;[object object]&#39;){
-        for(let key in objOrArray){
-            if(objOrArray.hasOwnProperty(key)){
-                callback.call(ctx || this, key,objOrArray[key]);
-            }
-        }
-    }
-}
-
-_each([1,2,3], function(it, index) {
-    console.log(it + index + this.a);  
-}, {a: 3}); 
-// 4
-// 6
-// 8
-
-_each({a: &#39;b&#39;, c: &#39;d&#39;}, function(key, value) {
-    console.log(key + value + this.a);
-}, {a: &#39;e&#39;});
-// abe
-// cde
-</code></pre><p>三板斧 <code>typeof</code> <code>Array.isArray([1,2])</code> <code>(Object.prototype.toString.call([1,2])</code></p>
+<h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>, len = arr.length; i &lt; len; i++)&#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(arr[i])</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">arr.forEach(<span class="function">(<span class="params">it, index, self</span>) =&gt;</span> &#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(it, index, self)</span>
+<span class="line">&#125;)</span>
+<span class="line"><span class="comment">// 1 0 [1,2,3]</span></span>
+<span class="line"><span class="comment">// 2 1 [1,2,3]</span></span>
+<span class="line"><span class="comment">// 3 2 [1,2,3]</span></span>
+<span class="line"><span class="comment">// 等于</span></span>
+<span class="line">arr.forEach(<span class="built_in">console</span>.log)</span>
+</pre></td></tr></table></figure>
+<h2 id="对象的遍历"><a href="#对象的遍历" class="headerlink" title="对象的遍历"></a>对象的遍历</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 打印出</span></span>
+<span class="line"><span class="comment">// key a -&gt; b</span></span>
+<span class="line"><span class="comment">// key c -&gt; d</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 要注意的是，for in 会遍历原型链上的属性</span></span>
+<span class="line"><span class="comment">// 但是并没有打印到 console.log(obj.toString) 这个值</span></span>
+<span class="line"><span class="comment">// 没有打印 key toString -&gt; [Function: toString]</span></span>
+<span class="line"></span>
+<span class="line"><span class="built_in">Object</span>.prototype.test = <span class="string">'mytest'</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// key a -&gt; b</span></span>
+<span class="line"><span class="comment">// key c -&gt; d</span></span>
+<span class="line"><span class="comment">// key test -&gt; mytest</span></span>
+<span class="line"><span class="comment">// 说明确实会遍历找到原型链上的属性</span></span>
+<span class="line"><span class="comment">// 那为什么 toString 没有打印出来？</span></span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyDescriptor(<span class="built_in">Object</span>.prototype, <span class="string">'toString'</span>))</span>
+<span class="line"><span class="comment">// &#123;writable: true, enumerable: false, configurable: true, value: ƒ&#125;</span></span>
+<span class="line"><span class="comment">// 通过 getOwnPropertyDescriptor 看到 enumerable 的确是 false ，说明了不可枚举。 </span></span>
+<span class="line"><span class="comment">// 所以说 Object.prototype 里面内置的方法大多数都是不可枚举的</span></span>
+</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 那怎么可以只 for in 自身属性呢而不会遍历其他赋予到原型链上的属性呢？ （有的第三方库会在原型链上赋值）</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">Object</span>.prototype.test = <span class="string">'mytest'</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span>
+<span class="line">	<span class="comment">// 只遍历自身属性 可以加一层判断</span></span>
+<span class="line">	<span class="keyword">if</span>(obj.hasOwnProperty(key)) &#123;</span>
+<span class="line">      	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</span>
+<span class="line">	&#125;</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 看一个使用场景</span></span>
+<span class="line"><span class="selector-tag">function</span> <span class="selector-tag">validUser</span>(obj) &#123;</span>
+<span class="line">    <span class="comment">// 同时具有name, age属性的为合法用户</span></span>
+<span class="line">	<span class="selector-tag">return</span> <span class="selector-tag">obj</span><span class="selector-class">.hasOwnProperty</span>(<span class="string">'name'</span>) <span class="selector-tag">&amp;</span><span class="selector-tag">&amp;</span> <span class="selector-tag">obj</span><span class="selector-class">.hasOwnProperty</span>(<span class="string">'age'</span>)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="selector-tag">console</span><span class="selector-class">.log</span>(validUser(&#123;<span class="attribute">name</span>: <span class="string">'mike'</span>&#125;)); <span class="comment">// false;</span></span>
+<span class="line"><span class="selector-tag">console</span><span class="selector-class">.log</span>(validUser(&#123;<span class="attribute">age</span>: <span class="number">15</span>&#125;)); <span class="comment">// false</span></span>
+<span class="line"><span class="selector-tag">console</span><span class="selector-class">.log</span>(validUser(&#123;<span class="attribute">name</span>: <span class="string">'xiaohong'</span>, <span class="attribute">age</span>: <span class="number">18</span>&#125;)); <span class="comment">// true</span></span>
+</pre></td></tr></table></figure>
+<p>要注意不能用 <code>(!!obj.name &amp;&amp; !!obj.age)</code> 这种方法，要考虑到 <code>{age: 0}</code> 的可能性或者其他 如：<code>!!0 -&gt; false</code> <code>!!{} -&gt; true</code> <code>!![] -&gt; true</code> <code>!!&#39;&#39; -&gt; false</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 多个属性</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validUser</span>(<span class="params">obj</span>) </span>&#123;</span>
+<span class="line">    <span class="comment">// 同时具有 name, age, sex 属性的为合法用户</span></span>
+<span class="line">    <span class="comment">// 若是上面那种做法，会导致多属性很麻烦</span></span>
+<span class="line">	<span class="comment">// return obj.hasOwnProperty('name') &amp;&amp; </span></span>
+<span class="line">	<span class="comment">//	      obj.hasOwnProperty('age') &amp;&amp;</span></span>
+<span class="line">	<span class="comment">//	      obj.hasOwnProperty('sex')</span></span>
+<span class="line">	<span class="comment">// 以下为解决方法</span></span>
+<span class="line">	<span class="keyword">return</span> requiredFields.every(<span class="function">(<span class="params">it</span>) =&gt;</span> &#123;</span>
+<span class="line">      	<span class="keyword">return</span> obj.hasOwnProperty(it)</span>
+<span class="line">	&#125;)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 可以先配置成一个数组, 改变量就好</span></span>
+<span class="line"><span class="keyword">let</span> requiredFields = [<span class="string">'name'</span>, <span class="string">'age'</span>, <span class="string">'sex'</span>]</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">name</span>: <span class="string">'mike'</span>&#125;)); <span class="comment">// false;</span></span>
+<span class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">age</span>: <span class="number">15</span>&#125;)); <span class="comment">// false</span></span>
+<span class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">name</span>: <span class="string">'xiaohong'</span>, <span class="attr">age</span>: <span class="number">18</span>&#125;)); <span class="comment">// true</span></span>
+<span class="line"><span class="built_in">console</span>.log(validUser(&#123;<span class="attr">name</span>: <span class="string">'xiaohong'</span>, <span class="attr">age</span>: <span class="number">18</span>, <span class="attr">sex</span>: <span class="string">'ddd'</span>&#125;)); <span class="comment">// true</span></span>
+</pre></td></tr></table></figure>
+<h2 id="Object-keys-obj"><a href="#Object-keys-obj" class="headerlink" title="Object.keys(obj)"></a>Object.keys(obj)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 另外一种遍历方法 Object.keys(obj)</span></span>
+<span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">Object</span>.prototype.test = <span class="string">'myTest'</span></span>
+<span class="line"></span>
+<span class="line"><span class="built_in">Object</span>.keys(obj).forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</span>
+<span class="line">&#125;)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 这个方法只能遍历到自身可枚举属性，那有没有办法可以遍历到不可枚举属性呢？</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 打印所有自身属性，包含不可枚举</span></span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(obj)) <span class="comment">// ["a", "c", "nonEnumerable"]</span></span>
+<span class="line"></span>
+<span class="line"><span class="built_in">Object</span>.getOwnPropertyNames(obj).forEach(<span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(<span class="string">`key <span class="subst">$&#123;key&#125;</span> -&gt; <span class="subst">$&#123;obj[key]&#125;</span>`</span>)</span>
+<span class="line">&#125;)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// key a -&gt; b</span></span>
+<span class="line"><span class="comment">// key c -&gt; d</span></span>
+<span class="line"><span class="comment">// key nonEnumerable -&gt; static</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 设置不可枚举的方法</span></span>
+<span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'nonEnumerable'</span>, &#123;</span>
+<span class="line">    enumerable: <span class="literal">false</span>,</span>
+<span class="line">    configurable: <span class="literal">false</span>,</span>
+<span class="line">    writable: <span class="literal">false</span>,</span>
+<span class="line">    value: <span class="string">'static'</span></span>
+<span class="line">&#125;);</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(obj.nonEnumerable) <span class="comment">// 'static'</span></span>
+<span class="line"><span class="built_in">console</span>.log(obj.hasOwnProperty(<span class="string">'nonEnumerable'</span>)) <span class="comment">// ture</span></span>
+<span class="line"><span class="comment">// 说明 obj 自身有 nonEnumerable ，设置为 static</span></span>
+</pre></td></tr></table></figure>
+<h2 id="get-set"><a href="#get-set" class="headerlink" title="get - set"></a>get - set</h2><p>数据双向绑定</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+</pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> obj = &#123;a: <span class="string">'b'</span>&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 可以这样</span></span>
+<span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'c'</span>, &#123;</span>
+<span class="line">    <span class="keyword">get</span>() &#123;</span>
+<span class="line">    	<span class="comment">// business logic 业务逻辑</span></span>
+<span class="line">    	<span class="comment">// if(...) &#123;</span></span>
+<span class="line">        <span class="comment">//  	throw Error()</span></span>
+<span class="line">    	<span class="comment">// &#125; </span></span>
+<span class="line">    	<span class="comment">// return 3 </span></span>
+<span class="line">      	<span class="keyword">return</span> <span class="number">2</span></span>
+<span class="line">    &#125;,</span>
+<span class="line">    <span class="keyword">set</span>() &#123;</span>
+<span class="line">   		<span class="comment">// 绑定逻辑 vue 的原理</span></span>
+<span class="line">      	<span class="built_in">console</span>.log(<span class="string">'setting value'</span>)</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;);</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(obj.c) <span class="comment">// 在什么情况下会打印出 2 ？</span></span>
+<span class="line">obj.c = <span class="number">10</span>         <span class="comment">// 相当于运行了 set() 这个函数 打印出 setting value</span></span>
+<span class="line"><span class="built_in">console</span>.log(obj.c) <span class="comment">// 仍然是 2</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 也就是说可以变成一个私有变量</span></span>
+</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果要设置深层次的赋值</span></span>
+<span class="line">obj = &#123;</span>
+<span class="line">    a: &#123;</span>
+<span class="line">        b: &#123;</span>
+<span class="line">            c: &#123;</span>
+<span class="line">                d: <span class="number">3</span></span>
+<span class="line">            &#125;</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="built_in">console</span>.log(obj.a.b.c.d); <span class="comment">// 3</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 用 defineProperty</span></span>
+<span class="line"><span class="built_in">Object</span>.defineProperty(obj, <span class="string">'_deep'</span>, &#123;</span>
+<span class="line">    get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
+<span class="line">        <span class="keyword">return</span> obj.a.b.c.d;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;);</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(obj._deep); <span class="comment">//3</span></span>
+</pre></td></tr></table></figure>
+<h2 id="怎么大小通吃"><a href="#怎么大小通吃" class="headerlink" title="怎么大小通吃"></a>怎么大小通吃</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 对象和数组一起遍历</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_each</span>(<span class="params">objOrArray, callback</span>) </span>&#123;</span>
+<span class="line">    <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object array]'</span>)&#123;</span>
+<span class="line">        objOrArray.forEach(callback); </span>
+<span class="line">    &#125;</span>
+<span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object object]'</span>)&#123;</span>
+<span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> objOrArray)&#123;</span>
+<span class="line">            <span class="keyword">if</span>(objOrArray.hasOwnProperty(key))&#123;</span>
+<span class="line">                callback(key,objOrArray[key]);</span>
+<span class="line">            &#125;</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;  	</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">_each([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], <span class="function"><span class="keyword">function</span>(<span class="params">it, index</span>) </span>&#123;</span>
+<span class="line">    <span class="built_in">console</span>.log(it + index);  </span>
+<span class="line">&#125;); </span>
+<span class="line"><span class="comment">// 1</span></span>
+<span class="line"><span class="comment">// 3</span></span>
+<span class="line"><span class="comment">// 5</span></span>
+<span class="line"></span>
+<span class="line">_each(&#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>) </span>&#123;</span>
+<span class="line">    <span class="built_in">console</span>.log(key + value);</span>
+<span class="line">&#125;);</span>
+<span class="line"><span class="comment">// ab</span></span>
+<span class="line"><span class="comment">// cd</span></span>
+</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置一个上下文</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_each</span>(<span class="params">objOrArray, callback, ctx</span>)</span>&#123;</span>
+<span class="line">    <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object array]'</span>)&#123;</span>
+<span class="line">        objOrArray.forEach(callback, ctx || <span class="keyword">this</span>); </span>
+<span class="line">    &#125;</span>
+<span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.toString.call(objOrArray).toLowerCase() === <span class="string">'[object object]'</span>)&#123;</span>
+<span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> objOrArray)&#123;</span>
+<span class="line">            <span class="keyword">if</span>(objOrArray.hasOwnProperty(key))&#123;</span>
+<span class="line">                callback.call(ctx || <span class="keyword">this</span>, key,objOrArray[key]);</span>
+<span class="line">            &#125;</span>
+<span class="line">        &#125;</span>
+<span class="line">    &#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">_each([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], <span class="function"><span class="keyword">function</span>(<span class="params">it, index</span>) </span>&#123;</span>
+<span class="line">    <span class="built_in">console</span>.log(it + index + <span class="keyword">this</span>.a);  </span>
+<span class="line">&#125;, &#123;<span class="attr">a</span>: <span class="number">3</span>&#125;); </span>
+<span class="line"><span class="comment">// 4</span></span>
+<span class="line"><span class="comment">// 6</span></span>
+<span class="line"><span class="comment">// 8</span></span>
+<span class="line"></span>
+<span class="line">_each(&#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">key, value</span>) </span>&#123;</span>
+<span class="line">    <span class="built_in">console</span>.log(key + value + <span class="keyword">this</span>.a);</span>
+<span class="line">&#125;, &#123;<span class="attr">a</span>: <span class="string">'e'</span>&#125;);</span>
+<span class="line"><span class="comment">// abe</span></span>
+<span class="line"><span class="comment">// cde</span></span>
+</pre></td></tr></table></figure>
+<p>三板斧 <code>typeof</code> <code>Array.isArray([1,2])</code> <code>(Object.prototype.toString.call([1,2])</code></p>
 </div></article></div></main><footer><div class="paginator"><a href="/2017/10/24/补基础：函数/" class="prev">PREV</a><a href="/2017/10/19/补基础：this/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/22/补基础：对象与数组的遍历方式/';
 var disqus_title = '补基础：对象与数组的遍历方式';

@@ -12,242 +12,479 @@
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="external">for of</a></li>
 </ul>
 </blockquote>
-<h2 id="什么是函数"><a href="#什么是函数" class="headerlink" title="什么是函数"></a>什么是函数</h2><pre><code class="1">function fn() {
-      console.log(1)
-}
-
-fn() // 1
-
-// 传东西
-function fn(num, fn) {
-      console.log(fn(num))
-}
-
-fn(1, function(a){
-      return a + 1
-}) // 2
-</code></pre>
-<pre><code>// whether fn is function
-function fn() {}
-
-console.log(typeof fn === &#39;function&#39;)
-console.log(fn instanceof Function)
-console.log(Object.prototype.toString.call(fn) === &#39;[object Function]&#39;)
-</code></pre><pre><code>// 函数调用和没调用的区别
-function fn2() {
-      return 2
-}
-
-fn2()
-
-let obj = {
-      fn: fn2
-}
-
-console.log(obj.fn)     // 返回是一个函数
-console.log(obj.fn())   // 返回函数的结果
-</code></pre><pre><code>// 函数的借用
-let user = {
-      name: &#39;xiaohong&#39;,
-      sayHi: function() {
-          console.log(&#39;hello my name is &#39; + this.name)
-      }
-}
-
-uesr.sayHi()  // hello my name is xiaohong
-
-// 怎么借用方法
-let user2 = {name: &#39;xiaohei&#39;}
-// to-do
-user.sayHi.call(user2)
-// hello my name is xiaohong
-
-
-setTimeout(function() {
-      console.log(&#39;hello&#39;)
-}, 1000)
-
-// 怎么写成一行呢？
-setTimeout(console.log.bind(null, &#39;hello&#39;), 1000)
-
-// 举个实用场景
-// var collection = document.getElementsByClassName(&#39;a&#39;)
-// 但是 collection 没有 forEach 方法
-// Array.prototype.forEach.call(collection)
-</code></pre><h2 id="形参-parameters-vs-实参-arguments"><a href="#形参-parameters-vs-实参-arguments" class="headerlink" title="形参(parameters) vs 实参(arguments)"></a>形参(parameters) vs 实参(arguments)</h2><p>实参是实际传进来的参数</p>
+<h2 id="什么是函数"><a href="#什么是函数" class="headerlink" title="什么是函数"></a>什么是函数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">function fn() &#123;</span>
+<span class="line">  	console.log(1)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">fn() // 1</span>
+<span class="line"></span>
+<span class="line">// 传东西</span>
+<span class="line">function fn(num, fn) &#123;</span>
+<span class="line">  	console.log(fn(num))</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">fn(1, function(a)&#123;</span>
+<span class="line">  	return a + 1</span>
+<span class="line">&#125;) // 2</span>
+</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// whether fn is function</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>) </span>&#123;&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> fn === <span class="string">'function'</span>)</span>
+<span class="line"><span class="built_in">console</span>.log(fn <span class="keyword">instanceof</span> <span class="built_in">Function</span>)</span>
+<span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.toString.call(fn) === <span class="string">'[object Function]'</span>)</span>
+</pre></td></tr></table></figure>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数调用和没调用的区别</span></span>
+<span class="line">function fn2() &#123;</span>
+<span class="line">  	<span class="keyword">return</span> <span class="number">2</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">fn2()</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> obj = &#123;</span>
+<span class="line">  	<span class="function"><span class="keyword">fn</span>: fn2</span></span>
+<span class="line"><span class="function">&#125;</span></span>
+<span class="line"><span class="function"></span></span>
+<span class="line"><span class="function">console.<span class="built_in">log</span><span class="params">(obj.<span class="keyword">fn</span>)</span>     <span class="comment">// 返回是一个函数</span></span></span>
+<span class="line"><span class="function">console.<span class="built_in">log</span><span class="params">(obj.<span class="keyword">fn</span>()</span>)   <span class="comment">// 返回函数的结果</span></span></span>
+</pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 函数的借用</span></span>
+<span class="line"><span class="keyword">let</span> user = &#123;</span>
+<span class="line">  	name: <span class="string">'xiaohong'</span>,</span>
+<span class="line">  	sayHi: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">      	<span class="built_in">console</span>.log(<span class="string">'hello my name is '</span> + <span class="keyword">this</span>.name)</span>
+<span class="line">  	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">uesr.sayHi()  <span class="comment">// hello my name is xiaohong</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 怎么借用方法</span></span>
+<span class="line"><span class="keyword">let</span> user2 = &#123;<span class="attr">name</span>: <span class="string">'xiaohei'</span>&#125;</span>
+<span class="line"><span class="comment">// to-do</span></span>
+<span class="line">user.sayHi.call(user2)</span>
+<span class="line"><span class="comment">// hello my name is xiaohong</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(<span class="string">'hello'</span>)</span>
+<span class="line">&#125;, <span class="number">1000</span>)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 怎么写成一行呢？</span></span>
+<span class="line">setTimeout(<span class="built_in">console</span>.log.bind(<span class="literal">null</span>, <span class="string">'hello'</span>), <span class="number">1000</span>)</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 举个实用场景</span></span>
+<span class="line"><span class="comment">// var collection = document.getElementsByClassName('a')</span></span>
+<span class="line"><span class="comment">// 但是 collection 没有 forEach 方法</span></span>
+<span class="line"><span class="comment">// Array.prototype.forEach.call(collection)</span></span>
+</pre></td></tr></table></figure>
+<h2 id="形参-parameters-vs-实参-arguments"><a href="#形参-parameters-vs-实参-arguments" class="headerlink" title="形参(parameters) vs 实参(arguments)"></a>形参(parameters) vs 实参(arguments)</h2><p>实参是实际传进来的参数</p>
 <p>形参是定义时候的参数</p>
-<pre><code class="javascrip">// arguments
-function fn(a, b) {
-    console.log(a, b)
-      console.log(arguments)
-      console.log(arguments.length)
-}
-
-function fn(a, b, ...args) {
-    console.log(a, b)
-      console.log(args)   // [3,4]
-      let args1 = Array.prototype.slice.call(arguments, 2)
-      console.log(args1)  // [3,4]
-}
-
-fn(1,2,3,4)
-// 1 2
-// { &#39;0&#39;: 1, &#39;1&#39;: 2, &#39;2&#39;: 3, &#39;3&#39;: 4 }
-// 4
-
-let arr = [1,2,3]
-arr.push(1,2,3,4,5)
-console.log(arr)
-
-Array.prototype.push = function() {
-    // arguments
-      let args = Array.prototype.slice.call(arguments)
-}
-</code></pre>
-<pre><code>// parameters
-function fn(a, b) {
-      console.log(arguments.length)
-}
-
-fn(1,2,3,4)
-console.log(fn.length) // 2 形参个数 = 函数名.length
-
-// 实现一个功能
-function sum(a, b, c) {
-      return a + b + c
-}
-
-console.log(sum(1,2,3))
-
-// fn 是一个函数
-function curry(fn) {
-    var len = fn.length
-      return function f1() {
-          let args = Array.prototype.slice.call(arguments)
-          if(args.length &lt; len) {
-              return function() {
-                  let args2 = Array.prototype.slice.call(arguments)
-                  return f1.apply(this, args.concat(args2))
-              }
-          } else {
-              return fn.apply(null,args)
-          }
-      }
-}
-
-let sumWithCurry = curry(sum) 
-sumWithCurry(1,2,3)   // 6 len = 3, args.length = 3 sum.apply(null,[1,2,3])
-sumWithCurry(1)(2,3)  // 6
-
-// 先运行 sumWithCurry(1) 然后吃掉后面的函数 利用 concat 
-
-sumWithCurry(1,2)(3)  // 6
-</code></pre><p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="external">柯里化</a></p>
-<h2 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器(Generator)"></a>生成器(Generator)</h2><pre><code>// 在 function 加一个 * 号就可以变成一个 Generator 函数
-function* fn() {
-      yield 3;
-      yield 4;
-      // console.log(&#39;hello&#39;)
-}
-
-console.log(typeof fn)     // function
-console.log(fn())          // {}
-let iterator = fn()
-console.log(iterator.next())  // {value: 3, done: false}
-console.log(iterator.next())  // {value: 4, done: false}
-console.log(iterator.next())  // {value: undefined, done: true}
-// 3 -&gt; 4 -&gt; done
-
-for(let i of fn()) {  // for of 遍历方法，可以遍历数组
-      console.log(i)
-}
-// 3
-// 4
-
-// 看看是怎么做到的
-let arr = [2,3,4]
-let iterator = arr[Symbol.iterator]()
-console.log(iterator.next()) // {value: 2, done: false}
-console.log(iterator.next()) // {value: 3, done: false}
-console.log(iterator.next()) // {value: 4, done: false}
-console.log(iterator.next()) // {value: undefined, done: true}
-// 只要符合迭代器 就可以用 for of 方法
-for(let j of iterator) {
-      console.log(j)
-}
-
-// 也可以遍历对象
-Object.defineProperty(Object.prototype, Symbol.iterator, {
-      enumerable: false,
-      writable: false,
-      configurable: false,
-      value: function() {
-          let self = this;
-          let keys = Object.keys(self); // [&#39;a&#39;, &#39;d&#39;]
-          let index = 0;
-          return {
-              next: function() {
-                  return {
-                      value: self[keys[index++]],  // 加点注释啥的 + &#39;suffix&#39;
-                      done: index &gt; keys.length
-                  }
-              }
-          }
-      }
-})
-
-let obj = {a: &#39;b&#39;, c: &#39;d&#39;}
-
-let iterator2 = obj[Symbol.iterator]()
-console.log(iterator2.next()) // {value: &#39;b&#39;, done: false}
-console.log(iterator2.next()) // {value: &#39;d&#39;, done: false}
-console.log(iterator2.next()) // {value: undefined, done: true}
-
-for(let val of obj) {
-      console.log(val)
-}
-
-let obj2 = {name: &#39;xiaohong&#39;, age: 20, sex: &#39;male&#39;}
-for(let j of obj2) {  // 只要支持迭代器协议就可以了
-      console.log(j)
-}
-</code></pre><pre><code>// 彩蛋 和 Promise 的比较
-
-// Promise
-new Promise()
-.then()
-.then()
-.then()
-
-// yield + generator
-let a = yield promise1
-let b = yield promise2
-let c = yield promise3
-// 看起来像是同步，实际上是异步
-</code></pre><pre><code>// 彩蛋2 为什么不支持 for of 遍历对象
-// 原因有可能是这样的
-// 数组不关心索引，对象关心
-
-let arr = [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;] = {
-      &#39;0&#39; : &#39;a&#39;,
-      &#39;1&#39; : &#39;b&#39;,
-      &#39;2&#39; : &#39;c&#39;,
-}
-
-let obj = {
-      &#39;a&#39;: &#39;b&#39;,
-      &#39;c&#39;: &#39;d&#39;
-}
-</code></pre><p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="external">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="external">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
-<pre><code>// 彩蛋3 Symbol 是用来干嘛的？
-// 避免相等的值重复
-let a = &#39;a&#39;
-let b = &#39;a&#39;
-
-let obj = {}
-obj[a]
-obj[b]
-</code></pre><p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="external">深入浅出ES6（八）：Symbols</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+</pre></td><td class="code"><pre><span class="line">// arguments</span>
+<span class="line">function fn(a, b) &#123;</span>
+<span class="line">	console.log(a, b)</span>
+<span class="line">  	console.log(arguments)</span>
+<span class="line">  	console.log(arguments.length)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">function fn(a, b, ...args) &#123;</span>
+<span class="line">	console.log(a, b)</span>
+<span class="line">  	console.log(args)   // [3,4]</span>
+<span class="line">  	let args1 = Array.prototype.slice.call(arguments, 2)</span>
+<span class="line">  	console.log(args1)  // [3,4]</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">fn(1,2,3,4)</span>
+<span class="line">// 1 2</span>
+<span class="line">// &#123; &apos;0&apos;: 1, &apos;1&apos;: 2, &apos;2&apos;: 3, &apos;3&apos;: 4 &#125;</span>
+<span class="line">// 4</span>
+<span class="line"></span>
+<span class="line">let arr = [1,2,3]</span>
+<span class="line">arr.push(1,2,3,4,5)</span>
+<span class="line">console.log(arr)</span>
+<span class="line"></span>
+<span class="line">Array.prototype.push = function() &#123;</span>
+<span class="line">	// arguments</span>
+<span class="line">  	let args = Array.prototype.slice.call(arguments)</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// parameters</span></span>
+<span class="line">function fn(<span class="selector-tag">a</span>, b) &#123;</span>
+<span class="line">  	console.log(arguments.length)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="title">fn</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span></span></span>
+<span class="line">console.log(fn.length) <span class="comment">// 2 形参个数 = 函数名.length</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 实现一个功能</span></span>
+<span class="line">function sum(<span class="selector-tag">a</span>, <span class="selector-tag">b</span>, c) &#123;</span>
+<span class="line">  	return <span class="selector-tag">a</span> + <span class="selector-tag">b</span> + c</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">console.log(sum(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// fn 是一个函数</span></span>
+<span class="line">function curry(fn) &#123;</span>
+<span class="line">	<span class="selector-tag">var</span> len = fn.length</span>
+<span class="line">  	return function f1() &#123;</span>
+<span class="line">      	let args = Array<span class="selector-class">.prototype</span><span class="selector-class">.slice</span><span class="selector-class">.call</span>(arguments)</span>
+<span class="line">      	<span class="keyword">if</span>(args<span class="selector-class">.length</span> &lt; len) &#123;</span>
+<span class="line">          	return function() &#123;</span>
+<span class="line">              	let args2 = Array<span class="selector-class">.prototype</span><span class="selector-class">.slice</span><span class="selector-class">.call</span>(arguments)</span>
+<span class="line">              	return f1.apply(this, args.concat(args2))</span>
+<span class="line">          	&#125;</span>
+<span class="line">      	&#125; <span class="keyword">else</span> &#123;</span>
+<span class="line">          	return fn.apply(null,args)</span>
+<span class="line">      	&#125;</span>
+<span class="line">  	&#125;</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line">let sumWithCurry = curry(sum) </span>
+<span class="line"><span class="function"><span class="title">sumWithCurry</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span></span>   <span class="comment">// 6 len = 3, args.length = 3 sum.apply(null,[1,2,3])</span></span>
+<span class="line"><span class="function"><span class="title">sumWithCurry</span><span class="params">(<span class="number">1</span>)</span><span class="params">(<span class="number">2</span>,<span class="number">3</span>)</span></span>  <span class="comment">// 6</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 先运行 sumWithCurry(1) 然后吃掉后面的函数 利用 concat </span></span>
+<span class="line"></span>
+<span class="line"><span class="function"><span class="title">sumWithCurry</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span><span class="params">(<span class="number">3</span>)</span></span>  <span class="comment">// 6</span></span>
+</pre></td></tr></table></figure>
+<p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="external">柯里化</a></p>
+<h2 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器(Generator)"></a>生成器(Generator)</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+<span class="line">15</span>
+<span class="line">16</span>
+<span class="line">17</span>
+<span class="line">18</span>
+<span class="line">19</span>
+<span class="line">20</span>
+<span class="line">21</span>
+<span class="line">22</span>
+<span class="line">23</span>
+<span class="line">24</span>
+<span class="line">25</span>
+<span class="line">26</span>
+<span class="line">27</span>
+<span class="line">28</span>
+<span class="line">29</span>
+<span class="line">30</span>
+<span class="line">31</span>
+<span class="line">32</span>
+<span class="line">33</span>
+<span class="line">34</span>
+<span class="line">35</span>
+<span class="line">36</span>
+<span class="line">37</span>
+<span class="line">38</span>
+<span class="line">39</span>
+<span class="line">40</span>
+<span class="line">41</span>
+<span class="line">42</span>
+<span class="line">43</span>
+<span class="line">44</span>
+<span class="line">45</span>
+<span class="line">46</span>
+<span class="line">47</span>
+<span class="line">48</span>
+<span class="line">49</span>
+<span class="line">50</span>
+<span class="line">51</span>
+<span class="line">52</span>
+<span class="line">53</span>
+<span class="line">54</span>
+<span class="line">55</span>
+<span class="line">56</span>
+<span class="line">57</span>
+<span class="line">58</span>
+<span class="line">59</span>
+<span class="line">60</span>
+<span class="line">61</span>
+<span class="line">62</span>
+<span class="line">63</span>
+<span class="line">64</span>
+<span class="line">65</span>
+<span class="line">66</span>
+<span class="line">67</span>
+<span class="line">68</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 function 加一个 * 号就可以变成一个 Generator 函数</span></span>
+<span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">  	<span class="keyword">yield</span> <span class="number">3</span>;</span>
+<span class="line">  	<span class="keyword">yield</span> <span class="number">4</span>;</span>
+<span class="line">  	<span class="comment">// console.log('hello')</span></span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> fn)     <span class="comment">// function</span></span>
+<span class="line"><span class="built_in">console</span>.log(fn())          <span class="comment">// &#123;&#125;</span></span>
+<span class="line"><span class="keyword">let</span> iterator = fn()</span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next())  <span class="comment">// &#123;value: 3, done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next())  <span class="comment">// &#123;value: 4, done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next())  <span class="comment">// &#123;value: undefined, done: true&#125;</span></span>
+<span class="line"><span class="comment">// 3 -&gt; 4 -&gt; done</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> fn()) &#123;  <span class="comment">// for of 遍历方法，可以遍历数组</span></span>
+<span class="line">  	<span class="built_in">console</span>.log(i)</span>
+<span class="line">&#125;</span>
+<span class="line"><span class="comment">// 3</span></span>
+<span class="line"><span class="comment">// 4</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 看看是怎么做到的</span></span>
+<span class="line"><span class="keyword">let</span> arr = [<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]</span>
+<span class="line"><span class="keyword">let</span> iterator = arr[<span class="built_in">Symbol</span>.iterator]()</span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: 2, done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: 3, done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: 4, done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator.next()) <span class="comment">// &#123;value: undefined, done: true&#125;</span></span>
+<span class="line"><span class="comment">// 只要符合迭代器 就可以用 for of 方法</span></span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> j <span class="keyword">of</span> iterator) &#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(j)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// 也可以遍历对象</span></span>
+<span class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">Object</span>.prototype, <span class="built_in">Symbol</span>.iterator, &#123;</span>
+<span class="line">  	enumerable: <span class="literal">false</span>,</span>
+<span class="line">  	writable: <span class="literal">false</span>,</span>
+<span class="line">  	configurable: <span class="literal">false</span>,</span>
+<span class="line">  	value: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">      	<span class="keyword">let</span> self = <span class="keyword">this</span>;</span>
+<span class="line">      	<span class="keyword">let</span> keys = <span class="built_in">Object</span>.keys(self); <span class="comment">// ['a', 'd']</span></span>
+<span class="line">      	<span class="keyword">let</span> index = <span class="number">0</span>;</span>
+<span class="line">      	<span class="keyword">return</span> &#123;</span>
+<span class="line">          	next: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span>
+<span class="line">              	<span class="keyword">return</span> &#123;</span>
+<span class="line">                  	value: self[keys[index++]],  <span class="comment">// 加点注释啥的 + 'suffix'</span></span>
+<span class="line">                  	done: index &gt; keys.length</span>
+<span class="line">              	&#125;</span>
+<span class="line">          	&#125;</span>
+<span class="line">      	&#125;</span>
+<span class="line">  	&#125;</span>
+<span class="line">&#125;)</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> obj = &#123;<span class="attr">a</span>: <span class="string">'b'</span>, <span class="attr">c</span>: <span class="string">'d'</span>&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> iterator2 = obj[<span class="built_in">Symbol</span>.iterator]()</span>
+<span class="line"><span class="built_in">console</span>.log(iterator2.next()) <span class="comment">// &#123;value: 'b', done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator2.next()) <span class="comment">// &#123;value: 'd', done: false&#125;</span></span>
+<span class="line"><span class="built_in">console</span>.log(iterator2.next()) <span class="comment">// &#123;value: undefined, done: true&#125;</span></span>
+<span class="line"></span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> val <span class="keyword">of</span> obj) &#123;</span>
+<span class="line">  	<span class="built_in">console</span>.log(val)</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> obj2 = &#123;<span class="attr">name</span>: <span class="string">'xiaohong'</span>, <span class="attr">age</span>: <span class="number">20</span>, <span class="attr">sex</span>: <span class="string">'male'</span>&#125;</span>
+<span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> j <span class="keyword">of</span> obj2) &#123;  <span class="comment">// 只要支持迭代器协议就可以了</span></span>
+<span class="line">  	<span class="built_in">console</span>.log(j)</span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 彩蛋 和 Promise 的比较</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment">// Promise</span></span>
+<span class="line"><span class="keyword">new</span> Promise()</span>
+<span class="line">.<span class="keyword">then</span>()</span>
+<span class="line">.<span class="keyword">then</span>()</span>
+<span class="line">.<span class="keyword">then</span>()</span>
+<span class="line"></span>
+<span class="line"><span class="comment">// yield + generator</span></span>
+<span class="line"><span class="keyword">let</span> a = <span class="keyword">yield</span> promise1</span>
+<span class="line"><span class="keyword">let</span> b = <span class="keyword">yield</span> promise2</span>
+<span class="line"><span class="keyword">let</span> c = <span class="keyword">yield</span> promise3</span>
+<span class="line"><span class="comment">// 看起来像是同步，实际上是异步</span></span>
+</pre></td></tr></table></figure>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+<span class="line">9</span>
+<span class="line">10</span>
+<span class="line">11</span>
+<span class="line">12</span>
+<span class="line">13</span>
+<span class="line">14</span>
+</pre></td><td class="code"><pre><span class="line">// 彩蛋<span class="number">2</span> 为什么不支持 <span class="keyword">for</span> <span class="keyword">of</span> 遍历对象</span>
+<span class="line">// 原因有可能是这样的</span>
+<span class="line">// 数组不关心索引，对象关心</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>] = &#123;</span>
+<span class="line">  	<span class="string">'0'</span> : <span class="string">'a'</span>,</span>
+<span class="line">  	<span class="string">'1'</span> : <span class="string">'b'</span>,</span>
+<span class="line">  	<span class="string">'2'</span> : <span class="string">'c'</span>,</span>
+<span class="line">&#125;</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">let</span> obj = &#123;</span>
+<span class="line">  	<span class="string">'a'</span>: <span class="string">'b'</span>,</span>
+<span class="line">  	<span class="string">'c'</span>: <span class="string">'d'</span></span>
+<span class="line">&#125;</span>
+</pre></td></tr></table></figure>
+<p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="external">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="external">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+<span class="line">5</span>
+<span class="line">6</span>
+<span class="line">7</span>
+<span class="line">8</span>
+</pre></td><td class="code"><pre><span class="line"><span class="comment">// 彩蛋3 Symbol 是用来干嘛的？</span></span>
+<span class="line"><span class="comment">// 避免相等的值重复</span></span>
+<span class="line">let <span class="selector-tag">a</span> = <span class="string">'a'</span></span>
+<span class="line">let <span class="selector-tag">b</span> = <span class="string">'a'</span></span>
+<span class="line"></span>
+<span class="line">let obj = &#123;&#125;</span>
+<span class="line">obj[a]</span>
+<span class="line">obj[b]</span>
+</pre></td></tr></table></figure>
+<p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="external">深入浅出ES6（八）：Symbols</a></p>
 </div></article></div></main><footer><div class="paginator"><a href="/2017/10/25/deepin shadowsocks-qt5 全局翻了个墙/" class="prev">PREV</a><a href="/2017/10/22/补基础：对象与数组的遍历方式/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/24/补基础：函数/';
 var disqus_title = '补基础：函数';

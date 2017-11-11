@@ -14,14 +14,22 @@
 </ul>
 <p>当我们运行了 <code>npm run build</code> 这句话，我们会发现多了一个 build 文件夹，里面的文件全部都压缩过了，感觉有点像 webpack 啊。。</p>
 <h2 id="试着写写-React"><a href="#试着写写-React" class="headerlink" title="试着写写 React"></a>试着写写 React</h2><p>我们把全部文件删掉，然后运行</p>
-<pre><code>create-react-app .
-npm start
-</code></pre><p>改 src/inden.js </p>
-<pre><code>ReactDOM.render(
-    &lt;h1&gt;Hello, world!&lt;/h1&gt;,
-    document.getElementById(&#39;root&#39;)
-)
-</code></pre><p>展现出一个大大的 hello world </p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+</pre></td><td class="code"><pre><span class="line"><span class="built_in">create-react-app</span> .</span>
+<span class="line"><span class="string">npm </span><span class="string">start</span></span>
+</pre></td></tr></table></figure>
+<p>改 src/inden.js </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+<span class="line">4</span>
+</pre></td><td class="code"><pre><span class="line">ReactDOM.render(</span>
+<span class="line">    &lt;h1&gt;Hello, world!<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>,</span>
+<span class="line">    <span class="built_in">document</span>.getElementById(<span class="string">'root'</span>)</span>
+<span class="line">)</span>
+</pre></td></tr></table></figure>
+<p>展现出一个大大的 hello world </p>
 <p>我们做点小修改</p>
 <ul>
 <li><p>我们把 Hello World 改成 Hi World，只用直接在 <code>&lt;h1&gt;text&lt;/h1&gt;</code> 这里改就好了。</p>
@@ -34,15 +42,21 @@ npm start
 <li><p><code>&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</code> 里添加了在 index.js 写好了的 HTML 代码。</p>
 </li>
 </ul>
-<h2 id="将这个应用部署到-GitHub"><a href="#将这个应用部署到-GitHub" class="headerlink" title="将这个应用部署到 GitHub"></a>将这个应用部署到 GitHub</h2><pre><code>git add .
-git commit -m &#39;update&#39;
-npm run build
-</code></pre><p>我们会发现看上去好像已经上传了，但实际上并没有，上网查了查原来是 .gitignore 被 create-react-app 改掉了，你需要删除 .gitignore 里面的 /build 这一行。</p>
+<h2 id="将这个应用部署到-GitHub"><a href="#将这个应用部署到-GitHub" class="headerlink" title="将这个应用部署到 GitHub"></a>将这个应用部署到 GitHub</h2><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span>
+<span class="line">2</span>
+<span class="line">3</span>
+</pre></td><td class="code"><pre><span class="line">git <span class="keyword">add</span><span class="bash"> .</span></span>
+<span class="line"><span class="bash">git commit -m <span class="string">'update'</span></span></span>
+<span class="line"><span class="bash">npm run build</span></span>
+</pre></td></tr></table></figure>
+<p>我们会发现看上去好像已经上传了，但实际上并没有，上网查了查原来是 .gitignore 被 create-react-app 改掉了，你需要删除 .gitignore 里面的 /build 这一行。</p>
 <p>然后我们就可以愉快的 push 上去了</p>
 <p>嗯？怎么没有效果啊？还记得前面曾经有提示<img src="http://upload-images.jianshu.io/upload_images/3191557-ece626b7c04a108c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>好，我们设置好路径</p>
-<pre><code>&quot;homepage&quot;: &quot;https://frankietang.github.io/react-demo/build&quot;
-</code></pre><p>搞定。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span>
+</pre></td><td class="code"><pre><span class="line"><span class="string">"homepage"</span>: <span class="string">"https://frankietang.github.io/react-demo/build"</span></span>
+</pre></td></tr></table></figure>
+<p>搞定。</p>
 <h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a><a href="https://github.com/FRANKIETANG/react-demo" target="_blank" rel="external">看看成果</a></h2></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 React 的门把手 (3)/" class="prev">PREV</a><a href="/2017/10/14/摸到 React 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
 var disqus_identifier = '2017/10/14/摸到 React 的门把手 (2)/';
 var disqus_title = '摸到 React 的门把手 (2)';
