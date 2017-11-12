@@ -1,32 +1,152 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 Vue.js 的门把手（3） · 付林恒的博客</title><meta name="description" content="摸到 Vue.js 的门把手（3） - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 Vue.js 的门把手（3）</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-Vue-js-的门把手（3）"><a href="#摸到-Vue-js-的门把手（3）" class="headerlink" title="摸到 Vue.js 的门把手（3）"></a>摸到 Vue.js 的门把手（3）</h1><p>回炉重造</p>
-<h2 id="重看-vue-init-webpack-的选项"><a href="#重看-vue-init-webpack-的选项" class="headerlink" title="重看 vue init webpack 的选项"></a>重看 <code>vue init webpack</code> 的选项</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-</pre></td><td class="code"><pre><span class="line">? <span class="keyword">Generate</span> project <span class="keyword">in</span> current directory? Yes</span>
-<span class="line">? Project name vue-resume</span>
-<span class="line">? Project description A Vue.js project</span>
-<span class="line">? Author FRANKIETANG &lt;350558468@qq.com&gt;</span>
-<span class="line">? Vue build standalone</span>
-<span class="line"><span class="comment">//可以以后再装</span></span>
-<span class="line">? Install vue-router? <span class="keyword">No</span></span>
-<span class="line"><span class="comment">//这东西很烦，不要</span></span>
-<span class="line">? <span class="keyword">Use</span> ESLint to lint your code? <span class="keyword">No</span></span>
-<span class="line"><span class="comment">//不需要单元测试</span></span>
-<span class="line">? Setup unit tests with Karma + Mocha? <span class="keyword">No</span></span>
-<span class="line"><span class="comment">//不用管</span></span>
-<span class="line">? Setup e2e tests with Nightwatch? <span class="keyword">No</span></span>
-</pre></td></tr></table></figure>
-<h2 id="升级了-NPM-之后居然装不了-SCSS-？"><a href="#升级了-NPM-之后居然装不了-SCSS-？" class="headerlink" title="升级了 NPM 之后居然装不了 SCSS ？"></a>升级了 NPM 之后居然装不了 SCSS ？</h2><p>会有一个奇怪的 <code>user &quot;root&quot; does not have permission to access the dev dir &quot;/home/tangkalun/Desktop/vue-resume/node_modules/node-sass/.node-gyp/6.3.1&quot;</code></p>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="摸到 Vue.js 的门把手（3）回炉重造 重看 vue init webpack 的选项? Generate project in current directory? Yes ? Project name vue-resume ? Project description A Vue.js project ? Author FRANKIETANG &amp;lt;350558468@qq.com&amp;gt;">
+<meta name="keywords" content="Black History,Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 Vue.js 的门把手（3）">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 Vue.js 的门把手（3）回炉重造 重看 vue init webpack 的选项? Generate project in current directory? Yes ? Project name vue-resume ? Project description A Vue.js project ? Author FRANKIETANG &amp;lt;350558468@qq.com&amp;gt;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.736Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 Vue.js 的门把手（3）">
+<meta name="twitter:description" content="摸到 Vue.js 的门把手（3）回炉重造 重看 vue init webpack 的选项? Generate project in current directory? Yes ? Project name vue-resume ? Project description A Vue.js project ? Author FRANKIETANG &amp;lt;350558468@qq.com&amp;gt;">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>摸到 Vue.js 的门把手（3）</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/15/做一个音乐 Webapp/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/摸到 Vue.js 的门把手（2）/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&text=摸到 Vue.js 的门把手（3）"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&is_video=false&description=摸到 Vue.js 的门把手（3）"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 Vue.js 的门把手（3）&body=Check out this article: http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&name=摸到 Vue.js 的门把手（3）&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-Vue-js-的门把手（3）"><span class="toc-number">1.</span> <span class="toc-text">摸到 Vue.js 的门把手（3）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重看-vue-init-webpack-的选项"><span class="toc-number">1.1.</span> <span class="toc-text">重看 vue init webpack 的选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级了-NPM-之后居然装不了-SCSS-？"><span class="toc-number">1.2.</span> <span class="toc-text">升级了 NPM 之后居然装不了 SCSS ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序构想"><span class="toc-number">1.3.</span> <span class="toc-text">程序构想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iconfont-的善用"><span class="toc-number">1.4.</span> <span class="toc-text">iconfont 的善用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#element-ui"><span class="toc-number">1.5.</span> <span class="toc-text">element-ui</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据绑定语法为-value-sync"><span class="toc-number">1.6.</span> <span class="toc-text">数据绑定语法为:value.sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#slot-分發內容"><span class="toc-number">1.7.</span> <span class="toc-text">slot 分發內容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完。"><span class="toc-number">1.8.</span> <span class="toc-text">完。</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        摸到 Vue.js 的门把手（3）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-10-13T16:13:11.000Z" itemprop="datePublished">2017-10-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Black-History/">Black History</a>, <a class="tag-link" href="/tags/Vue/">Vue</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="摸到-Vue-js-的门把手（3）"><a href="#摸到-Vue-js-的门把手（3）" class="headerlink" title="摸到 Vue.js 的门把手（3）"></a>摸到 Vue.js 的门把手（3）</h1><p>回炉重造</p>
+<h2 id="重看-vue-init-webpack-的选项"><a href="#重看-vue-init-webpack-的选项" class="headerlink" title="重看 vue init webpack 的选项"></a>重看 <code>vue init webpack</code> 的选项</h2><pre><code>? Generate project in current directory? Yes
+? Project name vue-resume
+? Project description A Vue.js project
+? Author FRANKIETANG &lt;350558468@qq.com&gt;
+? Vue build standalone
+//可以以后再装
+? Install vue-router? No
+//这东西很烦，不要
+? Use ESLint to lint your code? No
+//不需要单元测试
+? Setup unit tests with Karma + Mocha? No
+//不用管
+? Setup e2e tests with Nightwatch? No
+</code></pre><h2 id="升级了-NPM-之后居然装不了-SCSS-？"><a href="#升级了-NPM-之后居然装不了-SCSS-？" class="headerlink" title="升级了 NPM 之后居然装不了 SCSS ？"></a>升级了 NPM 之后居然装不了 SCSS ？</h2><p>会有一个奇怪的 <code>user &quot;root&quot; does not have permission to access the dev dir &quot;/home/tangkalun/Desktop/vue-resume/node_modules/node-sass/.node-gyp/6.3.1&quot;</code></p>
 <p>那就用 <code>sudo SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install --save --unsafe-perm</code></p>
 <p>不行就用 <code>export SASS_BINARY_SITE=&quot;https://npm.taobao.org/mirrors/node-sass&quot;</code></p>
 <p><code>npm install --save  sass-loader node-sass</code></p>
@@ -44,12 +164,97 @@
 <h2 id="数据绑定语法为-value-sync"><a href="#数据绑定语法为-value-sync" class="headerlink" title="数据绑定语法为:value.sync"></a>数据绑定语法为<code>:value.sync</code></h2><p><a href="https://vuxjs.gitbooks.io/vux/content/form/x-input.html" target="_blank" rel="external">点击这里</a></p>
 <h2 id="slot-分發內容"><a href="#slot-分發內容" class="headerlink" title="slot 分發內容"></a>slot 分發內容</h2><p><a href="http://jsnwork.kiiuo.com/archives/2645/vue-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E3%80%8C%E4%BD%BF%E7%94%A8-slot-%E5%88%86%E7%99%BC%E5%85%A7%E5%AE%B9%E3%80%8D" target="_blank" rel="external">Vue – 如何理解「使用 slot 分發內容」</a></p>
 <h2 id="完。"><a href="#完。" class="headerlink" title="完。"></a>完。</h2><p><a href="https://frankietang.github.io/vue-resume/dist/index.html" target="_blank" rel="external">预览</a></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2017/10/15/做一个音乐 Webapp/" class="prev">PREV</a><a href="/2017/10/14/摸到 Vue.js 的门把手（2）/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
-var disqus_identifier = '2017/10/14/摸到 Vue.js 的门把手（3）/';
-var disqus_title = '摸到 Vue.js 的门把手（3）';
-var disqus_url = 'http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 <a href="http://yoursite.com">Frankie Tang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-Vue-js-的门把手（3）"><span class="toc-number">1.</span> <span class="toc-text">摸到 Vue.js 的门把手（3）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重看-vue-init-webpack-的选项"><span class="toc-number">1.1.</span> <span class="toc-text">重看 vue init webpack 的选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#升级了-NPM-之后居然装不了-SCSS-？"><span class="toc-number">1.2.</span> <span class="toc-text">升级了 NPM 之后居然装不了 SCSS ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序构想"><span class="toc-number">1.3.</span> <span class="toc-text">程序构想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iconfont-的善用"><span class="toc-number">1.4.</span> <span class="toc-text">iconfont 的善用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#element-ui"><span class="toc-number">1.5.</span> <span class="toc-text">element-ui</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据绑定语法为-value-sync"><span class="toc-number">1.6.</span> <span class="toc-text">数据绑定语法为:value.sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#slot-分發內容"><span class="toc-number">1.7.</span> <span class="toc-text">slot 分發內容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完。"><span class="toc-number">1.8.</span> <span class="toc-text">完。</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&text=摸到 Vue.js 的门把手（3）"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&is_video=false&description=摸到 Vue.js 的门把手（3）"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 Vue.js 的门把手（3）&body=Check out this article: http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&title=摸到 Vue.js 的门把手（3）"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 Vue.js 的门把手（3）/&name=摸到 Vue.js 的门把手（3）&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

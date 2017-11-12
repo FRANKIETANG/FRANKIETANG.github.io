@@ -1,429 +1,438 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 TypeScript 的门把手 · 付林恒的博客</title><meta name="description" content="摸到 TypeScript 的门把手 - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 TypeScript 的门把手</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-TypeScript-的门把手"><a href="#摸到-TypeScript-的门把手" class="headerlink" title="摸到 TypeScript 的门把手"></a>摸到 TypeScript 的门把手</h1><p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="external">TypeScript</a></p>
-<h2 id="Basic-Types（原始数据类型）"><a href="#Basic-Types（原始数据类型）" class="headerlink" title="Basic Types（原始数据类型）"></a>Basic Types（原始数据类型）</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a: <span class="built_in">boolean</span> = <span class="literal">false</span>;</span>
-<span class="line">a = <span class="string">'hello'</span></span>
-<span class="line"><span class="comment">//这样是错的</span></span>
-<span class="line"><span class="comment">//因为类型不兼容 要 a = true</span></span>
-<span class="line"><span class="keyword">let</span> b: <span class="built_in">number</span> = <span class="number">1</span>;</span>
-<span class="line"><span class="keyword">let</span> c: <span class="built_in">string</span> = <span class="string">'1'</span>;</span>
-<span class="line"><span class="keyword">let</span> e: <span class="built_in">number</span>[] = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span>
-<span class="line"><span class="comment">//number[] 等于 Array&lt;number&gt;</span></span>
-<span class="line"></span>
-<span class="line"><span class="comment">//这里有一个新类型 Tuple</span></span>
-<span class="line"><span class="comment">//有限长度的有限列表</span></span>
-<span class="line"><span class="keyword">let</span> f: [<span class="built_in">string</span>, <span class="built_in">number</span>] = [<span class="string">'1'</span>,<span class="number">2</span>];</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Enum 一个数字的集合</span></span>
-<span class="line"><span class="keyword">enum</span> g &#123;</span>
-<span class="line">  hello = <span class="number">0</span>,</span>
-<span class="line">  world = <span class="number">1</span>,</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">enum</span> g1 &#123;</span>
-<span class="line">  hello,</span>
-<span class="line">  world,</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">//是默认012345这样赋值</span></span>
-<span class="line"><span class="comment">//转成 JS</span></span>
-<span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">g</span>) </span>&#123;</span>
-<span class="line">    g[g[<span class="string">"hello"</span>] = <span class="number">0</span>] = <span class="string">"hello"</span>;</span>
-<span class="line">    g[g[<span class="string">"world"</span>] = <span class="number">1</span>] = <span class="string">"world"</span>;</span>
-<span class="line">&#125;)(g || (g = &#123;&#125;));</span>
-<span class="line"><span class="keyword">var</span> g1;</span>
-<span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">g1</span>) </span>&#123;</span>
-<span class="line">    g1[g1[<span class="string">"hello"</span>] = <span class="number">0</span>] = <span class="string">"hello"</span>;</span>
-<span class="line">    g1[g1[<span class="string">"world"</span>] = <span class="number">1</span>] = <span class="string">"world"</span>;</span>
-<span class="line">&#125;)(g1 || (g1 = &#123;&#125;));</span>
-<span class="line"><span class="comment">//TS2.4后可以赋值 string</span></span>
-<span class="line"><span class="keyword">enum</span> g &#123;</span>
-<span class="line">  hello = <span class="string">'0'</span>,</span>
-<span class="line">  world = <span class="string">'1'</span>,</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Any</span></span>
-<span class="line"><span class="comment">//let the values pass through compile-time checks</span></span>
-<span class="line"><span class="keyword">let</span> notSure:<span class="built_in">any</span> = <span class="number">4</span>;</span>
-<span class="line">notSure = <span class="string">"maybe a string instead"</span>;</span>
-<span class="line">notSure = <span class="literal">false</span>;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Void</span></span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">a</span>(<span class="params"></span>): <span class="title">void</span> </span>&#123;</span>
-<span class="line">  alert(<span class="string">'hello world'</span>)</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Never</span></span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">never1</span>(<span class="params"></span>): <span class="title">never</span> </span>&#123;</span>
-<span class="line">  <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">'Something failed'</span>)</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//assert 断言</span></span>
-<span class="line"><span class="comment">//Type assertion</span></span>
-<span class="line"><span class="keyword">let</span> someValue1: <span class="built_in">any</span> = <span class="string">"this is a string"</span>;</span>
-<span class="line"><span class="keyword">let</span> strLength1: <span class="built_in">number</span> = (&lt;<span class="built_in">string</span>&gt;someValue).length;</span>
-<span class="line"><span class="comment">//让 String 具有 Number 的办法</span></span>
-</pre></td></tr></table></figure>
-<h2 id="Variable-Declarations"><a href="#Variable-Declarations" class="headerlink" title="Variable Declarations"></a>Variable Declarations</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="number">1</span>;</span>
-<span class="line"><span class="keyword">let</span> s1 = <span class="number">2</span>;</span>
-<span class="line"><span class="keyword">const</span> s2 = <span class="number">3</span>;</span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">s3</span> (<span class="params"></span>) </span>&#123;</span>
-<span class="line">  <span class="keyword">return</span> <span class="number">4</span>;</span>
-<span class="line">&#125; </span>
-<span class="line"><span class="keyword">const</span> s4 = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span>
-<span class="line">  <span class="keyword">return</span> <span class="number">5</span>；</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<h2 id="Interfaces（接口）"><a href="#Interfaces（接口）" class="headerlink" title="Interfaces（接口）"></a>Interfaces（接口）</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-<span class="line">48</span>
-<span class="line">49</span>
-<span class="line">50</span>
-<span class="line">51</span>
-<span class="line">52</span>
-<span class="line">53</span>
-<span class="line">54</span>
-<span class="line">55</span>
-<span class="line">56</span>
-<span class="line">57</span>
-<span class="line">58</span>
-<span class="line">59</span>
-<span class="line">60</span>
-<span class="line">61</span>
-<span class="line">62</span>
-<span class="line">63</span>
-<span class="line">64</span>
-<span class="line">65</span>
-<span class="line">66</span>
-<span class="line">67</span>
-<span class="line">68</span>
-<span class="line">69</span>
-<span class="line">70</span>
-<span class="line">71</span>
-<span class="line">72</span>
-<span class="line">73</span>
-<span class="line">74</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> IMap &#123;</span>
-<span class="line">  a: <span class="built_in">string</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">//type contract</span></span>
-<span class="line"><span class="keyword">let</span> obj1: IMap = &#123;</span>
-<span class="line">  a: <span class="string">'1'</span>,</span>
-<span class="line">  b: <span class="number">2</span>,   <span class="comment">//error 一定要 string</span></span>
-<span class="line">&#125;</span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sss</span> (<span class="params">a: IMap</span>): <span class="title">IMap</span></span>&#123;</span>
-<span class="line">  <span class="keyword">return</span> a;</span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Optional Properties</span></span>
-<span class="line"><span class="keyword">interface</span> IOptional1 &#123;</span>
-<span class="line">  a: <span class="built_in">number</span>;</span>
-<span class="line">  b?: <span class="built_in">string</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">// arg.b 有可能 undefined</span></span>
-<span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sss1</span>(<span class="params">arg: IOptional1</span>): <span class="title">string</span></span>&#123;</span>
-<span class="line">  <span class="keyword">return</span> arg.b + <span class="string">''</span></span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Readonly properties</span></span>
-<span class="line"><span class="keyword">interface</span> Point &#123;</span>
-<span class="line">    readonly x: <span class="built_in">number</span>;</span>
-<span class="line">    readonly y: <span class="built_in">number</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">let</span> point: IPoint = &#123;</span>
-<span class="line">  x: <span class="number">1</span>, </span>
-<span class="line">  y: <span class="number">2</span>,</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">//point.x = 23;</span></span>
-<span class="line"><span class="comment">//只读属性没法定义</span></span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Function Types</span></span>
-<span class="line"><span class="keyword">interface</span> ISearchFunc &#123;</span>
-<span class="line">    (source: <span class="built_in">string</span>, subString: <span class="built_in">string</span>): <span class="built_in">boolean</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">//function(source, subString) 没有必要再定义</span></span>
-<span class="line"><span class="keyword">let</span> mySearch: ISearchFunc = <span class="function"><span class="keyword">function</span>(<span class="params">source: <span class="built_in">string</span>, subString: <span class="built_in">string</span></span>) </span>&#123;</span>
-<span class="line">    <span class="keyword">let</span> result = source.search(subString);</span>
-<span class="line">    <span class="keyword">return</span> result &gt; <span class="number">-1</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">//Indexable Types</span></span>
-<span class="line"><span class="keyword">interface</span> IndexType &#123;</span>
-<span class="line">  [key:<span class="built_in">string</span>]:<span class="built_in">number</span></span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">let</span> inst1: IndexType &#123;</span>
-<span class="line">  a: <span class="string">'1'</span>,     <span class="comment">//error</span></span>
-<span class="line">&#125;</span>
-<span class="line"></span>
-<span class="line"><span class="comment">//type</span></span>
-<span class="line"><span class="keyword">type</span> aType = IndexType;</span>
-<span class="line"><span class="comment">//比如说是let啊，就是类型声明对吧 type 就类似</span></span>
-<span class="line"></span>
-<span class="line"><span class="keyword">type</span> aaaaa = <span class="built_in">string</span>;</span>
-<span class="line"><span class="keyword">let</span> ssss: aaaaa = <span class="string">'1'</span></span>
-<span class="line"></span>
-<span class="line"><span class="keyword">interface</span> IPeople &#123;</span>
-<span class="line">  eyes: <span class="built_in">number</span>;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">enum</span> LapTopEnum &#123;</span>
-<span class="line">  haiwei,</span>
-<span class="line">  lenovo,</span>
-<span class="line">  apple,</span>
-<span class="line">  IBM,</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">interface</span> ImonkeyProgramer <span class="keyword">extends</span> IPeople &#123;</span>
-<span class="line">  laptop: LapTopEnum</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">let</span> tangkalun: ImonkeyProgramer = &#123;</span>
-<span class="line">  laptop: LapTopEnum.apple,</span>
-<span class="line">  eyes: <span class="number">2</span>,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<blockquote>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="摸到 TypeScript 的门把手TypeScript Basic Types（原始数据类型）let a: boolean = false; a = &amp;#39;hello&amp;#39; //这样是错的 //因为类型不兼容 要 a = true let b: number = 1; let c: string = &amp;#39;1&amp;#39;; let e: number[] = [1,2,3]; //nu">
+<meta name="keywords" content="Black History,TypeScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 TypeScript 的门把手">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 TypeScript 的门把手TypeScript Basic Types（原始数据类型）let a: boolean = false; a = &amp;#39;hello&amp;#39; //这样是错的 //因为类型不兼容 要 a = true let b: number = 1; let c: string = &amp;#39;1&amp;#39;; let e: number[] = [1,2,3]; //nu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 TypeScript 的门把手">
+<meta name="twitter:description" content="摸到 TypeScript 的门把手TypeScript Basic Types（原始数据类型）let a: boolean = false; a = &amp;#39;hello&amp;#39; //这样是错的 //因为类型不兼容 要 a = true let b: number = 1; let c: string = &amp;#39;1&amp;#39;; let e: number[] = [1,2,3]; //nu">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>摸到 TypeScript 的门把手</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/摸到 React 的门把手/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/摸到 webpack 的门把手 (2)/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&text=摸到 TypeScript 的门把手"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&is_video=false&description=摸到 TypeScript 的门把手"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 TypeScript 的门把手&body=Check out this article: http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&name=摸到 TypeScript 的门把手&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-TypeScript-的门把手"><span class="toc-number">1.</span> <span class="toc-text">摸到 TypeScript 的门把手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Types（原始数据类型）"><span class="toc-number">1.1.</span> <span class="toc-text">Basic Types（原始数据类型）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variable-Declarations"><span class="toc-number">1.2.</span> <span class="toc-text">Variable Declarations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interfaces（接口）"><span class="toc-number">1.3.</span> <span class="toc-text">Interfaces（接口）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Classes（类）"><span class="toc-number">1.4.</span> <span class="toc-text">Classes（类）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generics（泛型）"><span class="toc-number">1.5.</span> <span class="toc-text">Generics（泛型）</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        摸到 TypeScript 的门把手
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-10-13T16:06:12.000Z" itemprop="datePublished">2017-10-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Black-History/">Black History</a>, <a class="tag-link" href="/tags/TypeScript/">TypeScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="摸到-TypeScript-的门把手"><a href="#摸到-TypeScript-的门把手" class="headerlink" title="摸到 TypeScript 的门把手"></a>摸到 TypeScript 的门把手</h1><p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="external">TypeScript</a></p>
+<h2 id="Basic-Types（原始数据类型）"><a href="#Basic-Types（原始数据类型）" class="headerlink" title="Basic Types（原始数据类型）"></a>Basic Types（原始数据类型）</h2><pre><code>let a: boolean = false;
+a = &#39;hello&#39;
+//这样是错的
+//因为类型不兼容 要 a = true
+let b: number = 1;
+let c: string = &#39;1&#39;;
+let e: number[] = [1,2,3];
+//number[] 等于 Array&lt;number&gt;
+
+//这里有一个新类型 Tuple
+//有限长度的有限列表
+let f: [string, number] = [&#39;1&#39;,2];
+
+//Enum 一个数字的集合
+enum g {
+  hello = 0,
+  world = 1,
+}
+enum g1 {
+  hello,
+  world,
+}
+//是默认012345这样赋值
+//转成 JS
+(function (g) {
+    g[g[&quot;hello&quot;] = 0] = &quot;hello&quot;;
+    g[g[&quot;world&quot;] = 1] = &quot;world&quot;;
+})(g || (g = {}));
+var g1;
+(function (g1) {
+    g1[g1[&quot;hello&quot;] = 0] = &quot;hello&quot;;
+    g1[g1[&quot;world&quot;] = 1] = &quot;world&quot;;
+})(g1 || (g1 = {}));
+//TS2.4后可以赋值 string
+enum g {
+  hello = &#39;0&#39;,
+  world = &#39;1&#39;,
+}
+
+//Any
+//let the values pass through compile-time checks
+let notSure:any = 4;
+notSure = &quot;maybe a string instead&quot;;
+notSure = false;
+
+//Void
+function a(): void {
+  alert(&#39;hello world&#39;)
+}
+
+//Never
+function never1(): never {
+  throw Error(&#39;Something failed&#39;)
+}
+
+//assert 断言
+//Type assertion
+let someValue1: any = &quot;this is a string&quot;;
+let strLength1: number = (&lt;string&gt;someValue).length;
+//让 String 具有 Number 的办法
+</code></pre><h2 id="Variable-Declarations"><a href="#Variable-Declarations" class="headerlink" title="Variable Declarations"></a>Variable Declarations</h2><pre><code>var s = 1;
+let s1 = 2;
+const s2 = 3;
+function s3 () {
+  return 4;
+} 
+const s4 = () =&gt; {
+  return 5；
+}
+</code></pre><h2 id="Interfaces（接口）"><a href="#Interfaces（接口）" class="headerlink" title="Interfaces（接口）"></a>Interfaces（接口）</h2><pre><code>interface IMap {
+  a: string;
+}
+//type contract
+let obj1: IMap = {
+  a: &#39;1&#39;,
+  b: 2,   //error 一定要 string
+}
+function sss (a: IMap): IMap{
+  return a;
+}
+
+//Optional Properties
+interface IOptional1 {
+  a: number;
+  b?: string;
+}
+// arg.b 有可能 undefined
+function sss1(arg: IOptional1): string{
+  return arg.b + &#39;&#39;
+}
+
+//Readonly properties
+interface Point {
+    readonly x: number;
+    readonly y: number;
+}
+let point: IPoint = {
+  x: 1, 
+  y: 2,
+}
+//point.x = 23;
+//只读属性没法定义
+
+//Function Types
+interface ISearchFunc {
+    (source: string, subString: string): boolean;
+}
+//function(source, subString) 没有必要再定义
+let mySearch: ISearchFunc = function(source: string, subString: string) {
+    let result = source.search(subString);
+    return result &gt; -1;
+}
+//Indexable Types
+interface IndexType {
+  [key:string]:number
+}
+let inst1: IndexType {
+  a: &#39;1&#39;,     //error
+}
+
+//type
+type aType = IndexType;
+//比如说是let啊，就是类型声明对吧 type 就类似
+
+type aaaaa = string;
+let ssss: aaaaa = &#39;1&#39;
+
+interface IPeople {
+  eyes: number;
+}
+enum LapTopEnum {
+  haiwei,
+  lenovo,
+  apple,
+  IBM,
+}
+interface ImonkeyProgramer extends IPeople {
+  laptop: LapTopEnum
+}
+let tangkalun: ImonkeyProgramer = {
+  laptop: LapTopEnum.apple,
+  eyes: 2,
+}
+</code></pre><blockquote>
 <p>In TypeScript, interfaces fill the role of naming these types, and are a powerful way of defining contracts within your code as well as contracts with code outside of your project.</p>
 </blockquote>
-<h2 id="Classes（类）"><a href="#Classes（类）" class="headerlink" title="Classes（类）"></a>Classes（类）</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-<span class="line">17</span>
-<span class="line">18</span>
-<span class="line">19</span>
-<span class="line">20</span>
-<span class="line">21</span>
-<span class="line">22</span>
-<span class="line">23</span>
-<span class="line">24</span>
-<span class="line">25</span>
-<span class="line">26</span>
-<span class="line">27</span>
-<span class="line">28</span>
-<span class="line">29</span>
-<span class="line">30</span>
-<span class="line">31</span>
-<span class="line">32</span>
-<span class="line">33</span>
-<span class="line">34</span>
-<span class="line">35</span>
-<span class="line">36</span>
-<span class="line">37</span>
-<span class="line">38</span>
-<span class="line">39</span>
-<span class="line">40</span>
-<span class="line">41</span>
-<span class="line">42</span>
-<span class="line">43</span>
-<span class="line">44</span>
-<span class="line">45</span>
-<span class="line">46</span>
-<span class="line">47</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> A &#123;</span>
-<span class="line">    a:<span class="built_in">string</span></span>
-<span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span>
-<span class="line">        <span class="keyword">this</span>.a = <span class="string">'1'</span></span>
-<span class="line">    &#125;</span>
-<span class="line">    hello(): <span class="built_in">string</span> &#123;</span>
-<span class="line">        <span class="keyword">return</span> <span class="string">'1'</span>;</span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">let</span> instA = <span class="keyword">new</span> A();</span>
-<span class="line">instA.a</span>
-<span class="line"><span class="comment">//转换成 JS</span></span>
-<span class="line"><span class="keyword">var</span> A = (<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
-<span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span>
-<span class="line">        <span class="keyword">this</span>.a = <span class="string">'1'</span>;</span>
-<span class="line">    &#125;</span>
-<span class="line">    A.prototype.hello = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span>
-<span class="line">        <span class="keyword">return</span> <span class="string">'1'</span>;</span>
-<span class="line">    &#125;;</span>
-<span class="line">    <span class="keyword">return</span> A;</span>
-<span class="line">&#125;());</span>
-<span class="line"><span class="keyword">var</span> instA = <span class="keyword">new</span> A();</span>
-<span class="line">instA.a;</span>
-<span class="line"><span class="comment">//注意 private public protect</span></span>
-<span class="line"></span>
-<span class="line"><span class="comment">//Inheritance</span></span>
-<span class="line"><span class="keyword">class</span> People &#123;</span>
-<span class="line">    name: <span class="built_in">string</span></span>
-<span class="line">    <span class="keyword">constructor</span>(<span class="params">name: <span class="built_in">string</span></span>) &#123;</span>
-<span class="line">        <span class="keyword">this</span>.name = name;</span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">class</span> A <span class="keyword">extends</span> People &#123;</span>
-<span class="line">    a: <span class="built_in">string</span>;</span>
-<span class="line">    <span class="keyword">constructor</span>(<span class="params"></span>) &#123;</span>
-<span class="line">        <span class="keyword">super</span>(<span class="string">'tangkalun'</span>);</span>
-<span class="line">        <span class="keyword">this</span>.a = <span class="string">'1'</span>;</span>
-<span class="line">    &#125;</span>
-<span class="line">    hello(): <span class="built_in">string</span> &#123;</span>
-<span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.a;</span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="comment">// class 不仅可以描述数据结构,同时他还有方法、属性等等的封装</span></span>
-<span class="line"><span class="keyword">let</span> instA = <span class="keyword">new</span> A();</span>
-<span class="line">instA.a;</span>
-<span class="line">instA.name;</span>
-<span class="line"><span class="comment">//关于super()这个问题，是调用父类的构造函数</span></span>
-</pre></td></tr></table></figure>
-<h2 id="Generics（泛型）"><a href="#Generics（泛型）" class="headerlink" title="Generics（泛型）"></a>Generics（泛型）</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> SillyBoy&lt;T&gt; &#123;</span>
-<span class="line">  skills: T</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">const</span> tangkalun: SillyBoy&lt;[<span class="string">'string'</span>,<span class="string">'string'</span>,<span class="string">'string'</span>]&gt; = &#123;</span>
-<span class="line">  skills: [<span class="string">'eat'</span>,<span class="string">'fuck'</span>,<span class="string">'sleep'</span>]</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">const</span> frankie: SillyBoy&lt;[<span class="built_in">string</span>]&gt; = &#123;</span>
-<span class="line">  skills: [<span class="string">'fuck'</span>],</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">const</span> tang: SillyBoy&lt;[<span class="literal">undefined</span>]&gt; = &#123;</span>
-<span class="line">  skills: <span class="literal">undefined</span>,</span>
-<span class="line">&#125;</span>
-<span class="line"><span class="keyword">const</span> kalun: SillyBoy&lt;<span class="built_in">string</span>&gt; = &#123;</span>
-<span class="line">    skills: <span class="string">'sleep'</span>,</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<p>先到这里吧，我太菜了。</p>
-</div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 React 的门把手/" class="prev">PREV</a><a href="/2017/10/14/摸到 webpack 的门把手 (2)/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
-var disqus_identifier = '2017/10/14/摸到 TypeScript 的门把手/';
-var disqus_title = '摸到 TypeScript 的门把手';
-var disqus_url = 'http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 <a href="http://yoursite.com">Frankie Tang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+<h2 id="Classes（类）"><a href="#Classes（类）" class="headerlink" title="Classes（类）"></a>Classes（类）</h2><pre><code>class A {
+    a:string
+    constructor() {
+        this.a = &#39;1&#39;
+    }
+    hello(): string {
+        return &#39;1&#39;;
+    }
+}
+let instA = new A();
+instA.a
+//转换成 JS
+var A = (function () {
+    function A() {
+        this.a = &#39;1&#39;;
+    }
+    A.prototype.hello = function () {
+        return &#39;1&#39;;
+    };
+    return A;
+}());
+var instA = new A();
+instA.a;
+//注意 private public protect
+
+//Inheritance
+class People {
+    name: string
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+class A extends People {
+    a: string;
+    constructor() {
+        super(&#39;tangkalun&#39;);
+        this.a = &#39;1&#39;;
+    }
+    hello(): string {
+        return this.a;
+    }
+}
+// class 不仅可以描述数据结构,同时他还有方法、属性等等的封装
+let instA = new A();
+instA.a;
+instA.name;
+//关于super()这个问题，是调用父类的构造函数
+</code></pre><h2 id="Generics（泛型）"><a href="#Generics（泛型）" class="headerlink" title="Generics（泛型）"></a>Generics（泛型）</h2><pre><code>interface SillyBoy&lt;T&gt; {
+  skills: T
+}
+const tangkalun: SillyBoy&lt;[&#39;string&#39;,&#39;string&#39;,&#39;string&#39;]&gt; = {
+  skills: [&#39;eat&#39;,&#39;fuck&#39;,&#39;sleep&#39;]
+}
+const frankie: SillyBoy&lt;[string]&gt; = {
+  skills: [&#39;fuck&#39;],
+}
+const tang: SillyBoy&lt;[undefined]&gt; = {
+  skills: undefined,
+}
+const kalun: SillyBoy&lt;string&gt; = {
+    skills: &#39;sleep&#39;,
+}
+</code></pre><p>先到这里吧，我太菜了。</p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-TypeScript-的门把手"><span class="toc-number">1.</span> <span class="toc-text">摸到 TypeScript 的门把手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Types（原始数据类型）"><span class="toc-number">1.1.</span> <span class="toc-text">Basic Types（原始数据类型）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variable-Declarations"><span class="toc-number">1.2.</span> <span class="toc-text">Variable Declarations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interfaces（接口）"><span class="toc-number">1.3.</span> <span class="toc-text">Interfaces（接口）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Classes（类）"><span class="toc-number">1.4.</span> <span class="toc-text">Classes（类）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generics（泛型）"><span class="toc-number">1.5.</span> <span class="toc-text">Generics（泛型）</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&text=摸到 TypeScript 的门把手"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&is_video=false&description=摸到 TypeScript 的门把手"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 TypeScript 的门把手&body=Check out this article: http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&title=摸到 TypeScript 的门把手"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 TypeScript 的门把手/&name=摸到 TypeScript 的门把手&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

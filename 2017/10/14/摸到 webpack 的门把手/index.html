@@ -1,4 +1,138 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 webpack 的门把手 · 付林恒的博客</title><meta name="description" content="摸到 webpack 的门把手 - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 webpack 的门把手</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-webpack-的门把手"><a href="#摸到-webpack-的门把手" class="headerlink" title="摸到 webpack 的门把手"></a>摸到 webpack 的门把手</h1><p>之前接触过一阵子 webpack ，想了一下还是写篇博客吧。要不然又忘掉怎么配置了。</p>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="摸到 webpack 的门把手之前接触过一阵子 webpack ，想了一下还是写篇博客吧。要不然又忘掉怎么配置了。 怎么安装？来，我们先看 webpack 的官网 点击到 guides ，我们直接抄，抄完我们就知道 webpack 的流程了 不过有几点我们是要注意的  注意 index.js 中的 _.join，这个 _ 实际上是 lodash 暴露的全局变量。 为了使用 lodash，HTML">
+<meta name="keywords" content="Black History,webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 webpack 的门把手">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 webpack 的门把手/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 webpack 的门把手之前接触过一阵子 webpack ，想了一下还是写篇博客吧。要不然又忘掉怎么配置了。 怎么安装？来，我们先看 webpack 的官网 点击到 guides ，我们直接抄，抄完我们就知道 webpack 的流程了 不过有几点我们是要注意的  注意 index.js 中的 _.join，这个 _ 实际上是 lodash 暴露的全局变量。 为了使用 lodash，HTML">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 webpack 的门把手">
+<meta name="twitter:description" content="摸到 webpack 的门把手之前接触过一阵子 webpack ，想了一下还是写篇博客吧。要不然又忘掉怎么配置了。 怎么安装？来，我们先看 webpack 的官网 点击到 guides ，我们直接抄，抄完我们就知道 webpack 的流程了 不过有几点我们是要注意的  注意 index.js 中的 _.join，这个 _ 实际上是 lodash 暴露的全局变量。 为了使用 lodash，HTML">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>摸到 webpack 的门把手</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/摸到 webpack 的门把手 (2)/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/摸到 Promise 的门把手/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&text=摸到 webpack 的门把手"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&is_video=false&description=摸到 webpack 的门把手"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 webpack 的门把手&body=Check out this article: http://yoursite.com/2017/10/14/摸到 webpack 的门把手/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&name=摸到 webpack 的门把手&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手"><span class="toc-number">1.</span> <span class="toc-text">摸到 webpack 的门把手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么安装？"><span class="toc-number">1.1.</span> <span class="toc-text">怎么安装？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#看看文件结构"><span class="toc-number">1.2.</span> <span class="toc-text">看看文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用-jQuery"><span class="toc-number">1.3.</span> <span class="toc-text">引用 jQuery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做一点改良"><span class="toc-number">1.4.</span> <span class="toc-text">做一点改良</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尝试-import-一个自己的文件"><span class="toc-number">1.5.</span> <span class="toc-text">尝试 import 一个自己的文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用-webpack-压缩-JS-文件"><span class="toc-number">1.6.</span> <span class="toc-text">利用 webpack 压缩 JS 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#看看成果"><span class="toc-number">1.7.</span> <span class="toc-text">看看成果</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        摸到 webpack 的门把手
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-10-13T16:04:38.000Z" itemprop="datePublished">2017-10-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Black-History/">Black History</a>, <a class="tag-link" href="/tags/webpack/">webpack</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="摸到-webpack-的门把手"><a href="#摸到-webpack-的门把手" class="headerlink" title="摸到 webpack 的门把手"></a>摸到 webpack 的门把手</h1><p>之前接触过一阵子 webpack ，想了一下还是写篇博客吧。要不然又忘掉怎么配置了。</p>
 <h2 id="怎么安装？"><a href="#怎么安装？" class="headerlink" title="怎么安装？"></a>怎么安装？</h2><p><a href="https://webpack.js.org/" target="_blank" rel="external">来，我们先看 webpack 的官网</a></p>
 <p>点击到 guides ，我们直接抄，抄完我们就知道 webpack 的流程了</p>
 <p>不过有几点我们是要注意的</p>
@@ -17,40 +151,23 @@
 <p><a href="http://www.ruanyifeng.com/blog/2012/08/how_to_read_diff.html" target="_blank" rel="external">读懂diff - 阮一峰</a></p>
 <h2 id="引用-jQuery"><a href="#引用-jQuery" class="headerlink" title="引用 jQuery"></a>引用 jQuery</h2><ul>
 <li><p><code>npm i -S jquery</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-<span class="line">11</span>
-<span class="line">12</span>
-<span class="line">13</span>
-<span class="line">14</span>
-<span class="line">15</span>
-<span class="line">16</span>
-</pre></td><td class="code"><pre><span class="line"> <span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span></span>
-<span class="line">+<span class="keyword">import</span> j <span class="keyword">from</span> <span class="string">'jquery'</span></span>
-<span class="line"></span>
-<span class="line"> <span class="function"><span class="keyword">function</span> <span class="title">component</span> (<span class="params"></span>) </span>&#123;</span>
-<span class="line">-  <span class="keyword">var</span> element = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);</span>
-<span class="line">+  <span class="keyword">var</span> element = j(<span class="string">'&lt;div&gt;&lt;/div&gt;'</span>);</span>
-<span class="line"></span>
-<span class="line">   <span class="comment">/* lodash is required for the next line to work */</span></span>
-<span class="line">-  element.innerHTML = _.join([<span class="string">'Hello'</span>,<span class="string">'webpack'</span>], <span class="string">' '</span>);</span>
-<span class="line">+  element.html(_.join([<span class="string">'Hello'</span>,<span class="string">'webpack'</span>], <span class="string">' '</span>))</span>
-<span class="line"></span>
-<span class="line">-  <span class="keyword">return</span> element;</span>
-<span class="line">+  <span class="keyword">return</span> element.get(<span class="number">0</span>);</span>
-<span class="line"> &#125;</span>
-<span class="line"></span>
-<span class="line"> <span class="built_in">document</span>.body.appendChild(component());</span>
-</pre></td></tr></table></figure>
-</li>
+<pre><code> import _ from &#39;lodash&#39;
++import j from &#39;jquery&#39;
+
+ function component () {
+-  var element = document.createElement(&#39;div&#39;);
++  var element = j(&#39;&lt;div&gt;&lt;/div&gt;&#39;);
+
+   /* lodash is required for the next line to work */
+-  element.innerHTML = _.join([&#39;Hello&#39;,&#39;webpack&#39;], &#39; &#39;);
++  element.html(_.join([&#39;Hello&#39;,&#39;webpack&#39;], &#39; &#39;))
+
+-  return element;
++  return element.get(0);
+ }
+
+ document.body.appendChild(component());
+</code></pre></li>
 <li><p><code>./node_modules/.bin/webpack src/index.js dist/bundle.js</code> 跑这句话</p>
 </li>
 <li><p>点击 commits 看看有什么变化</p>
@@ -60,54 +177,34 @@
 </ul>
 <h2 id="做一点改良"><a href="#做一点改良" class="headerlink" title="做一点改良"></a>做一点改良</h2><ul>
 <li><p>我们可以在根目录搞一个 <code>webpack.config.js</code>，在里面写上一点代码。</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-</pre></td><td class="code"><pre><span class="line">var <span class="built_in">path</span> = <span class="built_in">require</span>(<span class="string">'path'</span>)</span>
-<span class="line"></span>
-<span class="line">module.exports = &#123;</span>
-<span class="line">    entry: <span class="string">'./src/index.js'</span>,</span>
-<span class="line">    <span class="built_in">output</span>: &#123;</span>
-<span class="line">        filename: <span class="string">'bundle.js'</span>,</span>
-<span class="line">        <span class="built_in">path</span>: <span class="built_in">path</span>.resolve(__dirname, <span class="string">'dist'</span>)</span>
-<span class="line">    &#125;</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<p>重点是这三个玩意 src/index.js 、dist 和 bundle.js 在哪就行，方便我们后面改。</p>
+<pre><code>var path = require(&#39;path&#39;)
+
+module.exports = {
+    entry: &#39;./src/index.js&#39;,
+    output: {
+        filename: &#39;bundle.js&#39;,
+        path: path.resolve(__dirname, &#39;dist&#39;)
+    }
+}
+</code></pre><p>重点是这三个玩意 src/index.js 、dist 和 bundle.js 在哪就行，方便我们后面改。</p>
 </li>
 <li><p>然后我们就可以用上这句 <code>./node_modules/.bin/webpack --config webpack.config.js</code></p>
 </li>
 <li><p>或者我们可以进行下面的改良</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-</pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span>
-<span class="line">  <span class="string">"test"</span>: <span class="string">"echo \"</span><span class="keyword">Error</span>: <span class="keyword">no</span> <span class="keyword">test</span> specified\<span class="string">" &amp;&amp; exit 1"</span>,</span>
-<span class="line">  <span class="string">"webpack"</span>: <span class="string">"webpack"</span></span>
-<span class="line">&#125;,</span>
-<span class="line"><span class="string">"keywords"</span>: [],</span>
-</pre></td></tr></table></figure>
-<p>然后运行 npm run webpack</p>
+<pre><code>  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
+    &quot;webpack&quot;: &quot;webpack&quot;
+  },
+  &quot;keywords&quot;: [],
+</code></pre><p>然后运行 npm run webpack</p>
 </li>
 </ul>
 <h2 id="尝试-import-一个自己的文件"><a href="#尝试-import-一个自己的文件" class="headerlink" title="尝试 import 一个自己的文件"></a>尝试 import 一个自己的文件</h2><ul>
 <li><p>创建一个 <code>foo.js</code></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span>
-<span class="line">    <span class="keyword">return</span> <span class="string">'tangkalun'</span></span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-</li>
+<pre><code>export default function(){
+    return &#39;tangkalun&#39;
+}
+</code></pre></li>
 <li><p>然后在 <code>index.js</code> 加上 <code>import foo from &#39;./foo&#39;</code>，顺便 <code>console.log</code> 一下</p>
 </li>
 <li><p><code>npm run webpack</code></p>
@@ -117,36 +214,112 @@
 <li><p><a href="https://webpack.js.org/guides/production/" target="_blank" rel="external">webpack 自带的</a> 支持所有 <a href="https://github.com/mishoo/UglifyJS2#usage" target="_blank" rel="external">UglifyJS 选项</a></p>
 </li>
 <li><p>在 <code>webpack.config.js</code> 加上这样一句话，UglifyJS 的选项可以一个都不加</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-</pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>);</span>
-<span class="line"></span>
-<span class="line"><span class="built_in">module</span>.exports = &#123;</span>
-<span class="line">  <span class="comment">/*...*/</span></span>
-<span class="line">  plugins:[</span>
-<span class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin()</span>
-<span class="line">  ]</span>
-<span class="line">&#125;;</span>
-</pre></td></tr></table></figure>
-</li>
+<pre><code>var webpack = require(&#39;webpack&#39;);
+
+module.exports = {
+  /*...*/
+  plugins:[
+    new webpack.optimize.UglifyJsPlugin()
+  ]
+};
+</code></pre></li>
 <li><p><code>npm run webpack</code></p>
 </li>
 <li><p>压完了</p>
 </li>
 </ul>
 <h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a>看看成果</h2><p><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="external">点击这里</a></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 webpack 的门把手 (2)/" class="prev">PREV</a><a href="/2017/10/14/摸到 Promise 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
-var disqus_identifier = '2017/10/14/摸到 webpack 的门把手/';
-var disqus_title = '摸到 webpack 的门把手';
-var disqus_url = 'http://yoursite.com/2017/10/14/摸到 webpack 的门把手/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 <a href="http://yoursite.com">Frankie Tang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手"><span class="toc-number">1.</span> <span class="toc-text">摸到 webpack 的门把手</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么安装？"><span class="toc-number">1.1.</span> <span class="toc-text">怎么安装？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#看看文件结构"><span class="toc-number">1.2.</span> <span class="toc-text">看看文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引用-jQuery"><span class="toc-number">1.3.</span> <span class="toc-text">引用 jQuery</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#做一点改良"><span class="toc-number">1.4.</span> <span class="toc-text">做一点改良</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尝试-import-一个自己的文件"><span class="toc-number">1.5.</span> <span class="toc-text">尝试 import 一个自己的文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用-webpack-压缩-JS-文件"><span class="toc-number">1.6.</span> <span class="toc-text">利用 webpack 压缩 JS 文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#看看成果"><span class="toc-number">1.7.</span> <span class="toc-text">看看成果</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&text=摸到 webpack 的门把手"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&is_video=false&description=摸到 webpack 的门把手"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 webpack 的门把手&body=Check out this article: http://yoursite.com/2017/10/14/摸到 webpack 的门把手/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&title=摸到 webpack 的门把手"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手/&name=摸到 webpack 的门把手&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

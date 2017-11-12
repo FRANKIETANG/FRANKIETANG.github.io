@@ -1,4 +1,142 @@
-<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 摸到 webpack 的门把手 (2) · 付林恒的博客</title><meta name="description" content="摸到 webpack 的门把手 (2) - Frankie Tang"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.jpg"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="付林恒的博客"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.jpg" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="https://github.com/frankietang" target="_blank" class="nav-list-link">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">摸到 webpack 的门把手 (2)</h1><div class="post-info">Oct 14, 2017</div><div class="post-content"><h1 id="摸到-webpack-的门把手-2"><a href="#摸到-webpack-的门把手-2" class="headerlink" title="摸到 webpack 的门把手 (2)"></a>摸到 webpack 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 webpack 的门把手</a> 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。</p>
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="摸到 webpack 的门把手 (2)经过了上一篇 摸到 webpack 的门把手 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。 webpack 到底干了什么bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用">
+<meta name="keywords" content="Black History,webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="摸到 webpack 的门把手 (2)">
+<meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="摸到 webpack 的门把手 (2)经过了上一篇 摸到 webpack 的门把手 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。 webpack 到底干了什么bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-494866b6ba1c3ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-c12e95d7cc12d8af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.704Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="摸到 webpack 的门把手 (2)">
+<meta name="twitter:description" content="摸到 webpack 的门把手 (2)经过了上一篇 摸到 webpack 的门把手 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。 webpack 到底干了什么bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>摸到 webpack 的门把手 (2)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2017/10/14/摸到 TypeScript 的门把手/"><i class="fa fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/14/摸到 webpack 的门把手/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&text=摸到 webpack 的门把手 (2)"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&is_video=false&description=摸到 webpack 的门把手 (2)"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 webpack 的门把手 (2)&body=Check out this article: http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&name=摸到 webpack 的门把手 (2)&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手-2"><span class="toc-number">1.</span> <span class="toc-text">摸到 webpack 的门把手 (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-到底干了什么"><span class="toc-number">1.1.</span> <span class="toc-text">webpack 到底干了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码的一些问题"><span class="toc-number">1.2.</span> <span class="toc-text">压缩代码的一些问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch"><span class="toc-number">1.3.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看成果"><span class="toc-number">1.4.</span> <span class="toc-text">查看成果</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        摸到 webpack 的门把手 (2)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-10-13T16:05:14.000Z" itemprop="datePublished">2017-10-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Black-History/">Black History</a>, <a class="tag-link" href="/tags/webpack/">webpack</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="摸到-webpack-的门把手-2"><a href="#摸到-webpack-的门把手-2" class="headerlink" title="摸到 webpack 的门把手 (2)"></a>摸到 webpack 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 webpack 的门把手</a> 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。</p>
 <h2 id="webpack-到底干了什么"><a href="#webpack-到底干了什么" class="headerlink" title="webpack 到底干了什么"></a>webpack 到底干了什么</h2><p>bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用。有空填坑分析代码。</p>
 <h2 id="压缩代码的一些问题"><a href="#压缩代码的一些问题" class="headerlink" title="压缩代码的一些问题"></a>压缩代码的一些问题</h2><p>我们会发现 jQuery 的代码并没有压缩，其实我们可以使用 <code>webpack -p</code>，webpack 给出的解释是<br><code>shortcut for --optimize-minimize --define process.env.NODE_ENV=&quot;production&quot;</code></p>
 <p>运行 <code>-p</code> ，实际执行</p>
@@ -7,50 +145,31 @@
 <li>运行<a href="https://webpack.js.org/plugins/loader-options-plugin/#components/sidebar/sidebar.jsx" target="_blank" rel="external">LoaderOptionsPlugin</a></li>
 <li>设置Node环境变量</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-<span class="line">4</span>
-<span class="line">5</span>
-<span class="line">6</span>
-<span class="line">7</span>
-<span class="line">8</span>
-<span class="line">9</span>
-<span class="line">10</span>
-</pre></td><td class="code"><pre><span class="line"><span class="comment">//运行 webpack -p 会通过如下方式调用 DefinePlugin</span></span>
-<span class="line"><span class="keyword">var</span> webpack=<span class="built_in">require</span>(<span class="string">'webpack'</span>);</span>
-<span class="line"></span>
-<span class="line"><span class="built_in">module</span>.exports=&#123;</span>
-<span class="line">  plugins:[</span>
-<span class="line">    <span class="keyword">new</span> webpack DefinePlugin(&#123;</span>
-<span class="line">      <span class="string">'process.env.NODE_ENV'</span>: <span class="built_in">JSON</span>.stringify(<span class="string">'production'</span>)</span>
-<span class="line">    &#125;)</span>
-<span class="line">  ]</span>
-<span class="line">&#125;</span>
-</pre></td></tr></table></figure>
-<p><code>DefinePlugin</code> 在原始的源码中执行查找和替换操作. 在导入的代码中,任何出现 <code>process.env.NODE_ENV</code>的地方都会被替换为<code>”production”</code>. 因此, 形如<code>if (process.env.NODE_ENV !== ‘production’) console.log(‘…’)</code> 的代码就会等价于 <code>if (false) console.log(‘…’)</code> 并且最终通过<code>UglifyJS</code>等价替换掉.</p>
+<pre><code>//运行 webpack -p 会通过如下方式调用 DefinePlugin
+var webpack=require(&#39;webpack&#39;);
+
+module.exports={
+  plugins:[
+    new webpack DefinePlugin({
+      &#39;process.env.NODE_ENV&#39;: JSON.stringify(&#39;production&#39;)
+    })
+  ]
+}
+</code></pre><p><code>DefinePlugin</code> 在原始的源码中执行查找和替换操作. 在导入的代码中,任何出现 <code>process.env.NODE_ENV</code>的地方都会被替换为<code>”production”</code>. 因此, 形如<code>if (process.env.NODE_ENV !== ‘production’) console.log(‘…’)</code> 的代码就会等价于 <code>if (false) console.log(‘…’)</code> 并且最终通过<code>UglifyJS</code>等价替换掉.</p>
 <p><a href="https://webpack.js.org/guides/public-path/" target="_blank" rel="external">webpack - public-path</a></p>
 <h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>每次写完代码都要 npm run webpack ，很麻烦，那我们需要 <code>webpack --progress --watch</code> 监听文件变动，只要我们保存了文件就会自动编译代码。</p>
 <p>在 npm script 加一句 <code>&quot;watch&quot;: &quot;webpack --progress --watch&quot;</code>，然后 npm run watch 试试</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>不但能刷新代码，还能刷新浏览器</p>
 <p>看到 Using webpack-dev-server 那里，它叫我们在根目录跑这句话</p>
-<figure class="highlight q"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">npm install --<span class="built_in">save</span>-<span class="built_in">dev</span> webpack-<span class="built_in">dev</span>-server</span>
-</pre></td></tr></table></figure>
-<p>在 webpack.config.js 加点东西</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span>
-<span class="line">2</span>
-<span class="line">3</span>
-</pre></td><td class="code"><pre><span class="line"><span class="selector-tag">devServer</span>: &#123;</span>
-<span class="line">    <span class="attribute">contentBase</span>: <span class="string">'./dist'</span></span>
-<span class="line">&#125;,</span>
-</pre></td></tr></table></figure>
-<p>在 package.json 的 npm script 加点东西</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span>
-</pre></td><td class="code"><pre><span class="line">"<span class="keyword">start</span><span class="string">": "</span>webpack-dev-<span class="keyword">server</span> <span class="comment">--open"</span></span>
-</pre></td></tr></table></figure>
-<p>成了，看下图。<br><img src="http://upload-images.jianshu.io/upload_images/3191557-494866b6ba1c3ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<pre><code>npm install --save-dev webpack-dev-server
+</code></pre><p>在 webpack.config.js 加点东西</p>
+<pre><code>devServer: {
+    contentBase: &#39;./dist&#39;
+},
+</code></pre><p>在 package.json 的 npm script 加点东西</p>
+<pre><code>&quot;start&quot;: &quot;webpack-dev-server --open&quot;
+</code></pre><p>成了，看下图。<br><img src="http://upload-images.jianshu.io/upload_images/3191557-494866b6ba1c3ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>如果我们改一下 src/bundle.js 就会发现</p>
 <ul>
 <li>bundle.js 自动打包</li>
@@ -59,12 +178,97 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-c12e95d7cc12d8af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>注意，我们就不能再直接打开 index.html 了，因为它引用的是 /bundle.js，用 file:// 协议打开 index.html 的话，会请求 file:///bundle.js，显然这个文件不存在。</p>
 <p><a href="https://webpack.js.org/guides/development/" target="_blank" rel="external">webpack - development</a></p>
-<h2 id="查看成果"><a href="#查看成果" class="headerlink" title="查看成果"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="external">查看成果</a></h2></div></article></div></main><footer><div class="paginator"><a href="/2017/10/14/摸到 TypeScript 的门把手/" class="prev">PREV</a><a href="/2017/10/14/摸到 webpack 的门把手/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
-var disqus_identifier = '2017/10/14/摸到 webpack 的门把手 (2)/';
-var disqus_title = '摸到 webpack 的门把手 (2)';
-var disqus_url = 'http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/';
-(function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2017 <a href="http://yoursite.com">Frankie Tang</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>
+<h2 id="查看成果"><a href="#查看成果" class="headerlink" title="查看成果"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="external">查看成果</a></h2>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手-2"><span class="toc-number">1.</span> <span class="toc-text">摸到 webpack 的门把手 (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-到底干了什么"><span class="toc-number">1.1.</span> <span class="toc-text">webpack 到底干了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码的一些问题"><span class="toc-number">1.2.</span> <span class="toc-text">压缩代码的一些问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch"><span class="toc-number">1.3.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看成果"><span class="toc-number">1.4.</span> <span class="toc-text">查看成果</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&text=摸到 webpack 的门把手 (2)"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&is_video=false&description=摸到 webpack 的门把手 (2)"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=摸到 webpack 的门把手 (2)&body=Check out this article: http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&title=摸到 webpack 的门把手 (2)"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/10/14/摸到 webpack 的门把手 (2)/&name=摸到 webpack 的门把手 (2)&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
