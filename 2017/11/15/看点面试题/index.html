@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="看点面试题httpRESTful API 设计指南 — 解决状态码和请求方式 状态码 2xx成功 3xx重定向 4xx客户端错误 5xx服务器错误（流量大啥的）  3xx 重定向：比如访问网站 A，结果重新打到网站 B 上。怎么从 A 导到 B。 比如输入一个 http://www.baidu.com，它会自动转到 https://www.baidu.com，状态码是 307，因为在 Respon">
+<meta name="keywords" content="Interview">
+<meta property="og:type" content="article">
+<meta property="og:title" content="看点面试题">
+<meta property="og:url" content="http://yoursite.com/2017/11/15/看点面试题/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="看点面试题httpRESTful API 设计指南 — 解决状态码和请求方式 状态码 2xx成功 3xx重定向 4xx客户端错误 5xx服务器错误（流量大啥的）  3xx 重定向：比如访问网站 A，结果重新打到网站 B 上。怎么从 A 导到 B。 比如输入一个 http://www.baidu.com，它会自动转到 https://www.baidu.com，状态码是 307，因为在 Respon">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/116671/2012111610163856.jpg">
+<meta property="og:updated_time" content="2017-11-15T15:00:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="看点面试题">
+<meta name="twitter:description" content="看点面试题httpRESTful API 设计指南 — 解决状态码和请求方式 状态码 2xx成功 3xx重定向 4xx客户端错误 5xx服务器错误（流量大啥的）  3xx 重定向：比如访问网站 A，结果重新打到网站 B 上。怎么从 A 导到 B。 比如输入一个 http://www.baidu.com，它会自动转到 https://www.baidu.com，状态码是 307，因为在 Respon">
+<meta name="twitter:image" content="http://pic002.cnblogs.com/images/2012/116671/2012111610163856.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>看点面试题</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/11/13/补基础：JS 单元测试/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/11/15/看点面试题/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/11/15/看点面试题/&text=看点面试题"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/11/15/看点面试题/&is_video=false&description=看点面试题"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=看点面试题&body=Check out this article: http://yoursite.com/2017/11/15/看点面试题/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/11/15/看点面试题/&name=看点面试题&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#看点面试题"><span class="toc-number">1.</span> <span class="toc-text">看点面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http"><span class="toc-number">1.1.</span> <span class="toc-text">http</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-number">1.1.1.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求方式"><span class="toc-number">1.1.2.</span> <span class="toc-text">请求方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据发送"><span class="toc-number">1.1.3.</span> <span class="toc-text">数据发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求头"><span class="toc-number">1.1.4.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应头"><span class="toc-number">1.1.5.</span> <span class="toc-text">响应头</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript"><span class="toc-number">1.2.</span> <span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实参-Array-prototype-push"><span class="toc-number">1.2.1.</span> <span class="toc-text">实参 - Array.prototype.push</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call-amp-apply-amp-bind-把一个数组的元素添加到另一个数组"><span class="toc-number">1.2.2.</span> <span class="toc-text">call&apply&bind - 把一个数组的元素添加到另一个数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型-extend-parentConstructor-childConstructor"><span class="toc-number">1.2.3.</span> <span class="toc-text">原型 - extend(parentConstructor, childConstructor)</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        看点面试题
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-11-15T14:58:52.000Z" itemprop="datePublished">2017-11-15</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Interview/">Interview</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="看点面试题"><a href="#看点面试题" class="headerlink" title="看点面试题"></a>看点面试题</h1><h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="external">RESTful API 设计指南</a> — 解决状态码和请求方式</p>
+<h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
+<li>2xx成功</li>
+<li>3xx重定向</li>
+<li>4xx客户端错误</li>
+<li>5xx服务器错误（流量大啥的）</li>
+</ul>
+<p>3xx 重定向：比如访问网站 A，结果重新打到网站 B 上。怎么从 A 导到 B。</p>
+<p>比如输入一个 <a href="http://www.baidu.com，它会自动转到" target="_blank" rel="external">http://www.baidu.com，它会自动转到</a> <a href="https://www.baidu.com，状态码是" target="_blank" rel="external">https://www.baidu.com，状态码是</a> 307，因为在 Response Headers 有一个 Location</p>
+<p>还有一些缓存相关的</p>
+<blockquote>
+<p>304：当客户端缓存了目标资源但不确定该缓存资源是否是最新版本的时候,就会发送一个条件请求.在Fiddler中,你可以在<strong>Headers Inspector</strong>查找相关请求头,这样就可以辨别出一个请求是否是条件请求.</p>
+<p>在进行条件请求时,客户端会提供给服务器一个<strong>If-Modified-Since</strong>请求头,其值为服务器上次返回的<strong>Last-Modified</strong>响应头中的日期值,还会提供一个<strong>If-None-Match</strong>请求头,值为服务器上次返回的<strong>ETag</strong>响应头的值:</p>
+<p><img src="http://pic002.cnblogs.com/images/2012/116671/2012111610163856.jpg" alt="Fiddler Request Headers Inspector screenshot"></p>
+<p>服务器会读取到这两个请求头中的值,判断出客户端缓存的资源是否是最新的,如果是的话,服务器就会返回<strong>HTTP/304 Not Modified</strong>响应,但没有响应体.客户端收到304响应后,就会从缓存中读取对应的资源.</p>
+<p>另一种情况是,如果服务器认为客户端缓存的资源已经过期了,那么服务器就会返回<strong>HTTP/200 OK</strong>响应,响应体就是该资源当前最新的内容.客户端收到200响应后,就会用新的响应体覆盖掉旧的缓存资源.</p>
+<p>只有在客户端缓存了对应资源且该资源的响应头中包含了<strong>Last-Modified</strong>或<strong>ETag</strong>的情况下,才可能发送条件请求.如果这两个头都不存在,则必须无条件(<strong>unconditionally</strong>)请求该资源,服务器也就必须返回完整的资源数据.</p>
+</blockquote>
+<p>4xx客户端错误：</p>
+<ul>
+<li>404 就是页面不存在</li>
+<li>403 Forbidden 服务器上文件或目录的权限设置导致，就是登录了但是没有权限修改就会返回403</li>
+<li>401 Unanthorized 完全没有登录，比如说进入了一个系统看系统里的东西但是没登录就会返回401</li>
+</ul>
+<p>Cache-Control Expires 其实是一个同样的功能</p>
+<blockquote>
+<p><strong>Expires</strong></p>
+<p>给出的日期/时间后，被响应认为是过时。如Expires:Thu, 02 Apr 2009 05:14:08 GMT</p>
+<p>需和Last-Modified结合使用。用于控制请求文件的有效时间，当请求数据在有效期内时客户端浏览器从缓存请求数据而不是服务器端.当缓存中数据失效或过期，才决定从服务器更新数据。</p>
+<p><strong>关于 Cache-Control: max-age=秒 和 Expires</strong></p>
+<p>Expires = 时间，HTTP 1.0 版本，缓存的载止时间，允许客户端在这个时间之前不去检查（发请求）<br>max-age = 秒，HTTP 1.1版本，资源在本地缓存多少秒。<br>如果max-age和Expires同时存在，则被Cache-Control的max-age覆盖。</p>
+<p>Expires 的一个缺点就是，返回的到期时间是服务器端的时间，这样存在一个问题，如果客户端的时间与服务器的时间相差很大，那么误差就很大，所以在HTTP 1.1版开始，使用Cache-Control: max-age=秒替代。</p>
+<p><strong>Expires = max-age +   “每次下载时的当前的request时间”</strong></p>
+<p>所以一旦重新下载的页面后，expires就重新计算一次，但last-modified不会变化 </p>
+</blockquote>
+<p>不受系统时间的影响</p>
+<h3 id="请求方式"><a href="#请求方式" class="headerlink" title="请求方式"></a>请求方式</h3><p>比如一些常见的 get post delete put 这些</p>
+<p>get 和 post 的区别是？<a href="https://sunshinevvv.coding.me/blog/2017/02/09/HttpGETv.s.POST/" target="_blank" rel="external">HTTP协议中GET和POST方法的区别</a></p>
+<p>put 和 patch 的区别？<a href="https://ihower.tw/blog/archives/6483" target="_blank" rel="external">HTTP Verbs: 談 POST, PUT 和 PATCH 的應用</a></p>
+<h3 id="数据发送"><a href="#数据发送" class="headerlink" title="数据发送"></a>数据发送</h3><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Submitting_forms_and_uploading_files" target="_blank" rel="external">XMLHttpRequest</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/form" target="_blank" rel="external">form</a></li>
+</ul>
+<pre><code>// 假设发送的字符串里有 &amp; 和 = 怎么转译
+
+name: &#39;&amp;=xiaohong&#39;
+
+encodeURIComponent(&#39;&amp;=xiaohong&#39;)  // %26%3Dxiaohong
+decodeURIComponent(&#39;%26%3Dxiaohong&#39;)  // &amp;=xiaohong
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FormData" target="_blank" rel="external">FormData</a></p>
+<p>application/json <code>JSON.parse(JSON.stringify(obj))</code></p>
+<p>发数据的时候记得设置 content-type</p>
+<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><p><a href="https://segmentfault.com/a/1190000006689767" target="_blank" rel="external">HTTP 请求头与请求体</a></p>
+<h3 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h3><p><a href="https://segmentfault.com/a/1190000006689786" target="_blank" rel="external">HTTP 响应头与状态码</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><h3 id="实参-Array-prototype-push"><a href="#实参-Array-prototype-push" class="headerlink" title="实参 - Array.prototype.push"></a>实参 - Array.prototype.push</h3><pre><code>// 实现一个 _push() 方法
+// 一顿操作
+Array.prototype._push = function() {
+  // todo..
+  for(let i = 0; i &lt; arguments.length; i++) {
+    this.splice(this.length, 0, arguments[i]);
+  }
+}
+
+var arr = [1,2,3]
+arr._push(4,5)
+console.log(arr)  // [1,2,3,4,5]
+arr._push([1,2], 6)
+console.log(arr)  // [1,2,3,4,5,[1,2],6]
+</code></pre><h3 id="call-amp-apply-amp-bind-把一个数组的元素添加到另一个数组"><a href="#call-amp-apply-amp-bind-把一个数组的元素添加到另一个数组" class="headerlink" title="call&amp;apply&amp;bind - 把一个数组的元素添加到另一个数组"></a>call&amp;apply&amp;bind - 把一个数组的元素添加到另一个数组</h3><pre><code>Array.prototype._concat = function () {
+    // todo...
+    let arr = this.slice(0);
+    arguments.length &amp;&amp; [].forEach.call(arguments, (value) =&gt; {
+        if (Array.isArray(value)) {
+            value.forEach(val =&gt; {
+                arr.push(val);
+            })
+        } else {
+            arr.push(value);
+        }
+    })
+    return arr;
+}
+
+let arr = [1, 2, 3]
+arr._concat([4, 5])
+console.log(arr) // [1,2,3,4,5]
+</code></pre><p>利用 <code>[].forEach.call</code> 调用数组的 <code>forEach</code> 方法（arguments 是类数组没有 forEach 方法）</p>
+<h3 id="原型-extend-parentConstructor-childConstructor"><a href="#原型-extend-parentConstructor-childConstructor" class="headerlink" title="原型 - extend(parentConstructor, childConstructor)"></a>原型 - extend(parentConstructor, childConstructor)</h3><p>实现 extend 方法让子构造函数继承父构造函数的方法。</p>
+<pre><code>function extend(parentConstructor, childConstructor) {
+  var prototype = Object.create(parentConstructor.prototype);
+  prototype.constructor = childConstructor;
+  childConstructor.prototype = prototype;
+}
+
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.sayHi = function() {
+  console.log(`hi I&#39;m ${this.name}`);
+}
+
+var frankie = new Person(&#39;frankie&#39;);
+frankie.sayHi();
+
+function Student(name) {
+  Person.call(this, name);
+}
+
+// 实现 extend 方法让 xiaoming 有问候大家的技能
+extend(Person,Student);  //  extend 要挂在这里，如果挂在下面会有可能冲掉 student 的 prototype 属性
+Student.prototype.study = function() {
+  console.log(`hi I&#39;m ${this.name}. I&#39;m studying`);
+}
+
+var xiaoming = new Student(&#39;xiaoming&#39;);
+xiaoming.study()  // hi I&#39;m xiaoming. I&#39;m studying
+xiaoming.sayHi()  // hi I&#39;m xiaoming
+</code></pre>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#看点面试题"><span class="toc-number">1.</span> <span class="toc-text">看点面试题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#http"><span class="toc-number">1.1.</span> <span class="toc-text">http</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态码"><span class="toc-number">1.1.1.</span> <span class="toc-text">状态码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求方式"><span class="toc-number">1.1.2.</span> <span class="toc-text">请求方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据发送"><span class="toc-number">1.1.3.</span> <span class="toc-text">数据发送</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#请求头"><span class="toc-number">1.1.4.</span> <span class="toc-text">请求头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#响应头"><span class="toc-number">1.1.5.</span> <span class="toc-text">响应头</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript"><span class="toc-number">1.2.</span> <span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实参-Array-prototype-push"><span class="toc-number">1.2.1.</span> <span class="toc-text">实参 - Array.prototype.push</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#call-amp-apply-amp-bind-把一个数组的元素添加到另一个数组"><span class="toc-number">1.2.2.</span> <span class="toc-text">call&apply&bind - 把一个数组的元素添加到另一个数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#原型-extend-parentConstructor-childConstructor"><span class="toc-number">1.2.3.</span> <span class="toc-text">原型 - extend(parentConstructor, childConstructor)</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/11/15/看点面试题/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/11/15/看点面试题/&text=看点面试题"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/11/15/看点面试题/&is_video=false&description=看点面试题"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=看点面试题&body=Check out this article: http://yoursite.com/2017/11/15/看点面试题/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/11/15/看点面试题/&title=看点面试题"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/11/15/看点面试题/&name=看点面试题&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
