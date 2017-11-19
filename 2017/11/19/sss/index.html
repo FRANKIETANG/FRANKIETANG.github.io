@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="补基础：事件什么情况下会用到事件？  DOM 操作 服务器的事件操作  node eventsemitter.on(eventName, listener) emitter.emit(eventName[, …args]) // example.js const EventEmitter = require(&amp;#39;events&amp;#39;);  // 这是 node 的一个内置模块，给 node">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="补基础：事件">
+<meta property="og:url" content="http://yoursite.com/2017/11/19/sss/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="补基础：事件什么情况下会用到事件？  DOM 操作 服务器的事件操作  node eventsemitter.on(eventName, listener) emitter.emit(eventName[, …args]) // example.js const EventEmitter = require(&amp;#39;events&amp;#39;);  // 这是 node 的一个内置模块，给 node">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-19T05:44:41.672Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="补基础：事件">
+<meta name="twitter:description" content="补基础：事件什么情况下会用到事件？  DOM 操作 服务器的事件操作  node eventsemitter.on(eventName, listener) emitter.emit(eventName[, …args]) // example.js const EventEmitter = require(&amp;#39;events&amp;#39;);  // 这是 node 的一个内置模块，给 node">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>补基础：事件</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/11/15/看点面试题/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/11/19/sss/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/11/19/sss/&text=补基础：事件"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/11/19/sss/&is_video=false&description=补基础：事件"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=补基础：事件&body=Check out this article: http://yoursite.com/2017/11/19/sss/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/11/19/sss/&name=补基础：事件&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：事件"><span class="toc-number">1.</span> <span class="toc-text">补基础：事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-events"><span class="toc-number">1.1.</span> <span class="toc-text">node events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现一个-Event"><span class="toc-number">1.2.</span> <span class="toc-text">实现一个 Event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#on-和-emit"><span class="toc-number">1.2.1.</span> <span class="toc-text">on 和 emit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eventNames-和-listenerCount"><span class="toc-number">1.2.2.</span> <span class="toc-text">eventNames 和 listenerCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeListener"><span class="toc-number">1.2.3.</span> <span class="toc-text">removeListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#once"><span class="toc-number">1.2.4.</span> <span class="toc-text">once</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        补基础：事件
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-11-19T05:43:09.000Z" itemprop="datePublished">2017-11-19</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="补基础：事件"><a href="#补基础：事件" class="headerlink" title="补基础：事件"></a>补基础：事件</h1><p>什么情况下会用到事件？</p>
+<ul>
+<li>DOM 操作</li>
+<li>服务器的事件操作</li>
+</ul>
+<h2 id="node-events"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="external">node events</a></h2><p><a href="https://nodejs.org/api/events.html#events_emitter_on_eventname_listener" target="_blank" rel="external">emitter.on(eventName, listener)</a> <a href="https://nodejs.org/api/events.html#events_emitter_emit_eventname_args" target="_blank" rel="external">emitter.emit(eventName[, …args])</a></p>
+<pre><code>// example.js
+const EventEmitter = require(&#39;events&#39;);  // 这是 node 的一个内置模块，给 node 提供一个事件功能
+const emitter = new EventEmitter();
+
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {  // 这里这个 on 相当于 addEventListener
+  console.log(`an event occurred! with response ${arg}`)
+})
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)  // 用 emit 触发事件
+
+// node example.js
+// an event occurred! with response a,b
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_eventnames" target="_blank" rel="external">emitter.eventNames()</a> <a href="https://nodejs.org/api/events.html#events_emitter_listenercount_eventname" target="_blank" rel="external">emitter.listenerCount(eventName)</a></p>
+<pre><code>const EventEmitter = require(&#39;events&#39;);
+const emitter = new EventEmitter();
+
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {  // 1
+  console.log(`an event occurred! with response ${arg}`)
+});
+
+emitter.on(&#39;iEvent&#39;, () =&gt; {  // 2
+  console.log(`another event occurred!`);
+})
+
+emitter.on(&#39;newEvent&#39;, () =&gt; {
+  console.log(`another event occurred!`);
+})
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);  //  同时触发 1 和 2
+
+let eNames = emitter.eventNames();
+console.log(eName);  // [&#39;iEvent&#39;, &#39;newEvent&#39;]  // 返回所有注册实例的名称
+
+let iEventListenerCount = emitter.listenerCount(&#39;iEvent&#39;);
+console.log(iEventListenerCount);  // 2  // 绑定了多少个 handler
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener" target="_blank" rel="external">emitter.removeListener(eventName, listener)</a></p>
+<pre><code>const EventEmitter = require(&#39;events&#39;);
+const emitter = new EventEmitter();
+
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {
+  console.log(`an event occurred! with response ${args}`);
+});
+
+let handler = function() {
+  console.log(`handler`);
+}
+emitter.on(&#39;iEvent&#39;, handler);  // an event occurred! with response a,b   handler // 加一个 handler
+
+emitter.removeListener(&#39;iEvent&#39;, handler);  // an event occurred! with response a,b
+
+/* 这样做不会 remove handler 
+emitter.removeListener(&#39;iEvent&#39;, function() {
+  console.log(`handler`)  // an event occurred! with response a,b   handler
+})
+*/
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_once_eventname_listener" target="_blank" rel="external">emitter.once(eventName, listener)</a></p>
+<pre><code>const EventEmitter = require(&#39;events&#39;);
+const emitter = new EventEmitter();
+
+/* 这样会打印两次
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {
+  console.log(`an event occurred! with response ${args}`);
+});
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);  // an event occurred! with response a,b
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);  // an event occurred! with response a,b
+*/
+
+emitter.once(&#39;onceEvent&#39;, (...args) =&gt; {
+  console.log(`an event occurred! with response ${args}`);
+})
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
+// 只会触发一次
+// an event occurred! with response a,b
+</code></pre><h2 id="实现一个-Event"><a href="#实现一个-Event" class="headerlink" title="实现一个 Event"></a>实现一个 Event</h2><h3 id="on-和-emit"><a href="#on-和-emit" class="headerlink" title="on 和 emit"></a>on 和 emit</h3><pre><code>// on 可以想象成是一个订阅事件
+// emit 可以想象成一个发布事件
+// sub/pub(subscribe/publish)
+
+function Event() {
+    // todo...
+    this.eventToHandlers = {}  // 设置一个空对象
+}
+// todo...
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);  // 如果已经有 callback 了就继续添加
+    } else {
+        this.eventToHandlers[eventName] = [callback];  // 没有的话就让 eventToHandlers[name] 变为 callback
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];  // 解决变量名字是 undefined 的问题
+    for (let fn of handlers) {  // 遍历 eventName 下面的数组
+        fn(...args)
+    }
+}
+
+
+let emitter = new Event();
+
+let handler1 = (...args) =&gt; {
+    console.log(`an event occurred! with response ${args}`);
+};
+emitter.on(&#39;iEvent&#39;, handler1)
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)
+
+let handler2 = () =&gt; { console.log(`another handler2`); };
+let handler3 = () =&gt; { console.log(`another handler3`); };
+emitter.on(&#39;iEvent2&#39;, handler2)
+emitter.on(&#39;iEvent2&#39;, handler3)
+emitter.emit(&#39;iEvent2&#39;, &#39;c&#39;, &#39;d&#39;)
+
+// an event occurred! with response a,b
+// another handler2
+// another handler3
+
+// 保存的数据结构的格式最好是
+/*
+{
+  &quot;iEvent&quot;: [handler1]
+  &quot;iEvent2&quot;: [handler2, handler3]
+}
+*/
+</code></pre><h3 id="eventNames-和-listenerCount"><a href="#eventNames-和-listenerCount" class="headerlink" title="eventNames 和 listenerCount"></a>eventNames 和 listenerCount</h3><pre><code>function Event() {
+    this.eventToHandlers = {}
+}
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);
+    } else {
+        this.eventToHandlers[eventName] = [callback];
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];
+    for (let fn of handlers) {
+        fn(...args)
+    }
+}
+
+// 实现 eventNames 和 listenerCount
+Event.prototype.eventNames = function () {
+    // return array
+    return Object.keys(this.eventToHandlers);
+}
+
+Event.prototype.listenerCount = function (eventNames) {
+    // return number
+    // return (this.eventToHandlers[eventNames] || []).length  // 如果 this.eventToHandlers[eventNames] 没有就会取一个空数组
+    return this.eventToHandlers[eventNames] ? this.eventToHandlers[eventNames].length : 0;
+}
+
+let emitter = new Event();
+
+let handler1 = (...args) =&gt; {
+    console.log(`an event occurred! with response ${args}`);
+};
+emitter.on(&#39;iEvent&#39;, handler1)
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)
+
+let handler2 = () =&gt; { console.log(`another handler2`); };
+let handler3 = () =&gt; { console.log(`another handler3`); };
+emitter.on(&#39;iEvent2&#39;, handler2)
+emitter.on(&#39;iEvent2&#39;, handler3)
+emitter.emit(&#39;iEvent2&#39;, &#39;c&#39;, &#39;d&#39;)
+
+console.log(emitter.eventNames());  // [&#39;iEvent&#39;, &#39;iEvent2&#39;]
+console.log(emitter.listenerCount(&#39;iEvent2&#39;));  // 2
+console.log(emitter.listenerCount(&#39;abc&#39;));  // 做一个处理 0
+</code></pre><h3 id="removeListener"><a href="#removeListener" class="headerlink" title="removeListener"></a>removeListener</h3><pre><code>function Event() {
+    this.eventToHandlers = {}
+}
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);
+    } else {
+        this.eventToHandlers[eventName] = [callback];
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];
+    for (let fn of handlers) {
+        fn(...args)
+    }
+}
+
+// 实现一个 removeListener
+Event.prototype.removeListener = function (eventName, fn) {
+    let handlers = this.eventToHandlers[eventName];
+    let index = handlers.indexOf(fn);
+    if (index &gt; -1) {
+        handlers.splice(index, 1)
+    }
+}
+
+let emitter = new Event();
+
+let handler2 = () =&gt; { console.log(`another handler2`); };
+let handler3 = () =&gt; { console.log(`another handler3`); };
+emitter.on(&#39;iEvent2&#39;, handler2)
+emitter.on(&#39;iEvent2&#39;, handler3)
+emitter.removeListener(&#39;iEvent2&#39;, handler3)
+emitter.emit(&#39;iEvent2&#39;, &#39;c&#39;, &#39;d&#39;)
+
+// another handler2
+</code></pre><h3 id="once"><a href="#once" class="headerlink" title="once"></a>once</h3><pre><code>function Event() {
+    this.eventToHandlers = {}
+}
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);
+    } else {
+        this.eventToHandlers[eventName] = [callback];
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];
+    for (let fn of handlers) {
+        fn(...args)
+    }
+}
+
+Event.prototype.removeListener = function (eventName, fn) {
+    let handlers = this.eventToHandlers[eventName];
+    let index = handlers.indexOf(fn);
+    if (index &gt; -1) {
+        handlers.splice(index, 1)
+    }
+}
+
+// 实现一个 once
+Event.prototype.once = function (eventName, callback) {
+    // 触发之后删除掉
+    let handler = (...args) =&gt; {
+        callback(...args)
+        this.removeListener(eventName, handler)
+    }
+    this.on(eventName, handler)
+}
+
+let emitter = new Event();
+
+
+let handler4 = () =&gt; { console.log(`another handler4`); }
+emitter.once(&#39;iEvent4&#39;, handler4)
+emitter.emit(&#39;iEvent4&#39;)  // another handler4
+emitter.emit(&#39;iEvent4&#39;)  // 不打印
+</code></pre>
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：事件"><span class="toc-number">1.</span> <span class="toc-text">补基础：事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-events"><span class="toc-number">1.1.</span> <span class="toc-text">node events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现一个-Event"><span class="toc-number">1.2.</span> <span class="toc-text">实现一个 Event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#on-和-emit"><span class="toc-number">1.2.1.</span> <span class="toc-text">on 和 emit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eventNames-和-listenerCount"><span class="toc-number">1.2.2.</span> <span class="toc-text">eventNames 和 listenerCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeListener"><span class="toc-number">1.2.3.</span> <span class="toc-text">removeListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#once"><span class="toc-number">1.2.4.</span> <span class="toc-text">once</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/11/19/sss/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/11/19/sss/&text=补基础：事件"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/11/19/sss/&is_video=false&description=补基础：事件"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=补基础：事件&body=Check out this article: http://yoursite.com/2017/11/19/sss/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/11/19/sss/&title=补基础：事件"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/11/19/sss/&name=补基础：事件&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+

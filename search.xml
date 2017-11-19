@@ -3,6 +3,285 @@
   
     
     <entry>
+      <title><![CDATA[补基础：事件]]></title>
+      <url>/2017/11/19/sss/</url>
+      <content type="html"><![CDATA[<h1 id="补基础：事件"><a href="#补基础：事件" class="headerlink" title="补基础：事件"></a>补基础：事件</h1><p>什么情况下会用到事件？</p>
+<ul>
+<li>DOM 操作</li>
+<li>服务器的事件操作</li>
+</ul>
+<h2 id="node-events"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="external">node events</a></h2><p><a href="https://nodejs.org/api/events.html#events_emitter_on_eventname_listener" target="_blank" rel="external">emitter.on(eventName, listener)</a> <a href="https://nodejs.org/api/events.html#events_emitter_emit_eventname_args" target="_blank" rel="external">emitter.emit(eventName[, …args])</a></p>
+<pre><code>// example.js
+const EventEmitter = require(&#39;events&#39;);  // 这是 node 的一个内置模块，给 node 提供一个事件功能
+const emitter = new EventEmitter();
+
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {  // 这里这个 on 相当于 addEventListener
+  console.log(`an event occurred! with response ${arg}`)
+})
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)  // 用 emit 触发事件
+
+// node example.js
+// an event occurred! with response a,b
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_eventnames" target="_blank" rel="external">emitter.eventNames()</a> <a href="https://nodejs.org/api/events.html#events_emitter_listenercount_eventname" target="_blank" rel="external">emitter.listenerCount(eventName)</a></p>
+<pre><code>const EventEmitter = require(&#39;events&#39;);
+const emitter = new EventEmitter();
+
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {  // 1
+  console.log(`an event occurred! with response ${arg}`)
+});
+
+emitter.on(&#39;iEvent&#39;, () =&gt; {  // 2
+  console.log(`another event occurred!`);
+})
+
+emitter.on(&#39;newEvent&#39;, () =&gt; {
+  console.log(`another event occurred!`);
+})
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);  //  同时触发 1 和 2
+
+let eNames = emitter.eventNames();
+console.log(eName);  // [&#39;iEvent&#39;, &#39;newEvent&#39;]  // 返回所有注册实例的名称
+
+let iEventListenerCount = emitter.listenerCount(&#39;iEvent&#39;);
+console.log(iEventListenerCount);  // 2  // 绑定了多少个 handler
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener" target="_blank" rel="external">emitter.removeListener(eventName, listener)</a></p>
+<pre><code>const EventEmitter = require(&#39;events&#39;);
+const emitter = new EventEmitter();
+
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {
+  console.log(`an event occurred! with response ${args}`);
+});
+
+let handler = function() {
+  console.log(`handler`);
+}
+emitter.on(&#39;iEvent&#39;, handler);  // an event occurred! with response a,b   handler // 加一个 handler
+
+emitter.removeListener(&#39;iEvent&#39;, handler);  // an event occurred! with response a,b
+
+/* 这样做不会 remove handler 
+emitter.removeListener(&#39;iEvent&#39;, function() {
+  console.log(`handler`)  // an event occurred! with response a,b   handler
+})
+*/
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_once_eventname_listener" target="_blank" rel="external">emitter.once(eventName, listener)</a></p>
+<pre><code>const EventEmitter = require(&#39;events&#39;);
+const emitter = new EventEmitter();
+
+/* 这样会打印两次
+emitter.on(&#39;iEvent&#39;, (...args) =&gt; {
+  console.log(`an event occurred! with response ${args}`);
+});
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);  // an event occurred! with response a,b
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);  // an event occurred! with response a,b
+*/
+
+emitter.once(&#39;onceEvent&#39;, (...args) =&gt; {
+  console.log(`an event occurred! with response ${args}`);
+})
+
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
+// 只会触发一次
+// an event occurred! with response a,b
+</code></pre><h2 id="实现一个-Event"><a href="#实现一个-Event" class="headerlink" title="实现一个 Event"></a>实现一个 Event</h2><h3 id="on-和-emit"><a href="#on-和-emit" class="headerlink" title="on 和 emit"></a>on 和 emit</h3><pre><code>// on 可以想象成是一个订阅事件
+// emit 可以想象成一个发布事件
+// sub/pub(subscribe/publish)
+
+function Event() {
+    // todo...
+    this.eventToHandlers = {}  // 设置一个空对象
+}
+// todo...
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);  // 如果已经有 callback 了就继续添加
+    } else {
+        this.eventToHandlers[eventName] = [callback];  // 没有的话就让 eventToHandlers[name] 变为 callback
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];  // 解决变量名字是 undefined 的问题
+    for (let fn of handlers) {  // 遍历 eventName 下面的数组
+        fn(...args)
+    }
+}
+
+
+let emitter = new Event();
+
+let handler1 = (...args) =&gt; {
+    console.log(`an event occurred! with response ${args}`);
+};
+emitter.on(&#39;iEvent&#39;, handler1)
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)
+
+let handler2 = () =&gt; { console.log(`another handler2`); };
+let handler3 = () =&gt; { console.log(`another handler3`); };
+emitter.on(&#39;iEvent2&#39;, handler2)
+emitter.on(&#39;iEvent2&#39;, handler3)
+emitter.emit(&#39;iEvent2&#39;, &#39;c&#39;, &#39;d&#39;)
+
+// an event occurred! with response a,b
+// another handler2
+// another handler3
+
+// 保存的数据结构的格式最好是
+/*
+{
+  &quot;iEvent&quot;: [handler1]
+  &quot;iEvent2&quot;: [handler2, handler3]
+}
+*/
+</code></pre><h3 id="eventNames-和-listenerCount"><a href="#eventNames-和-listenerCount" class="headerlink" title="eventNames 和 listenerCount"></a>eventNames 和 listenerCount</h3><pre><code>function Event() {
+    this.eventToHandlers = {}
+}
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);
+    } else {
+        this.eventToHandlers[eventName] = [callback];
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];
+    for (let fn of handlers) {
+        fn(...args)
+    }
+}
+
+// 实现 eventNames 和 listenerCount
+Event.prototype.eventNames = function () {
+    // return array
+    return Object.keys(this.eventToHandlers);
+}
+
+Event.prototype.listenerCount = function (eventNames) {
+    // return number
+    // return (this.eventToHandlers[eventNames] || []).length  // 如果 this.eventToHandlers[eventNames] 没有就会取一个空数组
+    return this.eventToHandlers[eventNames] ? this.eventToHandlers[eventNames].length : 0;
+}
+
+let emitter = new Event();
+
+let handler1 = (...args) =&gt; {
+    console.log(`an event occurred! with response ${args}`);
+};
+emitter.on(&#39;iEvent&#39;, handler1)
+emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)
+
+let handler2 = () =&gt; { console.log(`another handler2`); };
+let handler3 = () =&gt; { console.log(`another handler3`); };
+emitter.on(&#39;iEvent2&#39;, handler2)
+emitter.on(&#39;iEvent2&#39;, handler3)
+emitter.emit(&#39;iEvent2&#39;, &#39;c&#39;, &#39;d&#39;)
+
+console.log(emitter.eventNames());  // [&#39;iEvent&#39;, &#39;iEvent2&#39;]
+console.log(emitter.listenerCount(&#39;iEvent2&#39;));  // 2
+console.log(emitter.listenerCount(&#39;abc&#39;));  // 做一个处理 0
+</code></pre><h3 id="removeListener"><a href="#removeListener" class="headerlink" title="removeListener"></a>removeListener</h3><pre><code>function Event() {
+    this.eventToHandlers = {}
+}
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);
+    } else {
+        this.eventToHandlers[eventName] = [callback];
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];
+    for (let fn of handlers) {
+        fn(...args)
+    }
+}
+
+// 实现一个 removeListener
+Event.prototype.removeListener = function (eventName, fn) {
+    let handlers = this.eventToHandlers[eventName];
+    let index = handlers.indexOf(fn);
+    if (index &gt; -1) {
+        handlers.splice(index, 1)
+    }
+}
+
+let emitter = new Event();
+
+let handler2 = () =&gt; { console.log(`another handler2`); };
+let handler3 = () =&gt; { console.log(`another handler3`); };
+emitter.on(&#39;iEvent2&#39;, handler2)
+emitter.on(&#39;iEvent2&#39;, handler3)
+emitter.removeListener(&#39;iEvent2&#39;, handler3)
+emitter.emit(&#39;iEvent2&#39;, &#39;c&#39;, &#39;d&#39;)
+
+// another handler2
+</code></pre><h3 id="once"><a href="#once" class="headerlink" title="once"></a>once</h3><pre><code>function Event() {
+    this.eventToHandlers = {}
+}
+
+Event.prototype.on = function (eventName, callback) {
+    if (this.eventToHandlers[eventName]) {
+        this.eventToHandlers[eventName].push(callback);
+    } else {
+        this.eventToHandlers[eventName] = [callback];
+    }
+}
+
+Event.prototype.emit = function (eventName, ...args) {
+    let handlers = this.eventToHandlers[eventName] || [];
+    for (let fn of handlers) {
+        fn(...args)
+    }
+}
+
+Event.prototype.removeListener = function (eventName, fn) {
+    let handlers = this.eventToHandlers[eventName];
+    let index = handlers.indexOf(fn);
+    if (index &gt; -1) {
+        handlers.splice(index, 1)
+    }
+}
+
+// 实现一个 once
+Event.prototype.once = function (eventName, callback) {
+    // 触发之后删除掉
+    let handler = (...args) =&gt; {
+        callback(...args)
+        this.removeListener(eventName, handler)
+    }
+    this.on(eventName, handler)
+}
+
+let emitter = new Event();
+
+
+let handler4 = () =&gt; { console.log(`another handler4`); }
+emitter.once(&#39;iEvent4&#39;, handler4)
+emitter.emit(&#39;iEvent4&#39;)  // another handler4
+emitter.emit(&#39;iEvent4&#39;)  // 不打印
+</code></pre>]]></content>
+      
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[看点面试题]]></title>
       <url>/2017/11/15/%E7%9C%8B%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
       <content type="html"><![CDATA[<h1 id="看点面试题"><a href="#看点面试题" class="headerlink" title="看点面试题"></a>看点面试题</h1><h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="external">RESTful API 设计指南</a> — 解决状态码和请求方式</p>
@@ -4999,9 +5278,9 @@ fn().then(fn1).then(fn2)
         
         <tags>
             
-            <tag> ES6 </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> ES6 </tag>
             
             <tag> Black History </tag>
             
@@ -5435,9 +5714,9 @@ console.log(a,b,c)
         
         <tags>
             
-            <tag> ES6 </tag>
-            
             <tag> JavaScript </tag>
+            
+            <tag> ES6 </tag>
             
             <tag> Black History </tag>
             
