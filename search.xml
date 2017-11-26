@@ -3,6 +3,97 @@
   
     
     <entry>
+      <title><![CDATA[简单走一遍 node]]></title>
+      <url>/2017/11/26/%E7%AE%80%E5%8D%95%E8%B5%B0%E4%B8%80%E9%81%8D%20node/</url>
+      <content type="html"><![CDATA[<h1 id="简单走一遍-node"><a href="#简单走一遍-node" class="headerlink" title="简单走一遍 node"></a>简单走一遍 node</h1><p>一个 Express 便利贴项目 | 预览 <a href="https://express-node.now.sh/" target="_blank" rel="external">https://express-node.now.sh/</a> 源码 <a href="https://github.com/FRANKIETANG/Express-node" target="_blank" rel="external">https://github.com/FRANKIETANG/Express-node</a></p>
+<p>详情代码看我 <a href="https://github.com/FRANKIETANG/Express-node/commits/master" target="_blank" rel="external">commit</a> </p>
+<p><a href="http://expressjs.com" target="_blank" rel="external">http://expressjs.com</a></p>
+<h2 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h2><ul>
+<li>增删改查</li>
+<li>便利贴可拖动</li>
+<li>GitHub 登录</li>
+</ul>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h3><pre><code>npm init -y
+npm install express --save
+</code></pre><p>老套路，先用 express 问候一下世界</p>
+<pre><code>// app.js
+const express = require(&#39;express&#39;)
+const app = express()
+
+app.get(&#39;/&#39;, (req, res) =&gt; res.send(&#39;Hello World!&#39;))
+
+app.listen(3000, () =&gt; console.log(&#39;Example app listening on port 3000!&#39;))
+</code></pre><p>用 <code>node app.js</code> 成功的问候了世界</p>
+<p>接下来安装 express-generator</p>
+<pre><code>npm install express-generator --save-dev
+</code></pre><p><code>./node_modules/express-generator/bin/express-cli.js . -f -e</code> 自动生成</p>
+<pre><code>// 看看目录
+tangkalun@tangkalun-PC:~/Desktop/Express-node$ ls
+app.js  bin  node_modules  package.json  public  routes  views
+</code></pre><pre><code>// 根据提示
+npm i
+npm start
+</code></pre><p>换端口的方法是 <code>PORT=4000 node bin/www</code></p>
+<h3 id="webpack-配置"><a href="#webpack-配置" class="headerlink" title="webpack 配置"></a>webpack 配置</h3><p>看以前写过的博客</p>
+<h3 id="onchange"><a href="#onchange" class="headerlink" title="onchange"></a>onchange</h3><p><a href="https://www.npmjs.com/package/onchange" target="_blank" rel="external">https://www.npmjs.com/package/onchange</a> 查看当前文件状况</p>
+<pre><code>&quot;build&quot;: &quot;webpack --config=src/webpack.config.js&quot;,
+&quot;watch&quot;: &quot;onchange &#39;src/**/*.js&#39; &#39;src/**/*.less&#39; -- npm run build&quot;
+</code></pre><h2 id="需要了解的内容有"><a href="#需要了解的内容有" class="headerlink" title="需要了解的内容有"></a><strong>需要了解的内容有</strong></h2><ul>
+<li><a href="http://expressjs.com/en/guide/using-middleware.html" target="_blank" rel="external">middleware</a></li>
+<li><a href="http://expressjs.com/en/guide/using-template-engines.html" target="_blank" rel="external">template engines with Express</a></li>
+<li><a href="http://expressjs.com/en/guide/routing.html" target="_blank" rel="external">Routing</a></li>
+</ul>
+<p>比如说一个简单的 middleware 可以这样子写</p>
+<pre><code>app.use(&#39;/student&#39;, function (req, res, next) {
+  res.send(&#39;hello frankie&#39;)
+})
+</code></pre><p>我理解的话，大概是一个类似路由的东西</p>
+<p>模板引擎：<a href="https://www.npmjs.com/package/ejs" target="_blank" rel="external">https://www.npmjs.com/package/ejs</a></p>
+<p>有一句话是设置路径的，很重要。是用来设置是路由还是其他公共路径下的文件不会被当成路由加载</p>
+<pre><code>app.use(express.static(path.join(__dirname, &#39;public&#39;)));
+</code></pre><h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>没什么好说的都是以前做的轮子变形</p>
+<p>不过发布订阅的确写得简单了点…</p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p><code>crud</code> <code>restful</code></p>
+<ul>
+<li>获取所有的 note <code>GET /api/notes  req:{}  res:{stauts: 0, data: [{},{}]} {status:1,errorMsg: &#39;失败的原因&#39;}</code></li>
+<li>创建一个 note <code>POST /api/note/create  req:{note: &#39;hello world&#39;}  res:{stauts: 0}  {status:1,errorMsg: &#39;失败的原因&#39;}</code></li>
+<li>修改一个 note <code>POST /api/note/edit  req:{note: &#39;new note&#39;, id:100}</code></li>
+<li>删除一个 note <code>POST /api/note/delete req:{id:100}</code></li>
+</ul>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><a href="https://www.npmjs.com/package/sequelize" target="_blank" rel="external">https://www.npmjs.com/package/sequelize</a></p>
+<p><a href="https://github.com/demopark/sequelize-docs-Zh-CN" target="_blank" rel="external">https://github.com/demopark/sequelize-docs-Zh-CN</a></p>
+<pre><code>// 用 n 模块降级到 6.10.3
+$ npm install --save sequelize
+$ npm install --save sqlite3
+</code></pre><h2 id="登录登出功能"><a href="#登录登出功能" class="headerlink" title="登录登出功能"></a>登录登出功能</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="external">理解OAuth 2.0</a></p>
+<p><a href="https://www.npmjs.com/package/passport" target="_blank" rel="external">https://www.npmjs.com/package/passport</a> 注意文档中的 Sessions 和 Middleware</p>
+<p><a href="https://www.npmjs.com/package/passport-github" target="_blank" rel="external">https://www.npmjs.com/package/passport-github</a> 注意文档中的 Configure Strategy 和 Authenticate Requests</p>
+<p><a href="http://www.cnblogs.com/gabrielchen/p/5800225.html" target="_blank" rel="external">http://www.cnblogs.com/gabrielchen/p/5800225.html</a></p>
+<p><a href="https://github.com/settings/applications/new" target="_blank" rel="external">https://github.com/settings/applications/new</a></p>
+<p><a href="https://diamondfsd.com/article/7fc2b070-e238-4fbb-acaf-47f0e3fdaabc" target="_blank" rel="external">使用 GitHub OAuth 第三方验证登录</a></p>
+<p><a href="http://www.open-open.com/lib/view/open1416812717570.html" target="_blank" rel="external">http://www.open-open.com/lib/view/open1416812717570.html</a></p>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p><a href="https://github.com/FRANKIETANG/Express-node/commit/23e800fd0f76661225f5bae731cad4f22d302a6d" target="_blank" rel="external">permission - commit</a></p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p><a href="https://zeit.co/now" target="_blank" rel="external">https://zeit.co/now</a></p>
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p>node 如何调试</p>
+<pre><code>npm i -g node-inspector
+node-inspector
+// 然后打开他指定的端口
+// 然后打开项目
+node --debug bin/www
+</code></pre><h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>为了能让自己回想起自己的代码是啥意思，多看看自己的 commit</p>
+<p>过一段时间想个更有难度的项目吧… 不应该老是做这种像 demo 一样的东西</p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> node </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[补基础：事件]]></title>
       <url>/2017/11/19/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9A%E4%BA%8B%E4%BB%B6/</url>
       <content type="html"><![CDATA[<h1 id="补基础：事件"><a href="#补基础：事件" class="headerlink" title="补基础：事件"></a>补基础：事件</h1><p>什么情况下会用到事件？</p>
