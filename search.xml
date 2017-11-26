@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[简单走一遍 node]]></title>
       <url>/2017/11/26/%E7%AE%80%E5%8D%95%E8%B5%B0%E4%B8%80%E9%81%8D%20node/</url>
-      <content type="html"><![CDATA[<h1 id="简单走一遍-node"><a href="#简单走一遍-node" class="headerlink" title="简单走一遍 node"></a>简单走一遍 node</h1><p>一个 Express 便利贴项目 | 预览 <a href="https://express-node.now.sh/" target="_blank" rel="external">https://express-node.now.sh/</a> 源码 <a href="https://github.com/FRANKIETANG/Express-node" target="_blank" rel="external">https://github.com/FRANKIETANG/Express-node</a></p>
+      <content type="html"><![CDATA[<h1 id="简单走一遍-node"><a href="#简单走一遍-node" class="headerlink" title="简单走一遍 node"></a>简单走一遍 node</h1><p>一个 Express 便利贴项目 | 预览 <a href="http://tangkalun.top" target="_blank" rel="external">http://tangkalun.top</a> 源码 <a href="https://github.com/FRANKIETANG/Express-node" target="_blank" rel="external">https://github.com/FRANKIETANG/Express-node</a></p>
 <p>详情代码看我 <a href="https://github.com/FRANKIETANG/Express-node/commits/master" target="_blank" rel="external">commit</a> </p>
 <p><a href="http://expressjs.com" target="_blank" rel="external">http://expressjs.com</a></p>
 <h2 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h2><ul>
@@ -73,7 +73,6 @@ $ npm install --save sqlite3
 <p><a href="https://diamondfsd.com/article/7fc2b070-e238-4fbb-acaf-47f0e3fdaabc" target="_blank" rel="external">使用 GitHub OAuth 第三方验证登录</a></p>
 <p><a href="http://www.open-open.com/lib/view/open1416812717570.html" target="_blank" rel="external">http://www.open-open.com/lib/view/open1416812717570.html</a></p>
 <h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p><a href="https://github.com/FRANKIETANG/Express-node/commit/23e800fd0f76661225f5bae731cad4f22d302a6d" target="_blank" rel="external">permission - commit</a></p>
-<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p><a href="https://zeit.co/now" target="_blank" rel="external">https://zeit.co/now</a></p>
 <h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p>node 如何调试</p>
 <pre><code>npm i -g node-inspector
 node-inspector
