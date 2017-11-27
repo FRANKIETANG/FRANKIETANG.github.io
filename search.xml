@@ -3,6 +3,140 @@
   
     
     <entry>
+      <title><![CDATA[Linux 的基本命令行和 Git 的基本操作]]></title>
+      <url>/2017/11/27/Linux%20%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%20Git%20%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
+      <content type="html"><![CDATA[<h1 id="Linux-的基本命令行和-Git-的基本操作"><a href="#Linux-的基本命令行和-Git-的基本操作" class="headerlink" title="Linux 的基本命令行和 Git 的基本操作"></a>Linux 的基本命令行和 Git 的基本操作</h1><h2 id="Linux-命令行"><a href="#Linux-命令行" class="headerlink" title="Linux 命令行"></a>Linux 命令行</h2><pre><code>//进入目录
+cd
+//显示当前目录
+pwd
+//创建目录
+mkdir 目录名
+//创建目录
+mkdir -p 目录路径
+//查看路径
+ls 路径
+//查看路径
+ls -a 路径
+//查看路径
+ls -l 路径
+//查看路径 
+ls -al 路径
+//创建文件
+echo &#39;1&#39; &gt; 文件路径
+//创建文件
+echo &#39;1&#39; &gt;! 文件路径
+//创建文件
+echo &#39;1&#39; &gt;&gt; 文件路径
+//创建文件
+touch 文件名
+//改变文件更新时间
+touch 文件名
+//复制文件
+cp 源路径 目标路径
+//复制目录
+cp -r 源路径 目标路径
+//移动节点
+mv 源路径 目标路径
+//删除文件
+rm 文件路径
+//强制删除文件
+rm -f 文件路径
+//删除目录
+rm -r 目录路径
+//强制删除目录
+rm -rf 目录路径
+//查看目录结构
+tree
+//建立软链接
+ln -s 真实文件 链接
+</code></pre><h2 id="怎么把项目上传到-GitHub"><a href="#怎么把项目上传到-GitHub" class="headerlink" title="怎么把项目上传到 GitHub"></a>怎么把项目上传到 GitHub</h2><pre><code>//把项目先克隆到本地
+git clone git@github.com:FRANKIETANG/Remote-Mouse.git
+//把文件夹里的东西全部清除，然后运行以下命令
+git add *
+git commit -m ‘del’
+git push origin master
+//把新项目放在文件夹，再运行以下命令
+git add *
+git commit -m ‘intinal’
+git pull origin master
+git push origin master
+//这样，项目就可以在 GitHub 上看到啦哈哈哈
+</code></pre><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p><a href="https://coolshell.cn/articles/5426.html" target="_blank" rel="external">vim 的基本操作</a></p>
+<p>自制命令行</p>
+<pre><code>// ~/.bashrc
+
+vi ~/.bashrc
+alias xx = &quot;要干的事情&quot;
+source ~/.bashrc
+xx 
+
+// ~/.zshrc
+
+vi ~/.zshrc
+alias xx = &quot;要干的事情&quot;
+source ~/.zshrc
+xx
+</code></pre><p>命令行小工具</p>
+<ul>
+<li>z: 方便实现快速目录跳转，<a href="https://github.com/rupa/z" target="_blank" rel="external">下载在此</a></li>
+<li>fzf: 方便快速搜索文件或目录，<a href="https://github.com/junegunn/fzf#installation" target="_blank" rel="external">官网在此</a></li>
+</ul>
+<pre><code>curl -L https://raw.githubusercontent.com/rupa/z/master/z.sh &gt; z.sh
+vi ~/.zshrc
+source ~/z.sh
+source ~/.zshrc
+z // 看到你以前去过的所有目录
+z Desk // 去桌面
+</code></pre><pre><code>git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
+source ~/.zshrc
+fzf
+// 然后就可以在命令行搜索文件了
+</code></pre><pre><code>把 z 和 fzf 合在一起
+vi ~/.zshrc
+
+unalias z // 不要 z 命令
+// 以下为合并命令，理解就好。把 z 换成 j 和 jj 。jj 是上一次搜索的记录
+j() {
+     if [[ -z &quot;$*&quot; ]]; then
+         cd &quot;$(_z -l 2&gt;&amp;1 | fzf +s | sed &#39;s/^[0-9,.]* *//&#39;)&quot;
+     else
+         _last_z_args=&quot;$@&quot;
+         _z &quot;$@&quot;
+     fi
+ }
+
+ jj() {
+     cd &quot;$(_z -l 2&gt;&amp;1 | sed &#39;s/^[0-9,.]* *//&#39; | fzf -q $_last_z_args)&quot;
+ }
+
+ source ~/.zshrc
+</code></pre><pre><code>// 安装 yarn
+sudo apt-get update &amp;&amp; sudo apt-get install yarn
+</code></pre><pre><code>// 怎么看精简文档
+npm i -g tldr
+// tldr = too long; didn&#39;t read
+// 比如看 linux 下的 less 怎么使用
+man less
+// 太多了
+tldr less
+// 就会精简
+tldr npm
+</code></pre>]]></content>
+      
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> Git </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[简单走一遍 node]]></title>
       <url>/2017/11/26/%E7%AE%80%E5%8D%95%E8%B5%B0%E4%B8%80%E9%81%8D%20node/</url>
       <content type="html"><![CDATA[<h1 id="简单走一遍-node"><a href="#简单走一遍-node" class="headerlink" title="简单走一遍 node"></a>简单走一遍 node</h1><p>一个 Express 便利贴项目 | 预览 <a href="http://tangkalun.top" target="_blank" rel="external">http://tangkalun.top</a> 源码 <a href="https://github.com/FRANKIETANG/Express-node" target="_blank" rel="external">https://github.com/FRANKIETANG/Express-node</a></p>
