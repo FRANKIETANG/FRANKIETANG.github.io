@@ -4,8 +4,8 @@
     
     <entry>
       <title><![CDATA[补基础： node 各种知识点]]></title>
-      <url>/2017/11/29/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9A%20node%20%E5%90%84%E7%A7%8D%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
-      <content type="html"><![CDATA[<h1 id="补基础：-node-各种知识点"><a href="#补基础：-node-各种知识点" class="headerlink" title="补基础： node 各种知识点"></a>补基础： node 各种知识点</h1><p>简单带过所有开发环境</p>
+      <url>/2017/11/29/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9Anode%20%E5%90%84%E7%A7%8D%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+      <content type="html"><![CDATA[<h1 id="补基础：node-各种知识点"><a href="#补基础：node-各种知识点" class="headerlink" title="补基础：node 各种知识点"></a>补基础：node 各种知识点</h1><p>简单带过所有开发环境</p>
 <p>NVM:nvm是一个node.js版本管理器，我们将会使用nvm安装node.js的不同版本<br><a href="https://github.com/creationix/nvm#installation" target="_blank" rel="external">NVM安装指南</a></p>
 <p>Node.js和npm: <a href="https://nodejs.org/dist/latest-v8.x/docs/api/" target="_blank" rel="external">Node.js官方文档</a> | <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwieh52Cgd_XAhUKrI8KHT9NBAoQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fnodejs%2Fnodejs-tutorial.html&amp;usg=AOvVaw2jflp9kjA1IHdV5QL7UYRB" target="_blank" rel="external">Node.js 教程| 菜鸟教程</a></p>
 <p>Git: <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwjD3buFgd_XAhUJvo8KHem-BIIQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fgit%2Fgit-tutorial.html&amp;usg=AOvVaw2SlbSmAVE814KUmXI236qx" target="_blank" rel="external">Git 教程| 菜鸟教程</a></p>
