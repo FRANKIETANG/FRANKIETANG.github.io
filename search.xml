@@ -3,6 +3,91 @@
   
     
     <entry>
+      <title><![CDATA[补基础： node 各种知识点]]></title>
+      <url>/2017/11/29/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9A%20node%20%E5%90%84%E7%A7%8D%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
+      <content type="html"><![CDATA[<h1 id="补基础：-node-各种知识点"><a href="#补基础：-node-各种知识点" class="headerlink" title="补基础： node 各种知识点"></a>补基础： node 各种知识点</h1><p>简单带过所有开发环境</p>
+<p>NVM:nvm是一个node.js版本管理器，我们将会使用nvm安装node.js的不同版本<br><a href="https://github.com/creationix/nvm#installation" target="_blank" rel="external">NVM安装指南</a></p>
+<p>Node.js和npm: <a href="https://nodejs.org/dist/latest-v8.x/docs/api/" target="_blank" rel="external">Node.js官方文档</a> | <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwieh52Cgd_XAhUKrI8KHT9NBAoQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fnodejs%2Fnodejs-tutorial.html&amp;usg=AOvVaw2jflp9kjA1IHdV5QL7UYRB" target="_blank" rel="external">Node.js 教程| 菜鸟教程</a></p>
+<p>Git: <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwjD3buFgd_XAhUJvo8KHem-BIIQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fgit%2Fgit-tutorial.html&amp;usg=AOvVaw2SlbSmAVE814KUmXI236qx" target="_blank" rel="external">Git 教程| 菜鸟教程</a></p>
+<p>MongoDB：MongoDB是时下最流行的NoSQL数据库，<a href="https://www.mongodb.com/" target="_blank" rel="external">MongoDB官网</a> | <a href="https://docs.mongodb.com/manual/introduction/" target="_blank" rel="external">官方文档</a></p>
+<p><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank" rel="external">Ubuntu下安装MongoDB官方文档</a></p>
+<p>Redis:运用最广的K-V数据库之一。在Ubuntu下使用 <code>sudo apt-get install redis-server</code> <a href="https://redis.io/" target="_blank" rel="external">官网</a></p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP" target="_blank" rel="external">HTTP - MDN</a></p>
+<p><a href="https://blog.zain.red/2017/11/23/http/" target="_blank" rel="external">HTTP</a></p>
+<p><a href="http://www.jianshu.com/p/80e25cb1d81a" target="_blank" rel="external">关于HTTP协议，一篇就够了</a></p>
+<h2 id="Git-和-Linux"><a href="#Git-和-Linux" class="headerlink" title="Git 和 Linux"></a>Git 和 Linux</h2><p>看我的旧文章 <a href="http://www.jianshu.com/p/82142a85df5d" target="_blank" rel="external">Linux 的基本命令行和 Git 的基本操作</a></p>
+<h2 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h2><p>写一个脚本文件 show.js，满足以下需求：运行 node /path/to/show.js，输出当前目录下的所有文件。</p>
+<pre><code>touch show.js
+vi show.js
+
+#!/usr/bin/env node  // 告诉 bash 用 node 运行
+var fs = require(&quot;fs&quot;)
+console.log(&quot;查看当前目录&quot;)
+fs.readdir(process.cwd(),function(error, files){
+  if(error){
+    return console.error(error)
+  }
+  files.forEach(function(file){
+    console.log(file)
+  })
+})
+
+node show.js
+</code></pre><p>写一个脚本文件 view.js，满足以下需求：运行 node /path/to/view.js xxx，如果 xxx 文件存在，就输出 xxx 内容；如果 xxx 文件不存在，就输出「xxx 不存在」</p>
+<pre><code>touch view.js
+vi view.js
+
+#!/usr/bin/env node  // 告诉 bash 用 node 运行
+var file = process.argv[2]  // 获取输入命令行第三个参数
+var fs = require(&#39;fs&#39;)
+fs.stat(file, function(error, stat){
+  if(stat&amp;&amp;stat.isFile()) {
+    console.log(&#39;文件存在&#39;)
+    var data = fs.readFileSync(file, &quot;utf-8&quot;)  // 读取文件内容
+    console.log(data)
+  } else {
+    console.log(&#39;文件不存在或不是标准文件&#39;)
+  }
+})
+
+node view.js show.js
+</code></pre><h2 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h2><p>把上面那两个代码上传</p>
+<pre><code>npm adduser  // 一顿操作
+ls
+npm init  // 一顿起名
+/*
+在 package.json 设置东西
+&quot;bin&quot;:{
+  &quot;view&quot;:&quot;view.js&quot;,
+  &quot;show&quot;:&quot;show.js&quot;
+}
+*/
+npm publish
+
+npm i -g frankie-demo-2017-11-19
+/*
+新加了两行
+/usr/local/bin/show -&gt; /usr/local/lib/node_modules/frankie-demo-2017-11-19/show.js
+/usr/local/bin/view -&gt; /usr/local/lib/node_modules/frankie-demo-2017-11-19/view.js
+*/
+// 然后就可以全局使用 show 和 view 了
+
+npm uninstall -g frankie-demo-2017-11-19  // 卸载掉 demo
+</code></pre><p><a href="https://www.npmjs.com/package/frankie-demo-2017-11-19" target="_blank" rel="external">https://www.npmjs.com/package/frankie-demo-2017-11-19</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Node </tag>
+            
+            <tag> HTTP </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Linux 的基本命令行和 Git 的基本操作]]></title>
       <url>/2017/11/27/Linux%20%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%20Git%20%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</url>
       <content type="html"><![CDATA[<h1 id="Linux-的基本命令行和-Git-的基本操作"><a href="#Linux-的基本命令行和-Git-的基本操作" class="headerlink" title="Linux 的基本命令行和 Git 的基本操作"></a>Linux 的基本命令行和 Git 的基本操作</h1><h2 id="Linux-命令行"><a href="#Linux-命令行" class="headerlink" title="Linux 命令行"></a>Linux 命令行</h2><pre><code>//进入目录
@@ -123,6 +208,53 @@ man less
 tldr less
 // 就会精简
 tldr npm
+</code></pre><pre><code>// git 操作脱离民工三连的方法
+
+git --version  // git 版本号
+
+
+git config --global user.name xxx  // 全局设置 user.name
+git config --global user.email yyy  // 全局设置 user.email
+git config --global push.default simple
+// 这个 simple 可以换成 matching，通常默认为是 simple 
+// 意味着执行 git push 没有指定分支时，只有当前分支会被 push 到你使用 git pull 获取的代码。
+// matching 参数是 Git 1.x 的默认行为，其意是如果你执行 git push 但没有指定分支，它将 push 所有你本地的分支到远程仓库中对应匹配的分支。
+git config --global core.quotepath false // 防止文件名变成数字，因为有可能你的文件是中文上传的是后变成中文
+git config --global push.editor &quot;vim&quot;  // 使用 vim 编辑提交信息
+// 以上这些都是在编辑 ~/.gitconfig
+
+
+mkdir git-demo
+cd git-demo
+git init  // 创建 .git 目录（本地仓库）
+touch 1.txt  // 打开写点东西
+git starus -sb  // ?? 1.txt  // 看文件处于什么状态
+// 这个 -sb 不是傻逼的意思，s 是 summary，b 是 branch
+git add .  // 将多行文字（注意是 行 文字）纳入 git 控制 
+git starus -sb  // A 1.txt A 就是 ADD 的意思    M 就是改变的意思 
+git commit -v  // 进入 vim 编gaibain辑，在第一行写字相当于 git commit -m &quot;&quot; 引号里的文字
+git log  // 显示历史
+git show  // 后面加 commit 的 ID 可以看到哪行文字改变
+git remote add origin https://github.com/xxx/xxx.git  
+// 与仓库建立链接，名字叫 origin，地址叫后面那个像网址一样的东西（错的）
+git remote set-url origin git@github.com/xxx/xxx.git  // 更换地址
+git push -u origin master  // -u 是本地的分支和远程的分支建立链接，master 是远程的分支
+git clone  // 复制仓库并克隆，后面接仓库地址
+git pull  // 更新本地仓库（.git）和本地文件
+/*
+1. git push 之前必须 git pull
+2. git pull 之前必须 git commit
+3. git commit 之前必须 git add
+*/
+
+
+// 以下命令 Google 点击第一个
+git stash  // 不想提交进行了一半的工作
+git branch  // 分支的新建
+git checkout  // 切换分支
+git merge  // 分支的合并
+git reset  // 和 git checkout 差不多，细节 google
+git reflog  // 用来数据恢复的
 </code></pre>]]></content>
       
         
@@ -220,7 +352,7 @@ node --debug bin/www
         
         <tags>
             
-            <tag> node </tag>
+            <tag> Node </tag>
             
         </tags>
         
