@@ -3,9 +3,9 @@
   
     
     <entry>
-      <title><![CDATA[用 Node 来搭建 HTTP 服务]]></title>
-      <url>/2017/12/01/%E7%94%A8%20Node%20%E6%9D%A5%E6%90%AD%E5%BB%BA%20HTTP%20%E6%9C%8D%E5%8A%A1/</url>
-      <content type="html"><![CDATA[<h1 id="用-Node-来搭建-HTTP-服务"><a href="#用-Node-来搭建-HTTP-服务" class="headerlink" title="用 Node 来搭建 HTTP 服务"></a>用 Node 来搭建 HTTP 服务</h1><p><a href="https://github.com/FRANKIETANG/simple-http-server" target="_blank" rel="external">https://github.com/FRANKIETANG/simple-http-server</a></p>
+      <title><![CDATA[用 Node 来搭建 HTTP 服务器]]></title>
+      <url>/2017/12/01/%E7%94%A8%20Node%20%E6%9D%A5%E6%90%AD%E5%BB%BA%20HTTP%20%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+      <content type="html"><![CDATA[<h1 id="用-Node-来搭建-HTTP-服务器"><a href="#用-Node-来搭建-HTTP-服务器" class="headerlink" title="用 Node 来搭建 HTTP 服务器"></a>用 Node 来搭建 HTTP 服务器</h1><p><a href="https://github.com/FRANKIETANG/simple-http-server" target="_blank" rel="external">https://github.com/FRANKIETANG/simple-http-server</a></p>
 <p>可以点进去看 <a href="https://github.com/FRANKIETANG/simple-http-server/commits/master" target="_blank" rel="external">commit</a></p>
 <h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>全称是 Uniform Resource Locator （唯一的资源定位器？），相当于一个地址。</p>
 <p><code>Schema://Host:Port/Path?query#hash</code></p>
@@ -6016,9 +6016,9 @@ fn().then(fn1).then(fn2)
         
         <tags>
             
-            <tag> JavaScript </tag>
-            
             <tag> ES6 </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Black History </tag>
             
@@ -6452,9 +6452,9 @@ console.log(a,b,c)
         
         <tags>
             
-            <tag> JavaScript </tag>
-            
             <tag> ES6 </tag>
+            
+            <tag> JavaScript </tag>
             
             <tag> Black History </tag>
             
