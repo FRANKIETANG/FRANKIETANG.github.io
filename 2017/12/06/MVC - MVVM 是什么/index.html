@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="MVC - MVVM 是什么谈谈MVC模式 - 阮一峰 MVC，MVP 和 MVVM 的图示 - 阮一峰 MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰 基于MVC的JavaScript Web富应用开发 - 网盘 密码是 y9jv 以下例子代码的仓库在 https://github.com/FRANKIETANG/mvc-mvvm-examp">
+<meta name="keywords" content="JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVC - MVVM 是什么">
+<meta property="og:url" content="http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html">
+<meta property="og:site_name" content="付林恒的博客">
+<meta property="og:description" content="MVC - MVVM 是什么谈谈MVC模式 - 阮一峰 MVC，MVP 和 MVVM 的图示 - 阮一峰 MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰 基于MVC的JavaScript Web富应用开发 - 网盘 密码是 y9jv 以下例子代码的仓库在 https://github.com/FRANKIETANG/mvc-mvvm-examp">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/02/90db865271941bd9a64075d1a667d60e.gif">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/02/9bee130d43526daa3c4794d75047aaa0.gif">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/02/53534b163c052c5f0b9a494c3a11f79c.gif">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/03/5673db0242ef4494b3c9affc904f96a5.gif">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/03/4bf9ab6f7e4d716f90c3b9e5684a710b.gif">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/03/7d92010a76b32fcc2c0d222194eec2fa.gif">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/05/b34439946bad220c9faf564fdbe2f080.png">
+<meta property="og:image" content="https://us1.myximage.com/2017/12/05/d8b5e5b60652215f6172f7e54a411110.png">
+<meta property="og:updated_time" content="2017-12-05T17:20:39.546Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MVC - MVVM 是什么">
+<meta name="twitter:description" content="MVC - MVVM 是什么谈谈MVC模式 - 阮一峰 MVC，MVP 和 MVVM 的图示 - 阮一峰 MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰 基于MVC的JavaScript Web富应用开发 - 网盘 密码是 y9jv 以下例子代码的仓库在 https://github.com/FRANKIETANG/mvc-mvvm-examp">
+<meta name="twitter:image" content="https://us1.myximage.com/2017/12/02/90db865271941bd9a64075d1a667d60e.gif">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.jpg">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon.jpg" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.jpg">
+          
+        
+    
+    <!-- title -->
+    <title>MVC - MVVM 是什么</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- rss -->
+    
+    
+</head>
+
+<body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2017/12/01/用 Node 来搭建 HTTP 服务器/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&text=MVC - MVVM 是什么"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&is_video=false&description=MVC - MVVM 是什么"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MVC - MVVM 是什么&body=Check out this article: http://yoursite.com/2017/12/06/MVC - MVVM 是什么/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&name=MVC - MVVM 是什么&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MVC-MVVM-是什么"><span class="toc-number">1.</span> <span class="toc-text">MVC - MVVM 是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MVC"><span class="toc-number">1.1.</span> <span class="toc-text">MVC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MVVM-的缺点"><span class="toc-number">1.1.1.</span> <span class="toc-text">MVVM 的缺点</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MVC - MVVM 是什么
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">付林恒的博客</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-12-05T17:19:34.000Z" itemprop="datePublished">2017-12-06</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="MVC-MVVM-是什么"><a href="#MVC-MVVM-是什么" class="headerlink" title="MVC - MVVM 是什么"></a>MVC - MVVM 是什么</h1><p><a href="http://www.ruanyifeng.com/blog/2007/11/mvc.html" target="_blank" rel="external">谈谈MVC模式 - 阮一峰</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="external">MVC，MVP 和 MVVM 的图示 - 阮一峰</a></p>
+<p><a href="http://javascript.ruanyifeng.com/advanced/backbonejs.html" target="_blank" rel="external">MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰</a></p>
+<p>基于MVC的JavaScript Web富应用开发 - <a href="https://pan.baidu.com/s/1qY9hJmG" target="_blank" rel="external">网盘</a> 密码是 y9jv</p>
+<p>以下例子代码的仓库在 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example" target="_blank" rel="external">https://github.com/FRANKIETANG/mvc-mvvm-example</a> </p>
+<p>代码变动看 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example/commits/master" target="_blank" rel="external">commit</a></p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>如果要先实现一个 MVC ，首先要实现的是中间的那一层 Controller</p>
+<p>对于 Controller 的作用，绑事件 / 调用方法可以用对象的形式 / 监听 DOM 并且更新 DOM / 操作数据</p>
+<p>下面实现一个 MVC 的轮子吧</p>
+<pre><code>// 举个例子
+
+// index.html 核心代码
+    &lt;div class=&quot;modules&quot;&gt;
+        &lt;div class=&quot;module1&quot;&gt;
+            &lt;input type=&quot;text&quot; name=&quot;number1&quot;&gt;
+            &lt;button name=&quot;button1&quot;&gt;点我&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+// index.js
+import &#39;./module1&#39;
+
+// Controller.js
+import $ from &#39;jquery&#39;
+
+class Controller {
+    constructor(options) {
+        this.$element = $(options.element)
+        this.events = options.events
+        this.bindEvents()
+    }
+    bindEvents() {
+        for (let key in this.events) {
+            let parts = key.split(&#39; &#39;)
+            let eventType = parts.shift()
+            let selector = parts.join(&#39; &#39;)
+            this.$element.on(eventType, selector, this.events[key])
+        }
+    }
+}
+
+export default Controller
+
+// module1.js
+import Controller from &#39;./Controller&#39;
+
+new Controller({
+    element: &#39;.module1&#39;,
+    events: {
+        &#39;change input&#39;: e =&gt; {
+            console.log(&#39;change1&#39;)
+        },
+        &#39;click button&#39;: e =&gt; {
+            console.log(&#39;click1&#39;)
+        }
+    }
+})
+</code></pre><p><img src="https://us1.myximage.com/2017/12/02/90db865271941bd9a64075d1a667d60e.gif" alt=""></p>
+<p>比如上面这个例子就是当需要 Controller 的时候只需要写上你要绑的元素，要做的事件就好。至于实现方法全部交给 Controller 去处理。</p>
+<p>但是上面的例子还是很简单，假如函数逻辑比较复杂该怎么做？可以用对象的形式调用方法。</p>
+<pre><code>// 举个例子
+
+new Controller({
+    element: &#39;.module1&#39;,
+    events: {
+        &#39;change input&#39;: &#39;onChangeInput&#39;,    
+        &#39;click button&#39;: &#39;addToCart&#39;
+    },
+    addToCart() {
+        let value = this.$element.find(&#39;input&#39;).val()
+        this.remoteAddCart(value).then(() =&gt; { // 假如发送到服务器让服务器知道你已经把什么放到购物车了，下次登录的时候就可以获取数据。
+            this.showAnimation() // 加入到购物车的动画
+        })  
+    },
+    remoteAddCart() {
+        console.log(&#39;远程请求&#39;)
+        return Promise.resolve(1)
+    },
+    showAnimation(){
+        console.log(&#39;展示添加到购物车的动画&#39;)
+    }
+    onChangeInput(e) {
+        let input = e.currentTarget
+        console.log(input.value)
+    }    
+})
+
+// 修改一下 Controller
+
+class Controller {
+    constructor(options) {
+        for (let key in options) {
+            this[key] = options[key] // 把用户传的东西都放到 json
+        }
+        this.$element = $(this.element)
+        this.bindEvents()
+    }
+    bindEvents() {
+        for (let key in this.events) {
+            let parts = key.split(&#39; &#39;)
+            let eventType = parts.shift()
+            let selector = parts.join(&#39; &#39;)
+            if (typeof this.events[key] === &#39;function&#39;) {
+                this.$element.on(eventType, selector, this.events[key])
+            } else if (typeof this.events[key] === &#39;string&#39;) {
+                let methodName = this.events[key]
+                this.$element.on(eventType, selector, this[methodName].bind(this))
+            }
+        }
+    }
+}
+</code></pre><p><img src="https://us1.myximage.com/2017/12/02/9bee130d43526daa3c4794d75047aaa0.gif" alt=""></p>
+<p>那监听 DOM 并且更新 DOM 呢？要怎么搞？（实际上早期的 MVC 更新 DOM 的确是要自己写，所以很麻烦）</p>
+<pre><code>// 举个例子
+
+new Controller({
+    element: &#39;.module2&#39;,
+    events: {
+        &#39;change input&#39;: &#39;onChangeInput&#39;,
+        &#39;click button&#39;: &#39;onClickButton&#39;
+    },
+    onClickButton(e) {
+        let value = this.$element.find(&#39;input&#39;).val()
+        this.render(value)
+    },
+    onChangeInput(e) {
+        let input = e.currentTarget
+        console.log(input.value)
+    },
+    render(value) {
+        let $output = this.$element.find(&#39;.output&#39;)
+        if ($output.length === 0) {
+            $output = $(&#39;&lt;div class=&quot;output&quot;&gt;&lt;/div&gt;&#39;).text(value)
+            $output.appendTo(this.$element)
+        } else {
+            $output.text(value)
+        }
+    }
+})
+</code></pre><p><img src="https://us1.myximage.com/2017/12/02/53534b163c052c5f0b9a494c3a11f79c.gif" alt=""></p>
+<p>然后过了一段时间之后就有了 template，在 JS 写模板。并且操作数据。<a href="http://handlebarsjs.com/" target="_blank" rel="external">http://handlebarsjs.com/</a></p>
+<pre><code>// 举个例子
+// 先修改html
+&lt;div class=&quot;module2&quot;&gt;&lt;/div&gt;
+
+// 增加 template 和 data
+new Controller({
+    element: &#39;.module2&#39;,
+    template: `
+        &lt;input type=&quot;text&quot; name=&quot;number2&quot; value=&quot;{{output}}&quot;&gt;
+        &lt;button name=&quot;button2&quot;&gt;点我&lt;/button&gt;  
+        &lt;div class=&quot;output&quot;&gt;{{output}}&lt;/div&gt;  
+    `,
+    data: {
+        output: &#39;&#39;  // 控制数据
+    },
+    events: {
+        &#39;change input&#39;: &#39;onChangeInput&#39;,
+        &#39;click button&#39;: &#39;onClickButton&#39;
+    },
+    onClickButton(e) {
+        let value = this.$element.find(&#39;input&#39;).val()
+        this.data.output = value
+        this.render()
+    },
+    onChangeInput(e) {
+        let input = e.currentTarget
+        console.log(input.value)
+    }
+})
+
+// Controller
+class Controller {
+    constructor(options) {
+        for (let key in options) {
+            this[key] = options[key]
+        }
+        this.$element = $(this.element)
+        if (this.template &amp;&amp; this.render) {  // 判断是否有 template
+            this.render()
+        }
+        this.bindEvents()
+    }
+    bindEvents() {
+        for (let key in this.events) {
+            let parts = key.split(&#39; &#39;)
+            let eventType = parts.shift()
+            let selector = parts.join(&#39; &#39;)
+            if (typeof this.events[key] === &#39;function&#39;) {
+                this.$element.on(eventType, selector, this.events[key])
+            } else if (typeof this.events[key] === &#39;string&#39;) {
+                let methodName = this.events[key]
+                this.$element.on(eventType, selector, this[methodName].bind(this))
+            }
+        }
+    }
+    render() {
+        let html = Handlebars.compile(this.template)(this.data)  // 渲染 template 和 data
+        this.$element.html(html)
+    }
+}
+</code></pre><p>和刚刚看起来效果变化不大，但实际上用上了 template 和 data 已经很接近 vue … 啊不是，是 MVC 了 </p>
+<p><img src="https://us1.myximage.com/2017/12/03/5673db0242ef4494b3c9affc904f96a5.gif" alt=""></p>
+<pre><code>// 再举个例子
+// index.html 加上模板
+    &lt;script id=&quot;module3Template&quot; type=&quot;text/x-handlerbars&quot;&gt;
+        &lt;button name=&quot;decrease&quot;&gt; - &lt;/button&gt;
+        &lt;span&gt;{{number}}&lt;/span&gt;
+        &lt;button name=&quot;increase&quot;&gt; + &lt;/button&gt;    
+    &lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;bundle.js&quot;&gt;&lt;/script&gt;
+
+// module3.js
+new Controller({
+    element: &#39;.module3&#39;,
+    template: &#39;#module3Template&#39;,
+    data: {
+        number: 0
+    },
+    events: {
+        &#39;click button[name=increase]&#39;: &#39;increase&#39;,
+        &#39;click button[name=decrease]&#39;: &#39;decrease&#39;
+    },
+    increase(){
+        this.data.number += 1
+        this.render()
+    },
+    decrease(){
+        this.data.number -= 1
+        this.render()
+    }    
+})
+
+// Controller.js 的 render 修改成
+    render() {
+        let template = (this.template[0] === &#39;#&#39;) ? $(this.template).html() : this.template
+        let html = Handlebars.compile(template)(this.data)
+        this.$element.html(html)
+    }
+</code></pre><p><img src="https://us1.myximage.com/2017/12/03/4bf9ab6f7e4d716f90c3b9e5684a710b.gif" alt=""></p>
+<p>到这一步为止，已经实现 VC 了，视图层”（View）利用了 template 来实现，控制层”（Controller）就是 Controller.js，而数据层”（Model）就是 data，下面来举个例子</p>
+<p>因为数据层”（Model）是从服务器来的，所以刚开始要初始化</p>
+<pre><code>// 举个例子
+// 本地模拟数据 data.json
+{
+    &quot;number&quot;: 10000
+}
+
+// 用 promise 模拟数据更新
+new Controller({
+    element: &#39;.module4&#39;,
+    template: `
+        &lt;button name=&quot;decrease&quot;&gt; - &lt;/button&gt;
+        &lt;span&gt;{{number}}&lt;/span&gt;
+        &lt;button name=&quot;increase&quot;&gt; + &lt;/button&gt;
+    `,
+    data: {
+        number: 0
+    },
+    init() {
+        $.get(&#39;/data.json&#39;).then((response) =&gt; {
+            this.data = response
+            this.render()
+        })
+    },
+    events: {
+        &#39;click button[name=increase]&#39;: &#39;increase&#39;,
+        &#39;click button[name=decrease]&#39;: &#39;decrease&#39;
+    },
+    increase() {
+        this.remoteIncrease.then(() =&gt; {
+            this.data.number += 1
+            this.render()
+        })
+    },
+    decrease() {
+        this.remoteDecrease.then(() =&gt; {
+            this.data.number -= 1
+            this.render()
+        })
+    },
+    remoteIncrease() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                resolve({
+                    number: this.number + 1
+                })
+            }, 500)
+        })
+    },
+    remoteDecrease() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                resolve({
+                    number: this.number - 1
+                })
+            }, 500)
+        })
+    }
+})
+</code></pre><p><img src="https://us1.myximage.com/2017/12/03/7d92010a76b32fcc2c0d222194eec2fa.gif" alt=""></p>
+<p>再优化一下代码把数据层”（Model）抽离出来</p>
+<pre><code>let model = {
+    data: {
+        number: 0
+    },
+    get() {
+        return $.get(&#39;/data.json&#39;).then((response) =&gt; {
+            this.data = response
+            return this.data
+        })
+    },
+    increase() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                this.data.number += 1
+                resolve(this.data)
+            }, 500)
+        })
+    },
+    decrease() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                this.data.number -= 1
+                resolve(this.data)
+            }, 500)
+        })
+    }
+}
+
+
+new Controller({
+    element: &#39;.module4&#39;,
+    template: `
+        &lt;button name=&quot;decrease&quot;&gt; - &lt;/button&gt;
+        &lt;span&gt;{{number}}&lt;/span&gt;
+        &lt;button name=&quot;increase&quot;&gt; + &lt;/button&gt;
+    `,
+    model: model,
+    events: {
+        &#39;click button[name=increase]&#39;: &#39;increase&#39;,
+        &#39;click button[name=decrease]&#39;: &#39;decrease&#39;
+    },
+    init() {
+        this.model.get().then(() =&gt; {
+            this.render()
+        })
+    },
+    increase() {
+        this.model.increase().then(() =&gt; {
+            this.render()
+        })
+    },
+    decrease() {
+        this.model.decrease().then(() =&gt; {
+            this.render()
+        })
+    }
+})
+</code></pre><p>这样的好处就很明显了，操作永远只是数据，不会操作到 DOM，就是调一下 model 操作一下 view，以上，就实现了MVC 的全部功能 </p>
+<p>##MVVM</p>
+<p>Object.defineProperty 可以对属性有读写的控制</p>
+<pre><code>// 举个例子
+let frankie = {
+    _data: {
+        age: 18,
+        name: &#39;frankie&#39;
+    }
+}
+
+Object.defineProperty(frankie, &#39;age&#39;, {
+    get: () =&gt; {
+        console.log(&#39;frankie.age 被读取了&#39;)
+        return frankie._data.age
+    },
+    set: xxx =&gt; {
+        console.log(&#39;frankie.age 被设置了&#39;)
+        frankie._data.age = xxx
+    }
+})
+
+frankie.age = 19  // frankie.age 被设置了
+frankie.age = 20  // frankie.age 被设置了
+frankie.age = 21  // frankie.age 被设置了
+console.log(frankie.age)  // frankie.age 被读取了 21
+</code></pre><p>通过以上代码可以做到监听 input value 的变化去改内存里对象的变化，也可以改 <code>frankie.age</code> 来改页面上的数值</p>
+<p>例子 =&gt; <a href="https://jsbin.com/zawapumihe/1/edit?html,js,output" target="_blank" rel="external">点击这里</a></p>
+<p>###那 MVVM 到底是个啥玩意呢？</p>
+<p>以上面这个例子为例：</p>
+<ul>
+<li>M -&gt; frankie (这个是 JS 内存里的)</li>
+<li>VM -&gt; 能让 V 和 M 互相沟通的东西，当 M 变了就通知 V 变，当 V 变了就通知 M 变。（两头互相监听互相变）</li>
+<li>V -&gt; HTML / CSS (内容 / 表现层)</li>
+</ul>
+<h3 id="MVVM-的缺点"><a href="#MVVM-的缺点" class="headerlink" title="MVVM 的缺点"></a>MVVM 的缺点</h3><p>第一点要注意的是 <code>Object.defineProperty</code> 里的 <code>get</code> 和 <code>set</code> 是同步还是异步（改了之后马上更新 input？改了之后在下一次任务的时候更新 input？）</p>
+<p><img src="https://us1.myximage.com/2017/12/05/b34439946bad220c9faf564fdbe2f080.png" alt=""></p>
+<p><img src="https://us1.myximage.com/2017/12/05/d8b5e5b60652215f6172f7e54a411110.png" alt="yin"></p>
+<p>经过上面的测试是同步的</p>
+<p>第二点是 DOM 的操作也是同步的（DOM 不存在异步过程）</p>
+<p>这样会有一个问题，假如 view 层加了一个 input 就不能增加效果（以为因为新的 VM 没有 set 这个 input）。例子 =&gt; <a href="https://jsbin.com/cibunafuro/1/edit?html,js,output" target="_blank" rel="external">点击这里</a></p>
+<p>所以 MVVM 的问题就在这里，只能监听已经存在的 key，新加的 key 没法监听</p>
+<p>解决方法还是有的，提供一个 API 为新加的 key 服务。例子 =&gt; <a href="https://jsbin.com/zagacilade/edit?html,js,output" target="_blank" rel="external">点击这里</a></p>
+<p>JS 操作 DOM 很慢，DOM 操作 JS 是很慢的</p>
+<p>因为操作是同步的，所以有一个问题是，会很卡。但是 vue.js 很好的解决了这一个问题。（再也不用操作 DOM，从此     jQuery 退出历史舞台）</p>
+<p><a href="https://jsbin.com/jeqaqoyeyi/2/edit?html,js,output" target="_blank" rel="external">vue.js 的 Hello world</a></p>
+
+  </div>
+</article>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MVC-MVVM-是什么"><span class="toc-number">1.</span> <span class="toc-text">MVC - MVVM 是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MVC"><span class="toc-number">1.1.</span> <span class="toc-text">MVC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MVVM-的缺点"><span class="toc-number">1.1.1.</span> <span class="toc-text">MVVM 的缺点</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&text=MVC - MVVM 是什么"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&is_video=false&description=MVC - MVVM 是什么"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MVC - MVVM 是什么&body=Check out this article: http://yoursite.com/2017/12/06/MVC - MVVM 是什么/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&title=MVC - MVVM 是什么"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/&name=MVC - MVVM 是什么&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2017 Frankie Tang
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-86660611-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Disqus Comments -->
+
+
