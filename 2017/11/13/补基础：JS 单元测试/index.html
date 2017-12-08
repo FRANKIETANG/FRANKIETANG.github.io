@@ -95,7 +95,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：JS-单元测试"><span class="toc-number">1.</span> <span class="toc-text">补基础：JS 单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试有啥用？"><span class="toc-number">1.1.</span> <span class="toc-text">单元测试有啥用？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例子1"><span class="toc-number">1.1.1.</span> <span class="toc-text">例子1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子2"><span class="toc-number">1.1.2.</span> <span class="toc-text">例子2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子3"><span class="toc-number">1.1.3.</span> <span class="toc-text">例子3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子4"><span class="toc-number">1.1.4.</span> <span class="toc-text">例子4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么做集成"><span class="toc-number">1.2.</span> <span class="toc-text">怎么做集成</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：JS-单元测试"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x8865;&#x57FA;&#x7840;&#xFF1A;JS-&#x5355;&#x5143;&#x6D4B;&#x8BD5;" class="headerlink" title="&#x8865;&#x57FA;&#x7840;&#xFF1A;JS &#x5355;&#x5143;&#x6D4B;&#x8BD5;"></a>&#x8865;&#x57FA;&#x7840;&#xFF1A;JS &#x5355;&#x5143;&#x6D4B;&#x8BD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试有啥用？"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x6709;&#x5565;&#x7528;&#xFF1F;" class="headerlink" title="&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x6709;&#x5565;&#x7528;&#xFF1F;"></a>&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x6709;&#x5565;&#x7528;&#xFF1F;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例子1"><span class="toc-number">1.1.1.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;1" class="headerlink" title="&#x4F8B;&#x5B50;1"></a>&#x4F8B;&#x5B50;1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子2"><span class="toc-number">1.1.2.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;2" class="headerlink" title="&#x4F8B;&#x5B50;2"></a>&#x4F8B;&#x5B50;2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子3"><span class="toc-number">1.1.3.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;3" class="headerlink" title="&#x4F8B;&#x5B50;3"></a>&#x4F8B;&#x5B50;3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子4"><span class="toc-number">1.1.4.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;4" class="headerlink" title="&#x4F8B;&#x5B50;4"></a>&#x4F8B;&#x5B50;4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么做集成"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x600E;&#x4E48;&#x505A;&#x96C6;&#x6210;" class="headerlink" title="&#x600E;&#x4E48;&#x505A;&#x96C6;&#x6210;"></a>&#x600E;&#x4E48;&#x505A;&#x96C6;&#x6210;</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -138,9 +138,9 @@
 <p>比如 GitHub 上较大的开源项目在别人贡献代码的时候要保证输出的东西和原来的一样。</p>
 <p>单元测试就是保证这个。</p>
 <p>而且单元测试也是一个文档，告诉别人怎么使用这个文档。</p>
-<p><a href="https://github.com/n0ruSh/blogs/issues/2" target="_blank" rel="external">教练我要写单元测试</a></p>
-<p><a href="http://mochajs.org/" target="_blank" rel="external">Mocha</a></p>
-<p><a href="http://shouldjs.github.io/" target="_blank" rel="external">Should</a></p>
+<p><a href="https://github.com/n0ruSh/blogs/issues/2" target="_blank" rel="noopener">教练我要写单元测试</a></p>
+<p><a href="http://mochajs.org/" target="_blank" rel="noopener">Mocha</a></p>
+<p><a href="http://shouldjs.github.io/" target="_blank" rel="noopener">Should</a></p>
 <h3 id="例子1"><a href="#例子1" class="headerlink" title="例子1"></a>例子1</h3><p>现在做一个方法 <code>takeWhile</code> ，传一个数组和函数通过所有的 Mocha 测试</p>
 <pre><code>/**
  * @param {Array} arr - base array
@@ -157,7 +157,7 @@ function takeWhile(arr, pred) {
 }
 
 module.exports = takeWhile;
-</code></pre><p>上面的 <code>@param</code> 看这个了解就好。<a href="http://www.css88.com/doc/jsdoc/tags-param.html" target="_blank" rel="external">@param</a></p>
+</code></pre><p>上面的 <code>@param</code> 看这个了解就好。<a href="http://www.css88.com/doc/jsdoc/tags-param.html" target="_blank" rel="noopener">@param</a></p>
 <p>Mocha 的测试写法</p>
 <pre><code>let takeWhile = require(&#39;../../src/array/takeWhile&#39;),
     should = require(&#39;should&#39;);  // 比较库或者叫断言库，用来看输出后的东西是不是一样的。
@@ -263,7 +263,7 @@ function takeWhile(arr, pred) {
 }
 
 module.exports = takeWhile;
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some" target="_blank" rel="external">Array.prototype.some()</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="external">for…of</a></p>
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some" target="_blank" rel="noopener">Array.prototype.some()</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">for…of</a></p>
 <pre><code>// 彩蛋 --- some() 的用法
 let arr = [1,2,3]
 arr.some(function(it) {return it &lt; 4})  // true
@@ -310,7 +310,7 @@ function isEmptyObject(obj) {
 }
 
 module.exports = isEmptyObject;
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" target="_blank" rel="external">Object.prototype.constructor</a></p>
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" target="_blank" rel="noopener">Object.prototype.constructor</a></p>
 <h3 id="例子3"><a href="#例子3" class="headerlink" title="例子3"></a>例子3</h3><p>实现一个 trim 方法去掉前后空格（单词中间的空格不能省略）</p>
 <pre><code>let trim = require(&#39;../../src/string/trim&#39;),
     should = require(&#39;should&#39;);
@@ -358,7 +358,7 @@ function trim(str) {
 }
 
 module.exports = trim;
-</code></pre><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim" target="_blank" rel="external">String.prototype.trim()</a> 的 Polyfill 是 </p>
+</code></pre><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim" target="_blank" rel="noopener">String.prototype.trim()</a> 的 Polyfill 是 </p>
 <pre><code>if (!String.prototype.trim) {
   String.prototype.trim = function () {
     return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, &#39;&#39;);
@@ -404,8 +404,8 @@ module.exports = toCamel;
 
 console.log(whole, matched)  // _w w _W W
 </code></pre><h2 id="怎么做集成"><a href="#怎么做集成" class="headerlink" title="怎么做集成"></a>怎么做集成</h2><p>相当于有中央服务器做集成，我提交代码，服务器自动帮我跑</p>
-<p><a href="https://www.travis-ci.org/" target="_blank" rel="external">Travis CI</a></p>
-<p><a href="http://blog.csdn.net/buptgshengod/article/details/39578353" target="_blank" rel="external">Travis setup guide</a></p>
+<p><a href="https://www.travis-ci.org/" target="_blank" rel="noopener">Travis CI</a></p>
+<p><a href="http://blog.csdn.net/buptgshengod/article/details/39578353" target="_blank" rel="noopener">Travis setup guide</a></p>
 <p>可以在 github 上做一个仓库，我一提交代码就会自动帮忙跑。（这个了解就好，其实都差不多的，就是人工跑代码和机器跑代码的区别）</p>
 
   </div>
@@ -427,7 +427,7 @@ console.log(whole, matched)  // _w w _W W
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：JS-单元测试"><span class="toc-number">1.</span> <span class="toc-text">补基础：JS 单元测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试有啥用？"><span class="toc-number">1.1.</span> <span class="toc-text">单元测试有啥用？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例子1"><span class="toc-number">1.1.1.</span> <span class="toc-text">例子1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子2"><span class="toc-number">1.1.2.</span> <span class="toc-text">例子2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子3"><span class="toc-number">1.1.3.</span> <span class="toc-text">例子3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子4"><span class="toc-number">1.1.4.</span> <span class="toc-text">例子4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么做集成"><span class="toc-number">1.2.</span> <span class="toc-text">怎么做集成</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：JS-单元测试"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x8865;&#x57FA;&#x7840;&#xFF1A;JS-&#x5355;&#x5143;&#x6D4B;&#x8BD5;" class="headerlink" title="&#x8865;&#x57FA;&#x7840;&#xFF1A;JS &#x5355;&#x5143;&#x6D4B;&#x8BD5;"></a>&#x8865;&#x57FA;&#x7840;&#xFF1A;JS &#x5355;&#x5143;&#x6D4B;&#x8BD5;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试有啥用？"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x6709;&#x5565;&#x7528;&#xFF1F;" class="headerlink" title="&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x6709;&#x5565;&#x7528;&#xFF1F;"></a>&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#x6709;&#x5565;&#x7528;&#xFF1F;</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#例子1"><span class="toc-number">1.1.1.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;1" class="headerlink" title="&#x4F8B;&#x5B50;1"></a>&#x4F8B;&#x5B50;1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子2"><span class="toc-number">1.1.2.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;2" class="headerlink" title="&#x4F8B;&#x5B50;2"></a>&#x4F8B;&#x5B50;2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子3"><span class="toc-number">1.1.3.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;3" class="headerlink" title="&#x4F8B;&#x5B50;3"></a>&#x4F8B;&#x5B50;3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#例子4"><span class="toc-number">1.1.4.</span> <span class="toc-text"><a href="#&#x4F8B;&#x5B50;4" class="headerlink" title="&#x4F8B;&#x5B50;4"></a>&#x4F8B;&#x5B50;4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么做集成"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x600E;&#x4E48;&#x505A;&#x96C6;&#x6210;" class="headerlink" title="&#x600E;&#x4E48;&#x505A;&#x96C6;&#x6210;"></a>&#x600E;&#x4E48;&#x505A;&#x96C6;&#x6210;</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

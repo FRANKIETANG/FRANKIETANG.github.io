@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-494866b6ba1c3ca0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-c12e95d7cc12d8af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-05T14:42:01.703Z">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="摸到 webpack 的门把手 (2)">
 <meta name="twitter:description" content="摸到 webpack 的门把手 (2)经过了上一篇 摸到 webpack 的门把手 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。 webpack 到底干了什么bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用">
@@ -97,7 +97,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手-2"><span class="toc-number">1.</span> <span class="toc-text">摸到 webpack 的门把手 (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-到底干了什么"><span class="toc-number">1.1.</span> <span class="toc-text">webpack 到底干了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码的一些问题"><span class="toc-number">1.2.</span> <span class="toc-text">压缩代码的一些问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch"><span class="toc-number">1.3.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看成果"><span class="toc-number">1.4.</span> <span class="toc-text">查看成果</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手-2"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x6478;&#x5230;-webpack-&#x7684;&#x95E8;&#x628A;&#x624B;-2" class="headerlink" title="&#x6478;&#x5230; webpack &#x7684;&#x95E8;&#x628A;&#x624B; (2)"></a>&#x6478;&#x5230; webpack &#x7684;&#x95E8;&#x628A;&#x624B; (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-到底干了什么"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#webpack-&#x5230;&#x5E95;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;" class="headerlink" title="webpack &#x5230;&#x5E95;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;"></a>webpack &#x5230;&#x5E95;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码的一些问题"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;" class="headerlink" title="&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;"></a>&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch"><span class="toc-number">1.3.</span> <span class="toc-text"><a href="#watch" class="headerlink" title="watch"></a>watch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看成果"><span class="toc-number">1.4.</span> <span class="toc-text"><a href="#&#x67E5;&#x770B;&#x6210;&#x679C;" class="headerlink" title="&#x67E5;&#x770B;&#x6210;&#x679C;"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="noopener">&#x67E5;&#x770B;&#x6210;&#x679C;</a></span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -136,13 +136,13 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="摸到-webpack-的门把手-2"><a href="#摸到-webpack-的门把手-2" class="headerlink" title="摸到 webpack 的门把手 (2)"></a>摸到 webpack 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 webpack 的门把手</a> 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。</p>
+    <h1 id="摸到-webpack-的门把手-2"><a href="#摸到-webpack-的门把手-2" class="headerlink" title="摸到 webpack 的门把手 (2)"></a>摸到 webpack 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 webpack 的门把手</a> 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。</p>
 <h2 id="webpack-到底干了什么"><a href="#webpack-到底干了什么" class="headerlink" title="webpack 到底干了什么"></a>webpack 到底干了什么</h2><p>bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用。有空填坑分析代码。</p>
 <h2 id="压缩代码的一些问题"><a href="#压缩代码的一些问题" class="headerlink" title="压缩代码的一些问题"></a>压缩代码的一些问题</h2><p>我们会发现 jQuery 的代码并没有压缩，其实我们可以使用 <code>webpack -p</code>，webpack 给出的解释是<br><code>shortcut for --optimize-minimize --define process.env.NODE_ENV=&quot;production&quot;</code></p>
 <p>运行 <code>-p</code> ，实际执行</p>
 <ul>
 <li>使用UglifyJsPlugin进行 JS文件压缩,webpack 自带的压缩插件</li>
-<li>运行<a href="https://webpack.js.org/plugins/loader-options-plugin/#components/sidebar/sidebar.jsx" target="_blank" rel="external">LoaderOptionsPlugin</a></li>
+<li>运行<a href="https://webpack.js.org/plugins/loader-options-plugin/#components/sidebar/sidebar.jsx" target="_blank" rel="noopener">LoaderOptionsPlugin</a></li>
 <li>设置Node环境变量</li>
 </ul>
 <pre><code>//运行 webpack -p 会通过如下方式调用 DefinePlugin
@@ -156,7 +156,7 @@ module.exports={
   ]
 }
 </code></pre><p><code>DefinePlugin</code> 在原始的源码中执行查找和替换操作. 在导入的代码中,任何出现 <code>process.env.NODE_ENV</code>的地方都会被替换为<code>”production”</code>. 因此, 形如<code>if (process.env.NODE_ENV !== ‘production’) console.log(‘…’)</code> 的代码就会等价于 <code>if (false) console.log(‘…’)</code> 并且最终通过<code>UglifyJS</code>等价替换掉.</p>
-<p><a href="https://webpack.js.org/guides/public-path/" target="_blank" rel="external">webpack - public-path</a></p>
+<p><a href="https://webpack.js.org/guides/public-path/" target="_blank" rel="noopener">webpack - public-path</a></p>
 <h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>每次写完代码都要 npm run webpack ，很麻烦，那我们需要 <code>webpack --progress --watch</code> 监听文件变动，只要我们保存了文件就会自动编译代码。</p>
 <p>在 npm script 加一句 <code>&quot;watch&quot;: &quot;webpack --progress --watch&quot;</code>，然后 npm run watch 试试</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -173,12 +173,12 @@ module.exports={
 <p>如果我们改一下 src/bundle.js 就会发现</p>
 <ul>
 <li>bundle.js 自动打包</li>
-<li><a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 自动刷新</li>
+<li><a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> 自动刷新</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-c12e95d7cc12d8af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>注意，我们就不能再直接打开 index.html 了，因为它引用的是 /bundle.js，用 file:// 协议打开 index.html 的话，会请求 file:///bundle.js，显然这个文件不存在。</p>
-<p><a href="https://webpack.js.org/guides/development/" target="_blank" rel="external">webpack - development</a></p>
-<h2 id="查看成果"><a href="#查看成果" class="headerlink" title="查看成果"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="external">查看成果</a></h2>
+<p><a href="https://webpack.js.org/guides/development/" target="_blank" rel="noopener">webpack - development</a></p>
+<h2 id="查看成果"><a href="#查看成果" class="headerlink" title="查看成果"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="noopener">查看成果</a></h2>
   </div>
 </article>
 
@@ -198,7 +198,7 @@ module.exports={
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手-2"><span class="toc-number">1.</span> <span class="toc-text">摸到 webpack 的门把手 (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-到底干了什么"><span class="toc-number">1.1.</span> <span class="toc-text">webpack 到底干了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码的一些问题"><span class="toc-number">1.2.</span> <span class="toc-text">压缩代码的一些问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch"><span class="toc-number">1.3.</span> <span class="toc-text">watch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看成果"><span class="toc-number">1.4.</span> <span class="toc-text">查看成果</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-webpack-的门把手-2"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x6478;&#x5230;-webpack-&#x7684;&#x95E8;&#x628A;&#x624B;-2" class="headerlink" title="&#x6478;&#x5230; webpack &#x7684;&#x95E8;&#x628A;&#x624B; (2)"></a>&#x6478;&#x5230; webpack &#x7684;&#x95E8;&#x628A;&#x624B; (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#webpack-到底干了什么"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#webpack-&#x5230;&#x5E95;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;" class="headerlink" title="webpack &#x5230;&#x5E95;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;"></a>webpack &#x5230;&#x5E95;&#x5E72;&#x4E86;&#x4EC0;&#x4E48;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#压缩代码的一些问题"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;" class="headerlink" title="&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;"></a>&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x7684;&#x4E00;&#x4E9B;&#x95EE;&#x9898;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#watch"><span class="toc-number">1.3.</span> <span class="toc-text"><a href="#watch" class="headerlink" title="watch"></a>watch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看成果"><span class="toc-number">1.4.</span> <span class="toc-text"><a href="#&#x67E5;&#x770B;&#x6210;&#x679C;" class="headerlink" title="&#x67E5;&#x770B;&#x6210;&#x679C;"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="noopener">&#x67E5;&#x770B;&#x6210;&#x679C;</a></span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

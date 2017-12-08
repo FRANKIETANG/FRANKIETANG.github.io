@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="付林恒的博客">
 <meta property="og:description" content="补基础：函数  函数 实参 length call apply bind Generator Function Generator 迭代器协议 for of   什么是函数function fn() {       console.log(1) }  fn() // 1  // 传东西 function fn(num, fn) {       console.log(fn(num)) }  fn(">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-05T14:42:01.467Z">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="补基础：函数">
 <meta name="twitter:description" content="补基础：函数  函数 实参 length call apply bind Generator Function Generator 迭代器协议 for of   什么是函数function fn() {       console.log(1) }  fn() // 1  // 传东西 function fn(num, fn) {       console.log(fn(num)) }  fn(">
@@ -93,7 +93,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：函数"><span class="toc-number">1.</span> <span class="toc-text">补基础：函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是函数"><span class="toc-number">1.1.</span> <span class="toc-text">什么是函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#形参-parameters-vs-实参-arguments"><span class="toc-number">1.2.</span> <span class="toc-text">形参(parameters) vs 实参(arguments)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器-Generator"><span class="toc-number">1.3.</span> <span class="toc-text">生成器(Generator)</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：函数"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x51FD;&#x6570;" class="headerlink" title="&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x51FD;&#x6570;"></a>&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x51FD;&#x6570;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是函数"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#&#x4EC0;&#x4E48;&#x662F;&#x51FD;&#x6570;" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;&#x51FD;&#x6570;"></a>&#x4EC0;&#x4E48;&#x662F;&#x51FD;&#x6570;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#形参-parameters-vs-实参-arguments"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x5F62;&#x53C2;-parameters-vs-&#x5B9E;&#x53C2;-arguments" class="headerlink" title="&#x5F62;&#x53C2;(parameters) vs &#x5B9E;&#x53C2;(arguments)"></a>&#x5F62;&#x53C2;(parameters) vs &#x5B9E;&#x53C2;(arguments)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器-Generator"><span class="toc-number">1.3.</span> <span class="toc-text"><a href="#&#x751F;&#x6210;&#x5668;-Generator" class="headerlink" title="&#x751F;&#x6210;&#x5668;(Generator)"></a>&#x751F;&#x6210;&#x5668;(Generator)</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -134,16 +134,16 @@
   <div class="content" itemprop="articleBody">
     <h1 id="补基础：函数"><a href="#补基础：函数" class="headerlink" title="补基础：函数"></a>补基础：函数</h1><blockquote>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" rel="external">函数</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/arguments" target="_blank" rel="external">实参</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/length" target="_blank" rel="external">length</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="external">call</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="external">apply</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="external">bind</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*" target="_blank" rel="external">Generator Function</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator" target="_blank" rel="external">Generator</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="external">迭代器协议</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="external">for of</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" rel="noopener">函数</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/arguments" target="_blank" rel="noopener">实参</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/length" target="_blank" rel="noopener">length</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="noopener">call</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="noopener">apply</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="noopener">bind</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*" target="_blank" rel="noopener">Generator Function</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator" target="_blank" rel="noopener">Generator</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="noopener">迭代器协议</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">for of</a></li>
 </ul>
 </blockquote>
 <h2 id="什么是函数"><a href="#什么是函数" class="headerlink" title="什么是函数"></a>什么是函数</h2><pre><code class="1">function fn() {
@@ -276,7 +276,7 @@ sumWithCurry(1)(2,3)  // 6
 // 先运行 sumWithCurry(1) 然后吃掉后面的函数 利用 concat 
 
 sumWithCurry(1,2)(3)  // 6
-</code></pre><p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="external">柯里化</a></p>
+</code></pre><p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="noopener">柯里化</a></p>
 <h2 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器(Generator)"></a>生成器(Generator)</h2><pre><code>// 在 function 加一个 * 号就可以变成一个 Generator 函数
 function* fn() {
       yield 3;
@@ -372,7 +372,7 @@ let obj = {
       &#39;a&#39;: &#39;b&#39;,
       &#39;c&#39;: &#39;d&#39;
 }
-</code></pre><p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="external">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="external">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
+</code></pre><p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="noopener">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="noopener">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
 <pre><code>// 彩蛋3 Symbol 是用来干嘛的？
 // 避免相等的值重复
 let a = &#39;a&#39;
@@ -381,7 +381,7 @@ let b = &#39;a&#39;
 let obj = {}
 obj[a]
 obj[b]
-</code></pre><p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="external">深入浅出ES6（八）：Symbols</a></p>
+</code></pre><p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="noopener">深入浅出ES6（八）：Symbols</a></p>
 
   </div>
 </article>
@@ -402,7 +402,7 @@ obj[b]
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：函数"><span class="toc-number">1.</span> <span class="toc-text">补基础：函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是函数"><span class="toc-number">1.1.</span> <span class="toc-text">什么是函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#形参-parameters-vs-实参-arguments"><span class="toc-number">1.2.</span> <span class="toc-text">形参(parameters) vs 实参(arguments)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器-Generator"><span class="toc-number">1.3.</span> <span class="toc-text">生成器(Generator)</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：函数"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x51FD;&#x6570;" class="headerlink" title="&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x51FD;&#x6570;"></a>&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x51FD;&#x6570;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是函数"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#&#x4EC0;&#x4E48;&#x662F;&#x51FD;&#x6570;" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;&#x51FD;&#x6570;"></a>&#x4EC0;&#x4E48;&#x662F;&#x51FD;&#x6570;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#形参-parameters-vs-实参-arguments"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x5F62;&#x53C2;-parameters-vs-&#x5B9E;&#x53C2;-arguments" class="headerlink" title="&#x5F62;&#x53C2;(parameters) vs &#x5B9E;&#x53C2;(arguments)"></a>&#x5F62;&#x53C2;(parameters) vs &#x5B9E;&#x53C2;(arguments)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器-Generator"><span class="toc-number">1.3.</span> <span class="toc-text"><a href="#&#x751F;&#x6210;&#x5668;-Generator" class="headerlink" title="&#x751F;&#x6210;&#x5668;(Generator)"></a>&#x751F;&#x6210;&#x5668;(Generator)</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

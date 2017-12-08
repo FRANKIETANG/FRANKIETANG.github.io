@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="付林恒的博客">
 <meta property="og:description" content="Promise这其实是异步的一种方法。 回调函数//假定有两个函数f1和f2，后者等待前者的执行结果。 f1() f2() //如果f1是一个很耗时的任务，可以考虑改写f1，把f2写成f1的回调函数。 function f1(callback){   setTimeout(function(){     //f1 的任务代码     callback()   },1000) } //是不是有点像">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-05T14:42:01.535Z">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="摸到 Promise 的门把手">
 <meta name="twitter:description" content="Promise这其实是异步的一种方法。 回调函数//假定有两个函数f1和f2，后者等待前者的执行结果。 f1() f2() //如果f1是一个很耗时的任务，可以考虑改写f1，把f2写成f1的回调函数。 function f1(callback){   setTimeout(function(){     //f1 的任务代码     callback()   },1000) } //是不是有点像">
@@ -93,7 +93,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">1.</span> <span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-number">1.0.1.</span> <span class="toc-text">回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promises对象"><span class="toc-number">1.0.2.</span> <span class="toc-text">Promises对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用-Promise"><span class="toc-number">1.0.3.</span> <span class="toc-text">为什么要用 Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现一个-Promise"><span class="toc-number">1.0.4.</span> <span class="toc-text">如何实现一个 Promise</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">1.</span> <span class="toc-text"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-number">1.0.1.</span> <span class="toc-text"><a href="#&#x56DE;&#x8C03;&#x51FD;&#x6570;" class="headerlink" title="&#x56DE;&#x8C03;&#x51FD;&#x6570;"></a>&#x56DE;&#x8C03;&#x51FD;&#x6570;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promises对象"><span class="toc-number">1.0.2.</span> <span class="toc-text"><a href="#Promises&#x5BF9;&#x8C61;" class="headerlink" title="Promises&#x5BF9;&#x8C61;"></a>Promises&#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用-Promise"><span class="toc-number">1.0.3.</span> <span class="toc-text"><a href="#&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7528;-Promise" class="headerlink" title="&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7528; Promise"></a>&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7528; Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现一个-Promise"><span class="toc-number">1.0.4.</span> <span class="toc-text"><a href="#&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;-Promise" class="headerlink" title="&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Promise"></a>&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Promise</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -162,7 +162,7 @@ function f1(callback){
 
 f1(f2)
 </code></pre><h3 id="Promises对象"><a href="#Promises对象" class="headerlink" title="Promises对象"></a>Promises对象</h3><blockquote>
-<p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">统一接口</a>。</p>
+<p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="noopener">统一接口</a>。</p>
 <p>简单说，它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。</p>
 </blockquote>
 <p>注意这个 <code>then</code> </p>
@@ -275,7 +275,7 @@ fn().then(fn1).then(fn2)
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">1.</span> <span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-number">1.0.1.</span> <span class="toc-text">回调函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promises对象"><span class="toc-number">1.0.2.</span> <span class="toc-text">Promises对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用-Promise"><span class="toc-number">1.0.3.</span> <span class="toc-text">为什么要用 Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现一个-Promise"><span class="toc-number">1.0.4.</span> <span class="toc-text">如何实现一个 Promise</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Promise"><span class="toc-number">1.</span> <span class="toc-text"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#回调函数"><span class="toc-number">1.0.1.</span> <span class="toc-text"><a href="#&#x56DE;&#x8C03;&#x51FD;&#x6570;" class="headerlink" title="&#x56DE;&#x8C03;&#x51FD;&#x6570;"></a>&#x56DE;&#x8C03;&#x51FD;&#x6570;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promises对象"><span class="toc-number">1.0.2.</span> <span class="toc-text"><a href="#Promises&#x5BF9;&#x8C61;" class="headerlink" title="Promises&#x5BF9;&#x8C61;"></a>Promises&#x5BF9;&#x8C61;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用-Promise"><span class="toc-number">1.0.3.</span> <span class="toc-text"><a href="#&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7528;-Promise" class="headerlink" title="&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7528; Promise"></a>&#x4E3A;&#x4EC0;&#x4E48;&#x8981;&#x7528; Promise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何实现一个-Promise"><span class="toc-number">1.0.4.</span> <span class="toc-text"><a href="#&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;-Promise" class="headerlink" title="&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Promise"></a>&#x5982;&#x4F55;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Promise</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

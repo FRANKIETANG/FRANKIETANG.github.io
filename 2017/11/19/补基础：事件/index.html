@@ -93,7 +93,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：事件"><span class="toc-number">1.</span> <span class="toc-text">补基础：事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-events"><span class="toc-number">1.1.</span> <span class="toc-text">node events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现一个-Event"><span class="toc-number">1.2.</span> <span class="toc-text">实现一个 Event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#on-和-emit"><span class="toc-number">1.2.1.</span> <span class="toc-text">on 和 emit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eventNames-和-listenerCount"><span class="toc-number">1.2.2.</span> <span class="toc-text">eventNames 和 listenerCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeListener"><span class="toc-number">1.2.3.</span> <span class="toc-text">removeListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#once"><span class="toc-number">1.2.4.</span> <span class="toc-text">once</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：事件"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x4E8B;&#x4EF6;" class="headerlink" title="&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x4E8B;&#x4EF6;"></a>&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x4E8B;&#x4EF6;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-events"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="noopener">node events</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现一个-Event"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;-Event" class="headerlink" title="&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Event"></a>&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#on-和-emit"><span class="toc-number">1.2.1.</span> <span class="toc-text"><a href="#on-&#x548C;-emit" class="headerlink" title="on &#x548C; emit"></a>on &#x548C; emit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eventNames-和-listenerCount"><span class="toc-number">1.2.2.</span> <span class="toc-text"><a href="#eventNames-&#x548C;-listenerCount" class="headerlink" title="eventNames &#x548C; listenerCount"></a>eventNames &#x548C; listenerCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeListener"><span class="toc-number">1.2.3.</span> <span class="toc-text"><a href="#removeListener" class="headerlink" title="removeListener"></a>removeListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#once"><span class="toc-number">1.2.4.</span> <span class="toc-text"><a href="#once" class="headerlink" title="once"></a>once</span></a></li></ol></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -137,7 +137,7 @@
 <li>DOM 操作</li>
 <li>服务器的事件操作</li>
 </ul>
-<h2 id="node-events"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="external">node events</a></h2><p><a href="https://nodejs.org/api/events.html#events_emitter_on_eventname_listener" target="_blank" rel="external">emitter.on(eventName, listener)</a> <a href="https://nodejs.org/api/events.html#events_emitter_emit_eventname_args" target="_blank" rel="external">emitter.emit(eventName[, …args])</a></p>
+<h2 id="node-events"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="noopener">node events</a></h2><p><a href="https://nodejs.org/api/events.html#events_emitter_on_eventname_listener" target="_blank" rel="noopener">emitter.on(eventName, listener)</a> <a href="https://nodejs.org/api/events.html#events_emitter_emit_eventname_args" target="_blank" rel="noopener">emitter.emit(eventName[, …args])</a></p>
 <pre><code>// example.js
 const EventEmitter = require(&#39;events&#39;);  // 这是 node 的一个内置模块，给 node 提供一个事件功能
 const emitter = new EventEmitter();
@@ -150,7 +150,7 @@ emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)  // 用 emit 触发事�
 
 // node example.js
 // an event occurred! with response a,b
-</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_eventnames" target="_blank" rel="external">emitter.eventNames()</a> <a href="https://nodejs.org/api/events.html#events_emitter_listenercount_eventname" target="_blank" rel="external">emitter.listenerCount(eventName)</a></p>
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_eventnames" target="_blank" rel="noopener">emitter.eventNames()</a> <a href="https://nodejs.org/api/events.html#events_emitter_listenercount_eventname" target="_blank" rel="noopener">emitter.listenerCount(eventName)</a></p>
 <pre><code>const EventEmitter = require(&#39;events&#39;);
 const emitter = new EventEmitter();
 
@@ -173,7 +173,7 @@ console.log(eName);  // [&#39;iEvent&#39;, &#39;newEvent&#39;]  // 返回所有�
 
 let iEventListenerCount = emitter.listenerCount(&#39;iEvent&#39;);
 console.log(iEventListenerCount);  // 2  // 绑定了多少个 handler
-</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener" target="_blank" rel="external">emitter.removeListener(eventName, listener)</a></p>
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener" target="_blank" rel="noopener">emitter.removeListener(eventName, listener)</a></p>
 <pre><code>const EventEmitter = require(&#39;events&#39;);
 const emitter = new EventEmitter();
 
@@ -195,7 +195,7 @@ emitter.removeListener(&#39;iEvent&#39;, function() {
 */
 
 emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
-</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_once_eventname_listener" target="_blank" rel="external">emitter.once(eventName, listener)</a></p>
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_once_eventname_listener" target="_blank" rel="noopener">emitter.once(eventName, listener)</a></p>
 <pre><code>const EventEmitter = require(&#39;events&#39;);
 const emitter = new EventEmitter();
 
@@ -417,7 +417,7 @@ emitter.emit(&#39;iEvent4&#39;)  // 不打印
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：事件"><span class="toc-number">1.</span> <span class="toc-text">补基础：事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-events"><span class="toc-number">1.1.</span> <span class="toc-text">node events</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现一个-Event"><span class="toc-number">1.2.</span> <span class="toc-text">实现一个 Event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#on-和-emit"><span class="toc-number">1.2.1.</span> <span class="toc-text">on 和 emit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eventNames-和-listenerCount"><span class="toc-number">1.2.2.</span> <span class="toc-text">eventNames 和 listenerCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeListener"><span class="toc-number">1.2.3.</span> <span class="toc-text">removeListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#once"><span class="toc-number">1.2.4.</span> <span class="toc-text">once</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#补基础：事件"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x4E8B;&#x4EF6;" class="headerlink" title="&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x4E8B;&#x4EF6;"></a>&#x8865;&#x57FA;&#x7840;&#xFF1A;&#x4E8B;&#x4EF6;</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-events"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="noopener">node events</a></span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现一个-Event"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;-Event" class="headerlink" title="&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Event"></a>&#x5B9E;&#x73B0;&#x4E00;&#x4E2A; Event</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#on-和-emit"><span class="toc-number">1.2.1.</span> <span class="toc-text"><a href="#on-&#x548C;-emit" class="headerlink" title="on &#x548C; emit"></a>on &#x548C; emit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#eventNames-和-listenerCount"><span class="toc-number">1.2.2.</span> <span class="toc-text"><a href="#eventNames-&#x548C;-listenerCount" class="headerlink" title="eventNames &#x548C; listenerCount"></a>eventNames &#x548C; listenerCount</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#removeListener"><span class="toc-number">1.2.3.</span> <span class="toc-text"><a href="#removeListener" class="headerlink" title="removeListener"></a>removeListener</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#once"><span class="toc-number">1.2.4.</span> <span class="toc-text"><a href="#once" class="headerlink" title="once"></a>once</span></a></li></ol></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">

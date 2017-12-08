@@ -3,14 +3,329 @@
   
     
     <entry>
+      <title><![CDATA[补基础：JS 模块化]]></title>
+      <url>/2017/12/08/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9AJS%20%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+      <content type="html"><![CDATA[<h1 id="补基础：JS-模块化"><a href="#补基础：JS-模块化" class="headerlink" title="补基础：JS 模块化"></a>补基础：JS 模块化</h1><p>为什么要用到模块化</p>
+<ul>
+<li>解耦</li>
+<li>复用</li>
+</ul>
+<p>先举一个简单的例子</p>
+<pre><code>// html
+&lt;body&gt;
+    &lt;script src=&quot;./js/main.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+// js
+class Person {
+    constructor(name) {
+        this.name = name
+    }
+    sayHi() {
+        console.log(`hello I&#39;m ${this.name}`)
+    }
+}
+
+class Employee extends Person {
+    constructor(name, salary) {
+        super(name)
+        this.salary = salary
+    }
+    work() {
+        console.log(`I&#39;m working, My salary is ${formatSalary(this.salary)}`)
+    }
+}
+
+function formatSalary(salary) {
+    return salary + &#39; RMB&#39;
+}
+
+let frankie = new Employee(&#39;frankie&#39;, 5000)
+frankie.sayHi() // hello I&#39;m frankie
+frankie.work() // I&#39;m working, My salary is 5000 RMB
+</code></pre><p>如果像上面那么样引入会直接暴露所有接口，而且起名字也要很小心，如果使用模块化就可以解决这些问题。</p>
+<p>##namespace</p>
+<p>在没有 es6 的时代，用一种叫 namespace 的方法</p>
+<p>解决暴露接口的问题可以用 namespace ，创造一个命名空间</p>
+<pre><code>// html 注意顺序（JS 加载） 
+&lt;script src=&quot;./js/person.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;./js/util.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;./js/employee.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;./js/main.js&quot;&gt;&lt;/script&gt;
+
+// person.js
+(function (global) {
+    class Person {
+        constructor(name) {
+            this.name = name
+        }
+        sayHi() {
+            console.log(`hello I&#39;m ${this.name}`)
+        }
+    }
+
+    let namespace = global.MYAPP = global.MYAPP || {}  // 初始化
+    namespace.Person = Person  // 导出 Person
+
+})(window)
+
+// util.js
+(function (global) {
+    let namespace = global.MYAPP  // 因为 Person.js 是先引的所以页面上已经存在 global.MYAPP
+
+    namespace.UTILS = {  // 公有方法
+        formatSalary: function(salary) {
+            return salary + &#39; RMB&#39;
+        }
+    }
+})(window)
+
+// employee.js
+(function (global) {
+
+    let namespace = global.MYAPP  // 同理
+    let Person = namespace.Person  // 引入 Person
+    let formatSalary = namespace.UTILS.formatSalary
+
+    class Employee extends Person {
+        constructor(name, salary) {
+            super(name)
+            this.salary = salary
+        }
+        work() {
+            console.log(`I&#39;m working, My salary is ${formatSalary(this.salary)}`)
+        }
+    }
+
+    namespace.Employee = Employee  // 导出 Employee
+
+})(window)
+
+// main.js
+(function (global) {
+    let namespace = global.MYAPP
+
+    namespace.UTILS = {  // 公有方法
+        formatSalary: function(salary) {
+            return salary + &#39; RMB&#39;
+        }
+    }
+})(window)
+</code></pre><p>问题也是很明显的，JS 的执行顺序很让人头疼</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>于是就有了新的规范 AMD -&gt; <a href="http://requirejs.org/" target="_blank" rel="noopener">requirejs</a> <a href="http://www.ruanyifeng.com/blog/2012/11/require_js.html" target="_blank" rel="noopener">Javascript模块化编程（三）：require.js的用法</a></p>
+<pre><code>// 举个例子
+// html 引入 requirejs
+&lt;script src=&quot;../node_modules/requirejs/require.js&quot; data-main=&quot;./js/main.js&quot;&gt;&lt;/script&gt;
+
+// person.js
+define(function () {
+    class Person {
+        constructor(name) {
+            this.name = name
+        }
+        sayHi() {
+            console.log(`hello I&#39;m ${this.name}`)
+        }
+    }
+    return Person  // 导出 Person 模块
+})
+
+// util.js
+define(function () {
+    return {  // 导出方法
+        formatSalary: function (salary) {
+            return salary + &#39; RMB&#39;
+        }
+    }
+})
+
+// employee.js
+define([&#39;./person&#39;, &#39;./util&#39;], function (Person, UTILS) {  // 引入 Person 和 util 两个依赖，记住是异步加载
+    class Employee extends Person {
+        constructor(name, salary) {
+            super(name)
+            this.salary = salary
+        }
+        work() {
+            console.log(`I&#39;m working, My salary is ${UTILS.formatSalary(this.salary)}`)  // 使用 UTILS 的 formatSalary 方法
+        }
+    }
+    return Employee  // 导出 Employee 模块
+})
+
+// main.js
+require([&#39;./employee&#39;], function (Employee) {  // 引入依赖 Employee
+    let frankie = new Employee(&#39;frankie&#39;, 5000)
+    frankie.sayHi() // hello I&#39;m frankie
+    frankie.work() // I&#39;m working, My salary is 5000 RMB
+})
+</code></pre><p>上面这个例子全部是依赖于 requirejs 来实现模块化，requirejs 定义了两个方法，define 和 require。他们都可以传两个参数，第一个是依赖，用数组表示，而且是异步加载，加载完后当做参数传给你要写逻辑的函数。</p>
+<p>AMD -&gt; Asynchronous Module Definition（异步的模块定义）</p>
+<p>##CommonJS</p>
+<p>是后端的模块化，主要是由 <code>require</code> 引入，<code>module.exports</code> 导出</p>
+<pre><code>// person.js
+class Person {
+    constructor(name) {
+        this.name = name
+    }
+    sayHi() {
+        console.log(`hello I&#39;m ${this.name}`)
+    }
+}
+module.exports = Person  // 导出 Person
+
+// util.js
+module.exports = {  // 导出方法
+    formatSalary: function (salary) {
+        return salary + &#39; RMB&#39;
+    }
+}
+
+// employee.js
+let Person = require(&#39;./person.js&#39;) 
+    UTILS = require(&#39;./util.js&#39;)  // 引入两个依赖
+
+class Employee extends Person {
+    constructor(name, salary) {
+        super(name)
+        this.salary = salary
+    }
+    work() {
+        console.log(`I&#39;m working, My salary is ${UTILS.formatSalary(this.salary)}`)
+    }
+}
+module.exports = Employee  // 导出 Employee
+
+// main.js
+let Employee = require(&#39;./employee.js&#39;)  // 引入依赖
+
+let frankie = new Employee(&#39;frankie&#39;, 5000)
+frankie.sayHi() // hello I&#39;m frankie
+frankie.work() // I&#39;m working, My salary is 5000 RMB
+</code></pre><p>CommonJS 这个规范不用把模块用 <code>function</code> 包起来，因为 node.js 定义就是每个文件就是模块</p>
+<p>##UMD</p>
+<p>假如在 AMD 规范里加载 CommonJS 规范的模块肯定是不识别，在 CommonJS 规范里加载 AMD 规范也肯定不行</p>
+<p>那怎么 AMD 和 CommonJS 都通吃呢？</p>
+<pre><code>(function (gl) {
+    class Person {
+        constructor(name) {
+            this.name = name
+        }
+        sayHi() {
+            console.log(`hello I&#39;m ${this.name}`)
+        }
+    }
+
+    // 这里是通用方法
+    if (gl.hasOwnProperty(&#39;define&#39;)) {  // 看全局变量有没有 define，有执行 amd 规范
+        define(function () {
+            return Person
+        })
+    } else if (module != null &amp;&amp; typeof module.exports === &#39;object&#39;) {  // module 在不在 module.exports 在不在，在就执行 commonjs 规范
+        module.exports = Person
+    } else {
+        gl.Person = Person  // 如果都没有就挂到全局变量
+    }
+})(this)  // 传一个全局变量
+</code></pre><p><a href="https://github.com/vuejs/vue-class-component" target="_blank" rel="noopener">vue-class-components</a> 也有这种判断规范的方法</p>
+<p><img src="https://us1.myximage.com/2017/12/08/f296231a6848467fa1ad1c777079553c.png" alt=""></p>
+<h2 id="es6-里的-import-和-export"><a href="#es6-里的-import-和-export" class="headerlink" title="es6 里的 import 和 export"></a>es6 里的 import 和 export</h2><pre><code>&lt;body&gt;
+    &lt;script src=&quot;./bundle.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+
+// person.js
+export default class Person {
+    constructor(name) {
+        this.name = name
+    }
+    sayHi() {
+        console.log(`hello I&#39;m ${this.name}`)
+    }
+}
+
+// util.js
+export default function formatSalary(salary) {
+    return salary + &#39; RMB&#39;
+}
+
+// employee.js
+import Person from &#39;./person.js&#39;
+import formatSalary from &#39;./util.js&#39;
+
+export default class Employee extends Person {
+    constructor(name, salary) {
+        super(name)
+        this.salary = salary
+    }
+    work() {
+        console.log(`I&#39;m working, My salary is ${formatSalary(this.salary)}`)
+    }
+}
+
+// main.js
+import Employee from &#39;./employee.js&#39;
+
+let frankie = new Employee(&#39;frankie&#39;, 5000)
+frankie.sayHi() // hello I&#39;m frankie
+frankie.work() // I&#39;m working, My salary is 5000 RMB
+
+// 设置好 webpack 打包
+</code></pre><p>值得一提的是，webpack 兼容所有模块规范的打包，各种规范混搭也可以。</p>
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p>###做一个 require</p>
+<pre><code>// person.js
+function Person(name) {
+    this.name = name
+}
+
+Person.prototype.sayHi = function () {
+    console.log(`hello I&#39;m ${this.name}`)
+}
+
+test.exports = Person  // 这里这个 test 要和下面一样
+
+// myrequire.js
+let fs = require(&#39;fs&#39;)
+
+let modul = (function () {
+    let mod = {
+        exports: {}
+    }
+    function myrequire(filePath) {
+        let fnInText = fs.readFileSync(filePath, &#39;utf8&#39;)
+        let fn = new Function(&#39;test&#39;, fnInText)
+        fn(mod)
+    }
+
+    myrequire(&#39;./person.js&#39;)
+
+    return mod
+})()
+
+let Person = modul.exports
+let frankie = new Person(&#39;frankie&#39;)
+frankie.sayHi()
+</code></pre><p><a href="https://cnodejs.org/topic/5231a630101e574521e45ef8" target="_blank" rel="noopener">exports 和 module.exports 的区别</a></p>
+<p><a href="https://github.com/FRANKIETANG/module" target="_blank" rel="noopener">代码</a></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> JavaScript </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[MVC - MVVM 是什么]]></title>
       <url>/2017/12/06/MVC%20-%20MVVM%20%E6%98%AF%E4%BB%80%E4%B9%88/</url>
-      <content type="html"><![CDATA[<h1 id="MVC-MVVM-是什么"><a href="#MVC-MVVM-是什么" class="headerlink" title="MVC - MVVM 是什么"></a>MVC - MVVM 是什么</h1><p><a href="http://www.ruanyifeng.com/blog/2007/11/mvc.html" target="_blank" rel="external">谈谈MVC模式 - 阮一峰</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="external">MVC，MVP 和 MVVM 的图示 - 阮一峰</a></p>
-<p><a href="http://javascript.ruanyifeng.com/advanced/backbonejs.html" target="_blank" rel="external">MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰</a></p>
-<p>基于MVC的JavaScript Web富应用开发 - <a href="https://pan.baidu.com/s/1qY9hJmG" target="_blank" rel="external">网盘</a> 密码是 y9jv</p>
-<p>以下例子代码的仓库在 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example" target="_blank" rel="external">https://github.com/FRANKIETANG/mvc-mvvm-example</a> </p>
-<p>代码变动看 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example/commits/master" target="_blank" rel="external">commit</a></p>
+      <content type="html"><![CDATA[<h1 id="MVC-MVVM-是什么"><a href="#MVC-MVVM-是什么" class="headerlink" title="MVC - MVVM 是什么"></a>MVC - MVVM 是什么</h1><p><a href="http://www.ruanyifeng.com/blog/2007/11/mvc.html" target="_blank" rel="noopener">谈谈MVC模式 - 阮一峰</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="noopener">MVC，MVP 和 MVVM 的图示 - 阮一峰</a></p>
+<p><a href="http://javascript.ruanyifeng.com/advanced/backbonejs.html" target="_blank" rel="noopener">MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰</a></p>
+<p>基于MVC的JavaScript Web富应用开发 - <a href="https://pan.baidu.com/s/1qY9hJmG" target="_blank" rel="noopener">网盘</a> 密码是 y9jv</p>
+<p>以下例子代码的仓库在 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example" target="_blank" rel="noopener">https://github.com/FRANKIETANG/mvc-mvvm-example</a> </p>
+<p>代码变动看 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example/commits/master" target="_blank" rel="noopener">commit</a></p>
 <h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>如果要先实现一个 MVC ，首先要实现的是中间的那一层 Controller</p>
 <p>对于 Controller 的作用，绑事件 / 调用方法可以用对象的形式 / 监听 DOM 并且更新 DOM / 操作数据</p>
 <p>下面实现一个 MVC 的轮子吧</p>
@@ -145,7 +460,7 @@ new Controller({
     }
 })
 </code></pre><p><img src="https://us1.myximage.com/2017/12/02/53534b163c052c5f0b9a494c3a11f79c.gif" alt=""></p>
-<p>然后过了一段时间之后就有了 template，在 JS 写模板。并且操作数据。<a href="http://handlebarsjs.com/" target="_blank" rel="external">http://handlebarsjs.com/</a></p>
+<p>然后过了一段时间之后就有了 template，在 JS 写模板。并且操作数据。<a href="http://handlebarsjs.com/" target="_blank" rel="noopener">http://handlebarsjs.com/</a></p>
 <pre><code>// 举个例子
 // 先修改html
 &lt;div class=&quot;module2&quot;&gt;&lt;/div&gt;
@@ -369,8 +684,7 @@ new Controller({
     }
 })
 </code></pre><p>这样的好处就很明显了，操作永远只是数据，不会操作到 DOM，就是调一下 model 操作一下 view，以上，就实现了MVC 的全部功能 </p>
-<p>##MVVM</p>
-<p>Object.defineProperty 可以对属性有读写的控制</p>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>Object.defineProperty 可以对属性有读写的控制</p>
 <pre><code>// 举个例子
 let frankie = {
     _data: {
@@ -395,9 +709,8 @@ frankie.age = 20  // frankie.age 被设置了
 frankie.age = 21  // frankie.age 被设置了
 console.log(frankie.age)  // frankie.age 被读取了 21
 </code></pre><p>通过以上代码可以做到监听 input value 的变化去改内存里对象的变化，也可以改 <code>frankie.age</code> 来改页面上的数值</p>
-<p>例子 =&gt; <a href="https://jsbin.com/zawapumihe/1/edit?html,js,output" target="_blank" rel="external">点击这里</a></p>
-<p>###那 MVVM 到底是个啥玩意呢？</p>
-<p>以上面这个例子为例：</p>
+<p>例子 =&gt; <a href="https://jsbin.com/zawapumihe/1/edit?html,js,output" target="_blank" rel="noopener">点击这里</a></p>
+<h3 id="那-MVVM-到底是个啥玩意呢？"><a href="#那-MVVM-到底是个啥玩意呢？" class="headerlink" title="那 MVVM 到底是个啥玩意呢？"></a>那 MVVM 到底是个啥玩意呢？</h3><p>以上面这个例子为例：</p>
 <ul>
 <li>M -&gt; frankie (这个是 JS 内存里的)</li>
 <li>VM -&gt; 能让 V 和 M 互相沟通的东西，当 M 变了就通知 V 变，当 V 变了就通知 M 变。（两头互相监听互相变）</li>
@@ -408,12 +721,12 @@ console.log(frankie.age)  // frankie.age 被读取了 21
 <p><img src="https://us1.myximage.com/2017/12/05/d8b5e5b60652215f6172f7e54a411110.png" alt="yin"></p>
 <p>经过上面的测试是同步的</p>
 <p>第二点是 DOM 的操作也是同步的（DOM 不存在异步过程）</p>
-<p>这样会有一个问题，假如 view 层加了一个 input 就不能增加效果（以为因为新的 VM 没有 set 这个 input）。例子 =&gt; <a href="https://jsbin.com/cibunafuro/1/edit?html,js,output" target="_blank" rel="external">点击这里</a></p>
+<p>这样会有一个问题，假如 view 层加了一个 input 就不能增加效果（以为因为新的 VM 没有 set 这个 input）。例子 =&gt; <a href="https://jsbin.com/cibunafuro/1/edit?html,js,output" target="_blank" rel="noopener">点击这里</a></p>
 <p>所以 MVVM 的问题就在这里，只能监听已经存在的 key，新加的 key 没法监听</p>
-<p>解决方法还是有的，提供一个 API 为新加的 key 服务。例子 =&gt; <a href="https://jsbin.com/zagacilade/edit?html,js,output" target="_blank" rel="external">点击这里</a></p>
+<p>解决方法还是有的，提供一个 API 为新加的 key 服务。例子 =&gt; <a href="https://jsbin.com/zagacilade/edit?html,js,output" target="_blank" rel="noopener">点击这里</a></p>
 <p>JS 操作 DOM 很慢，DOM 操作 JS 是很慢的</p>
 <p>因为操作是同步的，所以有一个问题是，会很卡。但是 vue.js 很好的解决了这一个问题。（再也不用操作 DOM，从此     jQuery 退出历史舞台）</p>
-<p><a href="https://jsbin.com/jeqaqoyeyi/2/edit?html,js,output" target="_blank" rel="external">vue.js 的 Hello world</a></p>
+<p><a href="https://jsbin.com/jeqaqoyeyi/2/edit?html,js,output" target="_blank" rel="noopener">vue.js 的 Hello world</a></p>
 ]]></content>
       
         
@@ -428,8 +741,8 @@ console.log(frankie.age)  // frankie.age 被读取了 21
     <entry>
       <title><![CDATA[用 Node 来搭建 HTTP 服务器]]></title>
       <url>/2017/12/01/%E7%94%A8%20Node%20%E6%9D%A5%E6%90%AD%E5%BB%BA%20HTTP%20%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
-      <content type="html"><![CDATA[<h1 id="用-Node-来搭建-HTTP-服务器"><a href="#用-Node-来搭建-HTTP-服务器" class="headerlink" title="用 Node 来搭建 HTTP 服务器"></a>用 Node 来搭建 HTTP 服务器</h1><p><a href="https://github.com/FRANKIETANG/simple-http-server" target="_blank" rel="external">https://github.com/FRANKIETANG/simple-http-server</a></p>
-<p>可以点进去看 <a href="https://github.com/FRANKIETANG/simple-http-server/commits/master" target="_blank" rel="external">commit</a></p>
+      <content type="html"><![CDATA[<h1 id="用-Node-来搭建-HTTP-服务器"><a href="#用-Node-来搭建-HTTP-服务器" class="headerlink" title="用 Node 来搭建 HTTP 服务器"></a>用 Node 来搭建 HTTP 服务器</h1><p><a href="https://github.com/FRANKIETANG/simple-http-server" target="_blank" rel="noopener">https://github.com/FRANKIETANG/simple-http-server</a></p>
+<p>可以点进去看 <a href="https://github.com/FRANKIETANG/simple-http-server/commits/master" target="_blank" rel="noopener">commit</a></p>
 <h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>全称是 Uniform Resource Locator （唯一的资源定位器？），相当于一个地址。</p>
 <p><code>Schema://Host:Port/Path?query#hash</code></p>
 <blockquote>
@@ -445,7 +758,7 @@ const url = `address://nanshan.shenzhen.china/shennandadao/10869`
 // 地址是://南山.深圳.中国/深南大道/10869号
 // Host:Port 可以写 IP 地址或者域名
 // 域名 -&gt; DNS (去 google)
-</code></pre><h3 id="举一个简单的例子"><a href="#举一个简单的例子" class="headerlink" title="举一个简单的例子"></a>举一个简单的例子</h3><p><a href="https://segmentfault.com/a/1190000009084576" target="_blank" rel="external">vscode 断点调试</a></p>
+</code></pre><h3 id="举一个简单的例子"><a href="#举一个简单的例子" class="headerlink" title="举一个简单的例子"></a>举一个简单的例子</h3><p><a href="https://segmentfault.com/a/1190000009084576" target="_blank" rel="noopener">vscode 断点调试</a></p>
 <p>最好用 <strong>postman</strong>，浏览器好像只支持 get 请求。</p>
 <pre><code>const http = require(&#39;http&#39;) // http 模块是一定的
 const server = http.createServer()
@@ -512,7 +825,7 @@ localhost:8282/hello?i_need_money=true&amp;how_much=300  // GET ok, here you are
 <p>HTTP 请求体和请求头以一个空行作为分隔符</p>
 <p>HTTP 第三部分  请求体 http-request / response-body</p>
 </blockquote>
-<h3 id="举一个简单的例子-1"><a href="#举一个简单的例子-1" class="headerlink" title="举一个简单的例子"></a>举一个简单的例子</h3><p><a href="https://segmentfault.com/a/1190000009084576" target="_blank" rel="external">vscode 断点调试</a></p>
+<h3 id="举一个简单的例子-1"><a href="#举一个简单的例子-1" class="headerlink" title="举一个简单的例子"></a>举一个简单的例子</h3><p><a href="https://segmentfault.com/a/1190000009084576" target="_blank" rel="noopener">vscode 断点调试</a></p>
 <p>最好用 <strong>postman</strong>，浏览器好像只支持 get 请求。</p>
 <pre><code>const http = require(&#39;http&#39;) // http 模块是一定的
 const server = http.createServer()
@@ -783,11 +1096,11 @@ module.exports = router
 </code></pre><p><img src="https://us1.myximage.com/2017/12/01/0eda1fdee399f2d5f16acd525d5f469a.gif" alt=""></p>
 <p>其实框架还是解决了很多自己写东西的细节，像什么判断啊，转码啊啥的。那就可以不用管那么多直接写业务逻辑。</p>
 <h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><h3 id="命令行神器"><a href="#命令行神器" class="headerlink" title="命令行神器"></a>命令行神器</h3><p>又发现了个命令行神器..</p>
-<p><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a></p>
-<h3 id="前端发送表单发送的数据-后端处理的方式"><a href="#前端发送表单发送的数据-后端处理的方式" class="headerlink" title="前端发送表单发送的数据-后端处理的方式"></a>前端发送表单发送的数据-后端处理的方式</h3><p><a href="https://github.com/FRANKIETANG/simple-http-server/commit/4366e9a1cc5506c7291b3550aa1ec2843644e817" target="_blank" rel="external">commit - form data</a></p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a></p>
+<h3 id="前端发送表单发送的数据-后端处理的方式"><a href="#前端发送表单发送的数据-后端处理的方式" class="headerlink" title="前端发送表单发送的数据-后端处理的方式"></a>前端发送表单发送的数据-后端处理的方式</h3><p><a href="https://github.com/FRANKIETANG/simple-http-server/commit/4366e9a1cc5506c7291b3550aa1ec2843644e817" target="_blank" rel="noopener">commit - form data</a></p>
 <p><img src="https://us1.myximage.com/2017/12/01/ca7f44d9c3c761bca5d419204b5a5ff0.gif" alt=""></p>
 <p>拿到数据了…（请忽略我的 JSON 报错）</p>
-<p><a href="https://github.com/FRANKIETANG/simple-http-server/commit/1fdc106bf64cb242d53008b4f93b5c86b53af408" target="_blank" rel="external">commit - querystring replace JSON</a></p>
+<p><a href="https://github.com/FRANKIETANG/simple-http-server/commit/1fdc106bf64cb242d53008b4f93b5c86b53af408" target="_blank" rel="noopener">commit - querystring replace JSON</a></p>
 <p><img src="https://us1.myximage.com/2017/12/01/6a58999accae3fe5bcac42cb90ce1400.gif" alt=""></p>
 <h3 id="如何做请求缓存"><a href="#如何做请求缓存" class="headerlink" title="如何做请求缓存"></a>如何做请求缓存</h3><p>就是收到第二次同样的请求返回一样的内容（先留个坑吧…）</p>
 <ul>
@@ -811,16 +1124,16 @@ module.exports = router
       <title><![CDATA[补基础： node 各种知识点]]></title>
       <url>/2017/11/29/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9Anode%20%E5%90%84%E7%A7%8D%E7%9F%A5%E8%AF%86%E7%82%B9/</url>
       <content type="html"><![CDATA[<h1 id="补基础：node-各种知识点"><a href="#补基础：node-各种知识点" class="headerlink" title="补基础：node 各种知识点"></a>补基础：node 各种知识点</h1><p>简单带过所有开发环境</p>
-<p>NVM:nvm是一个node.js版本管理器，我们将会使用nvm安装node.js的不同版本<br><a href="https://github.com/creationix/nvm#installation" target="_blank" rel="external">NVM安装指南</a></p>
-<p>Node.js和npm: <a href="https://nodejs.org/dist/latest-v8.x/docs/api/" target="_blank" rel="external">Node.js官方文档</a> | <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwieh52Cgd_XAhUKrI8KHT9NBAoQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fnodejs%2Fnodejs-tutorial.html&amp;usg=AOvVaw2jflp9kjA1IHdV5QL7UYRB" target="_blank" rel="external">Node.js 教程| 菜鸟教程</a></p>
-<p>Git: <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwjD3buFgd_XAhUJvo8KHem-BIIQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fgit%2Fgit-tutorial.html&amp;usg=AOvVaw2SlbSmAVE814KUmXI236qx" target="_blank" rel="external">Git 教程| 菜鸟教程</a></p>
-<p>MongoDB：MongoDB是时下最流行的NoSQL数据库，<a href="https://www.mongodb.com/" target="_blank" rel="external">MongoDB官网</a> | <a href="https://docs.mongodb.com/manual/introduction/" target="_blank" rel="external">官方文档</a></p>
-<p><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank" rel="external">Ubuntu下安装MongoDB官方文档</a></p>
-<p>Redis:运用最广的K-V数据库之一。在Ubuntu下使用 <code>sudo apt-get install redis-server</code> <a href="https://redis.io/" target="_blank" rel="external">官网</a></p>
-<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP" target="_blank" rel="external">HTTP - MDN</a></p>
-<p><a href="https://blog.zain.red/2017/11/23/http/" target="_blank" rel="external">HTTP</a></p>
-<p><a href="http://www.jianshu.com/p/80e25cb1d81a" target="_blank" rel="external">关于HTTP协议，一篇就够了</a></p>
-<h2 id="Git-和-Linux"><a href="#Git-和-Linux" class="headerlink" title="Git 和 Linux"></a>Git 和 Linux</h2><p>看我的旧文章 <a href="http://www.jianshu.com/p/82142a85df5d" target="_blank" rel="external">Linux 的基本命令行和 Git 的基本操作</a></p>
+<p>NVM:nvm是一个node.js版本管理器，我们将会使用nvm安装node.js的不同版本<br><a href="https://github.com/creationix/nvm#installation" target="_blank" rel="noopener">NVM安装指南</a></p>
+<p>Node.js和npm: <a href="https://nodejs.org/dist/latest-v8.x/docs/api/" target="_blank" rel="noopener">Node.js官方文档</a> | <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwieh52Cgd_XAhUKrI8KHT9NBAoQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fnodejs%2Fnodejs-tutorial.html&amp;usg=AOvVaw2jflp9kjA1IHdV5QL7UYRB" target="_blank" rel="noopener">Node.js 教程| 菜鸟教程</a></p>
+<p>Git: <a href="https://www.google.co.uk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0ahUKEwjD3buFgd_XAhUJvo8KHem-BIIQFggmMAA&amp;url=http%3A%2F%2Fwww.runoob.com%2Fgit%2Fgit-tutorial.html&amp;usg=AOvVaw2SlbSmAVE814KUmXI236qx" target="_blank" rel="noopener">Git 教程| 菜鸟教程</a></p>
+<p>MongoDB：MongoDB是时下最流行的NoSQL数据库，<a href="https://www.mongodb.com/" target="_blank" rel="noopener">MongoDB官网</a> | <a href="https://docs.mongodb.com/manual/introduction/" target="_blank" rel="noopener">官方文档</a></p>
+<p><a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank" rel="noopener">Ubuntu下安装MongoDB官方文档</a></p>
+<p>Redis:运用最广的K-V数据库之一。在Ubuntu下使用 <code>sudo apt-get install redis-server</code> <a href="https://redis.io/" target="_blank" rel="noopener">官网</a></p>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP" target="_blank" rel="noopener">HTTP - MDN</a></p>
+<p><a href="https://blog.zain.red/2017/11/23/http/" target="_blank" rel="noopener">HTTP</a></p>
+<p><a href="http://www.jianshu.com/p/80e25cb1d81a" target="_blank" rel="noopener">关于HTTP协议，一篇就够了</a></p>
+<h2 id="Git-和-Linux"><a href="#Git-和-Linux" class="headerlink" title="Git 和 Linux"></a>Git 和 Linux</h2><p>看我的旧文章 <a href="http://www.jianshu.com/p/82142a85df5d" target="_blank" rel="noopener">Linux 的基本命令行和 Git 的基本操作</a></p>
 <h2 id="Node"><a href="#Node" class="headerlink" title="Node"></a>Node</h2><p>写一个脚本文件 show.js，满足以下需求：运行 node /path/to/show.js，输出当前目录下的所有文件。</p>
 <pre><code>touch show.js
 vi show.js
@@ -878,7 +1191,7 @@ npm i -g frankie-demo-2017-11-19
 // 然后就可以全局使用 show 和 view 了
 
 npm uninstall -g frankie-demo-2017-11-19  // 卸载掉 demo
-</code></pre><p><a href="https://www.npmjs.com/package/frankie-demo-2017-11-19" target="_blank" rel="external">https://www.npmjs.com/package/frankie-demo-2017-11-19</a></p>
+</code></pre><p><a href="https://www.npmjs.com/package/frankie-demo-2017-11-19" target="_blank" rel="noopener">https://www.npmjs.com/package/frankie-demo-2017-11-19</a></p>
 ]]></content>
       
         
@@ -951,7 +1264,7 @@ git commit -m ‘intinal’
 git pull origin master
 git push origin master
 //这样，项目就可以在 GitHub 上看到啦哈哈哈
-</code></pre><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p><a href="https://coolshell.cn/articles/5426.html" target="_blank" rel="external">vim 的基本操作</a></p>
+</code></pre><h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p><a href="https://coolshell.cn/articles/5426.html" target="_blank" rel="noopener">vim 的基本操作</a></p>
 <p>自制命令行</p>
 <pre><code>// ~/.bashrc
 
@@ -968,8 +1281,8 @@ source ~/.zshrc
 xx
 </code></pre><p>命令行小工具</p>
 <ul>
-<li>z: 方便实现快速目录跳转，<a href="https://github.com/rupa/z" target="_blank" rel="external">下载在此</a></li>
-<li>fzf: 方便快速搜索文件或目录，<a href="https://github.com/junegunn/fzf#installation" target="_blank" rel="external">官网在此</a></li>
+<li>z: 方便实现快速目录跳转，<a href="https://github.com/rupa/z" target="_blank" rel="noopener">下载在此</a></li>
+<li>fzf: 方便快速搜索文件或目录，<a href="https://github.com/junegunn/fzf#installation" target="_blank" rel="noopener">官网在此</a></li>
 </ul>
 <pre><code>curl -L https://raw.githubusercontent.com/rupa/z/master/z.sh &gt; z.sh
 vi ~/.zshrc
@@ -1076,9 +1389,9 @@ git reflog  // 用来数据恢复的
     <entry>
       <title><![CDATA[简单走一遍 node]]></title>
       <url>/2017/11/26/%E7%AE%80%E5%8D%95%E8%B5%B0%E4%B8%80%E9%81%8D%20node/</url>
-      <content type="html"><![CDATA[<h1 id="简单走一遍-node"><a href="#简单走一遍-node" class="headerlink" title="简单走一遍 node"></a>简单走一遍 node</h1><p>一个 Express 便利贴项目 | 预览 <a href="http://tangkalun.top" target="_blank" rel="external">http://tangkalun.top</a> 源码 <a href="https://github.com/FRANKIETANG/Express-node" target="_blank" rel="external">https://github.com/FRANKIETANG/Express-node</a></p>
-<p>详情代码看我 <a href="https://github.com/FRANKIETANG/Express-node/commits/master" target="_blank" rel="external">commit</a> </p>
-<p><a href="http://expressjs.com" target="_blank" rel="external">http://expressjs.com</a></p>
+      <content type="html"><![CDATA[<h1 id="简单走一遍-node"><a href="#简单走一遍-node" class="headerlink" title="简单走一遍 node"></a>简单走一遍 node</h1><p>一个 Express 便利贴项目 | 预览 <a href="http://tangkalun.top" target="_blank" rel="noopener">http://tangkalun.top</a> 源码 <a href="https://github.com/FRANKIETANG/Express-node" target="_blank" rel="noopener">https://github.com/FRANKIETANG/Express-node</a></p>
+<p>详情代码看我 <a href="https://github.com/FRANKIETANG/Express-node/commits/master" target="_blank" rel="noopener">commit</a> </p>
+<p><a href="http://expressjs.com" target="_blank" rel="noopener">http://expressjs.com</a></p>
 <h2 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h2><ul>
 <li>增删改查</li>
 <li>便利贴可拖动</li>
@@ -1106,20 +1419,20 @@ npm i
 npm start
 </code></pre><p>换端口的方法是 <code>PORT=4000 node bin/www</code></p>
 <h3 id="webpack-配置"><a href="#webpack-配置" class="headerlink" title="webpack 配置"></a>webpack 配置</h3><p>看以前写过的博客</p>
-<h3 id="onchange"><a href="#onchange" class="headerlink" title="onchange"></a>onchange</h3><p><a href="https://www.npmjs.com/package/onchange" target="_blank" rel="external">https://www.npmjs.com/package/onchange</a> 查看当前文件状况</p>
+<h3 id="onchange"><a href="#onchange" class="headerlink" title="onchange"></a>onchange</h3><p><a href="https://www.npmjs.com/package/onchange" target="_blank" rel="noopener">https://www.npmjs.com/package/onchange</a> 查看当前文件状况</p>
 <pre><code>&quot;build&quot;: &quot;webpack --config=src/webpack.config.js&quot;,
 &quot;watch&quot;: &quot;onchange &#39;src/**/*.js&#39; &#39;src/**/*.less&#39; -- npm run build&quot;
 </code></pre><h2 id="需要了解的内容有"><a href="#需要了解的内容有" class="headerlink" title="需要了解的内容有"></a><strong>需要了解的内容有</strong></h2><ul>
-<li><a href="http://expressjs.com/en/guide/using-middleware.html" target="_blank" rel="external">middleware</a></li>
-<li><a href="http://expressjs.com/en/guide/using-template-engines.html" target="_blank" rel="external">template engines with Express</a></li>
-<li><a href="http://expressjs.com/en/guide/routing.html" target="_blank" rel="external">Routing</a></li>
+<li><a href="http://expressjs.com/en/guide/using-middleware.html" target="_blank" rel="noopener">middleware</a></li>
+<li><a href="http://expressjs.com/en/guide/using-template-engines.html" target="_blank" rel="noopener">template engines with Express</a></li>
+<li><a href="http://expressjs.com/en/guide/routing.html" target="_blank" rel="noopener">Routing</a></li>
 </ul>
 <p>比如说一个简单的 middleware 可以这样子写</p>
 <pre><code>app.use(&#39;/student&#39;, function (req, res, next) {
   res.send(&#39;hello frankie&#39;)
 })
 </code></pre><p>我理解的话，大概是一个类似路由的东西</p>
-<p>模板引擎：<a href="https://www.npmjs.com/package/ejs" target="_blank" rel="external">https://www.npmjs.com/package/ejs</a></p>
+<p>模板引擎：<a href="https://www.npmjs.com/package/ejs" target="_blank" rel="noopener">https://www.npmjs.com/package/ejs</a></p>
 <p>有一句话是设置路径的，很重要。是用来设置是路由还是其他公共路径下的文件不会被当成路由加载</p>
 <pre><code>app.use(express.static(path.join(__dirname, &#39;public&#39;)));
 </code></pre><h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><p>没什么好说的都是以前做的轮子变形</p>
@@ -1131,19 +1444,19 @@ npm start
 <li>修改一个 note <code>POST /api/note/edit  req:{note: &#39;new note&#39;, id:100}</code></li>
 <li>删除一个 note <code>POST /api/note/delete req:{id:100}</code></li>
 </ul>
-<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><a href="https://www.npmjs.com/package/sequelize" target="_blank" rel="external">https://www.npmjs.com/package/sequelize</a></p>
-<p><a href="https://github.com/demopark/sequelize-docs-Zh-CN" target="_blank" rel="external">https://github.com/demopark/sequelize-docs-Zh-CN</a></p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><a href="https://www.npmjs.com/package/sequelize" target="_blank" rel="noopener">https://www.npmjs.com/package/sequelize</a></p>
+<p><a href="https://github.com/demopark/sequelize-docs-Zh-CN" target="_blank" rel="noopener">https://github.com/demopark/sequelize-docs-Zh-CN</a></p>
 <pre><code>// 用 n 模块降级到 6.10.3
 $ npm install --save sequelize
 $ npm install --save sqlite3
-</code></pre><h2 id="登录登出功能"><a href="#登录登出功能" class="headerlink" title="登录登出功能"></a>登录登出功能</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="external">理解OAuth 2.0</a></p>
-<p><a href="https://www.npmjs.com/package/passport" target="_blank" rel="external">https://www.npmjs.com/package/passport</a> 注意文档中的 Sessions 和 Middleware</p>
-<p><a href="https://www.npmjs.com/package/passport-github" target="_blank" rel="external">https://www.npmjs.com/package/passport-github</a> 注意文档中的 Configure Strategy 和 Authenticate Requests</p>
-<p><a href="http://www.cnblogs.com/gabrielchen/p/5800225.html" target="_blank" rel="external">http://www.cnblogs.com/gabrielchen/p/5800225.html</a></p>
-<p><a href="https://github.com/settings/applications/new" target="_blank" rel="external">https://github.com/settings/applications/new</a></p>
-<p><a href="https://diamondfsd.com/article/7fc2b070-e238-4fbb-acaf-47f0e3fdaabc" target="_blank" rel="external">使用 GitHub OAuth 第三方验证登录</a></p>
-<p><a href="http://www.open-open.com/lib/view/open1416812717570.html" target="_blank" rel="external">http://www.open-open.com/lib/view/open1416812717570.html</a></p>
-<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p><a href="https://github.com/FRANKIETANG/Express-node/commit/23e800fd0f76661225f5bae731cad4f22d302a6d" target="_blank" rel="external">permission - commit</a></p>
+</code></pre><h2 id="登录登出功能"><a href="#登录登出功能" class="headerlink" title="登录登出功能"></a>登录登出功能</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html" target="_blank" rel="noopener">理解OAuth 2.0</a></p>
+<p><a href="https://www.npmjs.com/package/passport" target="_blank" rel="noopener">https://www.npmjs.com/package/passport</a> 注意文档中的 Sessions 和 Middleware</p>
+<p><a href="https://www.npmjs.com/package/passport-github" target="_blank" rel="noopener">https://www.npmjs.com/package/passport-github</a> 注意文档中的 Configure Strategy 和 Authenticate Requests</p>
+<p><a href="http://www.cnblogs.com/gabrielchen/p/5800225.html" target="_blank" rel="noopener">http://www.cnblogs.com/gabrielchen/p/5800225.html</a></p>
+<p><a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">https://github.com/settings/applications/new</a></p>
+<p><a href="https://diamondfsd.com/article/7fc2b070-e238-4fbb-acaf-47f0e3fdaabc" target="_blank" rel="noopener">使用 GitHub OAuth 第三方验证登录</a></p>
+<p><a href="http://www.open-open.com/lib/view/open1416812717570.html" target="_blank" rel="noopener">http://www.open-open.com/lib/view/open1416812717570.html</a></p>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><p><a href="https://github.com/FRANKIETANG/Express-node/commit/23e800fd0f76661225f5bae731cad4f22d302a6d" target="_blank" rel="noopener">permission - commit</a></p>
 <h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p>node 如何调试</p>
 <pre><code>npm i -g node-inspector
 node-inspector
@@ -1171,7 +1484,7 @@ node --debug bin/www
 <li>DOM 操作</li>
 <li>服务器的事件操作</li>
 </ul>
-<h2 id="node-events"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="external">node events</a></h2><p><a href="https://nodejs.org/api/events.html#events_emitter_on_eventname_listener" target="_blank" rel="external">emitter.on(eventName, listener)</a> <a href="https://nodejs.org/api/events.html#events_emitter_emit_eventname_args" target="_blank" rel="external">emitter.emit(eventName[, …args])</a></p>
+<h2 id="node-events"><a href="#node-events" class="headerlink" title="node events"></a><a href="https://nodejs.org/api/events.html" target="_blank" rel="noopener">node events</a></h2><p><a href="https://nodejs.org/api/events.html#events_emitter_on_eventname_listener" target="_blank" rel="noopener">emitter.on(eventName, listener)</a> <a href="https://nodejs.org/api/events.html#events_emitter_emit_eventname_args" target="_blank" rel="noopener">emitter.emit(eventName[, …args])</a></p>
 <pre><code>// example.js
 const EventEmitter = require(&#39;events&#39;);  // 这是 node 的一个内置模块，给 node 提供一个事件功能
 const emitter = new EventEmitter();
@@ -1184,7 +1497,7 @@ emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;)  // 用 emit 触发事�
 
 // node example.js
 // an event occurred! with response a,b
-</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_eventnames" target="_blank" rel="external">emitter.eventNames()</a> <a href="https://nodejs.org/api/events.html#events_emitter_listenercount_eventname" target="_blank" rel="external">emitter.listenerCount(eventName)</a></p>
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_eventnames" target="_blank" rel="noopener">emitter.eventNames()</a> <a href="https://nodejs.org/api/events.html#events_emitter_listenercount_eventname" target="_blank" rel="noopener">emitter.listenerCount(eventName)</a></p>
 <pre><code>const EventEmitter = require(&#39;events&#39;);
 const emitter = new EventEmitter();
 
@@ -1207,7 +1520,7 @@ console.log(eName);  // [&#39;iEvent&#39;, &#39;newEvent&#39;]  // 返回所有�
 
 let iEventListenerCount = emitter.listenerCount(&#39;iEvent&#39;);
 console.log(iEventListenerCount);  // 2  // 绑定了多少个 handler
-</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener" target="_blank" rel="external">emitter.removeListener(eventName, listener)</a></p>
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_removelistener_eventname_listener" target="_blank" rel="noopener">emitter.removeListener(eventName, listener)</a></p>
 <pre><code>const EventEmitter = require(&#39;events&#39;);
 const emitter = new EventEmitter();
 
@@ -1229,7 +1542,7 @@ emitter.removeListener(&#39;iEvent&#39;, function() {
 */
 
 emitter.emit(&#39;iEvent&#39;, &#39;a&#39;, &#39;b&#39;);
-</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_once_eventname_listener" target="_blank" rel="external">emitter.once(eventName, listener)</a></p>
+</code></pre><p><a href="https://nodejs.org/api/events.html#events_emitter_once_eventname_listener" target="_blank" rel="noopener">emitter.once(eventName, listener)</a></p>
 <pre><code>const EventEmitter = require(&#39;events&#39;);
 const emitter = new EventEmitter();
 
@@ -1445,7 +1758,7 @@ emitter.emit(&#39;iEvent4&#39;)  // 不打印
     <entry>
       <title><![CDATA[看点面试题]]></title>
       <url>/2017/11/15/%E7%9C%8B%E7%82%B9%E9%9D%A2%E8%AF%95%E9%A2%98/</url>
-      <content type="html"><![CDATA[<h1 id="看点面试题"><a href="#看点面试题" class="headerlink" title="看点面试题"></a>看点面试题</h1><h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="external">RESTful API 设计指南</a> — 解决状态码和请求方式</p>
+      <content type="html"><![CDATA[<h1 id="看点面试题"><a href="#看点面试题" class="headerlink" title="看点面试题"></a>看点面试题</h1><h2 id="http"><a href="#http" class="headerlink" title="http"></a>http</h2><p><a href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html" target="_blank" rel="noopener">RESTful API 设计指南</a> — 解决状态码和请求方式</p>
 <h3 id="状态码"><a href="#状态码" class="headerlink" title="状态码"></a>状态码</h3><ul>
 <li>2xx成功</li>
 <li>3xx重定向</li>
@@ -1453,7 +1766,7 @@ emitter.emit(&#39;iEvent4&#39;)  // 不打印
 <li>5xx服务器错误（流量大啥的）</li>
 </ul>
 <p>3xx 重定向：比如访问网站 A，结果重新打到网站 B 上。怎么从 A 导到 B。</p>
-<p>比如输入一个 <a href="http://www.baidu.com，它会自动转到" target="_blank" rel="external">http://www.baidu.com，它会自动转到</a> <a href="https://www.baidu.com，状态码是" target="_blank" rel="external">https://www.baidu.com，状态码是</a> 307，因为在 Response Headers 有一个 Location</p>
+<p>比如输入一个 <a href="http://www.baidu.com，它会自动转到" target="_blank" rel="noopener">http://www.baidu.com，它会自动转到</a> <a href="https://www.baidu.com，状态码是" target="_blank" rel="noopener">https://www.baidu.com，状态码是</a> 307，因为在 Response Headers 有一个 Location</p>
 <p>还有一些缓存相关的</p>
 <blockquote>
 <p>304：当客户端缓存了目标资源但不确定该缓存资源是否是最新版本的时候,就会发送一个条件请求.在Fiddler中,你可以在<strong>Headers Inspector</strong>查找相关请求头,这样就可以辨别出一个请求是否是条件请求.</p>
@@ -1482,11 +1795,11 @@ emitter.emit(&#39;iEvent4&#39;)  // 不打印
 </blockquote>
 <p>不受系统时间的影响</p>
 <h3 id="请求方式"><a href="#请求方式" class="headerlink" title="请求方式"></a>请求方式</h3><p>比如一些常见的 get post delete put 这些</p>
-<p>get 和 post 的区别是？<a href="https://sunshinevvv.coding.me/blog/2017/02/09/HttpGETv.s.POST/" target="_blank" rel="external">HTTP协议中GET和POST方法的区别</a></p>
-<p>put 和 patch 的区别？<a href="https://ihower.tw/blog/archives/6483" target="_blank" rel="external">HTTP Verbs: 談 POST, PUT 和 PATCH 的應用</a></p>
+<p>get 和 post 的区别是？<a href="https://sunshinevvv.coding.me/blog/2017/02/09/HttpGETv.s.POST/" target="_blank" rel="noopener">HTTP协议中GET和POST方法的区别</a></p>
+<p>put 和 patch 的区别？<a href="https://ihower.tw/blog/archives/6483" target="_blank" rel="noopener">HTTP Verbs: 談 POST, PUT 和 PATCH 的應用</a></p>
 <h3 id="数据发送"><a href="#数据发送" class="headerlink" title="数据发送"></a>数据发送</h3><ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Submitting_forms_and_uploading_files" target="_blank" rel="external">XMLHttpRequest</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/form" target="_blank" rel="external">form</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Submitting_forms_and_uploading_files" target="_blank" rel="noopener">XMLHttpRequest</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/form" target="_blank" rel="noopener">form</a></li>
 </ul>
 <pre><code>// 假设发送的字符串里有 &amp; 和 = 怎么转译
 
@@ -1494,11 +1807,11 @@ name: &#39;&amp;=xiaohong&#39;
 
 encodeURIComponent(&#39;&amp;=xiaohong&#39;)  // %26%3Dxiaohong
 decodeURIComponent(&#39;%26%3Dxiaohong&#39;)  // &amp;=xiaohong
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FormData" target="_blank" rel="external">FormData</a></p>
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/FormData" target="_blank" rel="noopener">FormData</a></p>
 <p>application/json <code>JSON.parse(JSON.stringify(obj))</code></p>
 <p>发数据的时候记得设置 content-type</p>
-<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><p><a href="https://segmentfault.com/a/1190000006689767" target="_blank" rel="external">HTTP 请求头与请求体</a></p>
-<h3 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h3><p><a href="https://segmentfault.com/a/1190000006689786" target="_blank" rel="external">HTTP 响应头与状态码</a></p>
+<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><p><a href="https://segmentfault.com/a/1190000006689767" target="_blank" rel="noopener">HTTP 请求头与请求体</a></p>
+<h3 id="响应头"><a href="#响应头" class="headerlink" title="响应头"></a>响应头</h3><p><a href="https://segmentfault.com/a/1190000006689786" target="_blank" rel="noopener">HTTP 响应头与状态码</a></p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><h3 id="实参-Array-prototype-push"><a href="#实参-Array-prototype-push" class="headerlink" title="实参 - Array.prototype.push"></a>实参 - Array.prototype.push</h3><pre><code>// 实现一个 _push() 方法
 // 一顿操作
 Array.prototype._push = function() {
@@ -1581,9 +1894,9 @@ xiaoming.sayHi()  // hi I&#39;m xiaoming
 <p>比如 GitHub 上较大的开源项目在别人贡献代码的时候要保证输出的东西和原来的一样。</p>
 <p>单元测试就是保证这个。</p>
 <p>而且单元测试也是一个文档，告诉别人怎么使用这个文档。</p>
-<p><a href="https://github.com/n0ruSh/blogs/issues/2" target="_blank" rel="external">教练我要写单元测试</a></p>
-<p><a href="http://mochajs.org/" target="_blank" rel="external">Mocha</a></p>
-<p><a href="http://shouldjs.github.io/" target="_blank" rel="external">Should</a></p>
+<p><a href="https://github.com/n0ruSh/blogs/issues/2" target="_blank" rel="noopener">教练我要写单元测试</a></p>
+<p><a href="http://mochajs.org/" target="_blank" rel="noopener">Mocha</a></p>
+<p><a href="http://shouldjs.github.io/" target="_blank" rel="noopener">Should</a></p>
 <h3 id="例子1"><a href="#例子1" class="headerlink" title="例子1"></a>例子1</h3><p>现在做一个方法 <code>takeWhile</code> ，传一个数组和函数通过所有的 Mocha 测试</p>
 <pre><code>/**
  * @param {Array} arr - base array
@@ -1600,7 +1913,7 @@ function takeWhile(arr, pred) {
 }
 
 module.exports = takeWhile;
-</code></pre><p>上面的 <code>@param</code> 看这个了解就好。<a href="http://www.css88.com/doc/jsdoc/tags-param.html" target="_blank" rel="external">@param</a></p>
+</code></pre><p>上面的 <code>@param</code> 看这个了解就好。<a href="http://www.css88.com/doc/jsdoc/tags-param.html" target="_blank" rel="noopener">@param</a></p>
 <p>Mocha 的测试写法</p>
 <pre><code>let takeWhile = require(&#39;../../src/array/takeWhile&#39;),
     should = require(&#39;should&#39;);  // 比较库或者叫断言库，用来看输出后的东西是不是一样的。
@@ -1706,7 +2019,7 @@ function takeWhile(arr, pred) {
 }
 
 module.exports = takeWhile;
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some" target="_blank" rel="external">Array.prototype.some()</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="external">for…of</a></p>
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some" target="_blank" rel="noopener">Array.prototype.some()</a> <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">for…of</a></p>
 <pre><code>// 彩蛋 --- some() 的用法
 let arr = [1,2,3]
 arr.some(function(it) {return it &lt; 4})  // true
@@ -1753,7 +2066,7 @@ function isEmptyObject(obj) {
 }
 
 module.exports = isEmptyObject;
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" target="_blank" rel="external">Object.prototype.constructor</a></p>
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor" target="_blank" rel="noopener">Object.prototype.constructor</a></p>
 <h3 id="例子3"><a href="#例子3" class="headerlink" title="例子3"></a>例子3</h3><p>实现一个 trim 方法去掉前后空格（单词中间的空格不能省略）</p>
 <pre><code>let trim = require(&#39;../../src/string/trim&#39;),
     should = require(&#39;should&#39;);
@@ -1801,7 +2114,7 @@ function trim(str) {
 }
 
 module.exports = trim;
-</code></pre><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim" target="_blank" rel="external">String.prototype.trim()</a> 的 Polyfill 是 </p>
+</code></pre><p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim" target="_blank" rel="noopener">String.prototype.trim()</a> 的 Polyfill 是 </p>
 <pre><code>if (!String.prototype.trim) {
   String.prototype.trim = function () {
     return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, &#39;&#39;);
@@ -1847,8 +2160,8 @@ module.exports = toCamel;
 
 console.log(whole, matched)  // _w w _W W
 </code></pre><h2 id="怎么做集成"><a href="#怎么做集成" class="headerlink" title="怎么做集成"></a>怎么做集成</h2><p>相当于有中央服务器做集成，我提交代码，服务器自动帮我跑</p>
-<p><a href="https://www.travis-ci.org/" target="_blank" rel="external">Travis CI</a></p>
-<p><a href="http://blog.csdn.net/buptgshengod/article/details/39578353" target="_blank" rel="external">Travis setup guide</a></p>
+<p><a href="https://www.travis-ci.org/" target="_blank" rel="noopener">Travis CI</a></p>
+<p><a href="http://blog.csdn.net/buptgshengod/article/details/39578353" target="_blank" rel="noopener">Travis setup guide</a></p>
 <p>可以在 github 上做一个仓库，我一提交代码就会自动帮忙跑。（这个了解就好，其实都差不多的，就是人工跑代码和机器跑代码的区别）</p>
 ]]></content>
       
@@ -1864,9 +2177,9 @@ console.log(whole, matched)  // _w w _W W
     <entry>
       <title><![CDATA[补基础：React-Redux-ES6-webpack-babel]]></title>
       <url>/2017/11/05/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9AReact-Redux-ES6-webpack-babel/</url>
-      <content type="html"><![CDATA[<h1 id="补基础：React-Redux-ES6-webpack-babel"><a href="#补基础：React-Redux-ES6-webpack-babel" class="headerlink" title="补基础：React-Redux-ES6-webpack-babel"></a>补基础：React-Redux-ES6-webpack-babel</h1><p><a href="https://www.docschina.org/" target="_blank" rel="external">印记中文</a></p>
+      <content type="html"><![CDATA[<h1 id="补基础：React-Redux-ES6-webpack-babel"><a href="#补基础：React-Redux-ES6-webpack-babel" class="headerlink" title="补基础：React-Redux-ES6-webpack-babel"></a>补基础：React-Redux-ES6-webpack-babel</h1><p><a href="https://www.docschina.org/" target="_blank" rel="noopener">印记中文</a></p>
 <p>先看一遍中文文档，第二遍中英文对着看，第三遍才看英文文档</p>
-<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p><a href="https://facebook.github.io/react/" target="_blank" rel="external">React 官方文档</a></p>
+<h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p><a href="https://facebook.github.io/react/" target="_blank" rel="noopener">React 官方文档</a></p>
 <pre><code>/**
  * JSX : xml in JavaScript
  * 1、tagName
@@ -2019,7 +2332,7 @@ render() {
 } 
 
 // 还有一些属性啊，比如 onChange onClick 都要用驼峰命名
-</code></pre><p><a href="https://zhuanlan.zhihu.com/p/22500730?refer=study-fe" target="_blank" rel="external">XSS是什么</a> <a href="https://zhuanlan.zhihu.com/p/22521378?refer=study-fe" target="_blank" rel="external">CSRF是什么</a></p>
+</code></pre><p><a href="https://zhuanlan.zhihu.com/p/22500730?refer=study-fe" target="_blank" rel="noopener">XSS是什么</a> <a href="https://zhuanlan.zhihu.com/p/22521378?refer=study-fe" target="_blank" rel="noopener">CSRF是什么</a></p>
 <h3 id="JS-in-JSX（动态化）"><a href="#JS-in-JSX（动态化）" class="headerlink" title="JS-in-JSX（动态化）"></a>JS-in-JSX（动态化）</h3><pre><code>// 记住要用大括号来包裹变量
 import React,{Component} from &#39;react&#39;;
 import {render} from &#39;react-dom&#39;;
@@ -2083,7 +2396,7 @@ render(&lt;A gender=&#39;male name=&#39;frankie&#39;/&gt;,RootDom);
  // class 组件必须继承 Component
 
  // 组件为什么要大写？区分 HTML 和 组件
-</code></pre><h3 id="life-cycle"><a href="#life-cycle" class="headerlink" title="life-cycle"></a>life-cycle</h3><p><a href="https://facebook.github.io/react/docs/state-and-lifecycle.html" target="_blank" rel="external">https://facebook.github.io/react/docs/state-and-lifecycle.html</a></p>
+</code></pre><h3 id="life-cycle"><a href="#life-cycle" class="headerlink" title="life-cycle"></a>life-cycle</h3><p><a href="https://facebook.github.io/react/docs/state-and-lifecycle.html" target="_blank" rel="noopener">https://facebook.github.io/react/docs/state-and-lifecycle.html</a></p>
 <pre><code>// 写代码的时候更具有控制力
 import React,{Component} from &#39;react&#39;;
 import {render} from &#39;react-dom&#39;;
@@ -2193,7 +2506,7 @@ render(&lt;ChildComponent&gt;我是个孩子&lt;/ChildComponent&gt;,RootDom);
 
  // 假设这里传了数字怎么办？
  ReactDOM.render(&lt;Welcome gender=&#39;0234&#39; name=&#39;0234&#39;/&gt;,RootDom)
-</code></pre><p><a href="https://reactjs.org/docs/typechecking-with-proptypes.html" target="_blank" rel="external">https://reactjs.org/docs/typechecking-with-proptypes.html</a></p>
+</code></pre><p><a href="https://reactjs.org/docs/typechecking-with-proptypes.html" target="_blank" rel="noopener">https://reactjs.org/docs/typechecking-with-proptypes.html</a></p>
 <h3 id="setState"><a href="#setState" class="headerlink" title="setState"></a>setState</h3><pre><code>// setState 是一个异步的操作
 // 改变数据只有一种方法 setState
 import React,{Component} from &#39;react&#39;;
@@ -2334,7 +2647,7 @@ class Name extends Component {
 }
 
 ReactDOM.render(&lt;Name onClick={this.handleClick.bind(this)}/&gt;,RootDom)
-</code></pre><h3 id="ref-和-DOM"><a href="#ref-和-DOM" class="headerlink" title="ref 和 DOM"></a>ref 和 DOM</h3><p><a href="https://reactjs.org/docs/refs-and-the-dom.html" target="_blank" rel="external">https://reactjs.org/docs/refs-and-the-dom.html</a></p>
+</code></pre><h3 id="ref-和-DOM"><a href="#ref-和-DOM" class="headerlink" title="ref 和 DOM"></a>ref 和 DOM</h3><p><a href="https://reactjs.org/docs/refs-and-the-dom.html" target="_blank" rel="noopener">https://reactjs.org/docs/refs-and-the-dom.html</a></p>
 <pre><code>// 利用 ref 操作 DOM
 // react 不建议直接操作 DOM 元素，性能不好
 class Name extends Component {
@@ -2500,7 +2813,7 @@ class Person extends React.Component{
 
 ReactDOM.render(&lt;Name /&gt;,mountNode)
 */
-</code></pre><p><a href="https://segmentfault.com/a/1190000006752076" target="_blank" rel="external">JavaScript 深入了解基本类型和引用类型的值</a></p>
+</code></pre><p><a href="https://segmentfault.com/a/1190000006752076" target="_blank" rel="noopener">JavaScript 深入了解基本类型和引用类型的值</a></p>
 <h3 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h3><pre><code>/*
 方法有：三元 if else 组件 方法 &amp;&amp;判断
 */
@@ -2645,10 +2958,10 @@ const EnhancedComponent = logProps(InputComponent);
     name += &#39; hah&#39;;
     ReactDOM.render(&lt;EnhancedComponent name={name} /&gt;, document.getElementById(&#39;root&#39;));
  }, 1000)
-</code></pre><h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p><a href="http://www.redux.org.cn/" target="_blank" rel="external">Redux 官方文档</a></p>
-<p><a href="https://github.com/slashhuang/redux-annotation" target="_blank" rel="external">https://github.com/slashhuang/redux-annotation</a></p>
+</code></pre><h2 id="Redux"><a href="#Redux" class="headerlink" title="Redux"></a>Redux</h2><p><a href="http://www.redux.org.cn/" target="_blank" rel="noopener">Redux 官方文档</a></p>
+<p><a href="https://github.com/slashhuang/redux-annotation" target="_blank" rel="noopener">https://github.com/slashhuang/redux-annotation</a></p>
 <p><img src="https://ooo.0o0.ooo/2017/11/04/59fd9c6002509.jpg" alt=""></p>
-<h3 id="第一个简单的例子"><a href="#第一个简单的例子" class="headerlink" title="第一个简单的例子"></a>第一个简单的例子</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="external">Object.assign()</a></p>
+<h3 id="第一个简单的例子"><a href="#第一个简单的例子" class="headerlink" title="第一个简单的例子"></a>第一个简单的例子</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign()</a></p>
 <pre><code>import { createStore } from &#39;redux&#39;
 const initState = {}
 const reducer = (state, action) =&gt; {
@@ -2954,11 +3267,11 @@ const store = createStore(reducer, {}, enhancer);
 store.dispatch({type:1});
 store.dispatch({type:2});
 store.dispatch({type:3});
-</code></pre><p>action 的另一种写法 <a href="https://github.com/acdlite/flux-standard-action" target="_blank" rel="external">https://github.com/acdlite/flux-standard-action</a></p>
-<p><a href="https://stackoverflow.com/questions/32646920/whats-the-at-symbol-in-the-redux-connect-decorator" target="_blank" rel="external">What’s the ‘@’ (at symbol) in the Redux @connect decorator?</a></p>
-<p><a href="http://taobaofed.org/blog/2016/08/18/react-redux-connect/" target="_blank" rel="external">React 实践心得：react-redux 之 connect 方法详解</a></p>
-<h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><p><a href="http://es6.ruanyifeng.com/" target="_blank" rel="external">ES6 教程</a></p>
-<p><a href="https://frankietang.github.io/2017/10/14/%E6%91%B8%E5%88%B0%20ES6%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 ES6 的门把手</a></p>
+</code></pre><p>action 的另一种写法 <a href="https://github.com/acdlite/flux-standard-action" target="_blank" rel="noopener">https://github.com/acdlite/flux-standard-action</a></p>
+<p><a href="https://stackoverflow.com/questions/32646920/whats-the-at-symbol-in-the-redux-connect-decorator" target="_blank" rel="noopener">What’s the ‘@’ (at symbol) in the Redux @connect decorator?</a></p>
+<p><a href="http://taobaofed.org/blog/2016/08/18/react-redux-connect/" target="_blank" rel="noopener">React 实践心得：react-redux 之 connect 方法详解</a></p>
+<h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><p><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6 教程</a></p>
+<p><a href="https://frankietang.github.io/2017/10/14/%E6%91%B8%E5%88%B0%20ES6%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 ES6 的门把手</a></p>
 <p>Stage 0 - Strawman（展示阶段）</p>
 <ul>
 <li>Stage 1 - Proposal（征求意见阶段）</li>
@@ -2967,7 +3280,7 @@ store.dispatch({type:3});
 <li>Stage 4 - Finished（定案阶段）</li>
 </ul>
 <p>配 babel 的时候有用 </p>
-<h3 id="Set-和-Map-的数据结构"><a href="#Set-和-Map-的数据结构" class="headerlink" title="Set 和 Map 的数据结构"></a>Set 和 Map 的数据结构</h3><p><a href="https://github.com/ruanyf/es6tutorial/blob/2ac6e76b38f117f2acf6c465ab70709275b4241a/docs/set-map.md" target="_blank" rel="external">set-map</a></p>
+<h3 id="Set-和-Map-的数据结构"><a href="#Set-和-Map-的数据结构" class="headerlink" title="Set 和 Map 的数据结构"></a>Set 和 Map 的数据结构</h3><p><a href="https://github.com/ruanyf/es6tutorial/blob/2ac6e76b38f117f2acf6c465ab70709275b4241a/docs/set-map.md" target="_blank" rel="noopener">set-map</a></p>
 <pre><code>// 向 Set 加入值的时候，不会发生类型转换，所以5和&quot;5&quot;是两个不同的值。Set 内部判断两个值是否不同，使用的算法叫做“Same-value equality”，它类似于精确相等运算符（===），主要的区别是NaN等于自身，而精确相等运算符认为NaN不等于自身。
 let s = new Set()
 s.size // 0
@@ -3018,7 +3331,7 @@ class Math{
 
 let m = new Math()
 console.log(m.divide(6,3)) // 2
-</code></pre><h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><p><a href="https://webpack.js.org/" target="_blank" rel="external">webpack 官方文档</a></p>
+</code></pre><h2 id="webpack"><a href="#webpack" class="headerlink" title="webpack"></a>webpack</h2><p><a href="https://webpack.js.org/" target="_blank" rel="noopener">webpack 官方文档</a></p>
 <h3 id="webpack-与-react"><a href="#webpack-与-react" class="headerlink" title="webpack 与 react"></a>webpack 与 react</h3><pre><code>// 主要是配 loaders
 {
     test: /\.js[x]?$/,        // 符合 js 或者 jsx
@@ -3026,8 +3339,8 @@ console.log(m.divide(6,3)) // 2
     exclude: /node_modules/
 },
 </code></pre><p>说实话 webpack 这东西翻翻文档就好，不用死记硬背的。要什么功能直接 Google ，<code>npm i -D &lt;package&gt;</code></p>
-<p><a href="https://juejin.im/post/59bb37fa6fb9a00a554f89d2" target="_blank" rel="external">webpack：从入门到真实项目配置</a></p>
-<h2 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h2><p><a href="http://babeljs.io/" target="_blank" rel="external">babel 官方文档</a></p>
+<p><a href="https://juejin.im/post/59bb37fa6fb9a00a554f89d2" target="_blank" rel="noopener">webpack：从入门到真实项目配置</a></p>
+<h2 id="babel"><a href="#babel" class="headerlink" title="babel"></a>babel</h2><p><a href="http://babeljs.io/" target="_blank" rel="noopener">babel 官方文档</a></p>
 <h3 id="babel-1"><a href="#babel-1" class="headerlink" title="babel"></a>babel</h3><pre><code>// 因为 react 用的是 JSX 所以需要用到 babel
 // 不止 JSX 还有高阶组件(HOC) 要用到 es7 的 Decorator
 // 把这一堆代码转换成 JS
@@ -3081,16 +3394,16 @@ proxychains
       <url>/2017/10/24/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%87%BD%E6%95%B0/</url>
       <content type="html"><![CDATA[<h1 id="补基础：函数"><a href="#补基础：函数" class="headerlink" title="补基础：函数"></a>补基础：函数</h1><blockquote>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" rel="external">函数</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/arguments" target="_blank" rel="external">实参</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/length" target="_blank" rel="external">length</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="external">call</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="external">apply</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="external">bind</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*" target="_blank" rel="external">Generator Function</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator" target="_blank" rel="external">Generator</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="external">迭代器协议</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="external">for of</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function" target="_blank" rel="noopener">函数</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/arguments" target="_blank" rel="noopener">实参</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/length" target="_blank" rel="noopener">length</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/call" target="_blank" rel="noopener">call</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/apply" target="_blank" rel="noopener">apply</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind" target="_blank" rel="noopener">bind</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*" target="_blank" rel="noopener">Generator Function</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Generator" target="_blank" rel="noopener">Generator</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols#iterator" target="_blank" rel="noopener">迭代器协议</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of" target="_blank" rel="noopener">for of</a></li>
 </ul>
 </blockquote>
 <h2 id="什么是函数"><a href="#什么是函数" class="headerlink" title="什么是函数"></a>什么是函数</h2><pre><code class="1">function fn() {
@@ -3223,7 +3536,7 @@ sumWithCurry(1)(2,3)  // 6
 // 先运行 sumWithCurry(1) 然后吃掉后面的函数 利用 concat 
 
 sumWithCurry(1,2)(3)  // 6
-</code></pre><p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="external">柯里化</a></p>
+</code></pre><p><a href="https://github.com/n0ruSh/the-art-of-reading/issues/5" target="_blank" rel="noopener">柯里化</a></p>
 <h2 id="生成器-Generator"><a href="#生成器-Generator" class="headerlink" title="生成器(Generator)"></a>生成器(Generator)</h2><pre><code>// 在 function 加一个 * 号就可以变成一个 Generator 函数
 function* fn() {
       yield 3;
@@ -3319,7 +3632,7 @@ let obj = {
       &#39;a&#39;: &#39;b&#39;,
       &#39;c&#39;: &#39;d&#39;
 }
-</code></pre><p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="external">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="external">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
+</code></pre><p>其实有两个新方法，<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/values" target="_blank" rel="noopener">Object.values()</a> 和 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/entries" target="_blank" rel="noopener">Object.entries()</a> 可以遍历，Object.values() 只返回 value ，Object.entries() 返回全部</p>
 <pre><code>// 彩蛋3 Symbol 是用来干嘛的？
 // 避免相等的值重复
 let a = &#39;a&#39;
@@ -3328,7 +3641,7 @@ let b = &#39;a&#39;
 let obj = {}
 obj[a]
 obj[b]
-</code></pre><p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="external">深入浅出ES6（八）：Symbols</a></p>
+</code></pre><p><a href="http://www.infoq.com/cn/articles/es6-in-depth-symbols" target="_blank" rel="noopener">深入浅出ES6（八）：Symbols</a></p>
 ]]></content>
       
         
@@ -3345,16 +3658,16 @@ obj[b]
       <url>/2017/10/22/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%AF%B9%E8%B1%A1%E4%B8%8E%E6%95%B0%E7%BB%84%E7%9A%84%E9%81%8D%E5%8E%86%E6%96%B9%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="补基础：对象与数组的遍历方式"><a href="#补基础：对象与数组的遍历方式" class="headerlink" title="补基础：对象与数组的遍历方式"></a>补基础：对象与数组的遍历方式</h1><blockquote>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames" target="_blank" rel="external">Object.getOwnPropertyNames</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames" target="_blank" rel="noopener">Object.getOwnPropertyNames</a></li>
 </ul>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">Object.defineProperty</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">Object.defineProperty</a></li>
 </ul>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor" target="_blank" rel="external">Object.getOwnPropertyDescriptor</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor" target="_blank" rel="noopener">Object.getOwnPropertyDescriptor</a></li>
 </ul>
 <ul>
-<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors" target="_blank" rel="external">getOwnPropertyDescriptors</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors" target="_blank" rel="noopener">getOwnPropertyDescriptors</a></li>
 </ul>
 </blockquote>
 <h2 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h2><pre><code>let arr = [1, 2, 3]
@@ -3585,8 +3898,8 @@ _each({a: &#39;b&#39;, c: &#39;d&#39;}, function(key, value) {
       <title><![CDATA[补基础：this]]></title>
       <url>/2017/10/19/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9Athis/</url>
       <content type="html"><![CDATA[<h1 id="补基础：this"><a href="#补基础：this" class="headerlink" title="补基础：this"></a>补基础：this</h1><blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/23804247?refer=study-fe" target="_blank" rel="external">this 的值到底是什么？一次说清楚</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/25991271" target="_blank" rel="external">你怎么还没搞懂 this？</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23804247?refer=study-fe" target="_blank" rel="noopener">this 的值到底是什么？一次说清楚</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25991271" target="_blank" rel="noopener">你怎么还没搞懂 this？</a></p>
 <p>this的值是在函数调用的时候决定，而不是定义的时候决定</p>
 </blockquote>
 <h2 id="this-的四种绑定规则"><a href="#this-的四种绑定规则" class="headerlink" title="this 的四种绑定规则"></a>this 的四种绑定规则</h2><pre><code>// 默认绑定
@@ -4149,7 +4462,7 @@ if(typeof Object.create !== &#39;function&#39;){
       <title><![CDATA[做一个音乐 Webapp 的流程]]></title>
       <url>/2017/10/15/%E5%81%9A%E4%B8%80%E4%B8%AA%E9%9F%B3%E4%B9%90%20Webapp/</url>
       <content type="html"><![CDATA[<h1 id="做一个音乐-Webapp"><a href="#做一个音乐-Webapp" class="headerlink" title="做一个音乐 Webapp"></a>做一个音乐 Webapp</h1><p>超低仿 Vanilla JS 写的 QQ 音乐</p>
-<p><a href="https://frankietang.github.io/qq-music/index.html" target="_blank" rel="external">预览</a> | <a href="https://github.com/FRANKIETANG/qq-music" target="_blank" rel="external">源码</a></p>
+<p><a href="https://frankietang.github.io/qq-music/index.html" target="_blank" rel="noopener">预览</a> | <a href="https://github.com/FRANKIETANG/qq-music" target="_blank" rel="noopener">源码</a></p>
 <p>那么乱的笔记估计就只有我才能看懂</p>
 <ul>
 <li>按需求制定一下接口</li>
@@ -4161,14 +4474,14 @@ if(typeof Object.create !== &#39;function&#39;){
 <pre><code>curl &#39;https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;_=1507564199109&#39; -H &#39;pragma: no-cache&#39; -H &#39;origin: https://m.y.qq.com&#39; -H &#39;accept-encoding: gzip, deflate, br&#39; -H &#39;accept-language: zh-CN,zh;q=0.8&#39; -H &#39;user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1&#39; -H &#39;accept: application/json&#39; -H &#39;cache-control: no-cache&#39; -H &#39;authority: c.y.qq.com&#39; -H &#39;cookie: pgv_pvi=1576136704; pgv_si=s2924205056; RK=QfWPx2jbHN; tvfe_boss_uuid=bdd869ba21d19595; o_cookie=350558468; ts_refer=ADTAGmyqq; ptui_loginuin=350558468; ptisp=ctc; ptcz=bde020f9828475fc3e22f0fc78ba0024b7a615fad803b91694a069a02cefdb0b; pt2gguin=o0350558468; LW_sid=11S540S7L3v4m1k4L632K6r1m3; LW_uid=g1l53027M384N1y4K6Z2v6d1L4; eas_sid=H1Y5t0B7H3o461B4f692f682Y2; ts_uid=2559117424; qqmusic_fromtag=10; checkmask=3; yqq_stat=0; ts_refer=www.google.ca/; ts_uid=2559117424; pgv_info=ssid=s8871552255; pgv_pvid=2779555285&#39; -H &#39;referer: https://m.y.qq.com/&#39; --compressed
 </code></pre><p><code>npm install express --save</code> </p>
 <p><code>npm install request --save</code> <code>npm install request-promise --save</code>（发请求的库）</p>
-<p><a href="https://github.com/request/request-promise" target="_blank" rel="external">request-promise</a></p>
+<p><a href="https://github.com/request/request-promise" target="_blank" rel="noopener">request-promise</a></p>
 <p><img src="https://i.loli.net/2017/09/23/59c60819cabdf.png" alt=""></p>
 <p><code>npm install -g nodemon</code></p>
-<p><a href="https://nodemon.io/" target="_blank" rel="external">nodemon</a></p>
+<p><a href="https://nodemon.io/" target="_blank" rel="noopener">nodemon</a></p>
 <p>我去…用 nodemon 不能用 <code>import XXX from &#39;XXX&#39;</code> 要用 <code>var XXX = require(&#39;XXX&#39;)</code></p>
 <p><img src="https://i.loli.net/2017/09/23/59c60b0dcf706.png" alt=""></p>
 <p>我去…原来还有 n 模块这玩意…</p>
-<p><a href="https://www.npmjs.com/package/n" target="_blank" rel="external">n</a> 接受了这个设定还是挺不错的…</p>
+<p><a href="https://www.npmjs.com/package/n" target="_blank" rel="noopener">n</a> 接受了这个设定还是挺不错的…</p>
 <pre><code>//qq-server 代码
 const express = require(&#39;express&#39;)
 const request = require(&#39;request-promise&#39;)
@@ -4225,7 +4538,7 @@ app.get(&#39;/search&#39;, async(req,res)=&gt;{
 <p>你看真的成了</p>
 <p>那就是说…我自己做了一个 API …</p>
 <p>让这个 API 跨域 <code>npm install cors --save</code></p>
-<p><a href="https://zeit.co/now" target="_blank" rel="external">https://zeit.co/now</a> 把做出来的 server.js 上传就可以用了</p>
+<p><a href="https://zeit.co/now" target="_blank" rel="noopener">https://zeit.co/now</a> 把做出来的 server.js 上传就可以用了</p>
 <h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>import export</p>
 <h2 id="音乐歌词-API"><a href="#音乐歌词-API" class="headerlink" title="音乐歌词 API"></a>音乐歌词 API</h2><p><img src="https://i.loli.net/2017/09/25/59c8db302e050.png" alt=""></p>
 <p>点击 network 看 JS</p>
@@ -4259,7 +4572,7 @@ app.get(&#39;/search&#39;, async(req,res)=&gt;{
 <p><img src="https://ooo.0o0.ooo/2017/09/28/59ccf1d9533c4.png" alt=""></p>
 <p>MVC – Model View Controller</p>
 <p>autoprefixer-cli</p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/NonDocumentTypeChildNode/previousElementSibling" target="_blank" rel="external">NonDocumentTypeChildNode.previousElementSibling</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/NonDocumentTypeChildNode/previousElementSibling" target="_blank" rel="noopener">NonDocumentTypeChildNode.previousElementSibling</a></p>
 ]]></content>
       
         
@@ -4302,10 +4615,10 @@ app.get(&#39;/search&#39;, async(req,res)=&gt;{
 <h2 id="程序构想"><a href="#程序构想" class="headerlink" title="程序构想"></a>程序构想</h2><p>和之前一样分为导航栏，侧栏编写区，预览区</p>
 <h2 id="iconfont-的善用"><a href="#iconfont-的善用" class="headerlink" title="iconfont 的善用"></a>iconfont 的善用</h2><p>生成 <code>&lt;script&gt;</code> 标签直接用…不用像之前写个脚本来搞一大堆</p>
 <h2 id="element-ui"><a href="#element-ui" class="headerlink" title="element-ui"></a>element-ui</h2><p><code>npm i element-ui -S</code></p>
-<p><a href="http://element.eleme.io/#/zh-CN/component/installation" target="_blank" rel="external">文档</a></p>
-<h2 id="数据绑定语法为-value-sync"><a href="#数据绑定语法为-value-sync" class="headerlink" title="数据绑定语法为:value.sync"></a>数据绑定语法为<code>:value.sync</code></h2><p><a href="https://vuxjs.gitbooks.io/vux/content/form/x-input.html" target="_blank" rel="external">点击这里</a></p>
-<h2 id="slot-分發內容"><a href="#slot-分發內容" class="headerlink" title="slot 分發內容"></a>slot 分發內容</h2><p><a href="http://jsnwork.kiiuo.com/archives/2645/vue-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E3%80%8C%E4%BD%BF%E7%94%A8-slot-%E5%88%86%E7%99%BC%E5%85%A7%E5%AE%B9%E3%80%8D" target="_blank" rel="external">Vue – 如何理解「使用 slot 分發內容」</a></p>
-<h2 id="完。"><a href="#完。" class="headerlink" title="完。"></a>完。</h2><p><a href="https://frankietang.github.io/vue-resume/dist/index.html" target="_blank" rel="external">预览</a></p>
+<p><a href="http://element.eleme.io/#/zh-CN/component/installation" target="_blank" rel="noopener">文档</a></p>
+<h2 id="数据绑定语法为-value-sync"><a href="#数据绑定语法为-value-sync" class="headerlink" title="数据绑定语法为:value.sync"></a>数据绑定语法为<code>:value.sync</code></h2><p><a href="https://vuxjs.gitbooks.io/vux/content/form/x-input.html" target="_blank" rel="noopener">点击这里</a></p>
+<h2 id="slot-分發內容"><a href="#slot-分發內容" class="headerlink" title="slot 分發內容"></a>slot 分發內容</h2><p><a href="http://jsnwork.kiiuo.com/archives/2645/vue-%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E3%80%8C%E4%BD%BF%E7%94%A8-slot-%E5%88%86%E7%99%BC%E5%85%A7%E5%AE%B9%E3%80%8D" target="_blank" rel="noopener">Vue – 如何理解「使用 slot 分發內容」</a></p>
+<h2 id="完。"><a href="#完。" class="headerlink" title="完。"></a>完。</h2><p><a href="https://frankietang.github.io/vue-resume/dist/index.html" target="_blank" rel="noopener">预览</a></p>
 ]]></content>
       
         
@@ -4348,9 +4661,9 @@ assetsPublicPath: &#39;/vue-resume/dist&#39;,
 <p><code>https://frankietang.github.io/vue-resume/dist/#/</code></p>
 <h2 id="使用-SCSS"><a href="#使用-SCSS" class="headerlink" title="使用 SCSS"></a>使用 SCSS</h2><p><code>npm install --save  sass-loader node-sass</code></p>
 <h2 id="SVG-合并和使用方法"><a href="#SVG-合并和使用方法" class="headerlink" title="SVG 合并和使用方法"></a>SVG 合并和使用方法</h2><ul>
-<li><a href="https://github.com/FRANKIETANG/vue-resume/commit/a112088f1c0bc772813f855139fcdd4cdeeea380" target="_blank" rel="external">使用脚本将所有 svg 拼成一个 svg，原来的多个 svg 变成了多个 symbol</a></li>
-<li><a href="https://github.com/FRANKIETANG/vue-resume/commit/78556c0f7cb18d20e078f3abbbb85fd9b4c8ed43" target="_blank" rel="external">运行 node build/svg-symbol.js</a></li>
-<li><a href="https://github.com/FRANKIETANG/vue-resume/commit/476cec015bbea1e7fc55bbfb33ba627c68353084" target="_blank" rel="external">将 SVG 插入 body 中</a></li>
+<li><a href="https://github.com/FRANKIETANG/vue-resume/commit/a112088f1c0bc772813f855139fcdd4cdeeea380" target="_blank" rel="noopener">使用脚本将所有 svg 拼成一个 svg，原来的多个 svg 变成了多个 symbol</a></li>
+<li><a href="https://github.com/FRANKIETANG/vue-resume/commit/78556c0f7cb18d20e078f3abbbb85fd9b4c8ed43" target="_blank" rel="noopener">运行 node build/svg-symbol.js</a></li>
+<li><a href="https://github.com/FRANKIETANG/vue-resume/commit/476cec015bbea1e7fc55bbfb33ba627c68353084" target="_blank" rel="noopener">将 SVG 插入 body 中</a></li>
 </ul>
 <pre><code>//任意地方
 &lt;svg&gt;
@@ -4379,7 +4692,7 @@ assetsPublicPath: &#39;/vue-resume/dist&#39;,
         &lt;/ol&gt;
 </code></pre><h2 id="如何把填进去的数据放到预览页面呢？"><a href="#如何把填进去的数据放到预览页面呢？" class="headerlink" title="如何把填进去的数据放到预览页面呢？"></a>如何把填进去的数据放到预览页面呢？</h2><p>可以做一个公共数据储存区域</p>
 <p>填写区填进去的数据先放到公共数据再传到预览区</p>
-<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p><a href="https://jsfiddle.net/n9jmu5v7/1269/" target="_blank" rel="external">最基本的 Vuex 记数应用</a></p>
+<h2 id="Vuex"><a href="#Vuex" class="headerlink" title="Vuex"></a>Vuex</h2><p><a href="https://jsfiddle.net/n9jmu5v7/1269/" target="_blank" rel="noopener">最基本的 Vuex 记数应用</a></p>
 <h2 id="getter-与-setter"><a href="#getter-与-setter" class="headerlink" title="getter 与 setter"></a>getter 与 setter</h2><pre><code>computed: {
   fullName: {
     // getter
@@ -4417,10 +4730,10 @@ store.commit(&#39;increment&#39;, {
 </code></pre><h2 id="store"><a href="#store" class="headerlink" title="$store"></a>$store</h2><p>这个 <code>$</code> 在 Vue 里是代表全局的意思</p>
 <h2 id="多次-import-同一个文件"><a href="#多次-import-同一个文件" class="headerlink" title="多次 import 同一个文件"></a>多次 import 同一个文件</h2><p>Node对引入的模块都会进行缓存（缓存的是编译和执行后的对象），减少二次引入开销；<br>在Node的加载机制中，缓存的优先级是最高的；<br>这一点同时适用于不同的模块加载机制，无论ES2015的import还是CommonJS的require；</p>
 <h2 id="CSS-white-space-pre-line"><a href="#CSS-white-space-pre-line" class="headerlink" title="CSS white-space: pre-line"></a>CSS white-space: pre-line</h2><p>去除一行文本中的空格，但是保留一行的换行符，作用是防止用户在输入框输入空格而产生对用户不友好显示效果</p>
-<h2 id="Object-Path"><a href="#Object-Path" class="headerlink" title="Object-Path"></a>Object-Path</h2><p><a href="https://github.com/mariocasciaro/object-path" target="_blank" rel="external">object-path</a></p>
-<p><a href="https://satanwoo.github.io/2015/11/05/Object-Path-Source-Code/" target="_blank" rel="external">Object-Path 源码解读</a></p>
+<h2 id="Object-Path"><a href="#Object-Path" class="headerlink" title="Object-Path"></a>Object-Path</h2><p><a href="https://github.com/mariocasciaro/object-path" target="_blank" rel="noopener">object-path</a></p>
+<p><a href="https://satanwoo.github.io/2015/11/05/Object-Path-Source-Code/" target="_blank" rel="noopener">Object-Path 源码解读</a></p>
 <h2 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h2><p><code>Object.assign()</code> 方法用于将所有可枚举的属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="external">Object.assign()</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign()</a></p>
 <h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><pre><code>//旧版本
 components: {
   &#39;MyDialog&#39;: MyDialog
@@ -4445,7 +4758,7 @@ components: {
     <entry>
       <title><![CDATA[摸到 Vue.js 的门把手]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20Vue.js%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-Vue-js-的门把手"><a href="#摸到-Vue-js-的门把手" class="headerlink" title="摸到 Vue.js 的门把手"></a>摸到 Vue.js 的门把手</h1><p>文档那么多中文多和谐啊是不是？<a href="https://cn.vuejs.org/" target="_blank" rel="external">Vue.js</a></p>
+      <content type="html"><![CDATA[<h1 id="摸到-Vue-js-的门把手"><a href="#摸到-Vue-js-的门把手" class="headerlink" title="摸到 Vue.js 的门把手"></a>摸到 Vue.js 的门把手</h1><p>文档那么多中文多和谐啊是不是？<a href="https://cn.vuejs.org/" target="_blank" rel="noopener">Vue.js</a></p>
 <h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><p>先把 webpack 给配好。</p>
 <p>接下来我们输入 Vue.js 测试代码给我们的代码</p>
 <pre><code>//index.html
@@ -4540,11 +4853,11 @@ addTodo: function(){
   let oldData = JSON.parse(oldDataString)
   this.todoList = oldData || []
 },
-</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload" target="_blank" rel="external">onbeforeunload - MDN</a> 当窗口即将被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onunload" target="_blank" rel="external"><code>卸载</code></a>时,会触发该事件.此时页面文档依然可见,且该事件的默认动作可以被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Event/preventDefault" target="_blank" rel="external"><code>取消</code></a>.</p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="external">JSON - MDN</a> 简单深拷贝</p>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="external">localStorage - MDN</a> <code>localStorage</code> 属性允许你访问一个 local <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Storage" target="_blank" rel="external"><code>Storage</code></a> 对象。存储在 localStorage 里面的数据没有过期时间（expiration time）。</p>
-<h2 id="数据存储选-leancloud"><a href="#数据存储选-leancloud" class="headerlink" title="数据存储选 leancloud"></a>数据存储选 leancloud</h2><p><a href="https://leancloud.cn/docs/start.html" target="_blank" rel="external">JavaScript SDK 安装指南</a></p>
-<p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html#数据存储开发指南___JavaScript" target="_blank" rel="external">数据存储开发指南 · JavaScript</a></p>
+</code></pre><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onbeforeunload" target="_blank" rel="noopener">onbeforeunload - MDN</a> 当窗口即将被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/onunload" target="_blank" rel="noopener"><code>卸载</code></a>时,会触发该事件.此时页面文档依然可见,且该事件的默认动作可以被<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Event/preventDefault" target="_blank" rel="noopener"><code>取消</code></a>.</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON" target="_blank" rel="noopener">JSON - MDN</a> 简单深拷贝</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">localStorage - MDN</a> <code>localStorage</code> 属性允许你访问一个 local <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Storage" target="_blank" rel="noopener"><code>Storage</code></a> 对象。存储在 localStorage 里面的数据没有过期时间（expiration time）。</p>
+<h2 id="数据存储选-leancloud"><a href="#数据存储选-leancloud" class="headerlink" title="数据存储选 leancloud"></a>数据存储选 leancloud</h2><p><a href="https://leancloud.cn/docs/start.html" target="_blank" rel="noopener">JavaScript SDK 安装指南</a></p>
+<p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html#数据存储开发指南___JavaScript" target="_blank" rel="noopener">数据存储开发指南 · JavaScript</a></p>
 <p>之前有一个没有注意到的东西，就是利用这一段代码的时候打印出来的东西</p>
 <pre><code>    signUp: function () {
       let user = new AV.User();
@@ -4568,7 +4881,7 @@ addTodo: function(){
 </code></pre><h2 id="可注册-可登入-可登出-功能"><a href="#可注册-可登入-可登出-功能" class="headerlink" title="可注册 / 可登入 / 可登出 功能"></a>可注册 / 可登入 / 可登出 功能</h2><p>这个和我之前 React 没什么区别了</p>
 <p>就是看 leancloud 的文档抄抄</p>
 <p>注意 <code>v-if</code> 的使用技巧</p>
-<h2 id="保存数据功能"><a href="#保存数据功能" class="headerlink" title="保存数据功能"></a>保存数据功能</h2><p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html#保存对象" target="_blank" rel="external">保存数据</a></p>
+<h2 id="保存数据功能"><a href="#保存数据功能" class="headerlink" title="保存数据功能"></a>保存数据功能</h2><p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html#保存对象" target="_blank" rel="noopener">保存数据</a></p>
 <pre><code>  // 声明类型
   var TodoFolder = AV.Object.extend(&#39;TodoFolder&#39;);
   // 新建对象
@@ -4591,7 +4904,7 @@ addTodo: function(){
 <p>简单来说，那就是：beforeunload 事件里面的所有请求都发不出去，会被取消！<br>我还从来没有在哪一本书里看到过这个知识点。所以说「实践」是非常重要的。</p>
 </blockquote>
 <p>这样就应该把上面那一段代码封装成一个函数调用。</p>
-<h2 id="角色权限管理"><a href="#角色权限管理" class="headerlink" title="角色权限管理"></a>角色权限管理</h2><p><a href="https://leancloud.cn/docs/acl-guide.html#角色的创建" target="_blank" rel="external">角色的创建</a></p>
+<h2 id="角色权限管理"><a href="#角色权限管理" class="headerlink" title="角色权限管理"></a>角色权限管理</h2><p><a href="https://leancloud.cn/docs/acl-guide.html#角色的创建" target="_blank" rel="noopener">角色的创建</a></p>
 <pre><code>  // 创建一个针对 User 的查询
   var query = new AV.Query(AV.User);
   query.get(&#39;55f1572460b2ce30e8b7afde&#39;).then(function(otherUser) {
@@ -4636,9 +4949,9 @@ npm install
     <entry>
       <title><![CDATA[摸到 React 的门把手 (完)]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(%E5%AE%8C)/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-完"><a href="#摸到-React-的门把手-完" class="headerlink" title="摸到 React 的门把手 (完)"></a>摸到 React 的门把手 (完)</h1><p>写啊写啊终于把大概功能给写完了 <a href="https://frankietang.github.io/banana-todolist/build/index.html#" target="_blank" rel="external">效果</a> ，CSS 真难写啊… 我的同学说，审美这些东西要慢慢培养。</p>
+      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-完"><a href="#摸到-React-的门把手-完" class="headerlink" title="摸到 React 的门把手 (完)"></a>摸到 React 的门把手 (完)</h1><p>写啊写啊终于把大概功能给写完了 <a href="https://frankietang.github.io/banana-todolist/build/index.html#" target="_blank" rel="noopener">效果</a> ，CSS 真难写啊… 我的同学说，审美这些东西要慢慢培养。</p>
 <p>接下来我们来说说这个项目用到了什么知识点。</p>
-<h2 id="1-JSX-React-webpack-LeanCloud-等知识。"><a href="#1-JSX-React-webpack-LeanCloud-等知识。" class="headerlink" title="1. JSX / React / webpack / LeanCloud 等知识。"></a>1. JSX / React / webpack / LeanCloud 等知识。</h2><p>在我博客都有很详细的介绍，这里就不多说了。<a href="https://frankietang.github.io/" target="_blank" rel="external">我的博客</a></p>
+<h2 id="1-JSX-React-webpack-LeanCloud-等知识。"><a href="#1-JSX-React-webpack-LeanCloud-等知识。" class="headerlink" title="1. JSX / React / webpack / LeanCloud 等知识。"></a>1. JSX / React / webpack / LeanCloud 等知识。</h2><p>在我博客都有很详细的介绍，这里就不多说了。<a href="https://frankietang.github.io/" target="_blank" rel="noopener">我的博客</a></p>
 <h2 id="2-HTML"><a href="#2-HTML" class="headerlink" title="2. HTML"></a>2. HTML</h2><h3 id="2-1-form-表单"><a href="#2-1-form-表单" class="headerlink" title="2.1 form 表单"></a>2.1 form 表单</h3><p><code>&lt;input id=&quot;xxx&quot;&gt;</code> 和 <code>&lt;label for=&quot;xxx&quot;&gt;</code> 可以对应关联</p>
 <h3 id="2-2-HTML5-LocalStorage-本地存储"><a href="#2-2-HTML5-LocalStorage-本地存储" class="headerlink" title="2.2 HTML5 LocalStorage 本地存储"></a>2.2 HTML5 LocalStorage 本地存储</h3><p>在这个项目里 LocalStorage 的用法是这样的</p>
 <ul>
@@ -4653,11 +4966,11 @@ npm install
 export function load(key){
     return JSON.parse(window.localStorage.getItem(key))
 }
-</code></pre><h2 id="3-CSS"><a href="#3-CSS" class="headerlink" title="3. CSS"></a>3. CSS</h2><h3 id="3-1-flex-布局"><a href="#3-1-flex-布局" class="headerlink" title="3.1 flex 布局"></a>3.1 flex 布局</h3><p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="external">Flex 布局教程：实例篇</a></p>
-<h3 id="3-2-CSS-选择器"><a href="#3-2-CSS-选择器" class="headerlink" title="3.2 CSS 选择器"></a>3.2 CSS 选择器</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started/Selectors" target="_blank" rel="external">CSS 选择器 - MDN</a></p>
-<h2 id="4-JavaScript"><a href="#4-JavaScript" class="headerlink" title="4. JavaScript"></a>4. JavaScript</h2><h3 id="4-1-import…from…"><a href="#4-1-import…from…" class="headerlink" title="4.1 import…from…"></a>4.1 import…from…</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import" target="_blank" rel="external">import - MDN</a></p>
+</code></pre><h2 id="3-CSS"><a href="#3-CSS" class="headerlink" title="3. CSS"></a>3. CSS</h2><h3 id="3-1-flex-布局"><a href="#3-1-flex-布局" class="headerlink" title="3.1 flex 布局"></a>3.1 flex 布局</h3><p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="noopener">Flex 布局教程：实例篇</a></p>
+<h3 id="3-2-CSS-选择器"><a href="#3-2-CSS-选择器" class="headerlink" title="3.2 CSS 选择器"></a>3.2 CSS 选择器</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started/Selectors" target="_blank" rel="noopener">CSS 选择器 - MDN</a></p>
+<h2 id="4-JavaScript"><a href="#4-JavaScript" class="headerlink" title="4. JavaScript"></a>4. JavaScript</h2><h3 id="4-1-import…from…"><a href="#4-1-import…from…" class="headerlink" title="4.1 import…from…"></a>4.1 import…from…</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import" target="_blank" rel="noopener">import - MDN</a></p>
 <p><strong>import 语句 </strong>用于从一个已经导出的外部模块或另一个脚本中导入函数，对象或原始类型。</p>
-<h3 id="4-2-ES6-Class"><a href="#4-2-ES6-Class" class="headerlink" title="4.2 ES6 - Class"></a>4.2 ES6 - Class</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="external">Class - MDN</a> <a href="http://es6.ruanyifeng.com/#docs/class#Class-的-Generator-方法" target="_blank" rel="external">Class 的基本语法</a></p>
+<h3 id="4-2-ES6-Class"><a href="#4-2-ES6-Class" class="headerlink" title="4.2 ES6 - Class"></a>4.2 ES6 - Class</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">Class - MDN</a> <a href="http://es6.ruanyifeng.com/#docs/class#Class-的-Generator-方法" target="_blank" rel="noopener">Class 的基本语法</a></p>
 <p>而我的项目最多是用到 <code>constructor()</code> / <code>extends</code> / <code>super()</code> ，这里举一个例子</p>
 <pre><code>class TestSuper {
   constructor() {
@@ -4674,7 +4987,7 @@ let inst = new Test()
 console.log(inst.a)   //a
 console.log(inst)     //Test{a:&#39;a&#39;,b:&#39;b&#39;}
 </code></pre><p><code>constructor</code>方法是类的默认方法，通过<code>new</code>命令生成对象实例时，自动调用该方法。一个类必须有<code>constructor</code>方法，如果没有显式定义，一个空的<code>constructor</code>方法会被默认添加。</p>
-<p><code>extends</code> 关键词被用在<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="external">类声明</a>或者<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class" target="_blank" rel="external">类表达式</a>上，以创建一个类是另一个类的子类。</p>
+<p><code>extends</code> 关键词被用在<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener">类声明</a>或者<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class" target="_blank" rel="noopener">类表达式</a>上，以创建一个类是另一个类的子类。</p>
 <p><code>super</code> 关键字用于调用一个对象的父对象上的函数。</p>
 <h3 id="4-3-ES6-箭头函数"><a href="#4-3-ES6-箭头函数" class="headerlink" title="4.3 ES6 - 箭头函数"></a>4.3 ES6 - 箭头函数</h3><pre><code>var f = v =&gt; v;
 var f1 = v =&gt; {
@@ -4687,7 +5000,7 @@ var f = function f(v) {
 var f1 = function f1(v) {
     return v;
 };
-</code></pre><h3 id="4-4-拓展运算符"><a href="#4-4-拓展运算符" class="headerlink" title="4.4 拓展运算符"></a>4.4 拓展运算符</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator" target="_blank" rel="external">扩展语句 - MDN</a></p>
+</code></pre><h3 id="4-4-拓展运算符"><a href="#4-4-拓展运算符" class="headerlink" title="4.4 拓展运算符"></a>4.4 拓展运算符</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator" target="_blank" rel="noopener">扩展语句 - MDN</a></p>
 <pre><code>const pa = (...args) =&gt; {
     console.log(args);
     return args.reduce((pre,cur) =&gt; {
@@ -4697,7 +5010,7 @@ var f1 = function f1(v) {
 pa.apply(this, [1,2,45]);
 //[1,2,45]
 //48
-</code></pre><h3 id="4-5-逻辑运算符-用来定义默认参数"><a href="#4-5-逻辑运算符-用来定义默认参数" class="headerlink" title="4.5 逻辑运算符 || 用来定义默认参数"></a>4.5 逻辑运算符 || 用来定义默认参数</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators" target="_blank" rel="external">逻辑运算符</a></p>
+</code></pre><h3 id="4-5-逻辑运算符-用来定义默认参数"><a href="#4-5-逻辑运算符-用来定义默认参数" class="headerlink" title="4.5 逻辑运算符 || 用来定义默认参数"></a>4.5 逻辑运算符 || 用来定义默认参数</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators" target="_blank" rel="noopener">逻辑运算符</a></p>
 <pre><code>var link = function (height,color,url) {
   var height = height || 50
   var color = color || &#39;red&#39;
@@ -4709,7 +5022,7 @@ let obj3 = JSON.parse(JSON.stringify(obj1));
 obj1.a = 4;
 obj1.b.c = 4;
 console.log(JSON.stringify(obj3)); // {a: 0, b: {c: 0}}
-</code></pre><h3 id="4-7-条件（三元）运算符"><a href="#4-7-条件（三元）运算符" class="headerlink" title="4.7 条件（三元）运算符"></a>4.7 条件（三元）运算符</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator" target="_blank" rel="external">条件运算符</a></p>
+</code></pre><h3 id="4-7-条件（三元）运算符"><a href="#4-7-条件（三元）运算符" class="headerlink" title="4.7 条件（三元）运算符"></a>4.7 条件（三元）运算符</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator" target="_blank" rel="noopener">条件运算符</a></p>
 <pre><code>condition ? expr1 : expr2
 </code></pre><h3 id="4-8-apply-call-bind"><a href="#4-8-apply-call-bind" class="headerlink" title="4.8 apply() / call() / bind()"></a>4.8 apply() / call() / bind()</h3><pre><code>var xw = {
   name : &quot;小王&quot;,
@@ -4770,21 +5083,21 @@ xw.say.bind(xh)(&quot;实验小学&quot;,&quot;六年级&quot;);
     &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><h3 id="4-10-this"><a href="#4-10-this" class="headerlink" title="4.10 this"></a>4.10 this</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this" target="_blank" rel="external">this</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html" target="_blank" rel="external">Javascript的this用法</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/23804247?refer=study-fe" target="_blank" rel="external">this 的值到底是什么？一次说清楚</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/25991271" target="_blank" rel="external">你怎么还没搞懂this</a></p>
-<h3 id="4-11-JavaScript-的-new"><a href="#4-11-JavaScript-的-new" class="headerlink" title="4.11 JavaScript 的 new"></a>4.11 JavaScript 的 new</h3><p><a href="https://zhuanlan.zhihu.com/p/23987456?refer=study-fe" target="_blank" rel="external">JS 的 new 到底是干什么的？</a></p>
+</code></pre><h3 id="4-10-this"><a href="#4-10-this" class="headerlink" title="4.10 this"></a>4.10 this</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this" target="_blank" rel="noopener">this</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html" target="_blank" rel="noopener">Javascript的this用法</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23804247?refer=study-fe" target="_blank" rel="noopener">this 的值到底是什么？一次说清楚</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25991271" target="_blank" rel="noopener">你怎么还没搞懂this</a></p>
+<h3 id="4-11-JavaScript-的-new"><a href="#4-11-JavaScript-的-new" class="headerlink" title="4.11 JavaScript 的 new"></a>4.11 JavaScript 的 new</h3><p><a href="https://zhuanlan.zhihu.com/p/23987456?refer=study-fe" target="_blank" rel="noopener">JS 的 new 到底是干什么的？</a></p>
 <h2 id="5-最后的一点建议"><a href="#5-最后的一点建议" class="headerlink" title="5. 最后的一点建议"></a>5. 最后的一点建议</h2><p>还是好好的刷一遍《JavaScript 高级程序设计》和《ES6 标准入门》吧，要不然基础差的你很难上手 React 。</p>
-<h2 id="6-相关链接"><a href="#6-相关链接" class="headerlink" title="6. 相关链接"></a>6. 相关链接</h2><p><a href="https://frankietang.github.io/2017/08/17/%E6%91%B8%E5%88%B0%20ES6%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 ES6 的门把手</a></p>
-<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 webpack 的门把手</a></p>
-<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="external">摸到 webpack 的门把手 (2)</a></p>
-<p><a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a></p>
-<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="external">摸到 React 的门把手 (2)</a></p>
-<p><a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="external">摸到 React 的门把手 (3)</a></p>
-<p><a href="https://frankietang.github.io/2017/08/22/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%284%29/" target="_blank" rel="external">摸到 React 的门把手 (4)</a></p>
-<p><a href="https://frankietang.github.io/2017/08/24/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%285%29/" target="_blank" rel="external">摸到 React 的门把手 (5)</a></p>
-<p><a href="https://frankietang.github.io/2017/08/25/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%286%29/" target="_blank" rel="external">摸到 React 的门把手 (6)</a></p>
+<h2 id="6-相关链接"><a href="#6-相关链接" class="headerlink" title="6. 相关链接"></a>6. 相关链接</h2><p><a href="https://frankietang.github.io/2017/08/17/%E6%91%B8%E5%88%B0%20ES6%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 ES6 的门把手</a></p>
+<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 webpack 的门把手</a></p>
+<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="noopener">摸到 webpack 的门把手 (2)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 React 的门把手</a></p>
+<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="noopener">摸到 React 的门把手 (2)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="noopener">摸到 React 的门把手 (3)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/22/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%284%29/" target="_blank" rel="noopener">摸到 React 的门把手 (4)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/24/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%285%29/" target="_blank" rel="noopener">摸到 React 的门把手 (5)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/25/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%286%29/" target="_blank" rel="noopener">摸到 React 的门把手 (6)</a></p>
 <p>这个项目的 2.0 版将会无限期跳票…</p>
 ]]></content>
       
@@ -4810,7 +5123,7 @@ xw.say.bind(xh)(&quot;实验小学&quot;,&quot;六年级&quot;);
 <p>返回登录框</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-cb586c8af567044d.gif?imageMogr2/auto-orient/strip" alt=""></p>
 <h2 id="分成一个一个小模块"><a href="#分成一个一个小模块" class="headerlink" title="分成一个一个小模块"></a>分成一个一个小模块</h2><p>就是把每个功能分成一个一个的小模块，但是在这一步要注意，会有大量的<code>props</code>和<code>state</code>。只要不弄混，你就能体会到模块化的好处。</p>
-<p><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank" rel="external">React Developer Tools</a></p>
+<p><a href="https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi" target="_blank" rel="noopener">React Developer Tools</a></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-85d314006e43f8d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>我们用 props 在组件直接传递数据（从父组件到子组件），用 state 保存组件自身的数据，这就是 props 和 state 的区别。</p>
 <p>注意每个模块的<code>state</code> </p>
@@ -4835,7 +5148,7 @@ xw.say.bind(xh)(&quot;实验小学&quot;,&quot;六年级&quot;);
 }
 </code></pre><p>所以说<code>state</code>的分布策略是每个组件只保存与自己有关系的数据到state里。而<code>props</code>的用法就是，负责传递数据或函数到子组件中。</p>
 <p>如果一个组件没有<code>state</code>只有<code>props</code>，说明这个组件没有特殊逻辑，是一个纯（pure）的组件，而且还有一个特点是不能对（props）做任何修改。</p>
-<p><a href="https://facebook.github.io/react/docs/components-and-props.html#props-are-read-only" target="_blank" rel="external">Props are Read-Only</a></p>
+<p><a href="https://facebook.github.io/react/docs/components-and-props.html#props-are-read-only" target="_blank" rel="noopener">Props are Read-Only</a></p>
 <p>我们可以把组件只有 <code>props</code> 没有 <code>state</code> 写成一个函数。</p>
 <p>在封装的时候要注意<code>this</code>，因为之前还是一个组件，所以是可以利用<code>this</code>来接住父组件的数据的，而变成了一个函数之后，<code>this</code>传入就是这个函数的东西了。所以 <code>{this.props.xxx}</code>就变成了<code>{props.props.xxx}</code>。</p>
 <p>另外如果组件只有一个方法，也可以改写一个函数</p>
@@ -4852,7 +5165,7 @@ let temp = function(e){
 }
 onChange={temp}
 </code></pre><p>可以说这几行代码是很看基础的。</p>
-<p>为什么在那几个函数明明没有用到 React ，但是要用 import React 。这是因为这个函数里面有 JSX ，而引用了这句话后<code>import React from &#39;react</code>浏览器就能读懂。<a href="http://web.jobbole.com/91637/" target="_blank" rel="external">我想这将是最有价值的 react 入门与进阶教程</a></p>
+<p>为什么在那几个函数明明没有用到 React ，但是要用 import React 。这是因为这个函数里面有 JSX ，而引用了这句话后<code>import React from &#39;react</code>浏览器就能读懂。<a href="http://web.jobbole.com/91637/" target="_blank" rel="noopener">我想这将是最有价值的 react 入门与进阶教程</a></p>
 <p>重构到此为止</p>
 <h2 id="把-TodoItem-的数据上传到云端"><a href="#把-TodoItem-的数据上传到云端" class="headerlink" title="把 TodoItem 的数据上传到云端"></a>把 TodoItem 的数据上传到云端</h2><p>我们再回过去看看 LeanCloud 的文档</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-087167c7a4e954a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -4867,7 +5180,7 @@ onChange={temp}
 <li>用户删除 Todo，我们就删除一个</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-213d7d92c6c93bf2.gif?imageMogr2/auto-orient/strip" alt=""></p>
-<p>这里要用到文档里的代码 <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#批量操作" target="_blank" rel="external">批量操作</a> <a href="https://leancloud.cn/docs/acl-guide.html#单用户权限设置" target="_blank" rel="external">单用户权限设置</a> <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#删除对象" target="_blank" rel="external">删除对象</a> <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#更新对象" target="_blank" rel="external">更新对象</a></p>
+<p>这里要用到文档里的代码 <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#批量操作" target="_blank" rel="noopener">批量操作</a> <a href="https://leancloud.cn/docs/acl-guide.html#单用户权限设置" target="_blank" rel="noopener">单用户权限设置</a> <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#删除对象" target="_blank" rel="noopener">删除对象</a> <a href="https://leancloud.cn/docs/leanstorage_guide-js.html#更新对象" target="_blank" rel="noopener">更新对象</a></p>
 <p>注意在更新对象的函数</p>
 <pre><code>  update({id,title,status,deleted},successFn,errorFn){
     let todo = AV.Object.createWithoutData(&#39;Todo&#39;,id)
@@ -4892,8 +5205,8 @@ onChange={temp}
     })
   }
 </code></pre><p>啊真的累，React 真的难啊，几个小模块就那么多接口…</p>
-<p><a href="https://github.com/FRANKIETANG/banana-todolist/commits/master" target="_blank" rel="external">所有代码</a></p>
-<p><a href="https://frankietang.github.io/banana-todolist/build/index.html" target="_blank" rel="external">预览</a></p>
+<p><a href="https://github.com/FRANKIETANG/banana-todolist/commits/master" target="_blank" rel="noopener">所有代码</a></p>
+<p><a href="https://frankietang.github.io/banana-todolist/build/index.html" target="_blank" rel="noopener">预览</a></p>
 <p>我会另开几篇文章来详解这里免得知识点的，因为涉及的知识点有点多。</p>
 ]]></content>
       
@@ -4911,8 +5224,8 @@ onChange={temp}
     <entry>
       <title><![CDATA[摸到 React 的门把手 (5)]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(5)/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-5"><a href="#摸到-React-的门把手-5" class="headerlink" title="摸到 React 的门把手 (5)"></a>摸到 React 的门把手 (5)</h1><p>这次我们就来天我们上一次挖的深坑 <a href="https://frankietang.github.io/2017/08/22/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(4" target="_blank" rel="external">摸到 React 的门把手 (4)</a>/) ，慢慢填，不用急。干那么快干嘛，要好好享受过程。体验学到知识的快感。</p>
-<h2 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h2><p>看名字就感觉应该是一个保存本地数据的玩意对吧（我猜的）<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="external">loocalStorage</a></p>
+      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-5"><a href="#摸到-React-的门把手-5" class="headerlink" title="摸到 React 的门把手 (5)"></a>摸到 React 的门把手 (5)</h1><p>这次我们就来天我们上一次挖的深坑 <a href="https://frankietang.github.io/2017/08/22/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(4" target="_blank" rel="noopener">摸到 React 的门把手 (4)</a>/) ，慢慢填，不用急。干那么快干嘛，要好好享受过程。体验学到知识的快感。</p>
+<h2 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h2><p>看名字就感觉应该是一个保存本地数据的玩意对吧（我猜的）<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">loocalStorage</a></p>
 <p>我们用这个方法就可以保存数据而不会一刷新就会初始化了</p>
 <ul>
 <li>用户提交数据的时候，将所有的 todo 字符串的形式保存在 localStorage</li>
@@ -4943,8 +5256,8 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 <h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>其实我们不需要服务器，用 LeanCloud 就可以了。</p>
 <p>点击创建应用</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-f47971710bf3edd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html" target="_blank" rel="external">看文档</a></p>
-<p><a href="https://leancloud.cn/docs/sdk_setup-js.html" target="_blank" rel="external">JavaScript SDK 安装指南</a></p>
+<p><a href="https://leancloud.cn/docs/leanstorage_guide-js.html" target="_blank" rel="noopener">看文档</a></p>
+<p><a href="https://leancloud.cn/docs/sdk_setup-js.html" target="_blank" rel="noopener">JavaScript SDK 安装指南</a></p>
 <p>安装</p>
 <pre><code>$ sudo npm install leancloud-storage --save
 </code></pre><p>复制这一段代码到我们的App.js</p>
@@ -4967,7 +5280,7 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
         this.state.formData.username = e.target.value
         this.setState(this.state)
     }
-</code></pre><p>其实是不行的，原因看 <a href="https://stackoverflow.com/questions/37755997/why-cant-i-directly-modify-a-components-state-really" target="_blank" rel="external">Why can’t I directly modify a component’s state, really?</a> 里面 <a href="https://stackoverflow.com/users/4945468/pranesh-ravi" target="_blank" rel="external">Pranesh Ravi</a> 的答案。</p>
+</code></pre><p>其实是不行的，原因看 <a href="https://stackoverflow.com/questions/37755997/why-cant-i-directly-modify-a-components-state-really" target="_blank" rel="noopener">Why can’t I directly modify a component’s state, really?</a> 里面 <a href="https://stackoverflow.com/users/4945468/pranesh-ravi" target="_blank" rel="noopener">Pranesh Ravi</a> 的答案。</p>
 <blockquote>
 <p>Just a reminder: most basic methods for cloning in JS (<code>slice</code>, ES6 destructuring, etc.) are shallow. If you have a nested array or nested objects you’ll need to look at other methods of deep copying, e.g. <code>JSON.parse(JSON.stringify(obj))</code> (though this particular method won’t work if your object has circular references). </p>
 </blockquote>
@@ -4987,8 +5300,8 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-10f8da0986e07f6b.gif?imageMogr2/auto-orient/strip" alt=""></p>
 <p>代码：</p>
 <ul>
-<li><a href="https://github.com/FRANKIETANG/banana-todolist/commits/master" target="_blank" rel="external">LeanCloud</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commits/master" target="_blank" rel="external">localStore</a></li>
+<li><a href="https://github.com/FRANKIETANG/banana-todolist/commits/master" target="_blank" rel="noopener">LeanCloud</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commits/master" target="_blank" rel="noopener">localStore</a></li>
 </ul>
 ]]></content>
       
@@ -5006,7 +5319,7 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
     <entry>
       <title><![CDATA[摸到 React 的门把手 (4)]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(4)/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-4"><a href="#摸到-React-的门把手-4" class="headerlink" title="摸到 React 的门把手 (4)"></a>摸到 React 的门把手 (4)</h1><p>经过一段时间的踩坑 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="external">摸到 React 的门把手 (2)</a> <a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="external">摸到 React 的门把手 (3)</a> ，是不是可以做一个项目了？</p>
+      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-4"><a href="#摸到-React-的门把手-4" class="headerlink" title="摸到 React 的门把手 (4)"></a>摸到 React 的门把手 (4)</h1><p>经过一段时间的踩坑 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="noopener">摸到 React 的门把手 (2)</a> <a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="noopener">摸到 React 的门把手 (3)</a> ，是不是可以做一个项目了？</p>
 <h2 id="Todo-List"><a href="#Todo-List" class="headerlink" title="Todo List"></a>Todo List</h2><p>不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-46b343dbe1c59d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h2 id="有什么功能"><a href="#有什么功能" class="headerlink" title="有什么功能"></a>有什么功能</h2><ul>
@@ -5050,7 +5363,7 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 </ul>
 <p>那我们用一下 <code>defaultValue</code> ，ok 了</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-0a3d90f9199c3e88.gif?imageMogr2/auto-orient/strip" alt=""></p>
-<p>监听用户的回车事件 我们可以用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onkeypress" target="_blank" rel="external">GlobalEventHandlers.onkeypress</a> 这个属性</p>
+<p>监听用户的回车事件 我们可以用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onkeypress" target="_blank" rel="noopener">GlobalEventHandlers.onkeypress</a> 这个属性</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-383c1bddda0d2c8c.gif?imageMogr2/auto-orient/strip" alt=""></p>
 <p>我们用 props 的话我们要注意绑定按回车那个 this ，就是我系列文章上一篇的 bind(this) </p>
 <p>这样，我们就能够往里面加东西了</p>
@@ -5070,23 +5383,23 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 <p>基本功能已经做出来了</p>
 <p>##代码</p>
 <ul>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/2431a2a81415c3fd674f14a894a2bd3f7777f805" target="_blank" rel="external">基本骨架完成</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/37a39392ac65e03d4a4551ca6f2aa33400fcd5ec" target="_blank" rel="external">将输入框变成 TodoInput 组件</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/db78ca8d08545394b5ecd93e344fc955508ce393" target="_blank" rel="external">将每个待办封装成 TodoItem 组件</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/ad05ce18fe7083a2e76573c3032b28cc6c715103" target="_blank" rel="external">添加 normalize.css</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9b62a921aa2adbfec99c17c04cc4438e7ae17b69" target="_blank" rel="external">添加 reset.css</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/556f760571f1b60c7b7c25f46e6698bacb168d67" target="_blank" rel="external">fix value</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/5eeef99c4ae2678e60c28a691b0b5d935c1b2591" target="_blank" rel="external">监听回车事件</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/c8727d8482b81f84e1441166f3be016b8affea9a" target="_blank" rel="external">App 传一个函数给 TodoInput</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b9de4886314df06317d176b00b769196fcbd642d" target="_blank" rel="external">bind(this)</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b765bebe0097d7283d34209f84404e9433e667c4" target="_blank" rel="external">可以添加 todo 了</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/20701a8e764cfe158b3b387c6686fada36f54c52" target="_blank" rel="external">fix value again</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/730db326d22892d3ef4e32e6e705c061d24a1142" target="_blank" rel="external">fix value again and again</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/a78fea70fd172c1aa35b77d85e1f9720f738ea1c" target="_blank" rel="external">标记为已完成或者未完成</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9bc07f8a2c564c95bacc7e8ba1728e4b69b20784" target="_blank" rel="external">删除 todo</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/f0ea5a391f90588fd093eb859c273bbd96a05930" target="_blank" rel="external">真正删除 todo</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/85b7255e4daa64699badfa2b35f8eab4268516f5" target="_blank" rel="external">TodoItem 样式</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/d1df4c1ecadaf9aa5af0a55e30d295e2b8b943c5" target="_blank" rel="external">TodoInput 样式</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/2431a2a81415c3fd674f14a894a2bd3f7777f805" target="_blank" rel="noopener">基本骨架完成</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/37a39392ac65e03d4a4551ca6f2aa33400fcd5ec" target="_blank" rel="noopener">将输入框变成 TodoInput 组件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/db78ca8d08545394b5ecd93e344fc955508ce393" target="_blank" rel="noopener">将每个待办封装成 TodoItem 组件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/ad05ce18fe7083a2e76573c3032b28cc6c715103" target="_blank" rel="noopener">添加 normalize.css</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9b62a921aa2adbfec99c17c04cc4438e7ae17b69" target="_blank" rel="noopener">添加 reset.css</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/556f760571f1b60c7b7c25f46e6698bacb168d67" target="_blank" rel="noopener">fix value</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/5eeef99c4ae2678e60c28a691b0b5d935c1b2591" target="_blank" rel="noopener">监听回车事件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/c8727d8482b81f84e1441166f3be016b8affea9a" target="_blank" rel="noopener">App 传一个函数给 TodoInput</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b9de4886314df06317d176b00b769196fcbd642d" target="_blank" rel="noopener">bind(this)</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b765bebe0097d7283d34209f84404e9433e667c4" target="_blank" rel="noopener">可以添加 todo 了</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/20701a8e764cfe158b3b387c6686fada36f54c52" target="_blank" rel="noopener">fix value again</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/730db326d22892d3ef4e32e6e705c061d24a1142" target="_blank" rel="noopener">fix value again and again</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/a78fea70fd172c1aa35b77d85e1f9720f738ea1c" target="_blank" rel="noopener">标记为已完成或者未完成</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9bc07f8a2c564c95bacc7e8ba1728e4b69b20784" target="_blank" rel="noopener">删除 todo</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/f0ea5a391f90588fd093eb859c273bbd96a05930" target="_blank" rel="noopener">真正删除 todo</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/85b7255e4daa64699badfa2b35f8eab4268516f5" target="_blank" rel="noopener">TodoItem 样式</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/d1df4c1ecadaf9aa5af0a55e30d295e2b8b943c5" target="_blank" rel="noopener">TodoInput 样式</a></li>
 </ul>
 ]]></content>
       
@@ -5104,10 +5417,10 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
     <entry>
       <title><![CDATA[摸到 React 的门把手 (3)]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(3)/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-3"><a href="#摸到-React-的门把手-3" class="headerlink" title="摸到 React 的门把手 (3)"></a>摸到 React 的门把手 (3)</h1><p>经过了上几篇文章 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(2" target="_blank" rel="external">摸到 React 的门把手 (2)</a>/) 的踩坑，我们估计很快就可以摸到门把手了。</p>
-<h2 id="关于-JSX"><a href="#关于-JSX" class="headerlink" title="关于 JSX"></a>关于 JSX</h2><p>实际上 JSX 并不是 JavaScript 和 HTML 的结合，而是和 XML 的结合，就像这样。<a href="https://babeljs.io/repl/" target="_blank" rel="external">https://babeljs.io/repl/</a></p>
+      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-3"><a href="#摸到-React-的门把手-3" class="headerlink" title="摸到 React 的门把手 (3)"></a>摸到 React 的门把手 (3)</h1><p>经过了上几篇文章 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(2" target="_blank" rel="noopener">摸到 React 的门把手 (2)</a>/) 的踩坑，我们估计很快就可以摸到门把手了。</p>
+<h2 id="关于-JSX"><a href="#关于-JSX" class="headerlink" title="关于 JSX"></a>关于 JSX</h2><p>实际上 JSX 并不是 JavaScript 和 HTML 的结合，而是和 XML 的结合，就像这样。<a href="https://babeljs.io/repl/" target="_blank" rel="noopener">https://babeljs.io/repl/</a></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-264608323011334e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="external">Introducing - JSX</a></p>
+<p><a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="noopener">Introducing - JSX</a></p>
 <h2 id="关于-React-的虚拟-DOM"><a href="#关于-React-的虚拟-DOM" class="headerlink" title="关于 React 的虚拟 DOM"></a>关于 React 的虚拟 DOM</h2><blockquote>
 <p>你用这些 XML 写出来的标签，都不会出现在页面里，只会出现在内存里。React 会使用虚拟 DOM 计算出真正的页面结构，然后再更新到页面中（真正的 DOM 操作）。</p>
 <p>让 JS 操作内存肯定比操作 DOM 要快很多。</p>
@@ -5138,7 +5451,7 @@ localStore.save(&#39;todoList&#39;,this.state.todoList)
 }
 
 setInterval(tick, 1000);
-</code></pre><p>这个示例通过 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval" target="_blank" rel="external"><code>setInterval()</code></a> 方法，每秒钟调用一次 <code>ReactDOM.render()</code>.</p>
+</code></pre><p>这个示例通过 <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setInterval" target="_blank" rel="noopener"><code>setInterval()</code></a> 方法，每秒钟调用一次 <code>ReactDOM.render()</code>.</p>
 <h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><pre><code>class Welcome extends React.Component {
     render() {
         return &lt;h1&gt;Component&lt;/h1&gt;
@@ -5165,7 +5478,7 @@ export default Welcome
 <p><code>export</code> 和 <code>export default</code> 作用是导出常量/函数/文件/模块 这些</p>
 <p><code>export</code> 和 <code>import</code> 可以有多个，<code>export default</code> 只能有一个</p>
 <p><code>export</code> 导出导入的时候要加 {}，<code>export default</code> 则不需要</p>
-<p><a href="http://www.jianshu.com/p/edaf43e9384f" target="_blank" rel="external">ES6：export default 和 export 区别</a></p>
+<p><a href="http://www.jianshu.com/p/edaf43e9384f" target="_blank" rel="noopener">ES6：export default 和 export 区别</a></p>
 <pre><code>//src/index.js
 import Welcome from &#39;./Welcome&#39;
 
@@ -5220,10 +5533,10 @@ setInterval(function(){
 </code></pre><blockquote>
 <p>The callback is made in a different context. You need to <code>bind</code> to <code>this</code> in order to have access inside the callback</p>
 </blockquote>
-<p><a href="https://stackoverflow.com/questions/31045716/react-this-setstate-is-not-a-function" target="_blank" rel="external">React this.setState is not a function</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/25954470" target="_blank" rel="external">setState：这个API设计到底怎么样</a></p>
+<p><a href="https://stackoverflow.com/questions/31045716/react-this-setstate-is-not-a-function" target="_blank" rel="noopener">React this.setState is not a function</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25954470" target="_blank" rel="noopener">setState：这个API设计到底怎么样</a></p>
 <p>我讨厌 setState 这个 API</p>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><a href="https://facebook.github.io/react/docs/react-component.html#the-component-lifecycle" target="_blank" rel="external">The Component Lifecycle</a></p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p><a href="https://facebook.github.io/react/docs/react-component.html#the-component-lifecycle" target="_blank" rel="noopener">The Component Lifecycle</a></p>
 <p>React 的生命周期包括三个阶段：mount（挂载）、update（更新）和 unmount（移除）</p>
 <h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><blockquote>
 <p>mount 就是第一次让组件出现在页面中的过程。这个过程的关键就是 render 方法。React 会将 render 的返回值（一般是虚拟 DOM，也可以是 DOM 或者 null）插入到页面中。</p>
@@ -5235,7 +5548,7 @@ setInterval(function(){
 <li><code>componentDidMount()</code> 插进去后该做点什么吗？</li>
 </ul>
 </blockquote>
-<p>commit: <a href="https://github.com/FRANKIETANG/react-demo/commit/cad040489620cf5b4f7e02a571cb2e3c06803932" target="_blank" rel="external">钩子</a></p>
+<p>commit: <a href="https://github.com/FRANKIETANG/react-demo/commit/cad040489620cf5b4f7e02a571cb2e3c06803932" target="_blank" rel="noopener">钩子</a></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-c31f16851c918ba5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><blockquote>
 <p>mount 之后，如果数据有任何变动，就会来到 update 过程，这个过程有 5 个钩子：</p>
@@ -5253,7 +5566,7 @@ setInterval(function(){
 <li>componentWillUnmount() - 我要死啦！</li>
 </ul>
 </blockquote>
-<h2 id="setState-应该放在哪？"><a href="#setState-应该放在哪？" class="headerlink" title="setState 应该放在哪？"></a>setState 应该放在哪？</h2><p>commit: <a href="https://github.com/FRANKIETANG/react-demo/commit/3b2061343d754f2975356ef4502d445e943eef5a" target="_blank" rel="external">哪些钩子里面可以加 setState</a></p>
+<h2 id="setState-应该放在哪？"><a href="#setState-应该放在哪？" class="headerlink" title="setState 应该放在哪？"></a>setState 应该放在哪？</h2><p>commit: <a href="https://github.com/FRANKIETANG/react-demo/commit/3b2061343d754f2975356ef4502d445e943eef5a" target="_blank" rel="noopener">哪些钩子里面可以加 setState</a></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-6dc701032129deb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>这里面有三个错误</p>
 <p>第一个错误说明不能在 constructor 里面 setState</p>
@@ -5269,7 +5582,7 @@ setInterval(function(){
 <li><code>componentWillReceiveProps</code></li>
 <li><code>componentDidUpdate</code></li>
 </ul>
-<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a><a href="https://github.com/FRANKIETANG/react-demo" target="_blank" rel="external">看看成果</a></h2>]]></content>
+<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a><a href="https://github.com/FRANKIETANG/react-demo" target="_blank" rel="noopener">看看成果</a></h2>]]></content>
       
         
         <tags>
@@ -5285,7 +5598,7 @@ setInterval(function(){
     <entry>
       <title><![CDATA[摸到 React 的门把手 (2)]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(2)/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-2"><a href="#摸到-React-的门把手-2" class="headerlink" title="摸到 React 的门把手 (2)"></a>摸到 React 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a> 的踩坑，我们现在可以更加深入的看看 React 其中的奥妙了。</p>
+      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手-2"><a href="#摸到-React-的门把手-2" class="headerlink" title="摸到 React 的门把手 (2)"></a>摸到 React 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 React 的门把手</a> 的踩坑，我们现在可以更加深入的看看 React 其中的奥妙了。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>点击 Get Started 第一个就是 ReactDOM 的 Hello World，我们先别看这些，先看看怎么安装，点击 Installation</p>
 <p>那我们就试试 Create a New App </p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-5c60dc8c2e8b2bfe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -5330,7 +5643,7 @@ npm run build
 <p>好，我们设置好路径</p>
 <pre><code>&quot;homepage&quot;: &quot;https://frankietang.github.io/react-demo/build&quot;
 </code></pre><p>搞定。</p>
-<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a><a href="https://github.com/FRANKIETANG/react-demo" target="_blank" rel="external">看看成果</a></h2>]]></content>
+<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a><a href="https://github.com/FRANKIETANG/react-demo" target="_blank" rel="noopener">看看成果</a></h2>]]></content>
       
         
         <tags>
@@ -5346,7 +5659,7 @@ npm run build
     <entry>
       <title><![CDATA[摸到 React 的门把手]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手"><a href="#摸到-React-的门把手" class="headerlink" title="摸到 React 的门把手"></a>摸到 React 的门把手</h1><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="external">React 入门实例教程 - 阮一峰</a></p>
+      <content type="html"><![CDATA[<h1 id="摸到-React-的门把手"><a href="#摸到-React-的门把手" class="headerlink" title="摸到 React 的门把手"></a>摸到 React 的门把手</h1><p><a href="http://www.ruanyifeng.com/blog/2015/03/react.html" target="_blank" rel="noopener">React 入门实例教程 - 阮一峰</a></p>
 <p>阮一峰真的很适合当老师，这里我们就慢慢的跟上阮一峰老师步伐，摸上 React 的门把手。</p>
 <h2 id="起步"><a href="#起步" class="headerlink" title="起步"></a>起步</h2><pre><code>npm init
 npm install --save react react-dom
@@ -5370,7 +5683,7 @@ npm install --save react react-dom
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre><ol>
-<li><p>并非一定要引用 browser.js ，引入它的作用是使浏览器支持<code>babel</code>，你可以使用<code>ES2015</code>（具体可以看<a href="http://es6.ruanyifeng.com/" target="_blank" rel="external">阮一峰的ECMAScript 6 入门</a>）进行编码。如果你用ES5，可以不引入。而在这里的作用是将 JSX 语法转为 JavaScript 语法。</p>
+<li><p>并非一定要引用 browser.js ，引入它的作用是使浏览器支持<code>babel</code>，你可以使用<code>ES2015</code>（具体可以看<a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">阮一峰的ECMAScript 6 入门</a>）进行编码。如果你用ES5，可以不引入。而在这里的作用是将 JSX 语法转为 JavaScript 语法。</p>
 <pre><code>// The ES5 way
 var Photo = React.createClass({
   handleDoubleTap: function(e) { … },
@@ -5523,7 +5836,7 @@ class Photo extends React.Component {
 </code></pre><ol>
 <li>这一个例子主要是讲解了 <code>this.props.children</code> 属性。它表示组件的所有子节点。</li>
 <li><code>this.props.children</code> 的值有三种可能：如果当前组件没有子节点，它就是 <code>undefined</code> ;如果有一个子节点，数据类型是 <code>object</code> ；如果有多个子节点，数据类型就是 <code>array</code> 。所以，处理 <code>this.props.children</code> 的时候要小心。</li>
-<li>React 提供一个工具方法 <a href="https://facebook.github.io/react/docs/top-level-api.html#react.children" target="_blank" rel="external"><code>React.Children</code></a> 来处理 <code>this.props.children</code> 。我们可以用 <code>React.Children.map</code> 来遍历子节点，而不用担心 <code>this.props.children</code> 的数据类型是 <code>undefined</code> 还是 <code>object</code>。</li>
+<li>React 提供一个工具方法 <a href="https://facebook.github.io/react/docs/top-level-api.html#react.children" target="_blank" rel="noopener"><code>React.Children</code></a> 来处理 <code>this.props.children</code> 。我们可以用 <code>React.Children.map</code> 来遍历子节点，而不用担心 <code>this.props.children</code> 的数据类型是 <code>undefined</code> 还是 <code>object</code>。</li>
 </ol>
 <h2 id="第六的demo"><a href="#第六的demo" class="headerlink" title="第六的demo"></a>第六的demo</h2><pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -5615,7 +5928,7 @@ ReactDOM.render(
 &lt;/html&gt;
 //这样就能通过点击 button 来获取 input 的 focus
 </code></pre><ol>
-<li><p>组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 <a href="http://calendar.perfplanet.com/2013/diff/" target="_blank" rel="external">DOM diff</a> ，它可以极大提高网页的性能表现。</p>
+<li><p>组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 <a href="http://calendar.perfplanet.com/2013/diff/" target="_blank" rel="noopener">DOM diff</a> ，它可以极大提高网页的性能表现。</p>
 <p>但是，有时需要从组件获取真实 DOM 的节点，这时就要用到 <code>ref</code> 属性。</p>
 </li>
 <li><p>上面代码中，组件 <code>MyComponent</code> 的子节点有一个文本输入框，用于获取用户的输入。这时就必须获取真实的 DOM 节点，虚拟 DOM 是拿不到用户输入的。为了做到这一点，文本输入框必须有一个 <code>ref</code> 属性，然后 <code>this.refs.[refName]</code> 就会返回这个真实的 DOM 节点。</p>
@@ -5697,7 +6010,7 @@ ReactDOM.render(
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre><ol>
-<li>第一次看这个，呦吼？这难道是传说中的双向绑定？<a href="http://www.cnblogs.com/kuailingmin/p/4609721.html" target="_blank" rel="external">React的双向绑定</a></li>
+<li>第一次看这个，呦吼？这难道是传说中的双向绑定？<a href="http://www.cnblogs.com/kuailingmin/p/4609721.html" target="_blank" rel="noopener">React的双向绑定</a></li>
 <li>上面代码中，文本输入框的值，不能用 <code>this.props.value</code> 读取，而要定义一个 <code>onChange</code> 事件的回调函数，通过 <code>event.target.value</code> 读取用户输入的值。</li>
 </ol>
 <h2 id="第十个demo"><a href="#第十个demo" class="headerlink" title="第十个demo"></a>第十个demo</h2><pre><code>&lt;!DOCTYPE html&gt;
@@ -5891,11 +6204,11 @@ ReactDOM.render(
 </li>
 <li><p>这是一个 React 的服务器渲染</p>
 </li>
-<li><p>根据 readme.md 的提示，我们搞好依赖，<code>node server.js</code> 来监听 <a href="http://localhost:3000" target="_blank" rel="external">http://localhost:3000</a> <img src="http://upload-images.jianshu.io/upload_images/3191557-888bf6bd6f540557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<li><p>根据 readme.md 的提示，我们搞好依赖，<code>node server.js</code> 来监听 <a href="http://localhost:3000" target="_blank" rel="noopener">http://localhost:3000</a> <img src="http://upload-images.jianshu.io/upload_images/3191557-888bf6bd6f540557.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
 <li><p>这看着是非常像手写服务器的方法，如果有 JavaScript权威指南 这本书，我建议你看看 P302 如何手写服务器。<img src="http://upload-images.jianshu.io/upload_images/3191557-bc51896f11363644.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </li>
-<li><p>这里推荐一篇文章 <a href="http://www.alloyteam.com/2017/01/react-from-scratch-server-render/" target="_blank" rel="external">从零开始 React 服务器渲染</a></p>
+<li><p>这里推荐一篇文章 <a href="http://www.alloyteam.com/2017/01/react-from-scratch-server-render/" target="_blank" rel="noopener">从零开始 React 服务器渲染</a></p>
 </li>
 </ul>
 ]]></content>
@@ -5914,7 +6227,7 @@ ReactDOM.render(
     <entry>
       <title><![CDATA[摸到 TypeScript 的门把手]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20TypeScript%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-TypeScript-的门把手"><a href="#摸到-TypeScript-的门把手" class="headerlink" title="摸到 TypeScript 的门把手"></a>摸到 TypeScript 的门把手</h1><p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="external">TypeScript</a></p>
+      <content type="html"><![CDATA[<h1 id="摸到-TypeScript-的门把手"><a href="#摸到-TypeScript-的门把手" class="headerlink" title="摸到 TypeScript 的门把手"></a>摸到 TypeScript 的门把手</h1><p><a href="https://github.com/Microsoft/TypeScript" target="_blank" rel="noopener">TypeScript</a></p>
 <h2 id="Basic-Types（原始数据类型）"><a href="#Basic-Types（原始数据类型）" class="headerlink" title="Basic Types（原始数据类型）"></a>Basic Types（原始数据类型）</h2><pre><code>let a: boolean = false;
 a = &#39;hello&#39;
 //这样是错的
@@ -6140,13 +6453,13 @@ const kalun: SillyBoy&lt;string&gt; = {
     <entry>
       <title><![CDATA[摸到 webpack 的门把手 (2)]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20(2)/</url>
-      <content type="html"><![CDATA[<h1 id="摸到-webpack-的门把手-2"><a href="#摸到-webpack-的门把手-2" class="headerlink" title="摸到 webpack 的门把手 (2)"></a>摸到 webpack 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 webpack 的门把手</a> 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。</p>
+      <content type="html"><![CDATA[<h1 id="摸到-webpack-的门把手-2"><a href="#摸到-webpack-的门把手-2" class="headerlink" title="摸到 webpack 的门把手 (2)"></a>摸到 webpack 的门把手 (2)</h1><p>经过了上一篇 <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 webpack 的门把手</a> 的踩坑，我们大概知道了 webpack 是用 loader 加载不同的资源，把大东西压成小东西。大不一定能满足，小也有小的优点嘛。对吧，有的时候大家就喜欢小。</p>
 <h2 id="webpack-到底干了什么"><a href="#webpack-到底干了什么" class="headerlink" title="webpack 到底干了什么"></a>webpack 到底干了什么</h2><p>bundle.js 把每一个每一个模块都 call 一下，然后把模块存到 installedModules 里，方便其他模块使用。有空填坑分析代码。</p>
 <h2 id="压缩代码的一些问题"><a href="#压缩代码的一些问题" class="headerlink" title="压缩代码的一些问题"></a>压缩代码的一些问题</h2><p>我们会发现 jQuery 的代码并没有压缩，其实我们可以使用 <code>webpack -p</code>，webpack 给出的解释是<br><code>shortcut for --optimize-minimize --define process.env.NODE_ENV=&quot;production&quot;</code></p>
 <p>运行 <code>-p</code> ，实际执行</p>
 <ul>
 <li>使用UglifyJsPlugin进行 JS文件压缩,webpack 自带的压缩插件</li>
-<li>运行<a href="https://webpack.js.org/plugins/loader-options-plugin/#components/sidebar/sidebar.jsx" target="_blank" rel="external">LoaderOptionsPlugin</a></li>
+<li>运行<a href="https://webpack.js.org/plugins/loader-options-plugin/#components/sidebar/sidebar.jsx" target="_blank" rel="noopener">LoaderOptionsPlugin</a></li>
 <li>设置Node环境变量</li>
 </ul>
 <pre><code>//运行 webpack -p 会通过如下方式调用 DefinePlugin
@@ -6160,7 +6473,7 @@ module.exports={
   ]
 }
 </code></pre><p><code>DefinePlugin</code> 在原始的源码中执行查找和替换操作. 在导入的代码中,任何出现 <code>process.env.NODE_ENV</code>的地方都会被替换为<code>”production”</code>. 因此, 形如<code>if (process.env.NODE_ENV !== ‘production’) console.log(‘…’)</code> 的代码就会等价于 <code>if (false) console.log(‘…’)</code> 并且最终通过<code>UglifyJS</code>等价替换掉.</p>
-<p><a href="https://webpack.js.org/guides/public-path/" target="_blank" rel="external">webpack - public-path</a></p>
+<p><a href="https://webpack.js.org/guides/public-path/" target="_blank" rel="noopener">webpack - public-path</a></p>
 <h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>每次写完代码都要 npm run webpack ，很麻烦，那我们需要 <code>webpack --progress --watch</code> 监听文件变动，只要我们保存了文件就会自动编译代码。</p>
 <p>在 npm script 加一句 <code>&quot;watch&quot;: &quot;webpack --progress --watch&quot;</code>，然后 npm run watch 试试</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-f654ac96a8135f12.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
@@ -6177,12 +6490,12 @@ module.exports={
 <p>如果我们改一下 src/bundle.js 就会发现</p>
 <ul>
 <li>bundle.js 自动打包</li>
-<li><a href="http://localhost:8080/" target="_blank" rel="external">http://localhost:8080/</a> 自动刷新</li>
+<li><a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> 自动刷新</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-c12e95d7cc12d8af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>注意，我们就不能再直接打开 index.html 了，因为它引用的是 /bundle.js，用 file:// 协议打开 index.html 的话，会请求 file:///bundle.js，显然这个文件不存在。</p>
-<p><a href="https://webpack.js.org/guides/development/" target="_blank" rel="external">webpack - development</a></p>
-<h2 id="查看成果"><a href="#查看成果" class="headerlink" title="查看成果"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="external">查看成果</a></h2>]]></content>
+<p><a href="https://webpack.js.org/guides/development/" target="_blank" rel="noopener">webpack - development</a></p>
+<h2 id="查看成果"><a href="#查看成果" class="headerlink" title="查看成果"></a><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="noopener">查看成果</a></h2>]]></content>
       
         
         <tags>
@@ -6199,7 +6512,7 @@ module.exports={
       <title><![CDATA[摸到 webpack 的门把手]]></title>
       <url>/2017/10/14/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/</url>
       <content type="html"><![CDATA[<h1 id="摸到-webpack-的门把手"><a href="#摸到-webpack-的门把手" class="headerlink" title="摸到 webpack 的门把手"></a>摸到 webpack 的门把手</h1><p>之前接触过一阵子 webpack ，想了一下还是写篇博客吧。要不然又忘掉怎么配置了。</p>
-<h2 id="怎么安装？"><a href="#怎么安装？" class="headerlink" title="怎么安装？"></a>怎么安装？</h2><p><a href="https://webpack.js.org/" target="_blank" rel="external">来，我们先看 webpack 的官网</a></p>
+<h2 id="怎么安装？"><a href="#怎么安装？" class="headerlink" title="怎么安装？"></a>怎么安装？</h2><p><a href="https://webpack.js.org/" target="_blank" rel="noopener">来，我们先看 webpack 的官网</a></p>
 <p>点击到 guides ，我们直接抄，抄完我们就知道 webpack 的流程了</p>
 <p>不过有几点我们是要注意的</p>
 <ul>
@@ -6214,7 +6527,7 @@ module.exports={
 <li>webpack 也被安装在 node_modules里，<code>./node_modules/.bin/webpack</code> 就是一个可执行文件</li>
 <li>webpack、lodash 的版本号都被写在 package.json 里了</li>
 </ul>
-<p><a href="http://www.ruanyifeng.com/blog/2012/08/how_to_read_diff.html" target="_blank" rel="external">读懂diff - 阮一峰</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2012/08/how_to_read_diff.html" target="_blank" rel="noopener">读懂diff - 阮一峰</a></p>
 <h2 id="引用-jQuery"><a href="#引用-jQuery" class="headerlink" title="引用 jQuery"></a>引用 jQuery</h2><ul>
 <li><p><code>npm i -S jquery</code></p>
 <pre><code> import _ from &#39;lodash&#39;
@@ -6277,7 +6590,7 @@ module.exports = {
 </li>
 </ul>
 <h2 id="利用-webpack-压缩-JS-文件"><a href="#利用-webpack-压缩-JS-文件" class="headerlink" title="利用 webpack 压缩 JS 文件"></a>利用 webpack 压缩 JS 文件</h2><ul>
-<li><p><a href="https://webpack.js.org/guides/production/" target="_blank" rel="external">webpack 自带的</a> 支持所有 <a href="https://github.com/mishoo/UglifyJS2#usage" target="_blank" rel="external">UglifyJS 选项</a></p>
+<li><p><a href="https://webpack.js.org/guides/production/" target="_blank" rel="noopener">webpack 自带的</a> 支持所有 <a href="https://github.com/mishoo/UglifyJS2#usage" target="_blank" rel="noopener">UglifyJS 选项</a></p>
 </li>
 <li><p>在 <code>webpack.config.js</code> 加上这样一句话，UglifyJS 的选项可以一个都不加</p>
 <pre><code>var webpack = require(&#39;webpack&#39;);
@@ -6294,7 +6607,7 @@ module.exports = {
 <li><p>压完了</p>
 </li>
 </ul>
-<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a>看看成果</h2><p><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="external">点击这里</a></p>
+<h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a>看看成果</h2><p><a href="https://github.com/FRANKIETANG/webpack-demo" target="_blank" rel="noopener">点击这里</a></p>
 ]]></content>
       
         
@@ -6341,7 +6654,7 @@ function f1(callback){
 
 f1(f2)
 </code></pre><h3 id="Promises对象"><a href="#Promises对象" class="headerlink" title="Promises对象"></a>Promises对象</h3><blockquote>
-<p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">统一接口</a>。</p>
+<p>Promises对象是CommonJS工作组提出的一种规范，目的是为异步编程提供<a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="noopener">统一接口</a>。</p>
 <p>简单说，它的思想是，每一个异步任务返回一个Promise对象，该对象有一个then方法，允许指定回调函数。</p>
 </blockquote>
 <p>注意这个 <code>then</code> </p>
@@ -6721,7 +7034,7 @@ let p1 = p.then(val=&gt;{
 });
 
 //只要 return 的话这个 return 的值就是 p1 的当前的状态
-</code></pre><p><a href="https://www.zhihu.com/question/36972010" target="_blank" rel="external">为什么要加 setTimeout</a> 神坑，这里我也不是很懂。</p>
+</code></pre><p><a href="https://www.zhihu.com/question/36972010" target="_blank" rel="noopener">为什么要加 setTimeout</a> 神坑，这里我也不是很懂。</p>
 <p>其实我们只用知道这只是一个异步过程</p>
 <pre><code>let p = new Promise((resolve,reject)=&gt;{
     setTimeout(resolve,3000,1)
@@ -6865,10 +7178,10 @@ console.log(a,b,c)
 </ul>
 <pre><code class="bash">$ cnpm install babel-cli
 </code></pre>
-<p><a href="http://es6.ruanyifeng.com/" target="_blank" rel="external">参考文档</a></p>
+<p><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">参考文档</a></p>
 <p>第一次接触 <code>&#39;use strict&#39;</code> </p>
 <p>看来踩的坑还有点少。</p>
-<p><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html" target="_blank" rel="external">Javascript 严格模式详解 - 阮一峰</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/01/javascript_strict_mode.html" target="_blank" rel="noopener">Javascript 严格模式详解 - 阮一峰</a></p>
 <p>这只是笔记，多看看阮一峰的 ES6 文档吧。</p>
 ]]></content>
       

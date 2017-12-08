@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-a6bbcdeda9ada74d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-3279099d4a906453.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3191557-76ff1267a6ea4bd5.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-11-05T14:42:01.271Z">
+<meta property="og:updated_time" content="2017-11-05T14:42:01.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="摸到 React 的门把手 (4)">
 <meta name="twitter:description" content="摸到 React 的门把手 (4)经过一段时间的踩坑 摸到 React 的门把手 摸到 React 的门把手 (2) 摸到 React 的门把手 (3) ，是不是可以做一个项目了？ Todo List不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。  有什么功能 输入框输入要做的事 按回车添加要做">
@@ -105,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-React-的门把手-4"><span class="toc-number">1.</span> <span class="toc-text">摸到 React 的门把手 (4)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List"><span class="toc-number">1.1.</span> <span class="toc-text">Todo List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有什么功能"><span class="toc-number">1.2.</span> <span class="toc-text">有什么功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List长什么样"><span class="toc-number">1.3.</span> <span class="toc-text">Todo List长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始写代码"><span class="toc-number">1.4.</span> <span class="toc-text">开始写代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么交互"><span class="toc-number">1.5.</span> <span class="toc-text">怎么交互</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-React-的门把手-4"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x6478;&#x5230;-React-&#x7684;&#x95E8;&#x628A;&#x624B;-4" class="headerlink" title="&#x6478;&#x5230; React &#x7684;&#x95E8;&#x628A;&#x624B; (4)"></a>&#x6478;&#x5230; React &#x7684;&#x95E8;&#x628A;&#x624B; (4)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#Todo-List" class="headerlink" title="Todo List"></a>Todo List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有什么功能"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x6709;&#x4EC0;&#x4E48;&#x529F;&#x80FD;" class="headerlink" title="&#x6709;&#x4EC0;&#x4E48;&#x529F;&#x80FD;"></a>&#x6709;&#x4EC0;&#x4E48;&#x529F;&#x80FD;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List长什么样"><span class="toc-number">1.3.</span> <span class="toc-text"><a href="#Todo-List&#x957F;&#x4EC0;&#x4E48;&#x6837;" class="headerlink" title="Todo List&#x957F;&#x4EC0;&#x4E48;&#x6837;"></a>Todo List&#x957F;&#x4EC0;&#x4E48;&#x6837;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始写代码"><span class="toc-number">1.4.</span> <span class="toc-text"><a href="#&#x5F00;&#x59CB;&#x5199;&#x4EE3;&#x7801;" class="headerlink" title="&#x5F00;&#x59CB;&#x5199;&#x4EE3;&#x7801;"></a>&#x5F00;&#x59CB;&#x5199;&#x4EE3;&#x7801;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么交互"><span class="toc-number">1.5.</span> <span class="toc-text"><a href="#&#x600E;&#x4E48;&#x4EA4;&#x4E92;" class="headerlink" title="&#x600E;&#x4E48;&#x4EA4;&#x4E92;"></a>&#x600E;&#x4E48;&#x4EA4;&#x4E92;</span></a></li></ol></li></ol>
     </div>
   </span>
 </div>
@@ -144,7 +144,7 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h1 id="摸到-React-的门把手-4"><a href="#摸到-React-的门把手-4" class="headerlink" title="摸到 React 的门把手 (4)"></a>摸到 React 的门把手 (4)</h1><p>经过一段时间的踩坑 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="external">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="external">摸到 React 的门把手 (2)</a> <a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="external">摸到 React 的门把手 (3)</a> ，是不是可以做一个项目了？</p>
+    <h1 id="摸到-React-的门把手-4"><a href="#摸到-React-的门把手-4" class="headerlink" title="摸到 React 的门把手 (4)"></a>摸到 React 的门把手 (4)</h1><p>经过一段时间的踩坑 <a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 React 的门把手</a> <a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="noopener">摸到 React 的门把手 (2)</a> <a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="noopener">摸到 React 的门把手 (3)</a> ，是不是可以做一个项目了？</p>
 <h2 id="Todo-List"><a href="#Todo-List" class="headerlink" title="Todo List"></a>Todo List</h2><p>不管学什么框架，好像大家都喜欢做 Todo List 啊… AngularJS Vue.js React 都有Todo List … 那我也做一个呗。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-46b343dbe1c59d29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h2 id="有什么功能"><a href="#有什么功能" class="headerlink" title="有什么功能"></a>有什么功能</h2><ul>
@@ -188,7 +188,7 @@
 </ul>
 <p>那我们用一下 <code>defaultValue</code> ，ok 了</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-0a3d90f9199c3e88.gif?imageMogr2/auto-orient/strip" alt=""></p>
-<p>监听用户的回车事件 我们可以用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onkeypress" target="_blank" rel="external">GlobalEventHandlers.onkeypress</a> 这个属性</p>
+<p>监听用户的回车事件 我们可以用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalEventHandlers/onkeypress" target="_blank" rel="noopener">GlobalEventHandlers.onkeypress</a> 这个属性</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3191557-383c1bddda0d2c8c.gif?imageMogr2/auto-orient/strip" alt=""></p>
 <p>我们用 props 的话我们要注意绑定按回车那个 this ，就是我系列文章上一篇的 bind(this) </p>
 <p>这样，我们就能够往里面加东西了</p>
@@ -208,23 +208,23 @@
 <p>基本功能已经做出来了</p>
 <p>##代码</p>
 <ul>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/2431a2a81415c3fd674f14a894a2bd3f7777f805" target="_blank" rel="external">基本骨架完成</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/37a39392ac65e03d4a4551ca6f2aa33400fcd5ec" target="_blank" rel="external">将输入框变成 TodoInput 组件</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/db78ca8d08545394b5ecd93e344fc955508ce393" target="_blank" rel="external">将每个待办封装成 TodoItem 组件</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/ad05ce18fe7083a2e76573c3032b28cc6c715103" target="_blank" rel="external">添加 normalize.css</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9b62a921aa2adbfec99c17c04cc4438e7ae17b69" target="_blank" rel="external">添加 reset.css</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/556f760571f1b60c7b7c25f46e6698bacb168d67" target="_blank" rel="external">fix value</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/5eeef99c4ae2678e60c28a691b0b5d935c1b2591" target="_blank" rel="external">监听回车事件</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/c8727d8482b81f84e1441166f3be016b8affea9a" target="_blank" rel="external">App 传一个函数给 TodoInput</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b9de4886314df06317d176b00b769196fcbd642d" target="_blank" rel="external">bind(this)</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b765bebe0097d7283d34209f84404e9433e667c4" target="_blank" rel="external">可以添加 todo 了</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/20701a8e764cfe158b3b387c6686fada36f54c52" target="_blank" rel="external">fix value again</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/730db326d22892d3ef4e32e6e705c061d24a1142" target="_blank" rel="external">fix value again and again</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/a78fea70fd172c1aa35b77d85e1f9720f738ea1c" target="_blank" rel="external">标记为已完成或者未完成</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9bc07f8a2c564c95bacc7e8ba1728e4b69b20784" target="_blank" rel="external">删除 todo</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/f0ea5a391f90588fd093eb859c273bbd96a05930" target="_blank" rel="external">真正删除 todo</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/85b7255e4daa64699badfa2b35f8eab4268516f5" target="_blank" rel="external">TodoItem 样式</a></li>
-<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/d1df4c1ecadaf9aa5af0a55e30d295e2b8b943c5" target="_blank" rel="external">TodoInput 样式</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/2431a2a81415c3fd674f14a894a2bd3f7777f805" target="_blank" rel="noopener">基本骨架完成</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/37a39392ac65e03d4a4551ca6f2aa33400fcd5ec" target="_blank" rel="noopener">将输入框变成 TodoInput 组件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/db78ca8d08545394b5ecd93e344fc955508ce393" target="_blank" rel="noopener">将每个待办封装成 TodoItem 组件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/ad05ce18fe7083a2e76573c3032b28cc6c715103" target="_blank" rel="noopener">添加 normalize.css</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9b62a921aa2adbfec99c17c04cc4438e7ae17b69" target="_blank" rel="noopener">添加 reset.css</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/556f760571f1b60c7b7c25f46e6698bacb168d67" target="_blank" rel="noopener">fix value</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/5eeef99c4ae2678e60c28a691b0b5d935c1b2591" target="_blank" rel="noopener">监听回车事件</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/c8727d8482b81f84e1441166f3be016b8affea9a" target="_blank" rel="noopener">App 传一个函数给 TodoInput</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b9de4886314df06317d176b00b769196fcbd642d" target="_blank" rel="noopener">bind(this)</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/b765bebe0097d7283d34209f84404e9433e667c4" target="_blank" rel="noopener">可以添加 todo 了</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/20701a8e764cfe158b3b387c6686fada36f54c52" target="_blank" rel="noopener">fix value again</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/730db326d22892d3ef4e32e6e705c061d24a1142" target="_blank" rel="noopener">fix value again and again</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/a78fea70fd172c1aa35b77d85e1f9720f738ea1c" target="_blank" rel="noopener">标记为已完成或者未完成</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/9bc07f8a2c564c95bacc7e8ba1728e4b69b20784" target="_blank" rel="noopener">删除 todo</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/f0ea5a391f90588fd093eb859c273bbd96a05930" target="_blank" rel="noopener">真正删除 todo</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/85b7255e4daa64699badfa2b35f8eab4268516f5" target="_blank" rel="noopener">TodoItem 样式</a></li>
+<li><a href="https://github.com/FRANKIETANG/react-todo-list/commit/d1df4c1ecadaf9aa5af0a55e30d295e2b8b943c5" target="_blank" rel="noopener">TodoInput 样式</a></li>
 </ul>
 
   </div>
@@ -246,7 +246,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-React-的门把手-4"><span class="toc-number">1.</span> <span class="toc-text">摸到 React 的门把手 (4)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List"><span class="toc-number">1.1.</span> <span class="toc-text">Todo List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有什么功能"><span class="toc-number">1.2.</span> <span class="toc-text">有什么功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List长什么样"><span class="toc-number">1.3.</span> <span class="toc-text">Todo List长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始写代码"><span class="toc-number">1.4.</span> <span class="toc-text">开始写代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么交互"><span class="toc-number">1.5.</span> <span class="toc-text">怎么交互</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#摸到-React-的门把手-4"><span class="toc-number">1.</span> <span class="toc-text"><a href="#&#x6478;&#x5230;-React-&#x7684;&#x95E8;&#x628A;&#x624B;-4" class="headerlink" title="&#x6478;&#x5230; React &#x7684;&#x95E8;&#x628A;&#x624B; (4)"></a>&#x6478;&#x5230; React &#x7684;&#x95E8;&#x628A;&#x624B; (4)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List"><span class="toc-number">1.1.</span> <span class="toc-text"><a href="#Todo-List" class="headerlink" title="Todo List"></a>Todo List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#有什么功能"><span class="toc-number">1.2.</span> <span class="toc-text"><a href="#&#x6709;&#x4EC0;&#x4E48;&#x529F;&#x80FD;" class="headerlink" title="&#x6709;&#x4EC0;&#x4E48;&#x529F;&#x80FD;"></a>&#x6709;&#x4EC0;&#x4E48;&#x529F;&#x80FD;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Todo-List长什么样"><span class="toc-number">1.3.</span> <span class="toc-text"><a href="#Todo-List&#x957F;&#x4EC0;&#x4E48;&#x6837;" class="headerlink" title="Todo List&#x957F;&#x4EC0;&#x4E48;&#x6837;"></a>Todo List&#x957F;&#x4EC0;&#x4E48;&#x6837;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始写代码"><span class="toc-number">1.4.</span> <span class="toc-text"><a href="#&#x5F00;&#x59CB;&#x5199;&#x4EE3;&#x7801;" class="headerlink" title="&#x5F00;&#x59CB;&#x5199;&#x4EE3;&#x7801;"></a>&#x5F00;&#x59CB;&#x5199;&#x4EE3;&#x7801;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#怎么交互"><span class="toc-number">1.5.</span> <span class="toc-text"><a href="#&#x600E;&#x4E48;&#x4EA4;&#x4E92;" class="headerlink" title="&#x600E;&#x4E48;&#x4EA4;&#x4E92;"></a>&#x600E;&#x4E48;&#x4EA4;&#x4E92;</span></a></li></ol></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
