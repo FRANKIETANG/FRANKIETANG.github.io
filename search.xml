@@ -44,10 +44,9 @@ let frankie = new Employee(&#39;frankie&#39;, 5000)
 frankie.sayHi() // hello I&#39;m frankie
 frankie.work() // I&#39;m working, My salary is 5000 RMB
 </code></pre><p>如果像上面那么样引入会直接暴露所有接口，而且起名字也要很小心，如果使用模块化就可以解决这些问题。</p>
-<p>##namespace</p>
-<p>在没有 es6 的时代，用一种叫 namespace 的方法</p>
+<h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><p>在没有 es6 的时代，用一种叫 namespace 的方法</p>
 <p>解决暴露接口的问题可以用 namespace ，创造一个命名空间</p>
-<pre><code>// html 注意顺序（JS 加载） 
+<pre><code>// html 注意顺序（JS 加载）
 &lt;script src=&quot;./js/person.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;./js/util.js&quot;&gt;&lt;/script&gt;
 &lt;script src=&quot;./js/employee.js&quot;&gt;&lt;/script&gt;
@@ -161,8 +160,7 @@ require([&#39;./employee&#39;], function (Employee) {  // 引入依赖 Employee
 })
 </code></pre><p>上面这个例子全部是依赖于 requirejs 来实现模块化，requirejs 定义了两个方法，define 和 require。他们都可以传两个参数，第一个是依赖，用数组表示，而且是异步加载，加载完后当做参数传给你要写逻辑的函数。</p>
 <p>AMD -&gt; Asynchronous Module Definition（异步的模块定义）</p>
-<p>##CommonJS</p>
-<p>是后端的模块化，主要是由 <code>require</code> 引入，<code>module.exports</code> 导出</p>
+<h2 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h2><p>是后端的模块化，主要是由 <code>require</code> 引入，<code>module.exports</code> 导出</p>
 <pre><code>// person.js
 class Person {
     constructor(name) {
@@ -182,7 +180,7 @@ module.exports = {  // 导出方法
 }
 
 // employee.js
-let Person = require(&#39;./person.js&#39;) 
+let Person = require(&#39;./person.js&#39;)
     UTILS = require(&#39;./util.js&#39;)  // 引入两个依赖
 
 class Employee extends Person {
@@ -203,8 +201,7 @@ let frankie = new Employee(&#39;frankie&#39;, 5000)
 frankie.sayHi() // hello I&#39;m frankie
 frankie.work() // I&#39;m working, My salary is 5000 RMB
 </code></pre><p>CommonJS 这个规范不用把模块用 <code>function</code> 包起来，因为 node.js 定义就是每个文件就是模块</p>
-<p>##UMD</p>
-<p>假如在 AMD 规范里加载 CommonJS 规范的模块肯定是不识别，在 CommonJS 规范里加载 AMD 规范也肯定不行</p>
+<h2 id="UMD"><a href="#UMD" class="headerlink" title="UMD"></a>UMD</h2><p>假如在 AMD 规范里加载 CommonJS 规范的模块肯定是不识别，在 CommonJS 规范里加载 AMD 规范也肯定不行</p>
 <p>那怎么 AMD 和 CommonJS 都通吃呢？</p>
 <pre><code>(function (gl) {
     class Person {
@@ -271,8 +268,7 @@ frankie.work() // I&#39;m working, My salary is 5000 RMB
 
 // 设置好 webpack 打包
 </code></pre><p>值得一提的是，webpack 兼容所有模块规范的打包，各种规范混搭也可以。</p>
-<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><p>###做一个 require</p>
-<pre><code>// person.js
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><h3 id="做一个-require"><a href="#做一个-require" class="headerlink" title="做一个 require"></a>做一个 require</h3><pre><code>// person.js
 function Person(name) {
     this.name = name
 }
