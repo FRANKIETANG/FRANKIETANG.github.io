@@ -3,6 +3,414 @@
   
     
     <entry>
+      <title><![CDATA[Express]]></title>
+      <url>/2017/12/13/Express/</url>
+      <content type="html"><![CDATA[<h1 id="Express"><a href="#Express" class="headerlink" title="Express"></a>Express</h1><p>一个文档很完善的框架</p>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><p>中间件是一种封装，对请求处理流程某一小块逻辑的封装。</p>
+<pre><code>// express 版服务器
+const express = require(&#39;express&#39;)
+const http = require(&#39;http&#39;)
+const app = express()
+
+app.use((req, res, next) =&gt; {
+    console.log(&#39;this is middleware no.1&#39;)  // 1
+    next()
+})
+
+app.use((req, res) =&gt; {
+    console.log(&#39;this is middleware no.2&#39;)  // 2
+    res.end(&#39;hello world&#39;)
+})
+
+const server = http.createServer(app)
+
+server.listen(&#39;9292&#39;)
+
+// 这样子会打印出 1 2 而不是 2 1，是按顺序执行的
+</code></pre><p>当服务器接收到了请求之后一直没有返回（也就是 <code>app.use</code> 之后怎么都不做），会有超时错误。</p>
+<h3 id="中间件的生命周期"><a href="#中间件的生命周期" class="headerlink" title="中间件的生命周期"></a>中间件的生命周期</h3><p>看下面这两段代码</p>
+<pre><code>app.use((req, res, next) =&gt; {
+    req.number = 1
+    next()
+})
+
+app.use((req, res) =&gt; {
+    console.log(`req.number: ${req.number}`)
+    res.end(&#39;end&#39;)
+})
+</code></pre><pre><code>app.use((req, res, next) =&gt; {
+    console.log(`req.number: ${req.number}`)
+    next()
+})
+
+app.use((req, res) =&gt; {
+    req.number = 1
+    res.end(&#39;end&#39;)
+})
+</code></pre><p>第一段打印的是<code>req.number: 1</code>，第二段打印的是<code>req.number: undefined</code></p>
+<p>他们的赋值也是有循序性的</p>
+<p>也可以说互不影响吧，每个中间件只用处理复杂逻辑的一小块，通过 <code>next()</code> 把控制权交给下一个中间件，中间件不需要知道前一个中间件做了什么或者后一个中间件做了什么，只要处理好自己的逻辑就可以了。</p>
+<h3 id="中间件的作用"><a href="#中间件的作用" class="headerlink" title="中间件的作用"></a>中间件的作用</h3><p>可以做个鉴权啥的</p>
+<pre><code>// auth.js
+module.exports =  function auth(req, res, next) {
+    console.log(req.query)
+    if (req.query.username === &#39;frankie&#39;) {  // req.query.username 一定要等于 frankie，要不然就go away
+        next()
+    } else {
+        res.end(&#39;please go away&#39;)
+    }
+}
+
+// index.js
+app.use(require(&#39;./middlewares/auth&#39;))  // 这里的 auth 可以理解为 OAuth 2
+</code></pre><p>不通过就停止执行下面的逻辑</p>
+<p><img src="https://i.loli.net/2017/12/10/5a2d4f70bb5a9.gif" alt=""></p>
+<pre><code>app.use(require(&#39;./middlewares/auth&#39;))
+
+app.use((req, res, next) =&gt; {
+    next(&#39;something wrong&#39;)  // next 里面如果有传东西就会当做错误处理掉，直接跑到下面的错误处理中间件
+})
+
+// 错误处理中间件
+app.use((err, req, res, next) =&gt; {
+    res.end(err)
+})
+
+// 注意传进去的四个参数一定要写全，如果只写 err, req, res 会被识别成 req, res, next
+</code></pre><h3 id="中间件的写法"><a href="#中间件的写法" class="headerlink" title="中间件的写法"></a>中间件的写法</h3><pre><code>function mw1(req, res, next) {
+    console.log(&#39;mw1&#39;)
+    next()
+}
+
+function mw2(req, res, next) {
+    console.log(&#39;mw2&#39;)
+    next()
+}
+
+function mw3(req, res, next) {
+    console.log(&#39;mw3&#39;)
+    res.end(&#39;done&#39;)
+}
+
+// 第一种
+app.use(mw1)
+app.use(mw2)
+app.use(mw3)
+
+// 第二种
+// app.use(mw1, mw2, mw3)
+
+// 第三种
+// app.use([mw1, mw2], mw3)
+
+app.use((err, req, res, next) =&gt; {
+    res.end(err)
+})
+</code></pre><h3 id="body-parser"><a href="#body-parser" class="headerlink" title="body-parser"></a>body-parser</h3><pre><code>// 另一种写法
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// extended 是这样用的，如 users[0]=123&amp;users[1]=456 解析成数组，users[age]=18&amp;users[name]=frankie 解析成对象
+
+function mw0(options) {
+    return function (req, res, next) {
+        console.log(req.body)
+        next()
+    }
+}
+
+app.use(mw0())
+</code></pre><p>这个其实是解决 post 的处理，不过只能检测两种格式 <code>application/json</code> 和 <code>x-www-form-urlencoded</code></p>
+<p><img src="https://i.loli.net/2017/12/11/5a2d5f3d9c67c.gif" alt=""></p>
+<p>更多中间件模块 <a href="http://expressjs.com/en/resources/middleware.html" target="_blank" rel="noopener">http://expressjs.com/en/resources/middleware.html</a></p>
+<h3 id="中间件的运行条件"><a href="#中间件的运行条件" class="headerlink" title="中间件的运行条件"></a>中间件的运行条件</h3><pre><code>app.use((req, res, next) =&gt; {
+    req.middlewares = []
+    next()
+})
+
+function mw1(options) {
+    return function (req, res, next) {
+        req.middlewares.push(&#39;mw1&#39;)
+        next()
+    }
+}
+
+function mw2(req, res, next) {
+    req.middlewares.push(&#39;mw2&#39;)
+    next()
+}
+
+function mw3(req, res, next) {
+    req.middlewares.push(&#39;mw3&#39;)
+    res.end(JSON.stringify(req.middlewares))
+}
+
+app.use(&#39;/&#39;, mw1())
+app.get(&#39;/article&#39;, mw2)
+app.post(&#39;/user&#39;, mw2)
+app.use(mw3)
+</code></pre><p><img src="https://i.loli.net/2017/12/11/5a2d636d08062.gif" alt=""></p>
+<p>也就是说中间件可以通过路由、HTTP 请求的方法、body-parser、query 来做一些精细的控制</p>
+<p>中间件不完全正则 <a href="http://expressjs.com/en/4x/api.html#path-examples" target="_blank" rel="noopener">http://expressjs.com/en/4x/api.html#path-examples</a></p>
+<h2 id="Express-的其他细节"><a href="#Express-的其他细节" class="headerlink" title="Express 的其他细节"></a>Express 的其他细节</h2><p>用 express-generator 生成一个例子</p>
+<pre><code>// Express 的 app.js
+const express = require(&#39;express&#39;);
+const path = require(&#39;path&#39;);
+// const favicon = require(&#39;serve-favicon&#39;);
+const logger = require(&#39;morgan&#39;);
+const cookieParser = require(&#39;cookie-parser&#39;);
+const bodyParser = require(&#39;body-parser&#39;);
+
+const index = require(&#39;./routes/index&#39;);
+const users = require(&#39;./routes/users&#39;);
+
+const app = express();
+
+// view engine setup
+app.set(&#39;views&#39;, path.join(__dirname, &#39;views&#39;)); // 设置 views 文件夹为视图文件的目录，存放模板文件，__dirname 为全局变量，存储着当前正在执行脚本所在文件夹的绝对路径
+app.set(&#39;view engine&#39;, &#39;ejs&#39;); // 设置视图模版引擎为 ejs
+
+// uncomment after placing your favicon in /public
+// app.use(favicon(path.join(__dirname, &#39;public&#39;, &#39;favicon.ico&#39;)));
+/**
+ *  Express 依赖于 connect，提供了大量的中间件，可以通过  app.use 启用
+ *
+ *  app.use([path], function)：使用中间件 function，可选参数path默认为&#39;/&#39;
+ *  app.use(express.favicon())：connect 内建的中间件，使用默认的 favicon 图标，
+ *  如果想使用自己的图标，需改为app.use(express.favicon(__dirname + &#39;/public/images/favicon.ico&#39;));
+ *  这里我们把自定义的 favicon.ico 放到了 public/images 文件夹下。
+ */
+app.use(logger(&#39;dev&#39;));
+/**
+ *  connect 内建的中间件，在开发环境下使用，在终端显示简单的不同颜色的日志，比如在启动 app.js 后访问 localhost:3000，终端会输出：
+ *  Express server listening on port 3000 GET / 200 21ms - 206b GET /stylesheets/style.css 304 4ms
+ *  数字200显示为绿色，304显示为蓝色。假如你去掉这一行代码，不管你怎么刷新网页，终端都只有一行 Express server listening on port 3000。
+ */
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+/**
+ * bodyParser作用是对post请求的请求体进行解析
+ * bodyParser用于解析客户端请求的body中的内容,内部使用JSON编码处理,url编码处理以及对于文件的上传处理
+ */
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, &#39;public&#39;)));
+/**
+ *  设置静态文件目录
+ *  express.static指定了静态页面的查找目录，如果定义express.static(&#39;/var/www&#39;)，
+ *  当用户向node请求http://server/file.html，node将会自动查找/var/www下面找server/file.html
+ */
+
+//  是一个路由控制器，用户如果访问“ / ”路径，则由 routes.index 来控制。
+app.use(&#39;/&#39;, index);
+app.use(&#39;/users&#39;, users);
+
+// catch 404 and forward to error handler
+// 上面全部走完没有结果就 404
+app.use((req, res, next) =&gt; {
+  const err = new Error(&#39;Not Found&#39;);
+  err.status = 404;
+  next(err);
+});
+
+// error handler
+// 错误信息会经过 error.ejs 渲染出来
+app.use((err, req, res) =&gt; {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get(&#39;env&#39;) === &#39;development&#39; ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render(&#39;error&#39;);
+});
+
+module.exports = app;
+</code></pre><p>入口看起来是 <code>bin/www</code>，但实际上真正的入口是 <code>app.js</code></p>
+<p>接下来看看中断的例子</p>
+<pre><code>router.use(&#39;/&#39;, (req, res, next) =&gt; {
+  console.log(&#39;mw1&#39;)
+  next(&#39;router&#39;)
+});
+
+router.use(&#39;/&#39;, (req, res, next) =&gt; {
+  console.log(&#39;mw2&#39;)
+  next()
+});
+
+// 这个只会打印 mw1
+// 如果在 next() 传一个字符串，就会中断代码
+</code></pre><h2 id="Express-中的-MVC"><a href="#Express-中的-MVC" class="headerlink" title="Express 中的 MVC"></a>Express 中的 MVC</h2><pre><code>// controller
+const express = require(&#39;express&#39;);
+
+const router = express.Router();
+const User = require(&#39;../models/in-demo/user&#39;);
+
+/* GET users listing. */
+router.get(&#39;/&#39;, (req, res) =&gt; {
+  const u = new User(req.query.firstName, req.query.lastName, req.query.age);
+  res.locals.user = u;
+  res.render(&#39;user&#39;);
+});
+
+module.exports = router;
+
+// model
+class User {
+  constructor(firstName, lastName, age) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+  }
+  getName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+module.exports = User;
+
+// view
+&lt;h1&gt;&lt;%= user.lastName %&gt;&lt;/h1&gt;
+&lt;h1&gt;&lt;%= user.age %&gt;&lt;/h1&gt;
+</code></pre><p><img src="https://i.loli.net/2017/12/11/5a2e792b19f57.gif" alt=""></p>
+<p>model -&gt; 保存变量</p>
+<p>controller -&gt; 接收用户的请求，根据 model 来进行数据拼装</p>
+<p>view -&gt; 显示给用户</p>
+<pre><code>// 完善 model
+const users = [];
+class User {
+  constructor(firstName, lastName, age) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+  }
+  getName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+
+  static insert(firstName, lastName, age) {
+    const u = new User(firstName, lastName, age);
+    User.users.push(u);
+    return u;
+  }
+  static getOneByName(firstName, lastName) {
+    return User.users.find(element =&gt; element.firstName === firstName &amp;&amp; element.lastName === lastName);
+  }
+
+  static list(query) {
+    return User.users;
+  }
+
+  // 访问 User.users 的时候返回 users，等于 console.log(User.users)
+  static get [&#39;users&#39;]() {
+    return users;
+  }
+}
+
+module.exports = User;
+
+// 测试代码
+console.log(User.list());
+console.log(User.insert(&#39;kalun&#39;, &#39;tang&#39;, 21));
+console.log(User.list());
+console.log(User.insert(&#39;frankie&#39;, &#39;tang&#39;, 21));
+console.log(User.list());
+console.log(User.getOneByName(&#39;kalun&#39;, &#39;tang&#39;));
+</code></pre><p><img src="https://i.loli.net/2017/12/12/5a2fc8cd9f5cb.png" alt=""></p>
+<p><a href="http://es6.ruanyifeng.com/#docs/class" target="_blank" rel="noopener">http://es6.ruanyifeng.com/#docs/class</a></p>
+<p>但是要考虑一个问题，每次重启 <code>users</code> 都是一个空数组，并没有持久化下来，因为是存在内存里。</p>
+<pre><code>// controller
+const UserService = require(&#39;../services/user-service&#39;);
+router.get(&#39;/&#39;, (req, res) =&gt; {
+  const users = UserService.getAllUsers();
+  res.locals.users = users;
+  res.render(&#39;user&#39;);
+});
+
+router.post(&#39;/&#39;, (req, res) =&gt; {
+  const { firstName, lastName, age } = req.body;
+  const u = UserService.addNewUser(firstName, lastName, age);
+  res.json(u);
+});
+
+// model
+const User = require(&#39;../models/in-demo/user&#39;);  // 见上面的 user
+
+module.exports = {
+  getAllUsers() {
+    return User.list();
+  },
+  addNewUser(firstName, lastName, age) {
+    return User.insert(firstName, lastName, age);
+  },
+};
+
+// view
+&lt;% for(let i = 0; i &lt; users.length; i++){ %&gt;
+  &lt;h1&gt;&lt;%= users[i].firstName %&gt;&lt;/h1&gt;
+&lt;% } %&gt;
+</code></pre><p><img src="https://i.loli.net/2017/12/12/5a2fda4fdf08b.gif" alt=""></p>
+<p>上面这个例子通过 post 数据储存到内存里，然后在通过 get 把数据渲染到页面上。</p>
+<p>MVC 肯定也有发布订阅模式</p>
+<p><a href="https://github.com/FRANKIETANG/express-demo/commit/b359514b3dbe998e35aac0a1af799f411abb1a74" target="_blank" rel="noopener">先给用户增加ID</a>（代码量太多不方便贴了）</p>
+<p>用户发生一些行为，并且和数据进行交互</p>
+<p><a href="https://github.com/FRANKIETANG/express-demo/commit/cca1519a3fb29de469a5cb9a98d6500ed93b6c73" target="_blank" rel="noopener">subscription</a>（代码量太多不方便贴了）</p>
+<p><img src="https://i.loli.net/2017/12/13/5a3001a5cb36f.gif" alt=""></p>
+<p>所以说，Express 的 MVC 的结构是</p>
+<pre><code>routes/
+views/
+models/
+services/
+</code></pre><ul>
+<li>其中，由于 express 的特点，根据设置，views 目录下的文件会被模板引擎在调用<code>res.render(&#39;view_name&#39;)</code>的时候自动渲染</li>
+<li>view 层可以理解为模板引擎 + views 文件夹中的文件</li>
+<li>而 routes 可以理解为 controller，负责根据用户的请求，调取相关的 service，最终得到 model 并用于渲染</li>
+<li>models 则代表了 model 和相关逻辑</li>
+<li>services 则有些特别，由于同层 model 之间解耦的需要，单个 model 往往不应该包含太多对其他 model 的操作，我们应该在 services 中对一系列逻辑上有关的 model 进行统一操作</li>
+</ul>
+<h2 id="彩蛋"><a href="#彩蛋" class="headerlink" title="彩蛋"></a>彩蛋</h2><h3 id="如何设置-eslint-？"><a href="#如何设置-eslint-？" class="headerlink" title="如何设置 eslint ？"></a>如何设置 eslint ？</h3><p><a href="https://www.npmjs.com/package/eslint-config-airbnb" target="_blank" rel="noopener">eslint-config-airbnb</a></p>
+<pre><code>// 按着第一行命令走
+npm info &quot;eslint-config-airbnb@latest&quot; peerDependencies  // 显示的那一串是要你一个一个装的，太麻烦
+
+// 第二个方法（这个最好）
+(
+  export PKG=eslint-config-airbnb;
+  npm info &quot;$PKG@latest&quot; peerDependencies --json | command sed &#39;s/[\{\},]//g ; s/: /@/g&#39; | xargs npm install --save-dev &quot;$PKG@latest&quot;
+)
+
+// 安装完后开始配置
+npm install -g eslint  // 全局安装
+eslint --init  // 到目标文件夹初始化
+// 然后出现下面这个
+? How would you like to configure ESLint? (Use arrow keys)
+❯ Answer questions about your style 
+  Use a popular style guide  // 选这个，然后选 airbub
+  Inspect your JavaScript file(s) 
+// 接下来就要哪个选那个
+// 配置文件选 JSON
+
+// 配完后就跟着报错一个一个改
+</code></pre><p><a href="https://segmentfault.com/a/1190000009077086" target="_blank" rel="noopener">使用 VSCode + ESLint 实践前端编码规范</a></p>
+<p><code>var</code> 改 <code>const</code>，用箭头函数，去掉没用的空格，要加分号，去掉没用的引用啊啥的，改到 0 报错就好。</p>
+<p>其实就是为了统一代码格式</p>
+<h3 id="query-里的冒号"><a href="#query-里的冒号" class="headerlink" title="query 里的冒号"></a>query 里的冒号</h3><pre><code>router.get(&#39;/:userId/subscription/:subscriptionId&#39;, (req, res, next) =&gt; { // 前面加一个冒号就代表这个是作为一个参数处理
+  res.json({
+    userId: req.params.userId,
+    subscriptionId: req.params.subscriptionId,
+  });
+});
+</code></pre><p><img src="https://i.loli.net/2017/12/13/5a300978c9cc4.gif" alt=""></p>
+]]></content>
+      
+        
+        <tags>
+            
+            <tag> Node </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[补基础：JS 模块化]]></title>
       <url>/2017/12/08/%E8%A1%A5%E5%9F%BA%E7%A1%80%EF%BC%9AJS%20%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
       <content type="html"><![CDATA[<h1 id="补基础：JS-模块化"><a href="#补基础：JS-模块化" class="headerlink" title="补基础：JS 模块化"></a>补基础：JS 模块化</h1><p>为什么要用到模块化</p>
