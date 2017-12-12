@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            做一个音乐 Webapp 的流程 | 
+        
+        付林恒的博客
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="要做最咸的鱼">
+    <meta name="keywords" content=",JavaScript">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="付林恒的博客">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2017/10/15/做一个音乐 Webapp/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="付林恒的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2017/10/15/做一个音乐 Webapp/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="做一个音乐 Webapp 的流程 | 付林恒的博客">
+    <meta property="og:image" content="/img/favicon.png">
+    <meta property="og:description" content="要做最咸的鱼">
+    <meta property="og:article:tag" content="JavaScript"> 
+
+    
+        <meta property="article:published_time" content="Sun Oct 15 2017 12:41:39 GMT+0800">
+        <meta property="article:modified_time" content="Wed Dec 13 2017 01:58:37 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html",
+    "headline": "做一个音乐 Webapp 的流程",
+    "datePublished": "Sun Oct 15 2017 12:41:39 GMT+0800",
+    "dateModified": "Wed Dec 13 2017 01:58:37 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Frankie Tang",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "付林恒的博客",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",JavaScript",
+    "description": "要做最咸的鱼",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#做一个音乐-Webapp"><span class="post-toc-number">1.</span> <span class="post-toc-text"><a href="#&#x505A;&#x4E00;&#x4E2A;&#x97F3;&#x4E50;-Webapp" class="headerlink" title="&#x505A;&#x4E00;&#x4E2A;&#x97F3;&#x4E50; Webapp"></a>&#x505A;&#x4E00;&#x4E2A;&#x97F3;&#x4E50; Webapp</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#怎么在网页抄数据"><span class="post-toc-number">1.1.</span> <span class="post-toc-text"><a href="#&#x600E;&#x4E48;&#x5728;&#x7F51;&#x9875;&#x6284;&#x6570;&#x636E;" class="headerlink" title="&#x600E;&#x4E48;&#x5728;&#x7F51;&#x9875;&#x6284;&#x6570;&#x636E;"></a>&#x600E;&#x4E48;&#x5728;&#x7F51;&#x9875;&#x6284;&#x6570;&#x636E;</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#伪造请求"><span class="post-toc-number">1.2.</span> <span class="post-toc-text"><a href="#&#x4F2A;&#x9020;&#x8BF7;&#x6C42;" class="headerlink" title="&#x4F2A;&#x9020;&#x8BF7;&#x6C42;"></a>&#x4F2A;&#x9020;&#x8BF7;&#x6C42;</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#模块化"><span class="post-toc-number">1.3.</span> <span class="post-toc-text"><a href="#&#x6A21;&#x5757;&#x5316;" class="headerlink" title="&#x6A21;&#x5757;&#x5316;"></a>&#x6A21;&#x5757;&#x5316;</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#音乐歌词-API"><span class="post-toc-number">1.4.</span> <span class="post-toc-text"><a href="#&#x97F3;&#x4E50;&#x6B4C;&#x8BCD;-API" class="headerlink" title="&#x97F3;&#x4E50;&#x6B4C;&#x8BCD; API"></a>&#x97F3;&#x4E50;&#x6B4C;&#x8BCD; API</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hash"><span class="post-toc-number">1.5.</span> <span class="post-toc-text"><a href="#hash" class="headerlink" title="hash"></a>hash</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#知识点"><span class="post-toc-number">1.6.</span> <span class="post-toc-text"><a href="#&#x77E5;&#x8BC6;&#x70B9;" class="headerlink" title="&#x77E5;&#x8BC6;&#x70B9;"></a>&#x77E5;&#x8BC6;&#x70B9;</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                做一个音乐 Webapp 的流程
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Frankie Tang</strong>
+        <span>10月 15, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=做一个音乐 Webapp 的流程&url=http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=做一个音乐 Webapp 的流程&url=http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html&via=Frankie Tang" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/15/做一个音乐 Webapp/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="做一个音乐-Webapp"><a href="#做一个音乐-Webapp" class="headerlink" title="做一个音乐 Webapp"></a>做一个音乐 Webapp</h1><p>超低仿 Vanilla JS 写的 QQ 音乐</p>
+<p><a href="https://frankietang.github.io/qq-music/index.html" target="_blank" rel="noopener">预览</a> | <a href="https://github.com/FRANKIETANG/qq-music" target="_blank" rel="noopener">源码</a></p>
+<p>那么乱的笔记估计就只有我才能看懂</p>
+<ul>
+<li>按需求制定一下接口</li>
+<li>功能拆分成一个一个模块（首页 + 推荐 / 排行榜 / 搜索 / 播放器界面）</li>
+<li>技术选型（CSS 预处理器 / JS 库）</li>
+</ul>
+<h2 id="怎么在网页抄数据"><a href="#怎么在网页抄数据" class="headerlink" title="怎么在网页抄数据"></a>怎么在网页抄数据</h2><p><img src="https://i.loli.net/2017/09/22/59c4990ac3f33.png" alt=""></p>
+<h2 id="伪造请求"><a href="#伪造请求" class="headerlink" title="伪造请求"></a>伪造请求</h2><p><img src="https://i.loli.net/2017/09/23/59c5f31f6601d.png" alt=""></p>
+<pre><code>curl &#39;https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;_=1507564199109&#39; -H &#39;pragma: no-cache&#39; -H &#39;origin: https://m.y.qq.com&#39; -H &#39;accept-encoding: gzip, deflate, br&#39; -H &#39;accept-language: zh-CN,zh;q=0.8&#39; -H &#39;user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1&#39; -H &#39;accept: application/json&#39; -H &#39;cache-control: no-cache&#39; -H &#39;authority: c.y.qq.com&#39; -H &#39;cookie: pgv_pvi=1576136704; pgv_si=s2924205056; RK=QfWPx2jbHN; tvfe_boss_uuid=bdd869ba21d19595; o_cookie=350558468; ts_refer=ADTAGmyqq; ptui_loginuin=350558468; ptisp=ctc; ptcz=bde020f9828475fc3e22f0fc78ba0024b7a615fad803b91694a069a02cefdb0b; pt2gguin=o0350558468; LW_sid=11S540S7L3v4m1k4L632K6r1m3; LW_uid=g1l53027M384N1y4K6Z2v6d1L4; eas_sid=H1Y5t0B7H3o461B4f692f682Y2; ts_uid=2559117424; qqmusic_fromtag=10; checkmask=3; yqq_stat=0; ts_refer=www.google.ca/; ts_uid=2559117424; pgv_info=ssid=s8871552255; pgv_pvid=2779555285&#39; -H &#39;referer: https://m.y.qq.com/&#39; --compressed
+</code></pre><p><code>npm install express --save</code> </p>
+<p><code>npm install request --save</code> <code>npm install request-promise --save</code>（发请求的库）</p>
+<p><a href="https://github.com/request/request-promise" target="_blank" rel="noopener">request-promise</a></p>
+<p><img src="https://i.loli.net/2017/09/23/59c60819cabdf.png" alt=""></p>
+<p><code>npm install -g nodemon</code></p>
+<p><a href="https://nodemon.io/" target="_blank" rel="noopener">nodemon</a></p>
+<p>我去…用 nodemon 不能用 <code>import XXX from &#39;XXX&#39;</code> 要用 <code>var XXX = require(&#39;XXX&#39;)</code></p>
+<p><img src="https://i.loli.net/2017/09/23/59c60b0dcf706.png" alt=""></p>
+<p>我去…原来还有 n 模块这玩意…</p>
+<p><a href="https://www.npmjs.com/package/n" target="_blank" rel="noopener">n</a> 接受了这个设定还是挺不错的…</p>
+<pre><code>//qq-server 代码
+const express = require(&#39;express&#39;)
+const request = require(&#39;request-promise&#39;)
+
+const app = express()
+
+app.get(&#39;/&#39;, async (req, res) =&gt; {
+    const url = `https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;_=${+ new Date()}`
+    try {
+        res.json(
+            await request({
+                uri: url,
+                json: true,
+                headers: {
+                    &#39;accept&#39;: &#39;application/json&#39;,
+                    &#39;authority&#39;: &#39;c.y.qq.com&#39;,
+                    &#39;origin&#39;: &#39;https://m.y.qq.com&#39;,
+                    &#39;referer&#39;: &#39;https://m.y.qq.com/&#39;,
+                    &#39;user-agent&#39;: &#39;Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1&#39;
+                }
+            })
+        )
+    } catch (e) {
+        res.json({ error: e.message })
+    }
+})
+
+app.listen(4000)
+</code></pre><p>运行 <code>nodemon qq-server.js</code> 打开 localhost:4000</p>
+<p><img src="https://i.loli.net/2017/09/23/59c6163e42f5b.png" alt=""></p>
+<p>开心 终于不用跨域请求了 也不用自己去抄数据了hhhh 新技能 get</p>
+<p>再分析一个 API 接口</p>
+<pre><code>https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;w=%E6%9D%8E%E8%8D%A3%E6%B5%A9&amp;zhidaqu=1&amp;catZhida=1&amp;t=0&amp;flag=1&amp;ie=utf-8&amp;sem=1&amp;aggr=0&amp;perpage=20&amp;n=20&amp;p=1&amp;remoteplace=txt.mqq.all&amp;_=1506154238572
+</code></pre><p><code>w=%E6%9D%8E%E8%8D%A3%E6%B5%A9</code> 这个是李荣浩</p>
+<p><img src="https://i.loli.net/2017/09/23/59c618bbb79d2.png" alt=""></p>
+<pre><code>//search部分的核心代码
+app.get(&#39;/search&#39;, async(req,res)=&gt;{
+    const { keyword, page = 1 } = req.query
+    const url=`https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?g_tk=5381&amp;uin=0&amp;format=json&amp;inCharset=utf-8&amp;outCharset=utf-8&amp;notice=0&amp;platform=h5&amp;needNewCode=1&amp;w=${encodeURIComponent(keyword)}&amp;zhidaqu=1&amp;catZhida=1&amp;t=0&amp;flag=1&amp;ie=utf-8&amp;sem=1&amp;aggr=0&amp;perpage=20&amp;n=20&amp;p=${page}&amp;remoteplace=txt.mqq.all&amp;_=${+ new Date()}`
+    try {
+        res.json(
+            await request({
+                uri: url,
+                json: true,
+                headers: HEADERS
+            })
+        )
+    } catch (e) {
+        res.json({ error: e.message })
+    }    
+})
+</code></pre><p><img src="https://i.loli.net/2017/09/23/59c6200b767cb.png" alt=""></p>
+<p>所有参数都放在 ? 后面 用 &amp; 链接</p>
+<p>你看真的成了</p>
+<p>那就是说…我自己做了一个 API …</p>
+<p>让这个 API 跨域 <code>npm install cors --save</code></p>
+<p><a href="https://zeit.co/now" target="_blank" rel="noopener">https://zeit.co/now</a> 把做出来的 server.js 上传就可以用了</p>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><p>import export</p>
+<h2 id="音乐歌词-API"><a href="#音乐歌词-API" class="headerlink" title="音乐歌词 API"></a>音乐歌词 API</h2><p><img src="https://i.loli.net/2017/09/25/59c8db302e050.png" alt=""></p>
+<p>点击 network 看 JS</p>
+<p>把这个地址复制，在 console 用 <code>fetch()</code> 跑一遍</p>
+<p><img src="https://i.loli.net/2017/09/25/59c8dbc2a1f79.png" alt=""></p>
+<p>再回到 network 看 XHR</p>
+<p><img src="https://i.loli.net/2017/09/25/59c8dc2dd23db.png" alt=""></p>
+<p>写一个正则，把 callback 去掉，括号去掉。</p>
+<p><code>MusicJsonCallback({...}).replace(/MusicJsonCallback\((.*)\)/, &#39;$1&#39;)</code></p>
+<p><code>let json = {...}</code></p>
+<p><code>JSON.parse(json)</code></p>
+<p><code>json.lyric</code></p>
+<p><code>let div = document.createElement(&#39;div&#39;)</code></p>
+<p><code>div.innerHTML = json.lyric</code></p>
+<p><code>div.firstChild.nodeValue</code></p>
+<h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><p>单页面保存数据的方式</p>
+<p>就是当你打开这个页面就可以直接转跳到那首歌的入口</p>
+<p><code>href=&quot;#player?artist=${artist}&amp;songid=${song.songid}&amp;songname=${song.songname}&amp;albummid=${song.albummid}&amp;duration=${song.interval}&quot;</code></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p>fetch / await async</p>
+<p><code>[].slice.call()</code></p>
+<p>IntersectionObserver</p>
+<p><code>map</code> 和 <code>forEach</code> 的区别</p>
+<p>懒加载 / 曝光加载</p>
+<p>正则</p>
+<pre><code>&#39;View frankietang on GitHub&#39;.match(/View (\w+) on GitHub/)[1]
+&#39;frankietang&#39;
+</code></pre><p>css 里面的 <code>filter:blur(15px)</code> 毛玻璃效果</p>
+<p>进度条可以先移到最边边，然后慢慢的往右移。</p>
+<p><code>max-height: calc(100% - 205px);</code></p>
+<p><code>location.hash</code> 点击时 url 的变化</p>
+<p><img src="https://ooo.0o0.ooo/2017/09/28/59ccf1d9533c4.png" alt=""></p>
+<p>MVC – Model View Controller</p>
+<p>autoprefixer-cli</p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/NonDocumentTypeChildNode/previousElementSibling" target="_blank" rel="noopener">NonDocumentTypeChildNode.previousElementSibling</a></p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/10/17/补基础：原型链和 prototype/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/10/14/摸到 Vue.js 的门把手（3）/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Frankie Tang's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">21</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>付林恒的博客
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

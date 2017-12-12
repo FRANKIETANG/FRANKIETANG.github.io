@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            MVC - MVVM 是什么 | 
+        
+        付林恒的博客
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="要做最咸的鱼">
+    <meta name="keywords" content=",JavaScript">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="付林恒的博客">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2017/12/06/MVC - MVVM 是什么/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="付林恒的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2017/12/06/MVC - MVVM 是什么/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="MVC - MVVM 是什么 | 付林恒的博客">
+    <meta property="og:image" content="/img/favicon.png">
+    <meta property="og:description" content="要做最咸的鱼">
+    <meta property="og:article:tag" content="JavaScript"> 
+
+    
+        <meta property="article:published_time" content="Wed Dec 06 2017 01:19:34 GMT+0800">
+        <meta property="article:modified_time" content="Wed Dec 13 2017 01:58:37 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html",
+    "headline": "MVC - MVVM 是什么",
+    "datePublished": "Wed Dec 06 2017 01:19:34 GMT+0800",
+    "dateModified": "Wed Dec 13 2017 01:58:37 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Frankie Tang",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "付林恒的博客",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",JavaScript",
+    "description": "要做最咸的鱼",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#MVC-MVVM-是什么"><span class="post-toc-number">1.</span> <span class="post-toc-text"><a href="#MVC-MVVM-&#x662F;&#x4EC0;&#x4E48;" class="headerlink" title="MVC - MVVM &#x662F;&#x4EC0;&#x4E48;"></a>MVC - MVVM &#x662F;&#x4EC0;&#x4E48;</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVC"><span class="post-toc-number">1.1.</span> <span class="post-toc-text"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MVVM"><span class="post-toc-number">1.2.</span> <span class="post-toc-text"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#那-MVVM-到底是个啥玩意呢？"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text"><a href="#&#x90A3;-MVVM-&#x5230;&#x5E95;&#x662F;&#x4E2A;&#x5565;&#x73A9;&#x610F;&#x5462;&#xFF1F;" class="headerlink" title="&#x90A3; MVVM &#x5230;&#x5E95;&#x662F;&#x4E2A;&#x5565;&#x73A9;&#x610F;&#x5462;&#xFF1F;"></a>&#x90A3; MVVM &#x5230;&#x5E95;&#x662F;&#x4E2A;&#x5565;&#x73A9;&#x610F;&#x5462;&#xFF1F;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#MVVM-的缺点"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text"><a href="#MVVM-&#x7684;&#x7F3A;&#x70B9;" class="headerlink" title="MVVM &#x7684;&#x7F3A;&#x70B9;"></a>MVVM &#x7684;&#x7F3A;&#x70B9;</span></a></li></ol></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                MVC - MVVM 是什么
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Frankie Tang</strong>
+        <span>12月 06, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/JavaScript/">JavaScript</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=MVC - MVVM 是什么&url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=MVC - MVVM 是什么&url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html&via=Frankie Tang" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/12/06/MVC - MVVM 是什么/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="MVC-MVVM-是什么"><a href="#MVC-MVVM-是什么" class="headerlink" title="MVC - MVVM 是什么"></a>MVC - MVVM 是什么</h1><p><a href="http://www.ruanyifeng.com/blog/2007/11/mvc.html" target="_blank" rel="noopener">谈谈MVC模式 - 阮一峰</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="noopener">MVC，MVP 和 MVVM 的图示 - 阮一峰</a></p>
+<p><a href="http://javascript.ruanyifeng.com/advanced/backbonejs.html" target="_blank" rel="noopener">MVC框架与Backbone.js - JavaScript 标准参考教程（alpha） - 阮一峰</a></p>
+<p>基于MVC的JavaScript Web富应用开发 - <a href="https://pan.baidu.com/s/1qY9hJmG" target="_blank" rel="noopener">网盘</a> 密码是 y9jv</p>
+<p>以下例子代码的仓库在 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example" target="_blank" rel="noopener">https://github.com/FRANKIETANG/mvc-mvvm-example</a> </p>
+<p>代码变动看 <a href="https://github.com/FRANKIETANG/mvc-mvvm-example/commits/master" target="_blank" rel="noopener">commit</a></p>
+<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><p>如果要先实现一个 MVC ，首先要实现的是中间的那一层 Controller</p>
+<p>对于 Controller 的作用，绑事件 / 调用方法可以用对象的形式 / 监听 DOM 并且更新 DOM / 操作数据</p>
+<p>下面实现一个 MVC 的轮子吧</p>
+<pre><code>// 举个例子
+
+// index.html 核心代码
+    &lt;div class=&quot;modules&quot;&gt;
+        &lt;div class=&quot;module1&quot;&gt;
+            &lt;input type=&quot;text&quot; name=&quot;number1&quot;&gt;
+            &lt;button name=&quot;button1&quot;&gt;点我&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+// index.js
+import &#39;./module1&#39;
+
+// Controller.js
+import $ from &#39;jquery&#39;
+
+class Controller {
+    constructor(options) {
+        this.$element = $(options.element)
+        this.events = options.events
+        this.bindEvents()
+    }
+    bindEvents() {
+        for (let key in this.events) {
+            let parts = key.split(&#39; &#39;)
+            let eventType = parts.shift()
+            let selector = parts.join(&#39; &#39;)
+            this.$element.on(eventType, selector, this.events[key])
+        }
+    }
+}
+
+export default Controller
+
+// module1.js
+import Controller from &#39;./Controller&#39;
+
+new Controller({
+    element: &#39;.module1&#39;,
+    events: {
+        &#39;change input&#39;: e =&gt; {
+            console.log(&#39;change1&#39;)
+        },
+        &#39;click button&#39;: e =&gt; {
+            console.log(&#39;click1&#39;)
+        }
+    }
+})
+</code></pre><p><img src="https://us1.myximage.com/2017/12/02/90db865271941bd9a64075d1a667d60e.gif" alt=""></p>
+<p>比如上面这个例子就是当需要 Controller 的时候只需要写上你要绑的元素，要做的事件就好。至于实现方法全部交给 Controller 去处理。</p>
+<p>但是上面的例子还是很简单，假如函数逻辑比较复杂该怎么做？可以用对象的形式调用方法。</p>
+<pre><code>// 举个例子
+
+new Controller({
+    element: &#39;.module1&#39;,
+    events: {
+        &#39;change input&#39;: &#39;onChangeInput&#39;,    
+        &#39;click button&#39;: &#39;addToCart&#39;
+    },
+    addToCart() {
+        let value = this.$element.find(&#39;input&#39;).val()
+        this.remoteAddCart(value).then(() =&gt; { // 假如发送到服务器让服务器知道你已经把什么放到购物车了，下次登录的时候就可以获取数据。
+            this.showAnimation() // 加入到购物车的动画
+        })  
+    },
+    remoteAddCart() {
+        console.log(&#39;远程请求&#39;)
+        return Promise.resolve(1)
+    },
+    showAnimation(){
+        console.log(&#39;展示添加到购物车的动画&#39;)
+    }
+    onChangeInput(e) {
+        let input = e.currentTarget
+        console.log(input.value)
+    }    
+})
+
+// 修改一下 Controller
+
+class Controller {
+    constructor(options) {
+        for (let key in options) {
+            this[key] = options[key] // 把用户传的东西都放到 json
+        }
+        this.$element = $(this.element)
+        this.bindEvents()
+    }
+    bindEvents() {
+        for (let key in this.events) {
+            let parts = key.split(&#39; &#39;)
+            let eventType = parts.shift()
+            let selector = parts.join(&#39; &#39;)
+            if (typeof this.events[key] === &#39;function&#39;) {
+                this.$element.on(eventType, selector, this.events[key])
+            } else if (typeof this.events[key] === &#39;string&#39;) {
+                let methodName = this.events[key]
+                this.$element.on(eventType, selector, this[methodName].bind(this))
+            }
+        }
+    }
+}
+</code></pre><p><img src="https://us1.myximage.com/2017/12/02/9bee130d43526daa3c4794d75047aaa0.gif" alt=""></p>
+<p>那监听 DOM 并且更新 DOM 呢？要怎么搞？（实际上早期的 MVC 更新 DOM 的确是要自己写，所以很麻烦）</p>
+<pre><code>// 举个例子
+
+new Controller({
+    element: &#39;.module2&#39;,
+    events: {
+        &#39;change input&#39;: &#39;onChangeInput&#39;,
+        &#39;click button&#39;: &#39;onClickButton&#39;
+    },
+    onClickButton(e) {
+        let value = this.$element.find(&#39;input&#39;).val()
+        this.render(value)
+    },
+    onChangeInput(e) {
+        let input = e.currentTarget
+        console.log(input.value)
+    },
+    render(value) {
+        let $output = this.$element.find(&#39;.output&#39;)
+        if ($output.length === 0) {
+            $output = $(&#39;&lt;div class=&quot;output&quot;&gt;&lt;/div&gt;&#39;).text(value)
+            $output.appendTo(this.$element)
+        } else {
+            $output.text(value)
+        }
+    }
+})
+</code></pre><p><img src="https://us1.myximage.com/2017/12/02/53534b163c052c5f0b9a494c3a11f79c.gif" alt=""></p>
+<p>然后过了一段时间之后就有了 template，在 JS 写模板。并且操作数据。<a href="http://handlebarsjs.com/" target="_blank" rel="noopener">http://handlebarsjs.com/</a></p>
+<pre><code>// 举个例子
+// 先修改html
+&lt;div class=&quot;module2&quot;&gt;&lt;/div&gt;
+
+// 增加 template 和 data
+new Controller({
+    element: &#39;.module2&#39;,
+    template: `
+        &lt;input type=&quot;text&quot; name=&quot;number2&quot; value=&quot;{{output}}&quot;&gt;
+        &lt;button name=&quot;button2&quot;&gt;点我&lt;/button&gt;  
+        &lt;div class=&quot;output&quot;&gt;{{output}}&lt;/div&gt;  
+    `,
+    data: {
+        output: &#39;&#39;  // 控制数据
+    },
+    events: {
+        &#39;change input&#39;: &#39;onChangeInput&#39;,
+        &#39;click button&#39;: &#39;onClickButton&#39;
+    },
+    onClickButton(e) {
+        let value = this.$element.find(&#39;input&#39;).val()
+        this.data.output = value
+        this.render()
+    },
+    onChangeInput(e) {
+        let input = e.currentTarget
+        console.log(input.value)
+    }
+})
+
+// Controller
+class Controller {
+    constructor(options) {
+        for (let key in options) {
+            this[key] = options[key]
+        }
+        this.$element = $(this.element)
+        if (this.template &amp;&amp; this.render) {  // 判断是否有 template
+            this.render()
+        }
+        this.bindEvents()
+    }
+    bindEvents() {
+        for (let key in this.events) {
+            let parts = key.split(&#39; &#39;)
+            let eventType = parts.shift()
+            let selector = parts.join(&#39; &#39;)
+            if (typeof this.events[key] === &#39;function&#39;) {
+                this.$element.on(eventType, selector, this.events[key])
+            } else if (typeof this.events[key] === &#39;string&#39;) {
+                let methodName = this.events[key]
+                this.$element.on(eventType, selector, this[methodName].bind(this))
+            }
+        }
+    }
+    render() {
+        let html = Handlebars.compile(this.template)(this.data)  // 渲染 template 和 data
+        this.$element.html(html)
+    }
+}
+</code></pre><p>和刚刚看起来效果变化不大，但实际上用上了 template 和 data 已经很接近 vue … 啊不是，是 MVC 了 </p>
+<p><img src="https://us1.myximage.com/2017/12/03/5673db0242ef4494b3c9affc904f96a5.gif" alt=""></p>
+<pre><code>// 再举个例子
+// index.html 加上模板
+    &lt;script id=&quot;module3Template&quot; type=&quot;text/x-handlerbars&quot;&gt;
+        &lt;button name=&quot;decrease&quot;&gt; - &lt;/button&gt;
+        &lt;span&gt;{{number}}&lt;/span&gt;
+        &lt;button name=&quot;increase&quot;&gt; + &lt;/button&gt;    
+    &lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;bundle.js&quot;&gt;&lt;/script&gt;
+
+// module3.js
+new Controller({
+    element: &#39;.module3&#39;,
+    template: &#39;#module3Template&#39;,
+    data: {
+        number: 0
+    },
+    events: {
+        &#39;click button[name=increase]&#39;: &#39;increase&#39;,
+        &#39;click button[name=decrease]&#39;: &#39;decrease&#39;
+    },
+    increase(){
+        this.data.number += 1
+        this.render()
+    },
+    decrease(){
+        this.data.number -= 1
+        this.render()
+    }    
+})
+
+// Controller.js 的 render 修改成
+    render() {
+        let template = (this.template[0] === &#39;#&#39;) ? $(this.template).html() : this.template
+        let html = Handlebars.compile(template)(this.data)
+        this.$element.html(html)
+    }
+</code></pre><p><img src="https://us1.myximage.com/2017/12/03/4bf9ab6f7e4d716f90c3b9e5684a710b.gif" alt=""></p>
+<p>到这一步为止，已经实现 VC 了，视图层”（View）利用了 template 来实现，控制层”（Controller）就是 Controller.js，而数据层”（Model）就是 data，下面来举个例子</p>
+<p>因为数据层”（Model）是从服务器来的，所以刚开始要初始化</p>
+<pre><code>// 举个例子
+// 本地模拟数据 data.json
+{
+    &quot;number&quot;: 10000
+}
+
+// 用 promise 模拟数据更新
+new Controller({
+    element: &#39;.module4&#39;,
+    template: `
+        &lt;button name=&quot;decrease&quot;&gt; - &lt;/button&gt;
+        &lt;span&gt;{{number}}&lt;/span&gt;
+        &lt;button name=&quot;increase&quot;&gt; + &lt;/button&gt;
+    `,
+    data: {
+        number: 0
+    },
+    init() {
+        $.get(&#39;/data.json&#39;).then((response) =&gt; {
+            this.data = response
+            this.render()
+        })
+    },
+    events: {
+        &#39;click button[name=increase]&#39;: &#39;increase&#39;,
+        &#39;click button[name=decrease]&#39;: &#39;decrease&#39;
+    },
+    increase() {
+        this.remoteIncrease.then(() =&gt; {
+            this.data.number += 1
+            this.render()
+        })
+    },
+    decrease() {
+        this.remoteDecrease.then(() =&gt; {
+            this.data.number -= 1
+            this.render()
+        })
+    },
+    remoteIncrease() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                resolve({
+                    number: this.number + 1
+                })
+            }, 500)
+        })
+    },
+    remoteDecrease() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                resolve({
+                    number: this.number - 1
+                })
+            }, 500)
+        })
+    }
+})
+</code></pre><p><img src="https://us1.myximage.com/2017/12/03/7d92010a76b32fcc2c0d222194eec2fa.gif" alt=""></p>
+<p>再优化一下代码把数据层”（Model）抽离出来</p>
+<pre><code>let model = {
+    data: {
+        number: 0
+    },
+    get() {
+        return $.get(&#39;/data.json&#39;).then((response) =&gt; {
+            this.data = response
+            return this.data
+        })
+    },
+    increase() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                this.data.number += 1
+                resolve(this.data)
+            }, 500)
+        })
+    },
+    decrease() {
+        return new Promise((resolve, reject) =&gt; {
+            setTimeout(() =&gt; {
+                console.log(&#39;500ms&#39;)
+                this.data.number -= 1
+                resolve(this.data)
+            }, 500)
+        })
+    }
+}
+
+
+new Controller({
+    element: &#39;.module4&#39;,
+    template: `
+        &lt;button name=&quot;decrease&quot;&gt; - &lt;/button&gt;
+        &lt;span&gt;{{number}}&lt;/span&gt;
+        &lt;button name=&quot;increase&quot;&gt; + &lt;/button&gt;
+    `,
+    model: model,
+    events: {
+        &#39;click button[name=increase]&#39;: &#39;increase&#39;,
+        &#39;click button[name=decrease]&#39;: &#39;decrease&#39;
+    },
+    init() {
+        this.model.get().then(() =&gt; {
+            this.render()
+        })
+    },
+    increase() {
+        this.model.increase().then(() =&gt; {
+            this.render()
+        })
+    },
+    decrease() {
+        this.model.decrease().then(() =&gt; {
+            this.render()
+        })
+    }
+})
+</code></pre><p>这样的好处就很明显了，操作永远只是数据，不会操作到 DOM，就是调一下 model 操作一下 view，以上，就实现了MVC 的全部功能 </p>
+<h2 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h2><p>Object.defineProperty 可以对属性有读写的控制</p>
+<pre><code>// 举个例子
+let frankie = {
+    _data: {
+        age: 18,
+        name: &#39;frankie&#39;
+    }
+}
+
+Object.defineProperty(frankie, &#39;age&#39;, {
+    get: () =&gt; {
+        console.log(&#39;frankie.age 被读取了&#39;)
+        return frankie._data.age
+    },
+    set: xxx =&gt; {
+        console.log(&#39;frankie.age 被设置了&#39;)
+        frankie._data.age = xxx
+    }
+})
+
+frankie.age = 19  // frankie.age 被设置了
+frankie.age = 20  // frankie.age 被设置了
+frankie.age = 21  // frankie.age 被设置了
+console.log(frankie.age)  // frankie.age 被读取了 21
+</code></pre><p>通过以上代码可以做到监听 input value 的变化去改内存里对象的变化，也可以改 <code>frankie.age</code> 来改页面上的数值</p>
+<p>例子 =&gt; <a href="https://jsbin.com/zawapumihe/1/edit?html,js,output" target="_blank" rel="noopener">点击这里</a></p>
+<h3 id="那-MVVM-到底是个啥玩意呢？"><a href="#那-MVVM-到底是个啥玩意呢？" class="headerlink" title="那 MVVM 到底是个啥玩意呢？"></a>那 MVVM 到底是个啥玩意呢？</h3><p>以上面这个例子为例：</p>
+<ul>
+<li>M -&gt; frankie (这个是 JS 内存里的)</li>
+<li>VM -&gt; 能让 V 和 M 互相沟通的东西，当 M 变了就通知 V 变，当 V 变了就通知 M 变。（两头互相监听互相变）</li>
+<li>V -&gt; HTML / CSS (内容 / 表现层)</li>
+</ul>
+<h3 id="MVVM-的缺点"><a href="#MVVM-的缺点" class="headerlink" title="MVVM 的缺点"></a>MVVM 的缺点</h3><p>第一点要注意的是 <code>Object.defineProperty</code> 里的 <code>get</code> 和 <code>set</code> 是同步还是异步（改了之后马上更新 input？改了之后在下一次任务的时候更新 input？）</p>
+<p><img src="https://us1.myximage.com/2017/12/05/b34439946bad220c9faf564fdbe2f080.png" alt=""></p>
+<p><img src="https://us1.myximage.com/2017/12/05/d8b5e5b60652215f6172f7e54a411110.png" alt="yin"></p>
+<p>经过上面的测试是同步的</p>
+<p>第二点是 DOM 的操作也是同步的（DOM 不存在异步过程）</p>
+<p>这样会有一个问题，假如 view 层加了一个 input 就不能增加效果（以为因为新的 VM 没有 set 这个 input）。例子 =&gt; <a href="https://jsbin.com/cibunafuro/1/edit?html,js,output" target="_blank" rel="noopener">点击这里</a></p>
+<p>所以 MVVM 的问题就在这里，只能监听已经存在的 key，新加的 key 没法监听</p>
+<p>解决方法还是有的，提供一个 API 为新加的 key 服务。例子 =&gt; <a href="https://jsbin.com/zagacilade/edit?html,js,output" target="_blank" rel="noopener">点击这里</a></p>
+<p>JS 操作 DOM 很慢，DOM 操作 JS 是很慢的</p>
+<p>因为操作是同步的，所以有一个问题是，会很卡。但是 vue.js 很好的解决了这一个问题。（再也不用操作 DOM，从此     jQuery 退出历史舞台）</p>
+<p><a href="https://jsbin.com/jeqaqoyeyi/2/edit?html,js,output" target="_blank" rel="noopener">vue.js 的 Hello world</a></p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/12/08/补基础：JS 模块化/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/12/01/用 Node 来搭建 HTTP 服务器/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Frankie Tang's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">21</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>付林恒的博客
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

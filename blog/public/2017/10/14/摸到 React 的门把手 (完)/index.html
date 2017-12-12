@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!-- Title -->
+    
+    <title>
+        
+            摸到 React 的门把手 (完) | 
+        
+        付林恒的博客
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="要做最咸的鱼">
+    <meta name="keywords" content=",Black History,React">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00838F;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #0097A7 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #0097A7 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #0097A7 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #00838F;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","/css/material-icons.css?pqhB/Rd/ab0H2+kZp0RDmw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="付林恒的博客">
+    <meta name="msapplication-starturl" content="http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="付林恒的博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="摸到 React 的门把手 (完) | 付林恒的博客">
+    <meta property="og:image" content="/img/favicon.png">
+    <meta property="og:description" content="要做最咸的鱼">
+    <meta property="og:article:tag" content="Black History"> <meta property="og:article:tag" content="React"> 
+
+    
+        <meta property="article:published_time" content="Sat Oct 14 2017 00:11:08 GMT+0800">
+        <meta property="article:modified_time" content="Wed Dec 13 2017 01:58:37 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/index.html",
+    "headline": "摸到 React 的门把手 (完)",
+    "datePublished": "Sat Oct 14 2017 00:11:08 GMT+0800",
+    "dateModified": "Wed Dec 13 2017 01:58:37 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "Frankie Tang",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/avatar.png"
+        },
+        "description": "Hi, nice to meet you"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "付林恒的博客",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "/img/favicon.png"
+        }
+    },
+    "keywords": ",Black History,React",
+    "description": "要做最咸的鱼",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+    
+    
+
+    <!-- Custom Head -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#摸到-React-的门把手-完"><span class="post-toc-number">1.</span> <span class="post-toc-text"><a href="#&#x6478;&#x5230;-React-&#x7684;&#x95E8;&#x628A;&#x624B;-&#x5B8C;" class="headerlink" title="&#x6478;&#x5230; React &#x7684;&#x95E8;&#x628A;&#x624B; (&#x5B8C;)"></a>&#x6478;&#x5230; React &#x7684;&#x95E8;&#x628A;&#x624B; (&#x5B8C;)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-JSX-React-webpack-LeanCloud-等知识。"><span class="post-toc-number">1.1.</span> <span class="post-toc-text"><a href="#1-JSX-React-webpack-LeanCloud-&#x7B49;&#x77E5;&#x8BC6;&#x3002;" class="headerlink" title="1. JSX / React / webpack / LeanCloud &#x7B49;&#x77E5;&#x8BC6;&#x3002;"></a>1. JSX / React / webpack / LeanCloud &#x7B49;&#x77E5;&#x8BC6;&#x3002;</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-HTML"><span class="post-toc-number">1.2.</span> <span class="post-toc-text"><a href="#2-HTML" class="headerlink" title="2. HTML"></a>2. HTML</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-form-表单"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text"><a href="#2-1-form-&#x8868;&#x5355;" class="headerlink" title="2.1 form &#x8868;&#x5355;"></a>2.1 form &#x8868;&#x5355;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-HTML5-LocalStorage-本地存储"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text"><a href="#2-2-HTML5-LocalStorage-&#x672C;&#x5730;&#x5B58;&#x50A8;" class="headerlink" title="2.2 HTML5 LocalStorage &#x672C;&#x5730;&#x5B58;&#x50A8;"></a>2.2 HTML5 LocalStorage &#x672C;&#x5730;&#x5B58;&#x50A8;</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-CSS"><span class="post-toc-number">1.3.</span> <span class="post-toc-text"><a href="#3-CSS" class="headerlink" title="3. CSS"></a>3. CSS</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-flex-布局"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text"><a href="#3-1-flex-&#x5E03;&#x5C40;" class="headerlink" title="3.1 flex &#x5E03;&#x5C40;"></a>3.1 flex &#x5E03;&#x5C40;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-CSS-选择器"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text"><a href="#3-2-CSS-&#x9009;&#x62E9;&#x5668;" class="headerlink" title="3.2 CSS &#x9009;&#x62E9;&#x5668;"></a>3.2 CSS &#x9009;&#x62E9;&#x5668;</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-JavaScript"><span class="post-toc-number">1.4.</span> <span class="post-toc-text"><a href="#4-JavaScript" class="headerlink" title="4. JavaScript"></a>4. JavaScript</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-1-import…from…"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text"><a href="#4-1-import&#x2026;from&#x2026;" class="headerlink" title="4.1 import&#x2026;from&#x2026;"></a>4.1 import&#x2026;from&#x2026;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-2-ES6-Class"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text"><a href="#4-2-ES6-Class" class="headerlink" title="4.2 ES6 - Class"></a>4.2 ES6 - Class</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-ES6-箭头函数"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text"><a href="#4-3-ES6-&#x7BAD;&#x5934;&#x51FD;&#x6570;" class="headerlink" title="4.3 ES6 - &#x7BAD;&#x5934;&#x51FD;&#x6570;"></a>4.3 ES6 - &#x7BAD;&#x5934;&#x51FD;&#x6570;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-4-拓展运算符"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text"><a href="#4-4-&#x62D3;&#x5C55;&#x8FD0;&#x7B97;&#x7B26;" class="headerlink" title="4.4 &#x62D3;&#x5C55;&#x8FD0;&#x7B97;&#x7B26;"></a>4.4 &#x62D3;&#x5C55;&#x8FD0;&#x7B97;&#x7B26;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-5-逻辑运算符-用来定义默认参数"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text"><a href="#4-5-&#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x7B26;-&#x7528;&#x6765;&#x5B9A;&#x4E49;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;" class="headerlink" title="4.5 &#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x7B26; || &#x7528;&#x6765;&#x5B9A;&#x4E49;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;"></a>4.5 &#x903B;&#x8F91;&#x8FD0;&#x7B97;&#x7B26; || &#x7528;&#x6765;&#x5B9A;&#x4E49;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-6-深拷贝"><span class="post-toc-number">1.4.6.</span> <span class="post-toc-text"><a href="#4-6-&#x6DF1;&#x62F7;&#x8D1D;" class="headerlink" title="4.6 &#x6DF1;&#x62F7;&#x8D1D;"></a>4.6 &#x6DF1;&#x62F7;&#x8D1D;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-7-条件（三元）运算符"><span class="post-toc-number">1.4.7.</span> <span class="post-toc-text"><a href="#4-7-&#x6761;&#x4EF6;&#xFF08;&#x4E09;&#x5143;&#xFF09;&#x8FD0;&#x7B97;&#x7B26;" class="headerlink" title="4.7 &#x6761;&#x4EF6;&#xFF08;&#x4E09;&#x5143;&#xFF09;&#x8FD0;&#x7B97;&#x7B26;"></a>4.7 &#x6761;&#x4EF6;&#xFF08;&#x4E09;&#x5143;&#xFF09;&#x8FD0;&#x7B97;&#x7B26;</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-8-apply-call-bind"><span class="post-toc-number">1.4.8.</span> <span class="post-toc-text"><a href="#4-8-apply-call-bind" class="headerlink" title="4.8 apply() / call() / bind()"></a>4.8 apply() / call() / bind()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-9-event-preventDefault"><span class="post-toc-number">1.4.9.</span> <span class="post-toc-text"><a href="#4-9-event-preventDefault" class="headerlink" title="4.9 event.preventDefault"></a>4.9 event.preventDefault</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-10-this"><span class="post-toc-number">1.4.10.</span> <span class="post-toc-text"><a href="#4-10-this" class="headerlink" title="4.10 this"></a>4.10 this</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-11-JavaScript-的-new"><span class="post-toc-number">1.4.11.</span> <span class="post-toc-text"><a href="#4-11-JavaScript-&#x7684;-new" class="headerlink" title="4.11 JavaScript &#x7684; new"></a>4.11 JavaScript &#x7684; new</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-最后的一点建议"><span class="post-toc-number">1.5.</span> <span class="post-toc-text"><a href="#5-&#x6700;&#x540E;&#x7684;&#x4E00;&#x70B9;&#x5EFA;&#x8BAE;" class="headerlink" title="5. &#x6700;&#x540E;&#x7684;&#x4E00;&#x70B9;&#x5EFA;&#x8BAE;"></a>5. &#x6700;&#x540E;&#x7684;&#x4E00;&#x70B9;&#x5EFA;&#x8BAE;</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-相关链接"><span class="post-toc-number">1.6.</span> <span class="post-toc-text"><a href="#6-&#x76F8;&#x5173;&#x94FE;&#x63A5;" class="headerlink" title="6. &#x76F8;&#x5173;&#x94FE;&#x63A5;"></a>6. &#x76F8;&#x5173;&#x94FE;&#x63A5;</span></a></li></ol></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 19 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                摸到 React 的门把手 (完)
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>Frankie Tang</strong>
+        <span>10月 14, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Black-History/">Black History</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/React/">React</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=摸到 React 的门把手 (完)&url=http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/index.html&pic=http://yoursite.com/img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=摸到 React 的门把手 (完)&url=http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/index.html&via=Frankie Tang" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+        <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Facebook
+            </li>
+        </a>
+    
+
+    <!-- Share Google+ -->
+    
+        <a class="post_share-link" href="https://plus.google.com/share?url=http://yoursite.com/2017/10/14/摸到 React 的门把手 (完)/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Google+
+            </li>
+        </a>
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <h1 id="摸到-React-的门把手-完"><a href="#摸到-React-的门把手-完" class="headerlink" title="摸到 React 的门把手 (完)"></a>摸到 React 的门把手 (完)</h1><p>写啊写啊终于把大概功能给写完了 <a href="https://frankietang.github.io/banana-todolist/build/index.html#" target="_blank" rel="noopener">效果</a> ，CSS 真难写啊… 我的同学说，审美这些东西要慢慢培养。</p>
+<p>接下来我们来说说这个项目用到了什么知识点。</p>
+<h2 id="1-JSX-React-webpack-LeanCloud-等知识。"><a href="#1-JSX-React-webpack-LeanCloud-等知识。" class="headerlink" title="1. JSX / React / webpack / LeanCloud 等知识。"></a>1. JSX / React / webpack / LeanCloud 等知识。</h2><p>在我博客都有很详细的介绍，这里就不多说了。<a href="https://frankietang.github.io/" target="_blank" rel="noopener">我的博客</a></p>
+<h2 id="2-HTML"><a href="#2-HTML" class="headerlink" title="2. HTML"></a>2. HTML</h2><h3 id="2-1-form-表单"><a href="#2-1-form-表单" class="headerlink" title="2.1 form 表单"></a>2.1 form 表单</h3><p><code>&lt;input id=&quot;xxx&quot;&gt;</code> 和 <code>&lt;label for=&quot;xxx&quot;&gt;</code> 可以对应关联</p>
+<h3 id="2-2-HTML5-LocalStorage-本地存储"><a href="#2-2-HTML5-LocalStorage-本地存储" class="headerlink" title="2.2 HTML5 LocalStorage 本地存储"></a>2.2 HTML5 LocalStorage 本地存储</h3><p>在这个项目里 LocalStorage 的用法是这样的</p>
+<ul>
+<li>用户提交数据的时候，将所有的 todo 字符串的形式保存在 localStorage</li>
+<li>重新打开页面的时候，将 localStorage 里面的字符串变为对象赋值给 todoList</li>
+</ul>
+<pre><code>export function save(key,value){
+    return window.localStorage.setItem(key,
+        JSON.stringify(value))
+}
+
+export function load(key){
+    return JSON.parse(window.localStorage.getItem(key))
+}
+</code></pre><h2 id="3-CSS"><a href="#3-CSS" class="headerlink" title="3. CSS"></a>3. CSS</h2><h3 id="3-1-flex-布局"><a href="#3-1-flex-布局" class="headerlink" title="3.1 flex 布局"></a>3.1 flex 布局</h3><p><a href="http://www.ruanyifeng.com/blog/2015/07/flex-examples.html" target="_blank" rel="noopener">Flex 布局教程：实例篇</a></p>
+<h3 id="3-2-CSS-选择器"><a href="#3-2-CSS-选择器" class="headerlink" title="3.2 CSS 选择器"></a>3.2 CSS 选择器</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/Guide/CSS/Getting_started/Selectors" target="_blank" rel="noopener">CSS 选择器 - MDN</a></p>
+<h2 id="4-JavaScript"><a href="#4-JavaScript" class="headerlink" title="4. JavaScript"></a>4. JavaScript</h2><h3 id="4-1-import…from…"><a href="#4-1-import…from…" class="headerlink" title="4.1 import…from…"></a>4.1 import…from…</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import" target="_blank" rel="noopener">import - MDN</a></p>
+<p><strong>import 语句 </strong>用于从一个已经导出的外部模块或另一个脚本中导入函数，对象或原始类型。</p>
+<h3 id="4-2-ES6-Class"><a href="#4-2-ES6-Class" class="headerlink" title="4.2 ES6 - Class"></a>4.2 ES6 - Class</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="noopener">Class - MDN</a> <a href="http://es6.ruanyifeng.com/#docs/class#Class-的-Generator-方法" target="_blank" rel="noopener">Class 的基本语法</a></p>
+<p>而我的项目最多是用到 <code>constructor()</code> / <code>extends</code> / <code>super()</code> ，这里举一个例子</p>
+<pre><code>class TestSuper {
+  constructor() {
+    this.a = &#39;a&#39;
+  }
+}
+class Test extends TestSuper {
+  constructor() {
+    super()
+    this.b = &#39;b&#39;
+  }
+}
+let inst = new Test()
+console.log(inst.a)   //a
+console.log(inst)     //Test{a:&#39;a&#39;,b:&#39;b&#39;}
+</code></pre><p><code>constructor</code>方法是类的默认方法，通过<code>new</code>命令生成对象实例时，自动调用该方法。一个类必须有<code>constructor</code>方法，如果没有显式定义，一个空的<code>constructor</code>方法会被默认添加。</p>
+<p><code>extends</code> 关键词被用在<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class" target="_blank" rel="noopener">类声明</a>或者<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/class" target="_blank" rel="noopener">类表达式</a>上，以创建一个类是另一个类的子类。</p>
+<p><code>super</code> 关键字用于调用一个对象的父对象上的函数。</p>
+<h3 id="4-3-ES6-箭头函数"><a href="#4-3-ES6-箭头函数" class="headerlink" title="4.3 ES6 - 箭头函数"></a>4.3 ES6 - 箭头函数</h3><pre><code>var f = v =&gt; v;
+var f1 = v =&gt; {
+  return v
+}
+//相当于
+var f = function f(v) {
+    return v;
+};
+var f1 = function f1(v) {
+    return v;
+};
+</code></pre><h3 id="4-4-拓展运算符"><a href="#4-4-拓展运算符" class="headerlink" title="4.4 拓展运算符"></a>4.4 拓展运算符</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_operator" target="_blank" rel="noopener">扩展语句 - MDN</a></p>
+<pre><code>const pa = (...args) =&gt; {
+    console.log(args);
+    return args.reduce((pre,cur) =&gt; {
+        return pre+cur;
+    }, 0);
+};
+pa.apply(this, [1,2,45]);
+//[1,2,45]
+//48
+</code></pre><h3 id="4-5-逻辑运算符-用来定义默认参数"><a href="#4-5-逻辑运算符-用来定义默认参数" class="headerlink" title="4.5 逻辑运算符 || 用来定义默认参数"></a>4.5 逻辑运算符 || 用来定义默认参数</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Logical_Operators" target="_blank" rel="noopener">逻辑运算符</a></p>
+<pre><code>var link = function (height,color,url) {
+  var height = height || 50
+  var color = color || &#39;red&#39;
+  var url = url || &#39;https://frankie.github.io&#39;
+}
+</code></pre><h3 id="4-6-深拷贝"><a href="#4-6-深拷贝" class="headerlink" title="4.6 深拷贝"></a>4.6 深拷贝</h3><pre><code>//deep Clone
+let obj1 = {a: 0, b: {c: 0}};
+let obj3 = JSON.parse(JSON.stringify(obj1));
+obj1.a = 4;
+obj1.b.c = 4;
+console.log(JSON.stringify(obj3)); // {a: 0, b: {c: 0}}
+</code></pre><h3 id="4-7-条件（三元）运算符"><a href="#4-7-条件（三元）运算符" class="headerlink" title="4.7 条件（三元）运算符"></a>4.7 条件（三元）运算符</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Conditional_Operator" target="_blank" rel="noopener">条件运算符</a></p>
+<pre><code>condition ? expr1 : expr2
+</code></pre><h3 id="4-8-apply-call-bind"><a href="#4-8-apply-call-bind" class="headerlink" title="4.8 apply() / call() / bind()"></a>4.8 apply() / call() / bind()</h3><pre><code>var xw = {
+  name : &quot;小王&quot;,
+  gender : &quot;男&quot;,
+  age : 24,
+  say : function() {
+      alert(this.name + &quot; , &quot; + this.gender + &quot; ,今年&quot; + this.age);        
+    }
+}
+var xh = {
+  name : &quot;小红&quot;,
+  gender : &quot;女&quot;,
+  age : 18
+}
+xw.say();
+xw.say.call(xh);
+xw.say.apply(xh);
+xw.say.bind(xh)();
+</code></pre><p>call和apply都是对函数的直接调用，而bind方法返回的仍然是一个函数，因此后面还需要()来进行调用才可以。</p>
+<pre><code>var xw = {
+  name : &quot;小王&quot;,
+  gender : &quot;男&quot;,
+  age : 24,
+  say : function(school,grade) {
+    alert(this.name + &quot; , &quot; + this.gender + &quot; ,今年&quot; + this.age + &quot; ,在&quot; + school + &quot;上&quot; + grade);  
+  }
+}
+var xh = {
+  name : &quot;小红&quot;,
+  gender : &quot;女&quot;,
+  age : 18
+}
+xw.say.call(xh,&quot;实验小学&quot;,&quot;六年级&quot;);
+xw.say.apply(xh,[&quot;实验小学&quot;,&quot;六年级&quot;]);
+xw.say.bind(xh,&quot;实验小学&quot;,&quot;六年级&quot;)();
+xw.say.bind(xh)(&quot;实验小学&quot;,&quot;六年级&quot;);
+</code></pre><p>call后面的参数与say方法中是一一对应的，而apply的第二个参数是一个数组，数组中的元素是和say方法中一一对应的，这就是两者最大的区别。<br>那么bind怎么传参呢？它可以像call那样传参。</p>
+<h3 id="4-9-event-preventDefault"><a href="#4-9-event-preventDefault" class="headerlink" title="4.9 event.preventDefault"></a>4.9 event.preventDefault</h3><p>如果事件可取消，则取消该事件，而不停止事件的进一步传播。</p>
+<p>例子：切换复选框是单击复选框的默认操作。此示例演示如何防止这种情况发生</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;event.preventDefault()&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p&gt;请点击复选框控件&lt;/p&gt;
+    &lt;form&gt;
+        &lt;label for=&quot;id-checkbox&quot;&gt;Checkbox&lt;/label&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;id-checkbox&quot; name=&quot;checkbox&quot; /&gt;
+    &lt;/form&gt;
+    &lt;script&gt;
+        document.querySelector(&quot;#id-checkbox&quot;).addEventListener(&quot;click&quot;, function(event){
+            alert(&quot;preventDefault会阻止该复选框被勾选.&quot;)
+            event.preventDefault();
+            //阻止该复选框被勾选
+        }, false);
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="4-10-this"><a href="#4-10-this" class="headerlink" title="4.10 this"></a>4.10 this</h3><p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/this" target="_blank" rel="noopener">this</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html" target="_blank" rel="noopener">Javascript的this用法</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23804247?refer=study-fe" target="_blank" rel="noopener">this 的值到底是什么？一次说清楚</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/25991271" target="_blank" rel="noopener">你怎么还没搞懂this</a></p>
+<h3 id="4-11-JavaScript-的-new"><a href="#4-11-JavaScript-的-new" class="headerlink" title="4.11 JavaScript 的 new"></a>4.11 JavaScript 的 new</h3><p><a href="https://zhuanlan.zhihu.com/p/23987456?refer=study-fe" target="_blank" rel="noopener">JS 的 new 到底是干什么的？</a></p>
+<h2 id="5-最后的一点建议"><a href="#5-最后的一点建议" class="headerlink" title="5. 最后的一点建议"></a>5. 最后的一点建议</h2><p>还是好好的刷一遍《JavaScript 高级程序设计》和《ES6 标准入门》吧，要不然基础差的你很难上手 React 。</p>
+<h2 id="6-相关链接"><a href="#6-相关链接" class="headerlink" title="6. 相关链接"></a>6. 相关链接</h2><p><a href="https://frankietang.github.io/2017/08/17/%E6%91%B8%E5%88%B0%20ES6%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 ES6 的门把手</a></p>
+<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 webpack 的门把手</a></p>
+<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20webpack%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="noopener">摸到 webpack 的门把手 (2)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/18/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B/" target="_blank" rel="noopener">摸到 React 的门把手</a></p>
+<p><a href="https://frankietang.github.io/2017/08/20/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%282%29/" target="_blank" rel="noopener">摸到 React 的门把手 (2)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/21/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%283%29/" target="_blank" rel="noopener">摸到 React 的门把手 (3)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/22/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%284%29/" target="_blank" rel="noopener">摸到 React 的门把手 (4)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/24/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%285%29/" target="_blank" rel="noopener">摸到 React 的门把手 (5)</a></p>
+<p><a href="https://frankietang.github.io/2017/08/25/%E6%91%B8%E5%88%B0%20React%20%E7%9A%84%E9%97%A8%E6%8A%8A%E6%89%8B%20%286%29/" target="_blank" rel="noopener">摸到 React 的门把手 (6)</a></p>
+<p>这个项目的 2.0 版将会无限期跳票…</p>
+
+        
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/10/14/摸到 Vue.js 的门把手/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/10/14/摸到 React 的门把手 (6)/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="Frankie Tang's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        youremail@email.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="#" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">21</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+
+    <!-- Pages  -->
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/twitter" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/facebook" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-facebook">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+        <a href="https://www.google.com/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-gplus">
+                <span class="visuallyhidden">Google Plus</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+    
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>付林恒的博客
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==", true)</script>
+
+
+
+    <script>lsloader.load("js_js","/js/js.min.js?V/53wGualMuiPM3xoetD5Q==", true)</script>
+
+
+
+    <script>lsloader.load("np_js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
