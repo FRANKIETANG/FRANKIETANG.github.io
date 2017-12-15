@@ -398,7 +398,7 @@ eslint --init  // 到目标文件夹初始化
     subscriptionId: req.params.subscriptionId,
   });
 });
-</code></pre><p><img src="https://i.loli.net/2017/12/13/5a300978c9cc4.gif" alt=""></p>
+</code></pre><p><img src="https://i.loli.net/2017/12/15/5a336d474c910.png" alt=""></p>
 ]]></content>
       
         
@@ -7411,8 +7411,8 @@ s()
 <p>（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。</p>
 <p>（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。</p>
 <p>（4）不可以使用yield命令，因此箭头函数不能用作Generator函数。</p>
-<h2 id="4-Promise"><a href="#4-Promise" class="headerlink" title="4. Promise"></a>4. Promise</h2></blockquote>
-<pre><code>let p = new Promise((resolve,reject)=&gt;{
+</blockquote>
+<h2 id="4-Promise"><a href="#4-Promise" class="headerlink" title="4. Promise"></a>4. Promise</h2><pre><code>let p = new Promise((resolve,reject)=&gt;{
     setTimeout(resolve,3000,1)
 })
 let q = new Promise((resolve, reject) =&gt; {

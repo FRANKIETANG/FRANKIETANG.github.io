@@ -505,4 +505,4 @@ router.get('/:userId/subscription/:subscriptionId', (req, res, next) => { // 前
 });
 ```
 
-![](https://i.loli.net/2017/12/13/5a300978c9cc4.gif)
+![](https://i.loli.net/2017/12/15/5a336d474c910.png)
