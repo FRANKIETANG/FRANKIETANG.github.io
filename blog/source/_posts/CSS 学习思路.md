@@ -13,6 +13,8 @@ description: 文科生们纷纷表示，我们 CSS 能吊打所有的理科生�
 
 先想一个问题，怎么把一个页面的背景有颜色，并且有一个`<h1>`的标题并且居中，标题是红色。
 
+![](https://i.loli.net/2018/02/05/5a78334dde02a.png)
+
 在没有 CSS 的时候，HTML 是有自己的一套办法的。
 
 ```html
@@ -784,6 +786,6 @@ CSS经常会有很多地方冲突，举几个例子：
 
 ## CSS 资料
 
-http://www.ayqy.net/doc/css2-1/cover.html
+http://cndevdocs.com/
 
 CSS 实际上是性价比很低的一个东西，大多数公司不需要 CSS 那么厉害的前端。
