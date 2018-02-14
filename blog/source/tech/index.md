@@ -14,5 +14,6 @@ comments: false
 - [icon 的 N 种搞法](https://frankietang.github.io/2018/02/11/icon%20%E7%9A%84%20N%20%E7%A7%8D%E6%90%9E%E6%B3%95/)
 - [响应式怎么搞](https://frankietang.github.io/2018/02/12/%E5%93%8D%E5%BA%94%E5%BC%8F%E6%80%8E%E4%B9%88%E6%90%9E/)
 - [Flex 布局](https://frankietang.github.io/2018/02/13/Flex%20%E5%B8%83%E5%B1%80/)
+- [布局の套路](https://frankietang.github.io/2018/02/14/%E5%B8%83%E5%B1%80%E3%81%AE%E5%A5%97%E8%B7%AF/)
 
 ------

@@ -12,6 +12,9 @@ description: Flex 布局是一种比较简单的 CSS 布局，只用不用兼容
 
 最简单，最省事的一种布局。
 
+- 老子加 `display: flex;`
+- 老子加 `justify-content: space-between;`
+
 [实例代码](https://github.com/FRANKIETANG/Understanding-CSS/tree/master/example/flex)
 
 ## Flex 前的布局
